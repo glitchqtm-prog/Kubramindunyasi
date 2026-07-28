@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rapor Siparişi — Astro Rapor</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="brand" style="text-decoration:none;">✦ Astro Rapor</a>
+</div>
+
+<div class="order-wrap">
+  <div class="order-card">
+
+    <!-- STEP 1: bilgi formu -->
+    <div id="step-form">
+      <div class="eyebrow">✦ EN ÇOK TERCİH EDİLEN ✦</div>
+      <div class="order-price"><span id="report-title-label"></span></div>
+      <div class="order-price" id="price-label" style="font-size:40px;"></div>
+
+      <label>Ad Soyad *</label>
+      <input id="name" placeholder="Rapor için ad soyadı" />
+
+      <label>E-posta *</label>
+      <input id="email" type="email" placeholder="Rapor bu adrese gönderilecek" />
+
+      <div class="row2">
+        <div>
+          <label>Doğum Tarihi *</label>
+          <input id="birth_date" type="date" />
+        </div>
+        <div>
+          <label>Saat * (bilmiyorsan 12:00)</label>
+          <input id="birth_time" type="time" value="12:00" />
+        </div>
+      </div>
+
+      <label>Cinsiyet</label>
+      <div class="gender-toggle">
+        <button type="button" data-gender="Kadın" class="active">Kadın</button>
+        <button type="button" data-gender="Erkek">Erkek</button>
+      </div>
+
+      <label>Doğum Yeri *</label>
+      <input id="birth_place" placeholder="Şehir, Ülke (örn: İstanbul, Türkiye)" />
+
+      <div id="personB">
+        <div class="section-title">İkinci Kişi Bilgileri</div>
+        <label>Ad Soyad *</label>
+        <input id="name_b" placeholder="İkinci kişinin adı soyadı" />
+        <div class="row2">
+          <div>
+            <label>Doğum Tarihi *</label>
+            <input id="birth_date_b" type="date" />
+          </div>
+          <div>
+            <label>Saat *</label>
+            <input id="birth_time_b" type="time" value="12:00" />
+          </div>
+        </div>
+        <label>Doğum Yeri *</label>
+        <input id="birth_place_b" placeholder="Şehir, Ülke" />
+      </div>
+
+      <button class="btn btn-gold btn-block" style="margin-top:26px;" id="go-to-payment">
+        RAPORUNU SİPARİŞ ET →
+      </button>
+      <div class="field-error" id="form-error"></div>
+      <div class="divider-note">🔒 Sonraki adımda ödeme bilgilerini gireceksin.</div>
+    </div>
+
+    <!-- STEP 2: sahte ödeme -->
+    <div id="step-payment" style="display:none;">
+      <div class="eyebrow">✦ ÖDEME (DEMO) ✦</div>
+      <div class="order-price" id="price-label-2"></div>
+
+      <label>Kart Üzerindeki İsim</label>
+      <input id="card_name" placeholder="Ad Soyad" />
+
+      <label>Kart Numarası</label>
+      <input id="card_number" placeholder="0000 0000 0000 0000" maxlength="19" />
+
+      <div class="row2">
+        <div>
+          <label>Son Kullanma Tarihi</label>
+          <input id="card_expiry" placeholder="AA/YY" />
+        </div>
+        <div>
+          <label>CVV</label>
+          <input id="card_cvv" placeholder="123" maxlength="4" />
+        </div>
+      </div>
+
+      <button class="btn btn-gold btn-block" style="margin-top:24px;" id="pay-btn">
+        ÖDEMEYİ TAMAMLA (DEMO)
+      </button>
+      <div class="field-error" id="payment-error"></div>
+      <div class="divider-note">Bu bir demo ödeme ekranıdır, gerçek bir ödeme alınmaz.</div>
+    </div>
+
+    <!-- STEP 3: üretim durumu -->
+    <div id="step-status" style="display:none;">
+      <div class="status-box">
+        <div class="spinner" id="spinner"></div>
+        <h3 id="status-title" style="font-family:var(--serif); font-weight:600;">Haritan hesaplanıyor…</h3>
+        <p id="status-detail" style="color:var(--muted); font-size:13.5px;">
+          Gerçek gezegen konumları hesaplanıyor, ardından yapay zekâ ile yorumlanıyor. Bu birkaç dakika sürebilir.
+        </p>
+        <a id="download-link" class="btn btn-primary" style="display:none; margin-top:14px;" href="#">Raporu İndir</a>
+        <p style="color:var(--muted); font-size:12px; margin-top:14px;">
+          Rapor hazır olduğunda <b id="email-echo"></b> adresine otomatik gönderildi.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 Astro Rapor — Bu bir demo uygulamadır.</footer>
+
+<script src="reports-data.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const reportType = params.get("type") || "dogum_haritasi";
+const report = REPORTS.find(r => r.id === reportType) || REPORTS[0];
+
+document.getElementById("report-title-label").textContent = report.title;
+document.getElementById("price-label").textContent = `₺${report.price} tek seferlik`;
+document.getElementById("price-label-2").textContent = `₺${report.price} tek seferlik`;
+if (report.needsTwoPeople) document.getElementById("personB").style.display = "block";
+
+let gender = "Kadın";
+document.querySelectorAll(".gender-toggle button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".gender-toggle button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    gender = btn.dataset.gender;
+  });
+});
+
+function val(id) { return document.getElementById(id).value.trim(); }
+
+let orderId = null;
+
+document.getElementById("go-to-payment").addEventListener("click", async () => {
+  const errEl = document.getElementById("form-error");
+  errEl.textContent = "";
+
+  const required = ["name", "email", "birth_date", "birth_time", "birth_place"];
+  if (report.needsTwoPeople) required.push("name_b", "birth_date_b", "birth_time_b", "birth_place_b");
+  for (const id of required) {
+    if (!val(id)) { errEl.textContent = "Lütfen tüm zorunlu alanları doldurun."; return; }
+  }
+
+  const payload = {
+    report_type: report.id,
+    name: val("name"),
+    email: val("email"),
+    birth_date: val("birth_date"),
+    birth_time: val("birth_time"),
+    gender,
+    birth_place: val("birth_place"),
+  };
+  if (report.needsTwoPeople) {
+    payload.person_b_name = val("name_b");
+    payload.birth_date_b = val("birth_date_b");
+    payload.birth_time_b = val("birth_time_b");
+    payload.birth_place_b = val("birth_place_b");
+  }
+
+  try {
+    const res = await fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || "Sipariş oluşturulamadı");
+    orderId = json.order_id;
+    document.getElementById("step-form").style.display = "none";
+    document.getElementById("step-payment").style.display = "block";
+  } catch (e) {
+    errEl.textContent = e.message;
+  }
+});
+
+document.getElementById("pay-btn").addEventListener("click", async () => {
+  const errEl = document.getElementById("payment-error");
+  errEl.textContent = "";
+  const cardNumber = val("card_number"), expiry = val("card_expiry"), cvv = val("card_cvv");
+  if (!cardNumber || !expiry || !cvv) { errEl.textContent = "Lütfen kart bilgilerini girin."; return; }
+
+  try {
+    const res = await fetch(`/api/pay/${orderId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ card_number: cardNumber, expiry, cvv }),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || "Ödeme başarısız");
+
+    document.getElementById("step-payment").style.display = "none";
+    document.getElementById("step-status").style.display = "block";
+    document.getElementById("email-echo").textContent = val("email");
+    pollStatus();
+  } catch (e) {
+    errEl.textContent = e.message;
+  }
+});
+
+function pollStatus() {
+  const iv = setInterval(async () => {
+    const res = await fetch(`/api/order/${orderId}/status`);
+    const json = await res.json();
+    if (json.status === "done") {
+      clearInterval(iv);
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("status-title").textContent = "Raporun hazır! ✨";
+      document.getElementById("status-detail").textContent = "Rapor e-posta adresine gönderildi. Aşağıdan da indirebilirsin.";
+      const link = document.getElementById("download-link");
+      link.href = `/api/order/${orderId}/download`;
+      link.style.display = "inline-flex";
+    } else if (json.status === "error") {
+      clearInterval(iv);
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("status-title").textContent = "Bir sorun oluştu";
+      document.getElementById("status-detail").textContent = json.error || "Lütfen tekrar deneyin.";
+    }
+  }, 3000);
+}
+</script>
+
+</body>
+</html>

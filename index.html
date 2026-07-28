@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Astro Rapor — Doğum Haritanı Keşfet</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">✦ Astro Rapor</div>
+</div>
+
+<section class="hero">
+  <div class="orbit-wrap">
+    <div class="orbit-ring r1"></div>
+    <div class="orbit-ring r2"></div>
+    <div class="orbit-ring r3"></div>
+    <div class="orbit-core"></div>
+    <div class="orbit-dot" style="top:2px;left:50%;"></div>
+    <div class="orbit-dot" style="bottom:24px;right:12px;background:var(--gold);"></div>
+    <div class="orbit-dot" style="top:60px;left:8px;"></div>
+  </div>
+  <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
+  <p>Gerçek gezegen konumlarıyla hesaplanan, yapay zekâ destekli, kişiye özel astroloji raporların. Hazır olduğunda otomatik olarak e-postana gönderilir.</p>
+</section>
+
+<section class="cards" id="cards"></section>
+
+<footer>© 2026 Astro Rapor — Bu bir demo uygulamadır.</footer>
+
+<script src="reports-data.js"></script>
+<script>
+  const container = document.getElementById("cards");
+  REPORTS.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="icon-orbit">
+        <div class="ring"></div>
+        <div class="ring in"></div>
+        <div class="core"></div>
+      </div>
+      <h3>${r.title}</h3>
+      <p>${r.short}</p>
+      <div class="meta">
+        <div class="price">₺${r.price}</div>
+        <div class="delivery">Anlık Teslimat</div>
+      </div>
+      <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>
+    `;
+    container.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
