@@ -1,6 +1,6 @@
 const REPORTS = [
   {
-    id: "dogum_haritasi",
+    	id: "natal",
     title: "Haritanı Tanı Raporu",
     short: "Doğum haritanı bütüncül ele alan, ilişkiler, kariyer ve yeteneklerine dair 18+ sayfalık kapsamlı analiz.",
     price: 500,
