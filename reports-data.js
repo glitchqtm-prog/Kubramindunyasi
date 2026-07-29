@@ -16,7 +16,7 @@ const REPORTS = [
   {
     id: "lunar_return",
     title: "Lunar Return Raporu",
-    short: "Ay'ın natal pozisyonuna döndüğü an için çıkarılan, aylık duygusal döngünü anlatan 8-10 sayfalık rapor.",
+    short: "Ay'ın natal pozisyonuna döndüğü an için çıkarılan, aylık duygusal döngünü anlatan 12+ sayfalık rapor.",
     price: 150,
     needsTwoPeople: false,
   },
