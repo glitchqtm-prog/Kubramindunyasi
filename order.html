@@ -52,7 +52,7 @@
   </div>
 
   <label>Cinsiyet</label>
-  <div class="genders">
+  <div class="genders" id="genderBox">
     <button type="button" data-g="Kadın" class="active">Kadın</button>
     <button type="button" data-g="Erkek">Erkek</button>
   </div>
@@ -118,12 +118,9 @@ const relBox = document.getElementById("relBox");
 });
 
 let gender = "Kadın";
-document.querySelectorAll(".genders")[0].querySelectorAll("button").forEach(b => b.onclick = () => {
-  document.querySelectorAll(".genders")[0].querySelectorAll("button").forEach(x => x.classList.remove("active"));
-  b.classList.add("active"); gender = b.dataset.g;
-});
-document.querySelectorAll(".genders button").forEach(b => b.onclick = () => {
-  document.querySelectorAll(".genders button").forEach(x => x.classList.remove("active"));
+const genderBox = document.getElementById("genderBox");
+genderBox.querySelectorAll("button").forEach(b => b.onclick = () => {
+  genderBox.querySelectorAll("button").forEach(x => x.classList.remove("active"));
   b.classList.add("active"); gender = b.dataset.g;
 });
 
