@@ -60,6 +60,9 @@
   <label>Doğum Yeri *</label>
   <input id="birthPlace" placeholder="Şehir, Ülke (örn: İstanbul, Türkiye)">
 
+  <label id="relLabel">İlişki Durumun *</label>
+  <div class="genders" id="relBox" style="flex-wrap:wrap"></div>
+
   <fieldset id="partnerBox">
     <legend>Partner Bilgileri</legend>
     <label>Partner Ad Soyad *</label>
@@ -98,7 +101,27 @@ document.getElementById("price").innerHTML = "&#8378;" + info.price + " <span st
 const needsPartner = ["sinastri","matrix_uyum"].includes(type);
 if (needsPartner) document.getElementById("partnerBox").classList.add("show");
 
+// İlişki durumu seçenekleri — çift raporlarında farklı, tekli raporlarda farklı
+const REL_TEKLI = ["Bekar","İlişkim var","Nişanlı","Evli","Boşanmış"];
+const REL_CIFT  = ["Yeni tanışıyoruz","Flört/İlişki","Nişanlı","Evli"];
+document.getElementById("relLabel").textContent = needsPartner ? "İlişkiniz Ne Aşamada? *" : "İlişki Durumun *";
+let relationship = "";
+const relBox = document.getElementById("relBox");
+(needsPartner ? REL_CIFT : REL_TEKLI).forEach(opt => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = opt; b.style.flex = "1 1 30%";
+  b.onclick = () => {
+    relBox.querySelectorAll("button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active"); relationship = opt;
+  };
+  relBox.appendChild(b);
+});
+
 let gender = "Kadın";
+document.querySelectorAll(".genders")[0].querySelectorAll("button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".genders")[0].querySelectorAll("button").forEach(x => x.classList.remove("active"));
+  b.classList.add("active"); gender = b.dataset.g;
+});
 document.querySelectorAll(".genders button").forEach(b => b.onclick = () => {
   document.querySelectorAll(".genders button").forEach(x => x.classList.remove("active"));
   b.classList.add("active"); gender = b.dataset.g;
@@ -109,10 +132,15 @@ const statusEl = document.getElementById("status");
 const btn = document.getElementById("btn");
 
 btn.onclick = async () => {
+  if (!relationship) {
+    statusEl.className = "status err";
+    statusEl.textContent = needsPartner ? "Lütfen ilişkinizin aşamasını seçin." : "Lütfen ilişki durumunu seç.";
+    return;
+  }
   const body = {
     type, name: $("name"), email: $("email"),
     birthDate: $("birthDate"), birthTime: $("birthTime") || "12:00",
-    birthPlace: $("birthPlace"), gender
+    birthPlace: $("birthPlace"), gender, relationship
   };
   if (needsPartner) body.partner = { name: $("pName"), birthDate: $("pDate"), birthTime: $("pTime") || "12:00", birthPlace: $("pPlace") };
 
