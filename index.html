@@ -5,11 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Astro Yuvam — Doğum Haritanı Keşfet</title>
 <link rel="stylesheet" href="style.css" />
+<style>
+  /* Astro Yuvam — ek bölüm stilleri (mevcut style.css'i bozmadan) */
+  :root{
+    --ay-gold:#d9b96a; --ay-panel:#161022; --ay-line:#2a2140;
+    --ay-ink:#efe9dc; --ay-muted:#b9aecb; --ay-violet:#7c6cf0;
+  }
+  .navlinks{position:absolute;top:26px;right:34px;display:flex;gap:22px;align-items:center;z-index:20}
+  .navlinks a{color:var(--ay-muted);text-decoration:none;font-size:14px;letter-spacing:.3px;transition:color .2s}
+  .navlinks a:hover{color:var(--ay-gold)}
+  .topbar{position:relative}
+  html{scroll-behavior:smooth}
+  .section-block{max-width:960px;margin:70px auto 0;padding:0 22px}
+  .section-block h2{color:var(--ay-gold);font-size:26px;text-align:center;margin-bottom:8px}
+  .section-block .sub{color:var(--ay-muted);text-align:center;font-size:14.5px;margin-bottom:34px}
+  /* Nasıl çalışır adımları */
+  .steps{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+  .step{flex:1 1 190px;max-width:220px;background:var(--ay-panel);border:1px solid var(--ay-line);
+    border-radius:14px;padding:26px 20px;text-align:center}
+  .step .num{width:44px;height:44px;line-height:44px;margin:0 auto 14px;border-radius:50%;
+    background:linear-gradient(180deg,var(--ay-gold),#c9a34e);color:#241a06;font-weight:bold;font-size:19px}
+  .step h3{color:var(--ay-ink);font-size:16px;margin-bottom:8px}
+  .step p{color:var(--ay-muted);font-size:13.5px;line-height:1.6}
+  /* SSS akordeon */
+  .faq{max-width:760px;margin:0 auto}
+  .faq details{background:var(--ay-panel);border:1px solid var(--ay-line);border-radius:12px;
+    margin-bottom:12px;padding:0 20px;overflow:hidden}
+  .faq summary{cursor:pointer;padding:18px 0;font-size:15.5px;color:var(--ay-ink);
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";color:var(--ay-gold);font-size:22px;transition:transform .2s}
+  .faq details[open] summary::after{content:"−"}
+  .faq details[open] summary{border-bottom:1px solid var(--ay-line)}
+  .faq .ans{padding:16px 0 20px;color:var(--ay-muted);font-size:14px;line-height:1.75}
+  .disclaimer{max-width:760px;margin:40px auto 0;padding:16px 20px;border:1px dashed var(--ay-line);
+    border-radius:12px;color:var(--ay-muted);font-size:12.5px;line-height:1.7;text-align:center}
+  @media(max-width:620px){
+    .navlinks{position:static;justify-content:center;margin-top:12px;gap:18px}
+    .topbar{text-align:center}
+  }
+</style>
 </head>
 <body>
 <div class="topbar">
   <div class="brand">✦ Astro Yuvam</div>
+  <nav class="navlinks">
+    <a href="#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="#sss">S.S.S.</a>
+    <a href="#cards">Raporlar</a>
+  </nav>
 </div>
+
 <section class="hero">
   <div class="orbit-wrap">
     <div class="orbit-ring r1"></div>
@@ -23,12 +69,60 @@
   <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
   <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, yapay zekâ destekli, kişiye özel astroloji ve kader matrisi raporların. Hazır olduğunda otomatik olarak e-postana gönderilir.</p>
 </section>
+
 <section class="cards" id="cards"></section>
+
+<section class="section-block" id="nasil-calisir">
+  <h2>Nasıl Çalışır?</h2>
+  <div class="sub">Dört basit adımda kişisel raporun e-postanda.</div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Raporunu Seç</h3><p>İhtiyacına uygun rapor türünü seç.</p></div>
+    <div class="step"><div class="num">2</div><h3>Bilgilerini Gir</h3><p>Doğum tarihi, yeri ve birkaç detay yeterli.</p></div>
+    <div class="step"><div class="num">3</div><h3>Güvenle Öde</h3><p>Güvenli ödeme altyapısıyla ödemeni tamamla.</p></div>
+    <div class="step"><div class="num">4</div><h3>E-postana Gelsin</h3><p>Raporun ~15 dk içinde PDF olarak e-postanda.</p></div>
+  </div>
+</section>
+
+<section class="section-block" id="sss">
+  <h2>Sıkça Sorulan Sorular</h2>
+  <div class="sub">Aklına takılanların cevabı burada.</div>
+  <div class="faq">
+    <details><summary>Doğum saatimi bilmiyorum, yine de rapor alabilir miyim?</summary>
+      <div class="ans">Evet. Doğum saatiniz yoksa varsayılan olarak 12:00 kullanılır. Bu durumda gezegen konumları ve burçlar doğru hesaplanır; yalnızca yükselen burç ve ev konumları saate bağlı olduğu için tam kesinlik taşımayabilir. Saatinizi biliyorsanız girmeniz raporu daha isabetli kılar.</div>
+    </details>
+    <details><summary>Raporum ne kadar sürede gelir?</summary>
+      <div class="ans">Siparişiniz sonrası raporunuz otomatik hazırlanır ve genellikle ~15 dakika içinde e-postanıza PDF olarak ulaşır. Yoğunluk durumunda bu süre biraz uzayabilir. Gelen kutunuzda göremezseniz spam/gereksiz klasörünü kontrol etmeyi unutmayın.</div>
+    </details>
+    <details><summary>İade veya iptal mümkün mü?</summary>
+      <div class="ans">Raporlar size özel, anında üretilen dijital ürünlerdir; bu nedenle üretim sonrası iade edilemez. Ancak teknik bir hata nedeniyle raporunuz üretilmez veya ulaşmazsa, yeniden üretir ya da ücretinizi iade ederiz. Detaylar için <a href="mesafeli-satis.html" style="color:var(--ay-gold)">Mesafeli Satış Sözleşmemize</a> bakabilirsiniz.</div>
+    </details>
+    <details><summary>Bilgilerim güvende mi?</summary>
+      <div class="ans">Evet. Verileriniz yalnızca raporunuzu hazırlamak ve size ulaştırmak için kullanılır; pazarlama amacıyla üçüncü kişilerle paylaşılmaz veya satılmaz. Ödeme bilgileriniz doğrudan güvenli ödeme altyapısı tarafından işlenir, tarafımızca saklanmaz. Detaylar <a href="gizlilik-kvkk.html" style="color:var(--ay-gold)">KVKK Aydınlatma Metnimizde</a>.</div>
+    </details>
+    <details><summary>İlişki raporlarında neden partnerimin bilgileri isteniyor?</summary>
+      <div class="ans">Sinastri ve Kader Matrisi Uyum gibi ilişki raporları, iki kişinin haritalarının/enerjilerinin etkileşimini analiz eder. Bu nedenle partnerinizin de doğum bilgileri gereklidir. Bu bilgileri girerken, ilgili kişinin bu konuda bilgilendirildiğini varsayarız.</div>
+    </details>
+    <details><summary>Bu raporlar bilimsel mi? Kesin doğru mu?</summary>
+      <div class="ans">Dürüst olalım: Astroloji ve numeroloji, bilimsel yöntemle kanıtlanmış disiplinler değil, binlerce yıllık sembolik geleneklerdir. Raporlarımızın hesaplama kısmı (gezegen konumları, sayısal değerler) gerçek ve hassastır; ancak yorumları kesin kehanet değil, kendinizi ve ilişkilerinizi keşfetmeniz için düşündürücü bir ayna, bir rehberlik çerçevesi olarak sunarız. Kararlarınız her zaman sizindir.</div>
+    </details>
+    <details><summary>Raporu kimler için alabilirim? Kendim dışında biri olur mu?</summary>
+      <div class="ans">Kendiniz için ya da hediye olarak bir yakınınız için alabilirsiniz. Sadece o kişinin doğum bilgilerini girmeniz yeterli. (Not: Bir başkası adına alırken, o kişinin bilgilerini paylaşmaya rıza gösterdiğinden emin olun.)</div>
+    </details>
+    <details><summary>Ödemeyi nasıl yapıyorum?</summary>
+      <div class="ans">Ödemenizi güvenli ödeme altyapısı üzerinden kartınızla kolayca yapabilirsiniz. Ödeme onaylandıktan sonra raporunuz otomatik olarak hazırlanmaya başlar.</div>
+    </details>
+  </div>
+  <div class="disclaimer">
+    Astro Yuvam raporları öz-farkındalık ve rehberlik amaçlıdır. Kesin kehanet niteliği taşımaz; tıbbi, psikolojik, hukuki veya finansal tavsiye yerine geçmez. Kararlarınız her zaman size aittir.
+  </div>
+</section>
+
 <footer>
   © 2026 Astro Yuvam — Tüm hakları saklıdır.<br>
   <a href="gizlilik-kvkk.html">Gizlilik &amp; KVKK Aydınlatma Metni</a> ·
   <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a>
 </footer>
+
 <script src="reports-data.js"></script>
 <script>
   const container = document.getElementById("cards");
@@ -45,7 +139,7 @@
       <p>${r.short}</p>
       <div class="meta">
         <div class="price">₺${r.price}</div>
-        <div class="delivery">Anlık Teslimat</div>
+        <div class="delivery">~15 dk içinde teslimat</div>
       </div>
       <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>
     `;
