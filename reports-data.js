@@ -1,6 +1,6 @@
 const REPORTS = [
   {
-    	id: "natal",
+    id: "natal",
     title: "Haritanı Tanı Raporu",
     short: "Doğum haritanı bütüncül ele alan, ilişkiler, kariyer ve yeteneklerine dair 18+ sayfalık kapsamlı analiz.",
     price: 500,
@@ -26,5 +26,26 @@ const REPORTS = [
     short: "İki kişinin doğum haritaları arasındaki etkileşimi analiz eden 18+ sayfalık ilişki uyum raporu.",
     price: 500,
     needsTwoPeople: true,
+  },
+  {
+    id: "matrix",
+    title: "Kader Matrisi Raporu",
+    short: "Doğum tarihinden hesaplanan 22 arkan sistemiyle karakterini, karmik yükünü, para ve ilişki kapılarını çözen 11+ sayfalık numeroloji raporu.",
+    price: 400,
+    needsTwoPeople: false,
+  },
+  {
+    id: "matrix_uyum",
+    title: "Kader Matrisi Uyum Raporu",
+    short: "İki kişinin enerjilerinin birleşiminden doğan ortak arketipleri ve ilişkinin karmik misyonunu analiz eden 11+ sayfalık uyum raporu.",
+    price: 500,
+    needsTwoPeople: true,
+  },
+  {
+    id: "transit",
+    title: "Transit Raporu",
+    short: "Önümüzdeki 12 ay için gökyüzünün natal haritanla kurduğu temasları tarih tarih yorumlayan 11+ sayfalık öngörü raporu.",
+    price: 300,
+    needsTwoPeople: false,
   },
 ];
