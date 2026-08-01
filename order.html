@@ -84,7 +84,7 @@
     </span>
   </label>
 
-  <div class="note">🔒 Sonraki adımda ödeme bilgilerini gireceksin.</div>
+  <div class="note">🔒 Sonraki adımda güvenli <strong>Shopier</strong> ödeme sayfasına yönlendirileceksin. Ödeme ekranında da <strong>aynı e-posta adresini</strong> kullan ki raporun sana ulaşsın.</div>
   <div class="status" id="status"></div>
 </div>
 
@@ -163,8 +163,13 @@ btn.onclick = async () => {
     const data = await res.json();
     if (!res.ok) throw new Error((data.errors || [data.error || "Bilinmeyen hata"]).join(" "));
     statusEl.className = "status ok";
-    statusEl.innerHTML = "✦ " + data.message + "<br><span style='font-size:12.5px;opacity:.85'>Raporun ortalama 5-15 dakika içinde e-postana ulaşır. Gelen kutunda göremezsen <strong>spam / gereksiz</strong> klasörünü de kontrol et.</span>";
-    poll(data.id);
+    statusEl.innerHTML = "✦ Bilgilerin alındı — güvenli ödeme sayfasına yönlendiriliyorsun…<br><span style='font-size:12.5px;opacity:.85'>Ödeme ekranında da <strong>aynı e-posta adresini</strong> kullan. Ödeme onaylanınca raporun otomatik hazırlanıp e-postana gönderilecek.</span>";
+    btn.textContent = "ÖDEMEYE GİDİLİYOR…";
+    // Ödeme Shopier'de alınır; onay webhook'u gelince rapor sunucuda otomatik üretilir.
+    if (data.paymentUrl) { setTimeout(() => { window.location.href = data.paymentUrl; }, 1000); return; }
+    // paymentUrl beklenmedik şekilde gelmezse bilgilendir:
+    statusEl.innerHTML = "✦ " + (data.message || "Siparişin alındı.");
+    btn.disabled = false; btn.textContent = "RAPORUNU SİPARİŞ ET →";
   } catch (e) {
     statusEl.className = "status err";
     statusEl.textContent = "Sipariş alınamadı: " + e.message;
