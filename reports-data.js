@@ -30,14 +30,14 @@ const REPORTS = [
   {
     id: "matrix",
     title: "Kader Matrisi Raporu",
-    short: "Doğum tarihinden hesaplanan 22 Arkana (Ladini yöntemi) oktagramıyla karakterini, karmik yükünü, çakralarını, para ve ilişki hatlarını çözen 14+ sayfalık numeroloji raporu.",
+    short: "Doğum tarihinden hesaplanan 22 Arkana (Ladini yöntemi) oktagramıyla karakterini; karmik kuyruğunu, aşk, para ve yetenek hat kombinasyonlarını, çakralarını, yaşam blokajlarını ve yaş dönemlerini tek tek çözen 24+ sayfalık numeroloji raporu.",
     price: 400,
     needsTwoPeople: false,
   },
   {
     id: "matrix_uyum",
     title: "Kader Matrisi Uyum Raporu",
-    short: "İki kişinin oktagramlarının birleşiminden doğan ortak enerjileri, bağlanma dinamiklerini ve ilişkinin karmik misyonunu analiz eden 14+ sayfalık uyum raporu.",
+    short: "İki kişinin oktagramlarının birleşiminden doğan ortak enerjileri; her iki tarafın hat kombinasyonlarını, bağlanma dinamiklerini, ilişki–para–karmik bağ blokajlarını ve ilişkinin karmik misyonunu derinlemesine analiz eden 30+ sayfalık uyum raporu.",
     price: 500,
     needsTwoPeople: true,
   },
