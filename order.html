@@ -48,7 +48,7 @@
 
   <div class="row">
     <div><label>Doğum Tarihi *</label><input id="birthDate" type="date"></div>
-    <div><label>Saat * (bilmiyorsan 12:00)</label><input id="birthTime" type="time" value="12:00"></div>
+    <div id="timeWrap"><label>Saat * (bilmiyorsan 12:00)</label><input id="birthTime" type="time" value="12:00"></div>
   </div>
 
   <label>Cinsiyet</label>
@@ -57,8 +57,10 @@
     <button type="button" data-g="Erkek">Erkek</button>
   </div>
 
+  <div id="placeWrap">
   <label>Doğum Yeri *</label>
   <input id="birthPlace" placeholder="Şehir, Ülke (örn: İstanbul, Türkiye)">
+  </div>
 
   <label id="relLabel">İlişki Durumun *</label>
   <div class="genders" id="relBox" style="flex-wrap:wrap"></div>
@@ -69,10 +71,12 @@
     <input id="pName" placeholder="Partnerin adı soyadı">
     <div class="row">
       <div><label>Doğum Tarihi *</label><input id="pDate" type="date"></div>
-      <div><label>Saat</label><input id="pTime" type="time" value="12:00"></div>
+      <div id="pTimeWrap"><label>Saat</label><input id="pTime" type="time" value="12:00"></div>
     </div>
+    <div id="pPlaceWrap">
     <label>Doğum Yeri *</label>
     <input id="pPlace" placeholder="Şehir, Ülke">
+    </div>
   </fieldset>
 
   <button class="submit" id="btn">RAPORUNU SİPARİŞ ET →</button>
@@ -108,6 +112,14 @@ document.getElementById("price").innerHTML = "&#8378;" + info.price + " <span st
 
 const needsPartner = ["sinastri","matrix_uyum"].includes(type);
 if (needsPartner) document.getElementById("partnerBox").classList.add("show");
+
+// Numeroloji raporları (Kader Matrisi / Uyum) yalnızca doğum TARİHİ ister — saat/yer gerekmez.
+const isNumerology = ["matrix","matrix_uyum"].includes(type);
+if (isNumerology) {
+  ["timeWrap","placeWrap","pTimeWrap","pPlaceWrap"].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = "none";
+  });
+}
 
 // İlişki durumu seçenekleri — çift raporlarında farklı, tekli raporlarda farklı
 const REL_TEKLI = ["Bekar","İlişkim var","Nişanlı","Evli","Boşanmış"];
@@ -147,12 +159,12 @@ btn.onclick = async () => {
     statusEl.textContent = needsPartner ? "Lütfen ilişkinizin aşamasını seçin." : "Lütfen ilişki durumunu seç.";
     return;
   }
-  const body = {
-    type, name: $("name"), email: $("email"),
-    birthDate: $("birthDate"), birthTime: $("birthTime") || "12:00",
-    birthPlace: $("birthPlace"), gender, relationship
-  };
-  if (needsPartner) body.partner = { name: $("pName"), birthDate: $("pDate"), birthTime: $("pTime") || "12:00", birthPlace: $("pPlace") };
+  const body = { type, name: $("name"), email: $("email"), birthDate: $("birthDate"), gender, relationship };
+  if (!isNumerology) { body.birthTime = $("birthTime") || "12:00"; body.birthPlace = $("birthPlace"); }
+  if (needsPartner) {
+    body.partner = { name: $("pName"), birthDate: $("pDate") };
+    if (!isNumerology) { body.partner.birthTime = $("pTime") || "12:00"; body.partner.birthPlace = $("pPlace"); }
+  }
 
   btn.disabled = true; btn.textContent = "GÖNDERİLİYOR…";
   statusEl.className = "status";
