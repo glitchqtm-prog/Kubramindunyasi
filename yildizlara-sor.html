@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Yıldızlara Sor — Astro Yuvam</title>
+<meta name="description" content="Astroloji ve numeroloji hakkında merak ettiğin kavramları sor. Satürn dönüşü, yükselen burç, Kader Matrisi ve daha fazlası — sıcak, dürüst bir rehber.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{
+    --bg-1:#0c0914; --bg-2:#14101f; --panel:#1c1733; --panel-2:#241c3d;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#9a8fb8; --line:#332a4d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #241c3d 0%, var(--bg-2) 55%, var(--bg-1) 100%) fixed;
+    color:var(--cream); font-family:Georgia,'Times New Roman',serif; min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold); text-decoration:none}
+  .wrap{max-width:720px; margin:0 auto; padding:0 20px 48px}
+
+  /* Üst şerit + Keşfet menüsü */
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:720px; margin:0 auto; padding:18px 20px}
+  nav .brand{font-size:18px; letter-spacing:2px; color:var(--gold); font-weight:bold; white-space:nowrap}
+  nav .links{display:flex; gap:18px; font-size:14px; font-family:'Segoe UI',system-ui,sans-serif; align-items:center}
+  nav .links>a{color:var(--cream); opacity:.82}
+  nav .links>a:hover{opacity:1; color:var(--gold-soft)}
+  .dropdown{position:relative; display:inline-block; font-family:'Segoe UI',system-ui,sans-serif}
+  .drop-btn{background:none; border:none; color:var(--cream); opacity:.82; font:inherit; font-size:14px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:0; transition:color .2s,opacity .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{opacity:1; color:var(--gold-soft)}
+  .drop-btn .caret{font-size:11px; transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute; top:calc(100% + 12px); right:0; min-width:250px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .18s,transform .18s,visibility .18s; z-index:60; text-align:left}
+  .dropdown.open .drop-menu{opacity:1; visibility:visible; transform:translateY(0)}
+  .drop-head{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.85; padding:8px 12px 6px}
+  .drop-menu a{display:block; padding:10px 12px; border-radius:8px; color:var(--cream); font-size:14.5px; text-decoration:none; transition:background .15s}
+  .drop-menu a:hover{background:rgba(217,185,106,.10); color:var(--gold-soft)}
+  .drop-menu a .d-sub{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+  .nav-cta{color:var(--gold) !important; opacity:1 !important; font-weight:bold; border:1px solid var(--line);
+    padding:7px 16px; border-radius:20px; transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12); border-color:var(--gold)}
+
+  header.hero{text-align:center; padding:20px 0 6px}
+  .hero .star{font-size:28px; color:var(--gold); letter-spacing:8px}
+  .hero h1{font-size:32px; margin:8px 0 4px; font-weight:600}
+  .hero p.sub{color:var(--muted); margin:0; font-size:15px; font-style:italic}
+  .kalan{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); text-align:center; margin:12px 0 0}
+  .kalan b{color:var(--gold-soft)}
+
+  /* Öneri çipleri */
+  .chips{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:18px 0 6px}
+  .chip{background:rgba(217,185,106,.06); border:1px solid var(--line); color:var(--cream);
+    border-radius:20px; padding:8px 14px; font-size:13px; font-family:'Segoe UI',system-ui,sans-serif;
+    cursor:pointer; transition:background .15s,border-color .15s}
+  .chip:hover{background:rgba(217,185,106,.14); border-color:var(--gold)}
+
+  /* Sohbet */
+  .chat{background:linear-gradient(180deg,var(--panel-2),var(--panel)); border:1px solid var(--line);
+    border-radius:16px; padding:18px; margin:18px 0; min-height:280px; box-shadow:0 10px 40px rgba(0,0,0,.35)}
+  .msg{display:flex; margin:10px 0}
+  .msg .bubble{max-width:84%; padding:12px 15px; border-radius:14px; font-size:15px; line-height:1.65}
+  .msg.bot{justify-content:flex-start}
+  .msg.bot .bubble{background:rgba(255,255,255,.05); border:1px solid var(--line); border-top-left-radius:4px; color:#efe7f6}
+  .msg.me{justify-content:flex-end}
+  .msg.me .bubble{background:linear-gradient(180deg,#3a2f63,#2f2652); border:1px solid var(--line); border-top-right-radius:4px; color:var(--cream)}
+  .msg .bubble p{margin:0 0 8px} .msg .bubble p:last-child{margin:0}
+  .msg .who{font-family:'Segoe UI',system-ui,sans-serif; font-size:11px; letter-spacing:1px; color:var(--muted); margin-bottom:4px; text-transform:uppercase}
+  .typing .bubble{color:var(--muted); font-style:italic}
+  .dots span{opacity:.3; animation:blink 1.2s infinite}
+  .dots span:nth-child(2){animation-delay:.2s} .dots span:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* Giriş */
+  .inrow{display:flex; gap:10px; align-items:flex-end}
+  textarea#q{flex:1; resize:none; background:var(--panel); border:1px solid var(--line); color:var(--cream);
+    border-radius:12px; padding:13px 15px; font-family:'Segoe UI',system-ui,sans-serif; font-size:15px; line-height:1.5;
+    min-height:50px; max-height:140px; outline:none; transition:border-color .2s}
+  textarea#q:focus{border-color:var(--gold)}
+  textarea#q:disabled{opacity:.5}
+  #send{background:linear-gradient(180deg,var(--gold-soft),var(--gold)); color:#2a1e08; font-weight:bold;
+    border:none; border-radius:12px; padding:0 22px; height:50px; font-size:15px; cursor:pointer;
+    font-family:'Segoe UI',system-ui,sans-serif; transition:transform .12s,box-shadow .2s; white-space:nowrap}
+  #send:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 8px 20px rgba(217,185,106,.25)}
+  #send:disabled{opacity:.45; cursor:not-allowed}
+
+  .foot{text-align:center; margin-top:24px}
+  .cta{display:inline-block; margin:4px 0 16px; background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:#2a1e08; font-weight:bold; padding:12px 24px; border-radius:30px; font-size:15px; font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); max-width:560px; margin:0 auto; line-height:1.6}
+
+  @media (max-width:560px){
+    nav{flex-wrap:wrap; justify-content:center}
+    nav .links{flex-wrap:wrap; justify-content:center}
+    .dropdown{position:static}
+    .drop-menu{position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; margin:6px auto 0; display:none; min-width:220px}
+    .dropdown.open .drop-menu{display:block}
+    #send{padding:0 16px}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
+  <div class="links">
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="/gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+        <a href="/yildizlara-sor.html" role="menuitem" aria-current="page">✦ Yıldızlara Sor<span class="d-sub">Kavramları sor, öğren</span></a>
+      </div>
+    </div>
+    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="/#sss">S.S.S.</a>
+    <a href="/#cards" class="nav-cta">Raporlar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="star">✦</span>
+    <h1>Yıldızlara Sor</h1>
+    <p class="sub">Astroloji ve numeroloji hakkında merak ettiğin kavramları sor.</p>
+    <p class="kalan" id="kalan">Her gün <b>5</b> soru hakkın var.</p>
+  </header>
+
+  <div class="chips" id="chips">
+    <button class="chip">Satürn dönüşü nedir?</button>
+    <button class="chip">Yükselen burç ne anlatır?</button>
+    <button class="chip">Kader Matrisi nedir?</button>
+    <button class="chip">Merkür retrosu nedir?</button>
+    <button class="chip">Ay burcu neyi temsil eder?</button>
+  </div>
+
+  <div class="chat" id="chat" aria-live="polite"></div>
+
+  <div class="inrow">
+    <textarea id="q" rows="1" placeholder="Bir kavram sor… (ör. 12. ev ne anlatır?)" maxlength="800"></textarea>
+    <button id="send">Sor</button>
+  </div>
+
+  <div class="foot">
+    <a class="cta" href="/#cards">Kendine özel derinlemesine bir okuma al →</a>
+    <p class="disclaimer">
+      Bu sohbet <strong>genel kavram bilgisi</strong> verir; kişiye özel kader okuması yapmaz.
+      Astroloji ve numeroloji sembolik geleneklerdir, kesin kehanet değildir. Kararlar her zaman senindir.
+    </p>
+  </div>
+</div>
+
+<script>
+const API = "https://astro-rapor.onrender.com";
+const $ = s => document.querySelector(s);
+const chat = $("#chat"), q = $("#q"), send = $("#send"), chips = $("#chips"), kalanEl = $("#kalan");
+const sohbet = []; // {rol:"user"|"asistan", metin}
+let mesgul = false, bitti = false;
+
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function paras(t){ return String(t).split(/\n{2,}|\n/).map(s=>s.trim()).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join("") || "<p>—</p>"; }
+
+function ekle(rol, metin){
+  const d = document.createElement("div");
+  d.className = "msg " + (rol==="user" ? "me" : "bot");
+  d.innerHTML = `<div class="bubble"><div class="who">${rol==="user"?"Sen":"Yıldız Rehberi"}</div>${paras(metin)}</div>`;
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+}
+function yaziyor(on){
+  let t = $("#typing");
+  if(on && !t){
+    t = document.createElement("div"); t.id="typing"; t.className="msg bot typing";
+    t.innerHTML = `<div class="bubble"><span class="dots"><span>●</span><span>●</span><span>●</span></span> düşünüyor…</div>`;
+    chat.appendChild(t); chat.scrollTop = chat.scrollHeight;
+  } else if(!on && t){ t.remove(); }
+}
+function kalanGoster(n){
+  if(n===0){ kalanEl.innerHTML = "Bugünlük soru hakkın doldu — yarın tekrar bekleriz. ✦"; }
+  else if(typeof n==="number"){ kalanEl.innerHTML = `Bugün kalan soru: <b>${n}</b>`; }
+}
+function kilitle(){ bitti=true; q.disabled=true; send.disabled=true; q.placeholder="Yarın yeni sorularınla tekrar bekleriz ✦"; }
+
+async function sor(metin){
+  if(mesgul || bitti) return;
+  metin = (metin||"").trim(); if(!metin) return;
+  chips.style.display = "none";
+  ekle("user", metin); sohbet.push({rol:"user", metin});
+  q.value=""; q.style.height="50px";
+  mesgul=true; send.disabled=true; yaziyor(true);
+  try{
+    const r = await fetch(API + "/api/yildizlara-sor", {
+      method:"POST", headers:{ "content-type":"application/json" },
+      body: JSON.stringify({ mesajlar: sohbet.slice(-6) })
+    });
+    const d = await r.json();
+    yaziyor(false);
+    if(r.status===429){
+      ekle("asistan", d.mesaj || "Bugünlük soru hakkın doldu.");
+      kalanGoster(0); kilitle(); return;
+    }
+    if(!d.ok){ ekle("asistan", d.mesaj || "Şu an yanıt veremedim, birazdan tekrar dene."); }
+    else {
+      ekle("asistan", d.cevap); sohbet.push({rol:"asistan", metin:d.cevap});
+      if(typeof d.kalan==="number"){ kalanGoster(d.kalan); if(d.kalan<=0) kilitle(); }
+    }
+  }catch(e){
+    yaziyor(false);
+    ekle("asistan", "Bağlantı kurulamadı. Birazdan tekrar dener misin? (İlk açılışta sunucu birkaç saniye uyanıyor olabilir.)");
+  }finally{
+    mesgul=false; if(!bitti) send.disabled=false; q.focus();
+  }
+}
+
+// Olaylar
+send.addEventListener("click", ()=>sor(q.value));
+q.addEventListener("keydown", e=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); sor(q.value); } });
+q.addEventListener("input", ()=>{ q.style.height="50px"; q.style.height=Math.min(q.scrollHeight,140)+"px"; });
+chips.querySelectorAll(".chip").forEach(c=> c.addEventListener("click", ()=>sor(c.textContent)));
+
+// Keşfet açılır menüsü
+document.querySelectorAll(".dropdown").forEach(dd=>{
+  const btn=dd.querySelector(".drop-btn");
+  btn.addEventListener("click", e=>{ e.stopPropagation(); const o=dd.classList.toggle("open"); btn.setAttribute("aria-expanded", o?"true":"false"); });
+});
+document.addEventListener("click", e=>{ document.querySelectorAll(".dropdown.open").forEach(dd=>{ if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); } }); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".dropdown.open").forEach(dd=>{ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }); });
+
+// Karşılama
+ekle("asistan", "Merhaba! ✦ Ben Yıldız Rehberi. Astroloji ve numeroloji (Kader Matrisi) hakkında merak ettiğin kavramları sorabilirsin. Kişiye özel okuma yapmam — onun için derinlemesine Raporlar var. Ne öğrenmek istersin?");
+</script>
+</body>
+</html>
