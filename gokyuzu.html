@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Gökyüzü — Astro Yuvam</title>
+<meta name="description" content="Şu an gökyüzünde gezegenler nerede? Bugün gökyüzü ne fısıldıyor? Gerçek gök verilerine dayalı, her gün tazelenen bir kozmik durak.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{
+    --bg-1:#0c0914; --bg-2:#14101f; --panel:#1c1733; --panel-2:#241c3d;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#9a8fb8; --line:#332a4d;
+    --fire:#e0794f; --earth:#b79a5a; --air:#6aa9d6; --water:#5fb3a3;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #241c3d 0%, var(--bg-2) 55%, var(--bg-1) 100%) fixed;
+    color:var(--cream); font-family:Georgia,'Times New Roman',serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  a{color:var(--gold); text-decoration:none}
+  .wrap{max-width:720px; margin:0 auto; padding:0 20px 64px}
+
+  /* Üst şerit */
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px;
+    max-width:720px; margin:0 auto; padding:18px 20px}
+  nav .brand{font-size:18px; letter-spacing:2px; color:var(--gold); font-weight:bold; white-space:nowrap}
+  nav .links{display:flex; gap:18px; font-size:14px; font-family:'Segoe UI',system-ui,sans-serif}
+  nav .links a{color:var(--cream); opacity:.82}
+  nav .links a:hover{opacity:1; color:var(--gold-soft)}
+
+  /* Hero */
+  header.hero{text-align:center; padding:26px 0 8px}
+  .hero .star{font-size:30px; color:var(--gold); letter-spacing:8px; display:block;
+    animation:tw 4.5s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.75; transform:translateY(0)}50%{opacity:1; transform:translateY(-2px)}}
+  .hero h1{font-size:34px; margin:10px 0 4px; font-weight:600; letter-spacing:.5px}
+  .hero p.sub{color:var(--muted); margin:0; font-size:15px; font-style:italic}
+
+  .eyebrow{font-family:'Segoe UI',system-ui,sans-serif; font-size:11.5px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--gold); opacity:.85; margin:0 0 8px}
+
+  /* Panel ortak */
+  .panel{background:linear-gradient(180deg, var(--panel-2), var(--panel));
+    border:1px solid var(--line); border-radius:16px; padding:24px; margin:22px 0;
+    box-shadow:0 10px 40px rgba(0,0,0,.35)}
+
+  /* Fısıltı kartı */
+  .whisper h2{font-size:22px; margin:0 0 12px; color:var(--cream)}
+  .whisper .date{font-family:'Segoe UI',system-ui,sans-serif; font-size:12px; color:var(--muted);
+    letter-spacing:1px; margin-bottom:14px}
+  .whisper .text{font-size:16.5px; color:#efe7f6}
+  .whisper .text p{margin:0 0 12px}
+
+  /* Ay evresi şeridi */
+  .moon{display:flex; align-items:center; gap:16px; justify-content:center; text-align:left;
+    background:rgba(217,185,106,.06); border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; margin:22px 0}
+  .moon .emoji{font-size:34px; line-height:1}
+  .moon .m-name{font-size:17px; color:var(--gold-soft)}
+  .moon .m-sug{font-size:13.5px; color:var(--muted); font-family:'Segoe UI',system-ui,sans-serif}
+
+  /* Çark */
+  .wheel-panel{text-align:center}
+  .wheel-panel .cap{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted);
+    margin-top:10px; letter-spacing:.5px}
+  .wheel-holder{max-width:520px; margin:0 auto}
+  .wheel-holder svg{width:100%; height:auto; border-radius:12px}
+
+  /* Gezegen kartları */
+  .planets{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+  @media (max-width:520px){ .planets{grid-template-columns:1fr} }
+  .pcard{background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    text-align:left; color:var(--cream); cursor:pointer; padding:0; overflow:hidden;
+    font-family:inherit; width:100%; transition:border-color .2s, transform .12s}
+  .pcard:hover{border-color:var(--gold); transform:translateY(-1px)}
+  .pcard:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+  .pcard .head{display:flex; align-items:center; gap:12px; padding:13px 15px}
+  .pcard .glif{font-size:24px; color:var(--gold); width:28px; text-align:center; flex:none}
+  .pcard .who{flex:1; min-width:0}
+  .pcard .nm{font-size:15.5px}
+  .pcard .pos{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted)}
+  .pcard .retro{font-family:'Segoe UI',system-ui,sans-serif; font-size:10px; letter-spacing:1px;
+    color:var(--fire); border:1px solid rgba(224,121,79,.4); border-radius:20px; padding:1px 7px; flex:none}
+  .pcard .note{max-height:0; opacity:0; transition:max-height .28s ease, opacity .28s ease, padding .28s;
+    padding:0 15px; font-size:14px; color:#ded3ec; font-family:'Segoe UI',system-ui,sans-serif; line-height:1.6}
+  .pcard.open .note{max-height:220px; opacity:1; padding:0 15px 15px}
+  .pcard .chev{color:var(--muted); font-size:12px; flex:none; transition:transform .2s}
+  .pcard.open .chev{transform:rotate(180deg)}
+
+  /* Element dengesi */
+  .elements{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; font-family:'Segoe UI',system-ui,sans-serif}
+  .el{display:flex; align-items:center; gap:7px; font-size:13.5px; color:var(--cream);
+    background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:6px 13px}
+  .dot{width:10px; height:10px; border-radius:50%; display:inline-block}
+
+  /* Alt bilgi / CTA */
+  .foot{text-align:center; margin-top:30px}
+  .cta{display:inline-block; margin:6px 0 18px; background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:#2a1e08; font-weight:bold; padding:13px 26px; border-radius:30px; font-size:15px;
+    font-family:'Segoe UI',system-ui,sans-serif; transition:transform .12s, box-shadow .2s}
+  .cta:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(217,185,106,.28)}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted);
+    max-width:520px; margin:0 auto; line-height:1.6}
+
+  /* Durumlar */
+  .loading, .error{font-family:'Segoe UI',system-ui,sans-serif; color:var(--muted); font-size:14px; text-align:center}
+  .error button{margin-top:10px; background:transparent; border:1px solid var(--gold); color:var(--gold);
+    padding:8px 18px; border-radius:20px; cursor:pointer; font-family:inherit}
+  .skl{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.09),rgba(255,255,255,.04));
+    background-size:200% 100%; animation:sh 1.3s infinite; border-radius:8px; height:14px; margin:9px 0}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">✦ ASTRO YUVAM</div>
+  <div class="links">
+    <a href="/">Ana Sayfa</a>
+    <a href="/gokyuzu.html" aria-current="page">Gökyüzü</a>
+    <a href="/order.html">Raporlar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="star">✦</span>
+    <h1>Gökyüzü</h1>
+    <p class="sub">Şu an başının üstünde gerçekten olan şey — her gün tazelenir.</p>
+  </header>
+
+  <!-- Günün fısıltısı -->
+  <section class="panel whisper" id="whisper">
+    <p class="eyebrow">Bugünün Göğü</p>
+    <h2 id="w-title">Gökyüzü Bugün Ne Fısıldıyor?</h2>
+    <div class="date" id="w-date"></div>
+    <div class="text" id="w-text">
+      <div class="skl" style="width:100%"></div>
+      <div class="skl" style="width:92%"></div>
+      <div class="skl" style="width:96%"></div>
+      <div class="skl" style="width:70%"></div>
+    </div>
+  </section>
+
+  <!-- Ay evresi -->
+  <section class="moon" id="moon" hidden>
+    <div class="emoji" id="moon-emoji">🌙</div>
+    <div>
+      <div class="m-name" id="moon-name">—</div>
+      <div class="m-sug" id="moon-sug">—</div>
+    </div>
+  </section>
+
+  <!-- Canlı çark -->
+  <section class="panel wheel-panel">
+    <p class="eyebrow">Şu An Gökyüzü</p>
+    <div class="wheel-holder" id="wheel">
+      <p class="loading">Gökyüzü hazırlanıyor… (ilk açılışta birkaç saniye sürebilir)</p>
+    </div>
+    <div class="cap" id="wheel-cap"></div>
+  </section>
+
+  <!-- Gezegenler -->
+  <section>
+    <p class="eyebrow" style="text-align:center">Gezegenler Şu An Nerede?</p>
+    <p class="disclaimer" style="text-align:center; margin-bottom:16px">Bir gezegene dokun, o an ne anlattığını gör.</p>
+    <div class="planets" id="planets"></div>
+  </section>
+
+  <!-- Element dengesi -->
+  <section class="panel" id="el-panel" hidden style="text-align:center">
+    <p class="eyebrow">Bugünün Element Dengesi</p>
+    <div class="elements" id="elements"></div>
+  </section>
+
+  <!-- Alt bilgi -->
+  <div class="foot">
+    <a class="cta" href="/order.html">Kendine özel derinlemesine bir okuma al →</a>
+    <p class="disclaimer">
+      Bu içerik <strong>genel gökyüzü durumudur</strong>, herkes için aynıdır; kişiye özel bir kehanet değildir.
+      Yıldızlar yol gösterir, kararlar her zaman senindir.
+    </p>
+  </div>
+
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+// Site GitHub Pages'te (astroyuvam.com), API ayrı sunucuda (Render). Bu yüzden TAM adres:
+const API = "https://astro-rapor.onrender.com";
+const ELEMENT_RENK = { "Ateş":"var(--fire)", "Toprak":"var(--earth)", "Hava":"var(--air)", "Su":"var(--water)" };
+
+// --- Günün fısıltısı ---
+async function fisilti(){
+  try{
+    const r = await fetch(API + "/api/gunun-goku");
+    const d = await r.json();
+    if(!d.ok) throw new Error();
+    $("#w-title").textContent = d.baslik || "Gökyüzü Bugün Ne Fısıldıyor?";
+    $("#w-date").textContent = d.tarih || "";
+    const paras = String(d.metin||"").split(/\n{2,}|\n/).filter(Boolean);
+    $("#w-text").innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join("") || "<p>—</p>";
+  }catch(e){
+    $("#w-text").innerHTML = `<p class="error">Bugünün göğü şu an okunamadı.<br><button onclick="fisilti()">Tekrar dene</button></p>`;
+  }
+}
+
+// --- Şu an gökyüzü (çark + gezegenler + ay + element) ---
+async function gokyuzu(){
+  try{
+    const r = await fetch(API + "/api/gokyuzu");
+    const d = await r.json();
+    if(!d.ok) throw new Error();
+
+    // Çark
+    $("#wheel").innerHTML = d.svg || "";
+    $("#wheel-cap").textContent = "Güncellenme: " + (d.guncellenme||"");
+
+    // Ay evresi
+    if(d.ayEvresi){
+      $("#moon-emoji").textContent = d.ayEvresi.emoji || "🌙";
+      $("#moon-name").textContent = "Ay evresi: " + (d.ayEvresi.ad || "");
+      $("#moon-sug").textContent = "Bu evre şuna elverişli: " + (d.ayEvresi.oneri || "");
+      $("#moon").hidden = false;
+    }
+
+    // Gezegen kartları
+    const box = $("#planets"); box.innerHTML = "";
+    (d.gezegenler||[]).forEach((p, i) => {
+      const b = document.createElement("button");
+      b.className = "pcard"; b.type = "button";
+      b.setAttribute("aria-expanded","false");
+      b.innerHTML = `
+        <div class="head">
+          <span class="glif">${escapeHtml(p.glif||"•")}</span>
+          <span class="who">
+            <span class="nm">${escapeHtml(p.ad)}</span>
+            <span class="pos"> — ${escapeHtml(p.burc)} ${Number(p.derece).toFixed(1)}°</span>
+          </span>
+          ${p.retro ? '<span class="retro">RETRO</span>' : ''}
+          <span class="chev">▼</span>
+        </div>
+        <div class="note">${escapeHtml(p.not||"")}</div>`;
+      b.addEventListener("click", () => {
+        const open = b.classList.toggle("open");
+        b.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      box.appendChild(b);
+    });
+
+    // Element dengesi
+    if(d.element){
+      const el = $("#elements"); el.innerHTML = "";
+      Object.entries(d.element).forEach(([ad,say]) => {
+        const chip = document.createElement("div");
+        chip.className = "el";
+        chip.innerHTML = `<span class="dot" style="background:${ELEMENT_RENK[ad]||'#888'}"></span>${ad}: ${say}`;
+        el.appendChild(chip);
+      });
+      $("#el-panel").hidden = false;
+    }
+  }catch(e){
+    $("#wheel").innerHTML = `<p class="error">Gökyüzü şu an hesaplanamadı.<br><button onclick="gokyuzu()">Tekrar dene</button></p>`;
+  }
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+fisilti();
+gokyuzu();
+</script>
+</body>
+</html>
