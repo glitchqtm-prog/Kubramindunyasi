@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Yaşam Yolu Sayın — Astro Yuvam</title>
+<meta name="description" content="Doğum tarihinden Yaşam Yolu Sayını anında hesapla. Numerolojinin en temel sayısı — sana hangi temayı fısıldıyor? Ücretsiz ve anında.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{
+    --bg-1:#0c0914; --bg-2:#14101f; --panel:#1c1733; --panel-2:#241c3d;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#9a8fb8; --line:#332a4d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #241c3d 0%, var(--bg-2) 55%, var(--bg-1) 100%) fixed;
+    color:var(--cream); font-family:Georgia,'Times New Roman',serif; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold); text-decoration:none}
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px 56px}
+
+  /* Nav + Keşfet menüsü */
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:720px; margin:0 auto; padding:18px 20px}
+  nav .brand{font-size:18px; letter-spacing:2px; color:var(--gold); font-weight:bold; white-space:nowrap}
+  nav .links{display:flex; gap:18px; font-size:14px; font-family:'Segoe UI',system-ui,sans-serif; align-items:center}
+  nav .links>a{color:var(--cream); opacity:.82}
+  nav .links>a:hover{opacity:1; color:var(--gold-soft)}
+  .dropdown{position:relative; display:inline-block; font-family:'Segoe UI',system-ui,sans-serif}
+  .drop-btn{background:none; border:none; color:var(--cream); opacity:.82; font:inherit; font-size:14px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:0; transition:color .2s,opacity .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{opacity:1; color:var(--gold-soft)}
+  .drop-btn .caret{font-size:11px; transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute; top:calc(100% + 12px); right:0; min-width:250px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .18s,transform .18s,visibility .18s; z-index:60; text-align:left}
+  .dropdown.open .drop-menu{opacity:1; visibility:visible; transform:translateY(0)}
+  .drop-head{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.85; padding:8px 12px 6px}
+  .drop-menu a{display:block; padding:10px 12px; border-radius:8px; color:var(--cream); font-size:14.5px; text-decoration:none; transition:background .15s}
+  .drop-menu a:hover{background:rgba(217,185,106,.10); color:var(--gold-soft)}
+  .drop-menu a .d-sub{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+  .nav-cta{color:var(--gold) !important; opacity:1 !important; font-weight:bold; border:1px solid var(--line);
+    padding:7px 16px; border-radius:20px; transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12); border-color:var(--gold)}
+
+  header.hero{text-align:center; padding:24px 0 6px}
+  .hero .star{font-size:28px; color:var(--gold); letter-spacing:8px}
+  .hero h1{font-size:32px; margin:8px 0 4px; font-weight:600}
+  .hero p.sub{color:var(--muted); margin:0; font-size:15px; font-style:italic}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel)); border:1px solid var(--line);
+    border-radius:16px; padding:24px; margin:22px 0; box-shadow:0 10px 40px rgba(0,0,0,.35)}
+  .eyebrow{font-family:'Segoe UI',system-ui,sans-serif; font-size:11.5px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:.85; margin:0 0 12px; text-align:center}
+
+  label{display:block; font-family:'Segoe UI',system-ui,sans-serif; font-size:13.5px; color:var(--muted); margin-bottom:8px; text-align:center}
+  .inrow{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  input[type=date]{background:var(--panel); border:1px solid var(--line); color:var(--cream);
+    border-radius:12px; padding:13px 15px; font-family:'Segoe UI',system-ui,sans-serif; font-size:16px; outline:none;
+    color-scheme:dark; transition:border-color .2s}
+  input[type=date]:focus{border-color:var(--gold)}
+  .btn{background:linear-gradient(180deg,var(--gold-soft),var(--gold)); color:#2a1e08; font-weight:bold; border:none;
+    border-radius:12px; padding:0 26px; height:50px; font-size:15px; cursor:pointer; font-family:'Segoe UI',system-ui,sans-serif;
+    transition:transform .12s,box-shadow .2s}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(217,185,106,.25)}
+  .hata{color:#e0794f; font-family:'Segoe UI',system-ui,sans-serif; font-size:13px; text-align:center; margin-top:10px; min-height:16px}
+
+  /* Sonuç */
+  #sonuc{opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s}
+  #sonuc.goster{opacity:1; transform:none}
+  .numara{font-size:72px; line-height:1; color:var(--gold); text-align:center; font-weight:600; margin:4px 0}
+  .usta{display:block; font-family:'Segoe UI',system-ui,sans-serif; font-size:12px; letter-spacing:2px; color:var(--gold-soft); text-transform:uppercase; margin-top:4px}
+  .tema{text-align:center; font-size:22px; color:var(--cream); margin:10px 0 2px}
+  .anahtar{text-align:center; color:var(--muted); font-family:'Segoe UI',system-ui,sans-serif; font-size:13.5px; letter-spacing:1px; margin-bottom:16px}
+  .yorum{font-size:15.5px; line-height:1.75; color:#efe7f6}
+  .kutuplar{display:flex; gap:12px; flex-wrap:wrap; margin:16px 0 4px}
+  .kutup{flex:1 1 200px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; font-family:'Segoe UI',system-ui,sans-serif}
+  .kutup .b{font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px}
+  .kutup.isik .b{color:var(--gold-soft)} .kutup.golge .b{color:#c99}
+  .kutup .t{font-size:14px; color:var(--cream); line-height:1.6}
+  details.nasil{margin-top:14px; font-family:'Segoe UI',system-ui,sans-serif}
+  details.nasil summary{cursor:pointer; color:var(--gold); font-size:13.5px}
+  details.nasil .adim{color:var(--muted); font-size:13.5px; line-height:1.9; margin-top:8px}
+
+  .foot{text-align:center; margin-top:28px}
+  .cta{display:inline-block; margin:6px 0 16px; background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:#2a1e08; font-weight:bold; padding:13px 26px; border-radius:30px; font-size:15px; font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); max-width:520px; margin:0 auto; line-height:1.6}
+
+  @media (max-width:560px){
+    nav{flex-wrap:wrap; justify-content:center}
+    nav .links{flex-wrap:wrap; justify-content:center}
+    .dropdown{position:static}
+    .drop-menu{position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; margin:6px auto 0; display:none; min-width:220px}
+    .dropdown.open .drop-menu{display:block}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
+  <div class="links">
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="/gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+        <a href="/yildizlara-sor.html" role="menuitem">✦ Yıldızlara Sor<span class="d-sub">Kavramları sor, öğren</span></a>
+        <a href="/yasam-yolu.html" role="menuitem" aria-current="page">✦ Yaşam Yolu Sayın<span class="d-sub">Doğum tarihinden anında</span></a>
+      </div>
+    </div>
+    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="/#sss">S.S.S.</a>
+    <a href="/#cards" class="nav-cta">Raporlar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="star">✦</span>
+    <h1>Yaşam Yolu Sayın</h1>
+    <p class="sub">Numerolojinin en temel sayısı — doğum tarihin hangi temayı fısıldıyor?</p>
+  </header>
+
+  <div class="card">
+    <p class="eyebrow">Doğum Tarihini Gir</p>
+    <label for="tarih">Yaşam Yolu Sayın, doğum tarihindeki tüm rakamlardan hesaplanır.</label>
+    <div class="inrow">
+      <input type="date" id="tarih" min="1900-01-01" max="2025-12-31">
+      <button class="btn" id="hesapla">Hesapla ✦</button>
+    </div>
+    <div class="hata" id="hata"></div>
+  </div>
+
+  <div class="card" id="sonuc" hidden>
+    <div class="numara" id="numara">—<span class="usta" id="usta" hidden>Usta Sayı</span></div>
+    <div class="tema" id="tema"></div>
+    <div class="anahtar" id="anahtar"></div>
+    <div class="yorum" id="yorum"></div>
+    <div class="kutuplar">
+      <div class="kutup isik"><div class="b">Işık Yanı</div><div class="t" id="isik"></div></div>
+      <div class="kutup golge"><div class="b">Gölge Yanı</div><div class="t" id="golge"></div></div>
+    </div>
+    <details class="nasil">
+      <summary>Nasıl hesaplandı?</summary>
+      <div class="adim" id="adim"></div>
+    </details>
+  </div>
+
+  <div class="foot" id="foot" hidden>
+    <a class="cta" href="/#cards">Kaderinin tamamını gör — Kader Matrisi Raporu →</a>
+    <p class="disclaimer">
+      Yaşam Yolu Sayısı, numerolojinin <strong>genel</strong> bir göstergesidir; sembolik bir gelenektir, kesin kehanet değildir.
+      Kişiye özel derinlemesine analiz için tam raporlara göz atabilirsin. Kararlar her zaman senindir.
+    </p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+
+// 1-9 + usta sayılar (11/22/33): GENEL, umut veren, öğretici anlamlar
+const ANLAM = {
+  1:{tema:"Öncü", anahtar:"Bağımsızlık · Liderlik · Başlangıçlar",
+     yorum:"1 Yaşam Yolu, kendi ayakları üzerinde durma ve yeni yollar açma temasını taşır. Geleneksel olarak öncülük, girişim ve özgün irade ile ilişkilendirilir; kendi sesini bulmakla ilgili bir yolculuğu sembolize eder.",
+     isik:"Cesaret, özgünlük, girişkenlik", golge:"İnatçılık, yalnızlaşma, aşırı benmerkezcilik"},
+  2:{tema:"Uyumcu", anahtar:"İşbirliği · Denge · Duyarlılık",
+     yorum:"2 Yaşam Yolu, ilişki, uyum ve sezgi temasıyla ilişkilendirilir. Köprü kurmayı, incelikli bir denge duygusunu ve başkalarını anlama yeteneğini sembolize eder.",
+     isik:"Diplomasi, sezgi, şefkat", golge:"Kararsızlık, aşırı bağımlılık, çekingenlik"},
+  3:{tema:"Yaratıcı", anahtar:"İfade · Neşe · İletişim",
+     yorum:"3 Yaşam Yolu, yaratıcı ifade ve iletişim temasını taşır. Sözün, sanatın ve neşenin gücünü; kendini paylaşarak var olmayı sembolize eder.",
+     isik:"Yaratıcılık, ilham, iyimserlik", golge:"Dağınıklık, yüzeysellik, odak kaybı"},
+  4:{tema:"Kurucu", anahtar:"Düzen · Emek · Sağlamlık",
+     yorum:"4 Yaşam Yolu, sağlam temeller kurma temasıyla ilişkilendirilir. Sabır, emek ve güvenilirlik ile; taş taş üstüne koyarak inşa etmeyi sembolize eder.",
+     isik:"Güvenilirlik, disiplin, kararlılık", golge:"Katılık, aşırı ihtiyat, değişime direnç"},
+  5:{tema:"Özgür Ruh", anahtar:"Değişim · Macera · Merak",
+     yorum:"5 Yaşam Yolu, özgürlük ve deneyim temasını taşır. Değişimi, hareketi ve hayatı çok yönlü tatmayı; esnek kalmayı sembolize eder.",
+     isik:"Uyum yeteneği, canlılık, merak", golge:"İstikrarsızlık, savrukluk, aşırılık"},
+  6:{tema:"Şefkatli", anahtar:"Sorumluluk · Sevgi · Aile",
+     yorum:"6 Yaşam Yolu, sevgi, sorumluluk ve şefkat temasıyla ilişkilendirilir. Yuvayı, ilgiyi ve başkalarına destek olmayı; güzelliği önemsemeyi sembolize eder.",
+     isik:"Şefkat, uyum, koruyuculuk", golge:"Aşırı fedakârlık, kontrol etme, kendini ihmal"},
+  7:{tema:"Arayışçı", anahtar:"Bilgelik · İçe Bakış · Analiz",
+     yorum:"7 Yaşam Yolu, bilgelik ve iç dünya temasını taşır. Sorgulamayı, derinleşmeyi ve görünenin ardındakini aramayı; sessizliğin gücünü sembolize eder.",
+     isik:"Derinlik, sezgi, bilgelik", golge:"İçe kapanma, aşırı kuşku, yalıtılmışlık"},
+  8:{tema:"İnşa Eden Güç", anahtar:"Hedef · Bolluk · Yönetim",
+     yorum:"8 Yaşam Yolu, güç, bolluk ve maddi dünyada ustalaşma temasıyla ilişkilendirilir. Hedefe yürümeyi, sorumluluğu ve dengeli bir güç kullanımını sembolize eder.",
+     isik:"Kararlılık, vizyon, organizasyon", golge:"İş-hayat dengesizliği, kontrol, aşırı hırs"},
+  9:{tema:"İnsancıl", anahtar:"Şefkat · Tamamlanma · İdealizm",
+     yorum:"9 Yaşam Yolu, evrensel sevgi ve tamamlanma temasını taşır. Vermeyi, büyük resmi görmeyi ve geçmişi onurla geride bırakmayı sembolize eder.",
+     isik:"Cömertlik, bilgelik, idealizm", golge:"Geçmişi bırakamama, hayal kırıklığı, mesafe"},
+  11:{tema:"Usta Sezgi", usta:true, anahtar:"İlham · Farkındalık · Ruhsal Hassasiyet",
+     yorum:"11, bir usta sayıdır; yüksek sezgi ve ilham temasıyla ilişkilendirilir. İçsel farkındalığı ve başkalarına ilham verme potansiyelini sembolize eder — aynı zamanda hassas bir denge ister.",
+     isik:"İlham, sezgi, vizyon", golge:"Aşırı hassasiyet, gerginlik, dağınık enerji"},
+  22:{tema:"Usta Kurucu", usta:true, anahtar:"Büyük Vizyon · Somuta Dökme · Yapı",
+     yorum:"22, bir usta sayıdır; büyük hayalleri gerçeğe dönüştürme temasını taşır. Vizyon ile pratiği birleştirmeyi, kalıcı bir şey inşa etme potansiyelini sembolize eder.",
+     isik:"Vizyon, ustalık, kararlılık", golge:"Baskı hissi, aşırı yük, mükemmeliyetçilik"},
+  33:{tema:"Usta Öğretmen", usta:true, anahtar:"Şefkatli Rehberlik · Hizmet · İyileştirme",
+     yorum:"33, nadir bir usta sayıdır; şefkatli rehberlik ve hizmet temasıyla ilişkilendirilir. Sevgiyle yol gösterme ve iyileştirme potansiyelini sembolize eder.",
+     isik:"Şefkat, rehberlik, ilham", golge:"Aşırı sorumluluk, kendini tüketme"}
+};
+
+// Usta sayıları koruyarak indirger
+function indir(n){
+  while(n>9 && n!==11 && n!==22 && n!==33){
+    n = String(n).split("").reduce((a,d)=>a + (+d||0), 0);
+  }
+  return n;
+}
+function hesapla(gun, ay, yil){
+  const rg = indir(gun), ra = indir(ay), ry = indir(yil);
+  const toplam = rg + ra + ry;
+  const sonuc = indir(toplam);
+  return { sonuc, rg, ra, ry, toplam, gun, ay, yil };
+}
+
+function goster(h){
+  const a = ANLAM[h.sonuc];
+  $("#numara").firstChild.textContent = h.sonuc;
+  $("#usta").hidden = !a.usta;
+  $("#tema").textContent = a.tema;
+  $("#anahtar").textContent = a.anahtar;
+  $("#yorum").textContent = a.yorum;
+  $("#isik").textContent = a.isik;
+  $("#golge").textContent = a.golge;
+  $("#adim").innerHTML =
+    `Gün ${h.gun} → ${h.rg}<br>Ay ${h.ay} → ${h.ra}<br>Yıl ${h.yil} → ${h.ry}<br>` +
+    `Toplam: ${h.rg} + ${h.ra} + ${h.ry} = ${h.toplam} → <strong style="color:var(--gold)">${h.sonuc}</strong>` +
+    (a.usta ? " (usta sayı — tek haneye indirgenmez)" : "");
+  const s = $("#sonuc"); s.hidden = false; $("#foot").hidden = false;
+  requestAnimationFrame(()=> s.classList.add("goster"));
+  s.scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+function calis(){
+  const v = $("#tarih").value; // YYYY-MM-DD
+  const err = $("#hata"); err.textContent = "";
+  if(!v){ err.textContent = "Lütfen doğum tarihini seç."; return; }
+  const [y,m,d] = v.split("-").map(Number);
+  if(!y || !m || !d || y<1900 || y>2025){ err.textContent = "Geçerli bir tarih seç (1900–2025)."; return; }
+  $("#sonuc").classList.remove("goster");
+  goster(hesapla(d, m, y));
+}
+
+$("#hesapla").addEventListener("click", calis);
+$("#tarih").addEventListener("keydown", e=>{ if(e.key==="Enter") calis(); });
+
+// Keşfet açılır menüsü
+document.querySelectorAll(".dropdown").forEach(dd=>{
+  const btn=dd.querySelector(".drop-btn");
+  btn.addEventListener("click", e=>{ e.stopPropagation(); const o=dd.classList.toggle("open"); btn.setAttribute("aria-expanded", o?"true":"false"); });
+});
+document.addEventListener("click", e=>{ document.querySelectorAll(".dropdown.open").forEach(dd=>{ if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); } }); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".dropdown.open").forEach(dd=>{ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }); });
+</script>
+</body>
+</html>
