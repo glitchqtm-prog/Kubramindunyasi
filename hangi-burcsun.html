@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Hangi Burçsun? — Astro Yuvam</title>
+<meta name="description" content="10 eğlenceli soruyla sana en çok hangi burç enerjisi yakışıyor? Doğum tarihi gerekmez — hemen dene ve paylaş!">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{
+    --bg-1:#0c0914; --bg-2:#14101f; --panel:#1c1733; --panel-2:#241c3d;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#9a8fb8; --line:#332a4d;
+    --fire:#e0794f; --earth:#b79a5a; --air:#6aa9d6; --water:#5fb3a3;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #241c3d 0%, var(--bg-2) 55%, var(--bg-1) 100%) fixed;
+    color:var(--cream); font-family:Georgia,'Times New Roman',serif; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold); text-decoration:none}
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px 56px}
+
+  /* Nav + Keşfet menüsü */
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:720px; margin:0 auto; padding:18px 20px}
+  nav .brand{font-size:18px; letter-spacing:2px; color:var(--gold); font-weight:bold; white-space:nowrap}
+  nav .links{display:flex; gap:18px; font-size:14px; font-family:'Segoe UI',system-ui,sans-serif; align-items:center}
+  nav .links>a{color:var(--cream); opacity:.82}
+  nav .links>a:hover{opacity:1; color:var(--gold-soft)}
+  .dropdown{position:relative; display:inline-block; font-family:'Segoe UI',system-ui,sans-serif}
+  .drop-btn{background:none; border:none; color:var(--cream); opacity:.82; font:inherit; font-size:14px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:0; transition:color .2s,opacity .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{opacity:1; color:var(--gold-soft)}
+  .drop-btn .caret{font-size:11px; transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute; top:calc(100% + 12px); right:0; min-width:250px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .18s,transform .18s,visibility .18s; z-index:60; text-align:left}
+  .dropdown.open .drop-menu{opacity:1; visibility:visible; transform:translateY(0)}
+  .drop-head{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.85; padding:8px 12px 6px}
+  .drop-menu a{display:block; padding:10px 12px; border-radius:8px; color:var(--cream); font-size:14.5px; text-decoration:none; transition:background .15s}
+  .drop-menu a:hover{background:rgba(217,185,106,.10); color:var(--gold-soft)}
+  .drop-menu a .d-sub{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+  .nav-cta{color:var(--gold) !important; opacity:1 !important; font-weight:bold; border:1px solid var(--line);
+    padding:7px 16px; border-radius:20px; transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12); border-color:var(--gold)}
+
+  header.hero{text-align:center; padding:22px 0 6px}
+  .hero .star{font-size:28px; color:var(--gold); letter-spacing:8px}
+  .hero h1{font-size:32px; margin:8px 0 4px; font-weight:600}
+  .hero p.sub{color:var(--muted); margin:0; font-size:15px; font-style:italic}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel)); border:1px solid var(--line);
+    border-radius:16px; padding:24px; margin:22px 0; box-shadow:0 10px 40px rgba(0,0,0,.35)}
+
+  /* İlerleme */
+  .bar{height:6px; background:rgba(255,255,255,.06); border-radius:20px; overflow:hidden; margin-bottom:6px}
+  .bar > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); transition:width .35s}
+  .qcount{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); text-align:right; margin-bottom:16px}
+
+  .soru{font-size:20px; line-height:1.5; margin:6px 0 18px; text-align:center}
+  .secenekler{display:flex; flex-direction:column; gap:10px}
+  .sec{background:var(--panel); border:1px solid var(--line); color:var(--cream); text-align:left;
+    border-radius:12px; padding:15px 17px; font-family:'Segoe UI',system-ui,sans-serif; font-size:15px; cursor:pointer;
+    transition:background .15s,border-color .15s,transform .1s}
+  .sec:hover{background:rgba(217,185,106,.10); border-color:var(--gold); transform:translateY(-1px)}
+  .sec:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+
+  /* Başlangıç ekranı */
+  .intro{text-align:center}
+  .intro p{color:#e6dcf3; font-size:15.5px; line-height:1.7}
+  .baslat{background:linear-gradient(180deg,var(--gold-soft),var(--gold)); color:#2a1e08; font-weight:bold; border:none;
+    border-radius:30px; padding:14px 34px; font-size:16px; cursor:pointer; font-family:'Segoe UI',system-ui,sans-serif;
+    transition:transform .12s,box-shadow .2s; margin-top:8px}
+  .baslat:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(217,185,106,.28)}
+
+  /* Sonuç */
+  #sonuc{text-align:center; opacity:0; transform:translateY(8px); transition:opacity .45s,transform .45s}
+  #sonuc.goster{opacity:1; transform:none}
+  .glif{font-size:78px; line-height:1; color:var(--gold)}
+  .burc-ad{font-size:30px; margin:6px 0 2px; color:var(--cream)}
+  .elmod{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-soft); margin-bottom:14px}
+  .anahtar{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:16px}
+  .anahtar span{background:rgba(217,185,106,.08); border:1px solid var(--line); border-radius:20px; padding:5px 13px;
+    font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--cream)}
+  .burc-yorum{font-size:15.5px; line-height:1.75; color:#efe7f6; text-align:left}
+  .burc-isik{font-family:'Segoe UI',system-ui,sans-serif; font-size:14px; color:var(--gold-soft); margin-top:12px; text-align:left}
+
+  .aksiyon{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:20px}
+  .btn{border:none; border-radius:30px; padding:12px 24px; font-size:15px; cursor:pointer; font-family:'Segoe UI',system-ui,sans-serif; transition:transform .12s,box-shadow .2s}
+  .btn-gold{background:linear-gradient(180deg,var(--gold-soft),var(--gold)); color:#2a1e08; font-weight:bold}
+  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(217,185,106,.28)}
+  .btn-ghost{background:transparent; border:1px solid var(--gold); color:var(--gold)}
+  .btn-ghost:hover{background:rgba(217,185,106,.10)}
+  .toast{font-family:'Segoe UI',system-ui,sans-serif; font-size:13px; color:var(--gold-soft); min-height:18px; margin-top:10px}
+
+  .foot{text-align:center; margin-top:24px}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); max-width:520px; margin:0 auto; line-height:1.6}
+
+  @media (max-width:560px){
+    nav{flex-wrap:wrap; justify-content:center}
+    nav .links{flex-wrap:wrap; justify-content:center}
+    .dropdown{position:static}
+    .drop-menu{position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; margin:6px auto 0; display:none; min-width:220px}
+    .dropdown.open .drop-menu{display:block}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
+  <div class="links">
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="/gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+        <a href="/yildizlara-sor.html" role="menuitem">✦ Yıldızlara Sor<span class="d-sub">Kavramları sor, öğren</span></a>
+        <a href="/yasam-yolu.html" role="menuitem">✦ Yaşam Yolu Sayın<span class="d-sub">Doğum tarihinden anında</span></a>
+        <a href="/hangi-burcsun.html" role="menuitem" aria-current="page">✦ Hangi Burçsun?<span class="d-sub">10 soruluk eğlenceli test</span></a>
+      </div>
+    </div>
+    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="/#sss">S.S.S.</a>
+    <a href="/#cards" class="nav-cta">Raporlar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="star">✦</span>
+    <h1>Hangi Burçsun?</h1>
+    <p class="sub">Sana en çok hangi burç enerjisi yakışıyor?</p>
+  </header>
+
+  <div class="card">
+    <!-- Başlangıç -->
+    <div class="intro" id="intro">
+      <p>10 hızlı soru, doğum tarihi yok — sadece sen, tercihlerin ve karakterin. 🔮<br>
+      Hazır mısın? Bakalım hangi burcun enerjisi seninle en çok titreşiyor.</p>
+      <button class="baslat" id="baslat">Teste Başla ✦</button>
+    </div>
+
+    <!-- Soru ekranı -->
+    <div id="quiz" hidden>
+      <div class="bar"><i id="ilerle"></i></div>
+      <div class="qcount" id="qcount"></div>
+      <div class="soru" id="soru"></div>
+      <div class="secenekler" id="secenekler"></div>
+    </div>
+
+    <!-- Sonuç -->
+    <div id="sonuc" hidden>
+      <div class="glif" id="s-glif"></div>
+      <div class="burc-ad" id="s-ad"></div>
+      <div class="elmod" id="s-elmod"></div>
+      <div class="anahtar" id="s-anahtar"></div>
+      <div class="burc-yorum" id="s-yorum"></div>
+      <div class="burc-isik" id="s-isik"></div>
+      <div class="aksiyon">
+        <button class="btn btn-gold" id="paylas">Sonucu Paylaş ✦</button>
+        <button class="btn btn-ghost" id="tekrar">Tekrar Dene</button>
+      </div>
+      <div class="toast" id="toast"></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p class="disclaimer">
+      Bu test <strong>eğlence amaçlıdır</strong>; gerçek burcun doğum tarihine göre belirlenir.
+      Kişiye özel gerçek haritanı merak ediyorsan <a href="/#cards">Raporlar</a>'a göz atabilirsin. ✦
+    </p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+
+// Her burç benzersiz bir element × nitelik birleşimidir (4×3 = 12).
+const BURCLAR = {
+  Koç:{el:"ates", mod:"oncu", glif:"♈", elmod:"Ateş · Öncü",
+    anahtar:["Cesur","Öncü","Enerjik"],
+    yorum:"Sende bir başlatıcının ateşi var: fikir aklına düştüğünde harekete geçmeyi seversin, engeller seni yıldırmaz. Koç enerjisi cesaret, girişim ve taze başlangıçlarla ilişkilendirilir.",
+    isik:"Işık yanın: cesaretin ve öncülüğün — ilk adımı atan sensin."},
+  Boğa:{el:"toprak", mod:"sabit", glif:"♉", elmod:"Toprak · Sabit",
+    anahtar:["Sağlam","Sabırlı","Keyifçi"],
+    yorum:"Sende köklü bir sağlamlık var: acele etmez, güzel ve kalıcı olanı seversin. Boğa enerjisi sadakat, sabır ve hayatın tadını çıkarmayla ilişkilendirilir.",
+    isik:"Işık yanın: güvenilirliğin — yanında olduğunda insanlar kendini güvende hisseder."},
+  İkizler:{el:"hava", mod:"degisken", glif:"♊", elmod:"Hava · Değişken",
+    anahtar:["Meraklı","Çevik","Esprili"],
+    yorum:"Sende parlak bir merak var: öğrenmeyi, konuşmayı ve bağ kurmayı seversin. İkizler enerjisi zihinsel çeviklik, iletişim ve çok yönlülükle ilişkilendirilir.",
+    isik:"Işık yanın: zekân ve uyum yeteneğin — her ortama renk katarsın."},
+  Yengeç:{el:"su", mod:"oncu", glif:"♋", elmod:"Su · Öncü",
+    anahtar:["Duygusal","Koruyucu","Sezgisel"],
+    yorum:"Sende şefkatli bir derinlik var: sevdiklerini korur, ortamın enerjisini sezersin. Yengeç enerjisi duygu, aidiyet ve içgüdüsel koruyuculukla ilişkilendirilir.",
+    isik:"Işık yanın: şefkatin ve sezgin — kalbinle görürsün."},
+  Aslan:{el:"ates", mod:"sabit", glif:"♌", elmod:"Ateş · Sabit",
+    anahtar:["Tutkulu","Cömert","Işıltılı"],
+    yorum:"Sende sıcak bir ışıltı var: içten, cömert ve fark edilmeyi seven bir enerji. Aslan enerjisi tutku, yaratıcılık ve yürekten liderlikle ilişkilendirilir.",
+    isik:"Işık yanın: cömert kalbin — girdiğin ortamı ısıtırsın."},
+  Başak:{el:"toprak", mod:"degisken", glif:"♍", elmod:"Toprak · Değişken",
+    anahtar:["Titiz","Çözümleyici","Yardımsever"],
+    yorum:"Sende ince bir dikkat var: detayları görür, işleri iyileştirmeyi seversin. Başak enerjisi titizlik, hizmet ve pratik zekâyla ilişkilendirilir.",
+    isik:"Işık yanın: özenin — küçük dokunuşlarla büyük fark yaratırsın."},
+  Terazi:{el:"hava", mod:"oncu", glif:"♎", elmod:"Hava · Öncü",
+    anahtar:["Uyumlu","Zarif","Dengeleyici"],
+    yorum:"Sende ince bir denge arayışı var: uyumu, güzelliği ve adaleti önemsersin. Terazi enerjisi ilişki, estetik ve diplomasiyle ilişkilendirilir.",
+    isik:"Işık yanın: uyum kurma yeteneğin — köprüleri sen inşa edersin."},
+  Akrep:{el:"su", mod:"sabit", glif:"♏", elmod:"Su · Sabit",
+    anahtar:["Yoğun","Derin","Kararlı"],
+    yorum:"Sende dönüştürücü bir yoğunluk var: yüzeyle yetinmez, gerçeğin derinine inersin. Akrep enerjisi tutku, sadakat ve dönüşümle ilişkilendirilir.",
+    isik:"Işık yanın: derinliğin — bir kez bağlandığında sonuna kadar varsın."},
+  Yay:{el:"ates", mod:"degisken", glif:"♐", elmod:"Ateş · Değişken",
+    anahtar:["Özgür","Maceracı","İyimser"],
+    yorum:"Sende geniş bir ufuk var: keşfetmeyi, öğrenmeyi ve özgür olmayı seversin. Yay enerjisi macera, anlam arayışı ve iyimserlikle ilişkilendirilir.",
+    isik:"Işık yanın: iyimserliğin — nereye gitsen umut taşırsın."},
+  Oğlak:{el:"toprak", mod:"oncu", glif:"♑", elmod:"Toprak · Öncü",
+    anahtar:["Kararlı","Hedefli","Sorumlu"],
+    yorum:"Sende sabırlı bir hırs var: hedefine adım adım, kararlılıkla yürürsün. Oğlak enerjisi disiplin, sorumluluk ve uzun vadeli başarıyla ilişkilendirilir.",
+    isik:"Işık yanın: azmin — başladığın işi zirveye taşırsın."},
+  Kova:{el:"hava", mod:"sabit", glif:"♒", elmod:"Hava · Sabit",
+    anahtar:["Özgün","Yenilikçi","Vizyoner"],
+    yorum:"Sende ileri bakan bir zihin var: farklı düşünür, kalıpları sorgularsın. Kova enerjisi özgünlük, topluluk ruhu ve geleceğe dair vizyonla ilişkilendirilir.",
+    isik:"Işık yanın: özgünlüğün — kimseye benzemeden ilham verirsin."},
+  Balık:{el:"su", mod:"degisken", glif:"♓", elmod:"Su · Değişken",
+    anahtar:["Sezgisel","Şefkatli","Hayalperest"],
+    yorum:"Sende uçsuz bir hassasiyet var: hisseder, hayal kurar ve şefkatle sararsın. Balık enerjisi sezgi, sanat ve sınırsız empatiyle ilişkilendirilir.",
+    isik:"Işık yanın: empatin — başkalarının hissetmediğini sen hissedersin."}
+};
+
+// 10 soru — her seçenek bir element ve/veya niteliğe puan verir (+2)
+const SORULAR = [
+  {s:"Yeni bir işe ya da projeye başlarken sen…", o:[
+    {t:"Hemen atlarım, detay sonra gelir", el:"ates", mod:"oncu"},
+    {t:"Önce sağlam bir plan kurarım", el:"toprak", mod:"oncu"},
+    {t:"Araştırır, fikir alışverişi yaparım", el:"hava", mod:"degisken"},
+    {t:"İçime doğana güvenirim", el:"su", mod:"degisken"}]},
+  {s:"İdeal bir hafta sonu senin için…", o:[
+    {t:"Macera, spor, dışarıda enerji", el:"ates", mod:"degisken"},
+    {t:"Evde konfor ve güzel bir yemek", el:"toprak", mod:"sabit"},
+    {t:"Arkadaşlarla sohbet ve sosyallik", el:"hava", mod:"oncu"},
+    {t:"Sevdiklerimle sakin, duygusal anlar", el:"su", mod:"oncu"}]},
+  {s:"Stres altında ilk tepkin genelde…", o:[
+    {t:"Harekete geçip çözerim", el:"ates", mod:"oncu"},
+    {t:"Sabırla dayanır, savuşturmam", el:"toprak", mod:"sabit"},
+    {t:"Konuşarak/analiz ederek boşaltırım", el:"hava", mod:"degisken"},
+    {t:"İçime çekilir, hissederim", el:"su", mod:"sabit"}]},
+  {s:"Seni en iyi hangisi anlatır?", o:[
+    {t:"Tutkulu ve cesur", el:"ates", mod:"sabit"},
+    {t:"Güvenilir ve pratik", el:"toprak", mod:"oncu"},
+    {t:"Meraklı ve esprili", el:"hava", mod:"degisken"},
+    {t:"Şefkatli ve sezgisel", el:"su", mod:"degisken"}]},
+  {s:"Bir kararı nasıl verirsin?", o:[
+    {t:"Hızlı ve içgüdüsel", el:"ates", mod:"oncu"},
+    {t:"Artıları-eksileri tartarak", el:"hava", mod:"oncu"},
+    {t:"Deneyime ve mantığa dayanarak", el:"toprak", mod:"degisken"},
+    {t:"Hislerime kulak vererek", el:"su", mod:"oncu"}]},
+  {s:"Arkadaş grubunda rolün…", o:[
+    {t:"Lider / başlatıcı", el:"ates", mod:"oncu"},
+    {t:"Kaya gibi sadık dost", el:"toprak", mod:"sabit"},
+    {t:"Fikir üreten, bağ kuran", el:"hava", mod:"sabit"},
+    {t:"Duygusal destek veren", el:"su", mod:"oncu"}]},
+  {s:"Değişime bakışın nasıl?", o:[
+    {t:"Bayılırım, çeşitlilik şart", el:"hava", mod:"degisken"},
+    {t:"Temkinliyim, istikrar isterim", el:"toprak", mod:"sabit"},
+    {t:"Değişimi ben başlatırım", el:"ates", mod:"oncu"},
+    {t:"Akışına bırakırım", el:"su", mod:"degisken"}]},
+  {s:"Aşkta sen daha çok…", o:[
+    {t:"Tutkulu ve gösterişli", el:"ates", mod:"sabit"},
+    {t:"Sadık ve derin", el:"su", mod:"sabit"},
+    {t:"Eğlenceli ve özgür", el:"hava", mod:"degisken"},
+    {t:"Romantik ve fedakâr", el:"su", mod:"degisken"}]},
+  {s:"Hayalindeki başarı nasıl görünür?", o:[
+    {t:"Zirveye çıkmak, iz bırakmak", el:"toprak", mod:"oncu"},
+    {t:"Özgürce keşfetmek", el:"ates", mod:"degisken"},
+    {t:"Bir topluluğa/insanlığa katkı", el:"hava", mod:"sabit"},
+    {t:"Huzurlu ve güvenli bir yaşam", el:"toprak", mod:"sabit"}]},
+  {s:"Seni en çok ne besler?", o:[
+    {t:"Yeni deneyimler ve adrenalin", el:"ates", mod:"degisken"},
+    {t:"Doğa, dokunuş, konfor", el:"toprak", mod:"sabit"},
+    {t:"Fikirler, sohbet, öğrenme", el:"hava", mod:"degisken"},
+    {t:"Derin bağlar ve duygular", el:"su", mod:"sabit"}]}
+];
+
+let idx = 0;
+let elP = {ates:0, toprak:0, hava:0, su:0};
+let modP = {oncu:0, sabit:0, degisken:0};
+
+function baslat(){
+  idx = 0; elP = {ates:0,toprak:0,hava:0,su:0}; modP = {oncu:0,sabit:0,degisken:0};
+  $("#intro").hidden = true; $("#sonuc").hidden = true; $("#sonuc").classList.remove("goster");
+  $("#quiz").hidden = false;
+  goster();
+}
+
+function goster(){
+  const q = SORULAR[idx];
+  $("#ilerle").style.width = (idx/SORULAR.length*100) + "%";
+  $("#qcount").textContent = `Soru ${idx+1} / ${SORULAR.length}`;
+  $("#soru").textContent = q.s;
+  const box = $("#secenekler"); box.innerHTML = "";
+  q.o.forEach(opt => {
+    const b = document.createElement("button");
+    b.className = "sec"; b.type = "button"; b.textContent = opt.t;
+    b.addEventListener("click", () => sec(opt));
+    box.appendChild(b);
+  });
+}
+
+function sec(opt){
+  if(opt.el) elP[opt.el] += 2;
+  if(opt.mod) modP[opt.mod] += 2;
+  idx++;
+  if(idx < SORULAR.length) goster();
+  else bitir();
+}
+
+function bitir(){
+  $("#ilerle").style.width = "100%";
+  // Her burç puanı = element puanı + nitelik puanı
+  let enIyi = null, enPuan = -1;
+  for(const [ad, b] of Object.entries(BURCLAR)){
+    const p = elP[b.el] + modP[b.mod];
+    if(p > enPuan){ enPuan = p; enIyi = ad; }
+  }
+  const b = BURCLAR[enIyi];
+  $("#s-glif").textContent = b.glif;
+  $("#s-ad").textContent = enIyi;
+  $("#s-elmod").textContent = b.elmod;
+  $("#s-anahtar").innerHTML = b.anahtar.map(k => `<span>${k}</span>`).join("");
+  $("#s-yorum").textContent = b.yorum;
+  $("#s-isik").textContent = b.isik;
+  $("#paylas").dataset.burc = enIyi;
+  $("#quiz").hidden = true;
+  const s = $("#sonuc"); s.hidden = false;
+  requestAnimationFrame(()=> s.classList.add("goster"));
+  s.scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+async function paylas(){
+  const burc = $("#paylas").dataset.burc || "";
+  const url = location.origin + "/hangi-burcsun.html";
+  const metin = `Astro Yuvam "Hangi Burçsun?" testinde bana en çok ${burc} enerjisi çıktı! ✦ Sen de dene:`;
+  const toast = $("#toast");
+  if(navigator.share){
+    try{ await navigator.share({ title:"Hangi Burçsun? — Astro Yuvam", text:metin, url }); return; }catch(e){ /* iptal edildi */ }
+  }
+  try{
+    await navigator.clipboard.writeText(metin + " " + url);
+    toast.textContent = "Kopyalandı! İstediğin yere yapıştırıp paylaşabilirsin. ✦";
+  }catch(e){
+    toast.textContent = "Paylaşmak için bu sayfanın linkini kopyalayabilirsin: " + url;
+  }
+  setTimeout(()=>{ toast.textContent = ""; }, 5000);
+}
+
+$("#baslat").addEventListener("click", baslat);
+$("#tekrar").addEventListener("click", baslat);
+$("#paylas").addEventListener("click", paylas);
+
+// Keşfet açılır menüsü
+document.querySelectorAll(".dropdown").forEach(dd=>{
+  const btn=dd.querySelector(".drop-btn");
+  btn.addEventListener("click", e=>{ e.stopPropagation(); const o=dd.classList.toggle("open"); btn.setAttribute("aria-expanded", o?"true":"false"); });
+});
+document.addEventListener("click", e=>{ document.querySelectorAll(".dropdown.open").forEach(dd=>{ if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); } }); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".dropdown.open").forEach(dd=>{ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }); });
+</script>
+</body>
+</html>
