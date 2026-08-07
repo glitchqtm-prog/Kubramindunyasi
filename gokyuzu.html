@@ -116,16 +116,48 @@
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important}
   }
+  /* Keşfet açılır menüsü */
+  .dropdown{position:relative; display:inline-block; font-family:'Segoe UI',system-ui,sans-serif}
+  .drop-btn{background:none; border:none; color:var(--cream); opacity:.82; font:inherit; font-size:14px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:0; transition:color .2s,opacity .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{opacity:1; color:var(--gold-soft)}
+  .drop-btn .caret{font-size:11px; transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute; top:calc(100% + 12px); right:0; min-width:250px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .18s,transform .18s,visibility .18s; z-index:60; text-align:left}
+  .dropdown.open .drop-menu{opacity:1; visibility:visible; transform:translateY(0)}
+  .drop-head{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.85; padding:8px 12px 6px}
+  .drop-menu a{display:block; padding:10px 12px; border-radius:8px; color:var(--cream); font-size:14.5px; text-decoration:none; transition:background .15s; opacity:1}
+  .drop-menu a:hover{background:rgba(217,185,106,.10); color:var(--gold-soft)}
+  .drop-menu a .d-sub{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+  .nav-cta{color:var(--gold) !important; opacity:1 !important; font-weight:bold; border:1px solid var(--line);
+    padding:7px 16px; border-radius:20px; transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12); border-color:var(--gold)}
+  @media (max-width:560px){
+    nav{flex-wrap:wrap; justify-content:center}
+    nav .links{flex-wrap:wrap; justify-content:center}
+    .dropdown{position:static}
+    .drop-menu{position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; margin:6px auto 0; display:none; min-width:220px}
+    .dropdown.open .drop-menu{display:block}
+  }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="brand">✦ ASTRO YUVAM</div>
+  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
   <div class="links">
-    <a href="/">Ana Sayfa</a>
-    <a href="/gokyuzu.html" aria-current="page">Gökyüzü</a>
-    <a href="/order.html">Raporlar</a>
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="/gokyuzu.html" role="menuitem" aria-current="page">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+      </div>
+    </div>
+    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="/#sss">S.S.S.</a>
+    <a href="/#cards" class="nav-cta">Raporlar</a>
   </div>
 </nav>
 
@@ -206,7 +238,14 @@ async function fisilti(){
     if(!d.ok) throw new Error();
     $("#w-title").textContent = d.baslik || "Gökyüzü Bugün Ne Fısıldıyor?";
     $("#w-date").textContent = d.tarih || "";
-    const paras = String(d.metin||"").split(/\n{2,}|\n/).filter(Boolean);
+    const temiz = String(d.metin||"")
+      .replace(/^\s*#{1,6}\s+.*$/gm, "")   // markdown başlık satırlarını at (# ...)
+      .replace(/\*\*(.+?)\*\*/g, "$1")      // **kalın** → kalın
+      .replace(/\*(.+?)\*/g, "$1")          // *italik* → italik
+      .replace(/^\s*[-*]\s+/gm, "")         // liste işaretleri
+      .replace(/`/g, "")                     // ` işaretleri
+      .trim();
+    const paras = temiz.split(/\n{2,}|\n/).map(s => s.trim()).filter(Boolean);
     $("#w-text").innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join("") || "<p>—</p>";
   }catch(e){
     $("#w-text").innerHTML = `<p class="error">Bugünün göğü şu an okunamadı.<br><button onclick="fisilti()">Tekrar dene</button></p>`;
@@ -278,6 +317,26 @@ function escapeHtml(s){
 
 fisilti();
 gokyuzu();
+
+// Keşfet açılır menüsü: tıkla-aç/kapa, dışarı tıkla ve Esc ile kapan
+document.querySelectorAll(".dropdown").forEach(dd => {
+  const btn = dd.querySelector(".drop-btn");
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const open = dd.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+});
+document.addEventListener("click", e => {
+  document.querySelectorAll(".dropdown.open").forEach(dd => {
+    if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }
+  });
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") document.querySelectorAll(".dropdown.open").forEach(dd => {
+    dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false");
+  });
+});
 </script>
 </body>
 </html>

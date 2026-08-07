@@ -45,19 +45,45 @@
   .disclaimer{max-width:760px;margin:40px auto 0;padding:16px 20px;border:1px dashed var(--ay-line);
     border-radius:12px;color:var(--ay-muted);font-size:12.5px;line-height:1.7;text-align:center}
   @media(max-width:620px){
-    .navlinks{position:static;justify-content:center;margin-top:12px;gap:18px}
+    .navlinks{position:static;justify-content:center;margin-top:12px;gap:18px;flex-wrap:wrap}
     .topbar{text-align:center}
+    .dropdown{position:static}
+    .drop-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;margin:6px auto 0;display:none;min-width:220px}
+    .dropdown.open .drop-menu{display:block}
   }
+  /* Keşfet açılır menüsü */
+  .dropdown{position:relative;display:inline-block}
+  .drop-btn{background:none;border:none;color:var(--ay-muted);font:inherit;font-size:14px;letter-spacing:.3px;
+    cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{color:var(--ay-gold)}
+  .drop-btn .caret{font-size:11px;transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute;top:calc(100% + 12px);left:0;min-width:250px;background:#1a1330;
+    border:1px solid var(--ay-line);border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.45);
+    opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:50;text-align:left}
+  .dropdown.open .drop-menu{opacity:1;visibility:visible;transform:translateY(0)}
+  .drop-head{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ay-gold);opacity:.8;padding:8px 12px 6px}
+  .drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:var(--ay-ink);font-size:14.5px;text-decoration:none;transition:background .15s}
+  .drop-menu a:hover{background:rgba(217,185,106,.10);color:var(--ay-gold)}
+  .drop-menu a .d-sub{display:block;font-size:12px;color:var(--ay-muted);margin-top:2px}
+  .nav-cta{color:var(--ay-gold)!important;font-weight:bold;border:1px solid var(--ay-line);padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12);border-color:var(--ay-gold)}
 </style>
 </head>
 <body>
 <div class="topbar">
   <div class="brand">✦ Astro Yuvam</div>
   <nav class="navlinks">
-    <a href="gokyuzu.html">Gökyüzü</a>
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+      </div>
+    </div>
     <a href="#nasil-calisir">Nasıl Çalışır?</a>
     <a href="#sss">S.S.S.</a>
-    <a href="#cards">Raporlar</a>
+    <a href="#cards" class="nav-cta">Raporlar</a>
   </nav>
 </div>
 
@@ -149,6 +175,27 @@
       <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>
     `;
     container.appendChild(card);
+  });
+</script>
+<script>
+  // Keşfet açılır menüsü: tıkla-aç/kapa, dışarı tıkla ve Esc ile kapan
+  document.querySelectorAll(".dropdown").forEach(dd => {
+    const btn = dd.querySelector(".drop-btn");
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const open = dd.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+  document.addEventListener("click", e => {
+    document.querySelectorAll(".dropdown.open").forEach(dd => {
+      if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }
+    });
+  });
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape") document.querySelectorAll(".dropdown.open").forEach(dd => {
+      dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false");
+    });
   });
 </script>
 </body>
