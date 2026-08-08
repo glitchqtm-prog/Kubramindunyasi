@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Rüya Sembolü — Rüyanda Gördüğün Ne Anlatıyor? | Astro Yuvam</title>
+<meta name="description" content="Rüyanda gördüğün sembolün arketipsel anlamını keşfet. Yılan, su, uçmak, diş, ev… Jung'un gölge ve arketip diliyle, sıcak ve dürüst bir rüya rehberi.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{
+    --bg-1:#0c0914; --bg-2:#14101f; --panel:#1c1733; --panel-2:#241c3d;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#9a8fb8; --line:#332a4d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #2a2147 0%, var(--bg-2) 52%, var(--bg-1) 100%) fixed;
+    color:var(--cream); font-family:Georgia,'Times New Roman',serif; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold); text-decoration:none}
+  .wrap{max-width:660px; margin:0 auto; padding:0 20px 56px}
+
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:720px; margin:0 auto; padding:18px 20px}
+  nav .brand{font-size:18px; letter-spacing:2px; color:var(--gold); font-weight:bold; white-space:nowrap}
+  nav .links{display:flex; gap:18px; font-size:14px; font-family:'Segoe UI',system-ui,sans-serif; align-items:center}
+  nav .links>a{color:var(--cream); opacity:.82}
+  nav .links>a:hover{opacity:1; color:var(--gold-soft)}
+  .dropdown{position:relative; display:inline-block; font-family:'Segoe UI',system-ui,sans-serif}
+  .drop-btn{background:none; border:none; color:var(--cream); opacity:.82; font:inherit; font-size:14px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:0; transition:color .2s,opacity .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{opacity:1; color:var(--gold-soft)}
+  .drop-btn .caret{font-size:11px; transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute; top:calc(100% + 12px); right:0; min-width:250px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .18s,transform .18s,visibility .18s; z-index:60; text-align:left}
+  .dropdown.open .drop-menu{opacity:1; visibility:visible; transform:translateY(0)}
+  .drop-head{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.85; padding:8px 12px 6px}
+  .drop-menu a{display:block; padding:10px 12px; border-radius:8px; color:var(--cream); font-size:14.5px; text-decoration:none; transition:background .15s}
+  .drop-menu a:hover{background:rgba(217,185,106,.10); color:var(--gold-soft)}
+  .drop-menu a .d-sub{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+  .nav-cta{color:var(--gold) !important; opacity:1 !important; font-weight:bold; border:1px solid var(--line);
+    padding:7px 16px; border-radius:20px; transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12); border-color:var(--gold)}
+
+  header.hero{text-align:center; padding:26px 0 4px}
+  .hero .moon{font-size:34px; filter:drop-shadow(0 0 14px rgba(217,185,106,.45)); animation:float 5s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .hero h1{font-size:33px; margin:10px 0 4px; font-weight:600}
+  .hero p.sub{color:var(--muted); margin:0 auto; font-size:15px; font-style:italic; max-width:440px; line-height:1.6}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel)); border:1px solid var(--line);
+    border-radius:16px; padding:24px; margin:22px 0; box-shadow:0 10px 40px rgba(0,0,0,.38)}
+  .eyebrow{font-family:'Segoe UI',system-ui,sans-serif; font-size:11.5px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:.85; margin:0 0 12px; text-align:center}
+  .inrow{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  input[type=text]{flex:1; min-width:220px; background:var(--panel); border:1px solid var(--line); color:var(--cream);
+    border-radius:12px; padding:13px 16px; font-family:'Segoe UI',system-ui,sans-serif; font-size:16px; outline:none; transition:border-color .2s}
+  input[type=text]:focus{border-color:var(--gold)}
+  input[type=text]:disabled{opacity:.5}
+  .btn{background:linear-gradient(180deg,var(--gold-soft),var(--gold)); color:#2a1e08; font-weight:bold; border:none;
+    border-radius:12px; padding:0 24px; height:50px; font-size:15px; cursor:pointer; font-family:'Segoe UI',system-ui,sans-serif;
+    transition:transform .12s,box-shadow .2s; white-space:nowrap}
+  .btn:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 8px 20px rgba(217,185,106,.25)}
+  .btn:disabled{opacity:.45; cursor:not-allowed}
+  .kalan{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); text-align:center; margin-top:12px}
+  .kalan b{color:var(--gold-soft)}
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px}
+  .chip{background:rgba(217,185,106,.06); border:1px solid var(--line); color:var(--cream);
+    border-radius:20px; padding:7px 14px; font-size:13px; font-family:'Segoe UI',system-ui,sans-serif; cursor:pointer; transition:background .15s,border-color .15s}
+  .chip:hover{background:rgba(217,185,106,.14); border-color:var(--gold)}
+
+  /* Sonuç */
+  #sonuc{opacity:0; transform:translateY(8px); transition:opacity .45s,transform .45s}
+  #sonuc.goster{opacity:1; transform:none}
+  .s-baslik{text-align:center; font-size:24px; color:var(--gold-soft); margin-bottom:2px; text-transform:capitalize}
+  .s-alt{text-align:center; font-family:'Segoe UI',system-ui,sans-serif; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:16px}
+  .s-yorum{font-size:15.5px; line-height:1.8; color:#efe7f6}
+  .s-yorum p{margin:0 0 12px} .s-yorum p:last-child{margin:0}
+  .yukleniyor{text-align:center; color:var(--muted); font-family:'Segoe UI',system-ui,sans-serif; font-style:italic; padding:8px 0}
+  .dots span{opacity:.3; animation:blink 1.2s infinite} .dots span:nth-child(2){animation-delay:.2s} .dots span:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+  .hata{color:#e0794f; font-family:'Segoe UI',system-ui,sans-serif; font-size:13.5px; text-align:center}
+  .hata button{margin-top:8px; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:7px 16px; border-radius:20px; cursor:pointer; font-family:inherit}
+
+  .foot{text-align:center; margin-top:24px}
+  .cta{display:inline-block; margin:6px 0 16px; background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:#2a1e08; font-weight:bold; padding:13px 26px; border-radius:30px; font-size:15px; font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); max-width:540px; margin:0 auto; line-height:1.6}
+
+  @media (max-width:560px){
+    nav{flex-wrap:wrap; justify-content:center}
+    nav .links{flex-wrap:wrap; justify-content:center}
+    .dropdown{position:static}
+    .drop-menu{position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; margin:6px auto 0; display:none; min-width:220px}
+    .dropdown.open .drop-menu{display:block}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
+  <div class="links">
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="/gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+        <a href="/yildizlara-sor.html" role="menuitem">✦ Yıldızlara Sor<span class="d-sub">Kavramları sor, öğren</span></a>
+        <a href="/yasam-yolu.html" role="menuitem">✦ Yaşam Yolu Sayın<span class="d-sub">Doğum tarihinden anında</span></a>
+        <a href="/hangi-burcsun.html" role="menuitem">✦ Hangi Burçsun?<span class="d-sub">10 soruluk eğlenceli test</span></a>
+        <a href="/isim-titresimi.html" role="menuitem">✦ İsminin Titreşimi<span class="d-sub">Bir ismin sayısal titreşimi</span></a>
+        <a href="/ruya-sembolu.html" role="menuitem" aria-current="page">✦ Rüya Sembolü<span class="d-sub">Rüyandaki motif ne anlatıyor?</span></a>
+      </div>
+    </div>
+    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="/#sss">S.S.S.</a>
+    <a href="/#cards" class="nav-cta">Raporlar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="moon">🌙</div>
+    <h1>Rüya Sembolü</h1>
+    <p class="sub">Rüyanda gördüğün bir sembol yaz; arketiplerin ve gölgenin diliyle ne anlatabileceğine birlikte bakalım.</p>
+  </header>
+
+  <div class="card">
+    <p class="eyebrow">Bir Sembol Yaz</p>
+    <div class="inrow">
+      <input type="text" id="sembol" placeholder="Örn. yılan, su, uçmak, diş, ev…" maxlength="120" autocomplete="off">
+      <button class="btn" id="yorumla">Yorumla ✦</button>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip">Yılan</button>
+      <button class="chip">Su</button>
+      <button class="chip">Uçmak</button>
+      <button class="chip">Diş dökülmesi</button>
+      <button class="chip">Ev</button>
+      <button class="chip">Bebek</button>
+      <button class="chip">Düşmek</button>
+      <button class="chip">Deniz</button>
+      <button class="chip">Kedi</button>
+      <button class="chip">Merdiven</button>
+      <button class="chip">Ateş</button>
+      <button class="chip">Yol</button>
+    </div>
+    <div class="kalan" id="kalan">Her gün <b>8</b> sembol yorumu hakkın var.</div>
+  </div>
+
+  <div class="card" id="sonuc" hidden>
+    <div class="s-baslik" id="s-baslik"></div>
+    <div class="s-alt">Arketipsel Yorum</div>
+    <div id="s-govde"></div>
+  </div>
+
+  <div class="foot" id="foot" hidden>
+    <a class="cta" href="/#cards">İç dünyanı derinlemesine keşfet — Kader Matrisi Raporu →</a>
+    <p class="disclaimer">
+      Rüya yorumu <strong>sembolik bir düşünme aracıdır</strong>, kesin bir kehanet değildir. Bir sembolün en gerçek anlamı,
+      onu gördüğünde içinde uyandırdığı histir. Kararlar her zaman senindir. 🌙
+    </p>
+  </div>
+</div>
+
+<script>
+const API = "https://astro-rapor.onrender.com";
+const $ = s => document.querySelector(s);
+const inp = $("#sembol"), btn = $("#yorumla"), chips = $("#chips"), kalanEl = $("#kalan");
+let mesgul = false, bitti = false;
+
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function paras(t){ return String(t).split(/\n{2,}|\n/).map(s=>s.trim()).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join("") || "<p>—</p>"; }
+
+function kalanGoster(n){
+  if(n===0){ kalanEl.innerHTML = "Bugünlük hakkın doldu — yarın yeni rüyalarınla tekrar bekleriz. 🌙"; }
+  else if(typeof n==="number"){ kalanEl.innerHTML = `Bugün kalan: <b>${n}</b> sembol`; }
+}
+function kilitle(){ bitti=true; inp.disabled=true; btn.disabled=true; inp.placeholder="Yarın tekrar bekleriz 🌙"; }
+
+async function yorumla(sembol){
+  if(mesgul || bitti) return;
+  sembol = (sembol||"").trim(); if(!sembol){ inp.focus(); return; }
+  const sonuc = $("#sonuc"), govde = $("#s-govde");
+  $("#s-baslik").textContent = sembol;
+  sonuc.hidden = false; $("#foot").hidden = false; sonuc.classList.remove("goster");
+  requestAnimationFrame(()=> sonuc.classList.add("goster"));
+  govde.innerHTML = `<div class="yukleniyor"><span class="dots"><span>●</span><span>●</span><span>●</span></span> rüya yorumlanıyor… (ilk açılışta birkaç saniye sürebilir)</div>`;
+  sonuc.scrollIntoView({ behavior:"smooth", block:"center" });
+  mesgul = true; btn.disabled = true;
+  try{
+    const r = await fetch(API + "/api/ruya-sembolu", {
+      method:"POST", headers:{ "content-type":"application/json" },
+      body: JSON.stringify({ sembol })
+    });
+    const d = await r.json();
+    if(r.status===429){ govde.innerHTML = `<div class="hata">${esc(d.mesaj||"Bugünlük hakkın doldu.")}</div>`; kalanGoster(0); kilitle(); return; }
+    if(!d.ok){ govde.innerHTML = `<div class="hata">${esc(d.mesaj||"Şu an yorumlayamadım.")}<br><button onclick="location.reload()">Tekrar dene</button></div>`; return; }
+    govde.innerHTML = `<div class="s-yorum">${paras(d.yorum)}</div>`;
+    if(typeof d.kalan==="number"){ kalanGoster(d.kalan); if(d.kalan<=0) kilitle(); }
+  }catch(e){
+    govde.innerHTML = `<div class="hata">Bağlantı kurulamadı. Birazdan tekrar dener misin?<br><button onclick="location.reload()">Tekrar dene</button></div>`;
+  }finally{
+    mesgul = false; if(!bitti) btn.disabled = false;
+  }
+}
+
+btn.addEventListener("click", ()=>yorumla(inp.value));
+inp.addEventListener("keydown", e=>{ if(e.key==="Enter") yorumla(inp.value); });
+chips.querySelectorAll(".chip").forEach(c=> c.addEventListener("click", ()=>{ inp.value = c.textContent; yorumla(c.textContent); }));
+
+// Keşfet açılır menüsü
+document.querySelectorAll(".dropdown").forEach(dd=>{
+  const b=dd.querySelector(".drop-btn");
+  b.addEventListener("click", e=>{ e.stopPropagation(); const o=dd.classList.toggle("open"); b.setAttribute("aria-expanded", o?"true":"false"); });
+});
+document.addEventListener("click", e=>{ document.querySelectorAll(".dropdown.open").forEach(dd=>{ if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); } }); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".dropdown.open").forEach(dd=>{ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }); });
+</script>
+</body>
+</html>
