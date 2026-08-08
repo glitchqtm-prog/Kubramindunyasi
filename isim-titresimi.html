@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ İsminin Titreşimi — Astro Yuvam</title>
+<meta name="description" content="Bir ismin sayısal titreşimini anında öğren. Kendi adın, bebek adayı ya da sevdiğin biri — numerolojiye göre hangi enerjiyi taşıyor? Ücretsiz ve anında.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{
+    --bg-1:#0c0914; --bg-2:#14101f; --panel:#1c1733; --panel-2:#241c3d;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#9a8fb8; --line:#332a4d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #241c3d 0%, var(--bg-2) 55%, var(--bg-1) 100%) fixed;
+    color:var(--cream); font-family:Georgia,'Times New Roman',serif; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold); text-decoration:none}
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px 56px}
+
+  nav{display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:720px; margin:0 auto; padding:18px 20px}
+  nav .brand{font-size:18px; letter-spacing:2px; color:var(--gold); font-weight:bold; white-space:nowrap}
+  nav .links{display:flex; gap:18px; font-size:14px; font-family:'Segoe UI',system-ui,sans-serif; align-items:center}
+  nav .links>a{color:var(--cream); opacity:.82}
+  nav .links>a:hover{opacity:1; color:var(--gold-soft)}
+  .dropdown{position:relative; display:inline-block; font-family:'Segoe UI',system-ui,sans-serif}
+  .drop-btn{background:none; border:none; color:var(--cream); opacity:.82; font:inherit; font-size:14px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:0; transition:color .2s,opacity .2s}
+  .drop-btn:hover,.drop-btn[aria-expanded="true"]{opacity:1; color:var(--gold-soft)}
+  .drop-btn .caret{font-size:11px; transition:transform .2s}
+  .drop-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .drop-menu{position:absolute; top:calc(100% + 12px); right:0; min-width:250px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .18s,transform .18s,visibility .18s; z-index:60; text-align:left}
+  .dropdown.open .drop-menu{opacity:1; visibility:visible; transform:translateY(0)}
+  .drop-head{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.85; padding:8px 12px 6px}
+  .drop-menu a{display:block; padding:10px 12px; border-radius:8px; color:var(--cream); font-size:14.5px; text-decoration:none; transition:background .15s}
+  .drop-menu a:hover{background:rgba(217,185,106,.10); color:var(--gold-soft)}
+  .drop-menu a .d-sub{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+  .nav-cta{color:var(--gold) !important; opacity:1 !important; font-weight:bold; border:1px solid var(--line);
+    padding:7px 16px; border-radius:20px; transition:background .2s,border-color .2s}
+  .nav-cta:hover{background:rgba(217,185,106,.12); border-color:var(--gold)}
+
+  header.hero{text-align:center; padding:24px 0 6px}
+  .hero .star{font-size:28px; color:var(--gold); letter-spacing:8px}
+  .hero h1{font-size:32px; margin:8px 0 4px; font-weight:600}
+  .hero p.sub{color:var(--muted); margin:0; font-size:15px; font-style:italic}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel)); border:1px solid var(--line);
+    border-radius:16px; padding:24px; margin:22px 0; box-shadow:0 10px 40px rgba(0,0,0,.35)}
+  .eyebrow{font-family:'Segoe UI',system-ui,sans-serif; font-size:11.5px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:.85; margin:0 0 12px; text-align:center}
+  label{display:block; font-family:'Segoe UI',system-ui,sans-serif; font-size:13.5px; color:var(--muted); margin-bottom:10px; text-align:center}
+  .inrow{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  input[type=text]{flex:1; min-width:220px; background:var(--panel); border:1px solid var(--line); color:var(--cream);
+    border-radius:12px; padding:13px 16px; font-family:'Segoe UI',system-ui,sans-serif; font-size:16px; outline:none; transition:border-color .2s}
+  input[type=text]:focus{border-color:var(--gold)}
+  .btn{background:linear-gradient(180deg,var(--gold-soft),var(--gold)); color:#2a1e08; font-weight:bold; border:none;
+    border-radius:12px; padding:0 26px; height:50px; font-size:15px; cursor:pointer; font-family:'Segoe UI',system-ui,sans-serif;
+    transition:transform .12s,box-shadow .2s}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(217,185,106,.25)}
+  .ipucu{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); text-align:center; margin-top:12px}
+  .hata{color:#e0794f; font-family:'Segoe UI',system-ui,sans-serif; font-size:13px; text-align:center; margin-top:10px; min-height:16px}
+
+  #sonuc{opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s}
+  #sonuc.goster{opacity:1; transform:none}
+  .isim-baslik{text-align:center; font-size:20px; color:var(--gold-soft); margin-bottom:4px}
+  .numara{font-size:72px; line-height:1; color:var(--gold); text-align:center; font-weight:600; margin:2px 0}
+  .usta{display:block; font-family:'Segoe UI',system-ui,sans-serif; font-size:12px; letter-spacing:2px; color:var(--gold-soft); text-transform:uppercase; margin-top:4px}
+  .tema{text-align:center; font-size:22px; color:var(--cream); margin:8px 0 2px}
+  .anahtar{text-align:center; color:var(--muted); font-family:'Segoe UI',system-ui,sans-serif; font-size:13.5px; letter-spacing:1px; margin-bottom:16px}
+  .yorum{font-size:15.5px; line-height:1.75; color:#efe7f6}
+  .kalp{margin-top:16px; background:rgba(217,185,106,.06); border:1px solid var(--line); border-radius:12px; padding:14px 16px; font-family:'Segoe UI',system-ui,sans-serif; font-size:14px; color:var(--cream); line-height:1.6}
+  .kalp b{color:var(--gold-soft)}
+  details.nasil{margin-top:14px; font-family:'Segoe UI',system-ui,sans-serif}
+  details.nasil summary{cursor:pointer; color:var(--gold); font-size:13.5px}
+  details.nasil .adim{color:var(--muted); font-size:13.5px; line-height:1.9; margin-top:8px; word-spacing:2px}
+
+  .foot{text-align:center; margin-top:28px}
+  .cta{display:inline-block; margin:6px 0 16px; background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:#2a1e08; font-weight:bold; padding:13px 26px; border-radius:30px; font-size:15px; font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px; color:var(--muted); max-width:520px; margin:0 auto; line-height:1.6}
+
+  @media (max-width:560px){
+    nav{flex-wrap:wrap; justify-content:center}
+    nav .links{flex-wrap:wrap; justify-content:center}
+    .dropdown{position:static}
+    .drop-menu{position:static; opacity:1; visibility:visible; transform:none; box-shadow:none; margin:6px auto 0; display:none; min-width:220px}
+    .dropdown.open .drop-menu{display:block}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
+  <div class="links">
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
+      <div class="drop-menu" role="menu">
+        <div class="drop-head">Ücretsiz Keşif</div>
+        <a href="/gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
+        <a href="/yildizlara-sor.html" role="menuitem">✦ Yıldızlara Sor<span class="d-sub">Kavramları sor, öğren</span></a>
+        <a href="/yasam-yolu.html" role="menuitem">✦ Yaşam Yolu Sayın<span class="d-sub">Doğum tarihinden anında</span></a>
+        <a href="/hangi-burcsun.html" role="menuitem">✦ Hangi Burçsun?<span class="d-sub">10 soruluk eğlenceli test</span></a>
+        <a href="/isim-titresimi.html" role="menuitem" aria-current="page">✦ İsminin Titreşimi<span class="d-sub">Bir ismin sayısal titreşimi</span></a>
+      </div>
+    </div>
+    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
+    <a href="/#sss">S.S.S.</a>
+    <a href="/#cards" class="nav-cta">Raporlar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="star">✦</span>
+    <h1>İsminin Titreşimi</h1>
+    <p class="sub">Bir ismin taşıdığı sayısal enerji — numerolojinin gizli diliyle.</p>
+  </header>
+
+  <div class="card">
+    <p class="eyebrow">Bir İsim Yaz</p>
+    <label for="isim">Kendi adın, bebek adayı ya da merak ettiğin biri — fark etmez.</label>
+    <div class="inrow">
+      <input type="text" id="isim" placeholder="Örn. Zeynep" maxlength="40" autocomplete="off">
+      <button class="btn" id="hesapla">Titreşimi Gör ✦</button>
+    </div>
+    <div class="ipucu">İsimdeki her harf bir sayıya karşılık gelir; toplamı ismin “titreşim”ini verir.</div>
+    <div class="hata" id="hata"></div>
+  </div>
+
+  <div class="card" id="sonuc" hidden>
+    <div class="isim-baslik" id="s-isim"></div>
+    <div class="numara" id="numara">—<span class="usta" id="usta" hidden>Usta Sayı</span></div>
+    <div class="tema" id="tema"></div>
+    <div class="anahtar" id="anahtar"></div>
+    <div class="yorum" id="yorum"></div>
+    <div class="kalp" id="kalp"></div>
+    <details class="nasil">
+      <summary>Nasıl hesaplandı?</summary>
+      <div class="adim" id="adim"></div>
+    </details>
+  </div>
+
+  <div class="foot" id="foot" hidden>
+    <a class="cta" href="/#cards">Kendine özel derinlemesine bir okuma al →</a>
+    <p class="disclaimer">
+      İsim titreşimi, numerolojinin <strong>genel ve sembolik</strong> bir göstergesidir; kesin bir kader iddiası değildir.
+      Eğlenceli bir keşif olarak düşün. Kararlar her zaman senindir. ✦
+    </p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+
+// Pisagor sistemi (Latin A-Z → 1-9). Türkçe harfler Latin karşılığına göre değerlendirilir.
+const DEGER = {a:1,b:2,c:3,"ç":3,d:4,e:5,f:6,g:7,"ğ":7,h:8,"ı":9,i:9,j:1,k:2,l:3,m:4,n:5,o:6,"ö":6,p:7,q:8,r:9,s:1,"ş":1,t:2,u:3,"ü":3,v:4,w:5,x:6,y:7,z:8,"â":1,"î":9,"û":3};
+const SESLI = new Set(["a","e","ı","i","o","ö","u","ü","â","î","û"]);
+
+const ANLAM = {
+  1:{tema:"Öncü İfade", anahtar:"Bağımsız · Lider · Girişken",
+     yorum:"Bu isim, kendi yolunu açan bir titreşim taşır. Numerolojide 1; öncülük, cesaret ve özgün irade ile ilişkilendirilir — “ilk adımı atan” bir enerji."},
+  2:{tema:"Uyumlu İfade", anahtar:"Nazik · İşbirlikçi · Sezgisel",
+     yorum:"Bu isim, köprü kuran yumuşak bir titreşim taşır. Numerolojide 2; uyum, incelik ve ortaklık ile ilişkilendirilir — insanları birbirine bağlayan bir enerji."},
+  3:{tema:"Yaratıcı İfade", anahtar:"İfadeli · Neşeli · Sosyal",
+     yorum:"Bu isim, ışıltılı ve ilham veren bir titreşim taşır. Numerolojide 3; yaratıcılık, iletişim ve neşe ile ilişkilendirilir — ortama renk katan bir enerji."},
+  4:{tema:"Kurucu İfade", anahtar:"Güvenilir · Düzenli · Çalışkan",
+     yorum:"Bu isim, sağlam ve istikrarlı bir titreşim taşır. Numerolojide 4; disiplin, emek ve güvenilirlik ile ilişkilendirilir — temelleri sağlam kuran bir enerji."},
+  5:{tema:"Özgür İfade", anahtar:"Dinamik · Meraklı · Değişimci",
+     yorum:"Bu isim, hareketli ve maceracı bir titreşim taşır. Numerolojide 5; özgürlük, çeşitlilik ve merak ile ilişkilendirilir — sürekli keşfeden bir enerji."},
+  6:{tema:"Şefkatli İfade", anahtar:"Sıcak · Sorumlu · Sevgi Dolu",
+     yorum:"Bu isim, koruyan ve kucaklayan bir titreşim taşır. Numerolojide 6; sevgi, sorumluluk ve uyum ile ilişkilendirilir — yuvayı ve sevdiklerini önemseyen bir enerji."},
+  7:{tema:"Bilge İfade", anahtar:"Derin · Sezgisel · Araştırıcı",
+     yorum:"Bu isim, düşünceli ve gizemli bir titreşim taşır. Numerolojide 7; bilgelik, iç dünya ve arayış ile ilişkilendirilir — görünenin ardını merak eden bir enerji."},
+  8:{tema:"Güçlü İfade", anahtar:"Hedefli · Organize · Etkileyici",
+     yorum:"Bu isim, iddialı ve bereketli bir titreşim taşır. Numerolojide 8; güç, başarı ve maddi dünyada ustalık ile ilişkilendirilir — hedefe yürüyen bir enerji."},
+  9:{tema:"İnsancıl İfade", anahtar:"Cömert · İdealist · Şefkatli",
+     yorum:"Bu isim, geniş yürekli bir titreşim taşır. Numerolojide 9; evrensel sevgi, idealizm ve olgunluk ile ilişkilendirilir — vermeyi seven bir enerji."},
+  11:{tema:"Usta Sezgi", usta:true, anahtar:"İlham · Vizyon · Hassasiyet",
+     yorum:"Bu isim, 11 usta sayısının yüksek titreşimini taşır. İlham, sezgi ve farkındalık ile ilişkilendirilir — başkalarına ışık olabilen, aynı zamanda hassas bir enerji."},
+  22:{tema:"Usta Kurucu", usta:true, anahtar:"Büyük Vizyon · Somuta Dökme",
+     yorum:"Bu isim, 22 usta sayısının güçlü titreşimini taşır. Büyük hayalleri gerçeğe dönüştürme; vizyon ile pratiği birleştirme potansiyeliyle ilişkilendirilir."},
+  33:{tema:"Usta Öğretmen", usta:true, anahtar:"Şefkatli Rehberlik · Hizmet",
+     yorum:"Bu isim, nadir 33 usta sayısının titreşimini taşır. Sevgiyle yol gösterme ve iyileştirme; şefkatli bir rehberlik potansiyeliyle ilişkilendirilir."}
+};
+
+function indir(n){ while(n>9 && n!==11 && n!==22 && n!==33){ n=String(n).split("").reduce((a,d)=>a+(+d||0),0);} return n; }
+
+function titresim(isim){
+  const s = String(isim).toLocaleLowerCase("tr");
+  let tum=0, sesli=0; const adim=[];
+  for(const ch of s){
+    if(DEGER[ch]!=null){ tum+=DEGER[ch]; if(SESLI.has(ch)) sesli+=DEGER[ch]; adim.push(ch.toLocaleUpperCase("tr")+"("+DEGER[ch]+")"); }
+  }
+  return { ifade: indir(tum), kalp: indir(sesli), tumToplam:tum, sesliToplam:sesli, adim, harfSayisi:adim.length };
+}
+
+function goster(isim, r){
+  const a = ANLAM[r.ifade];
+  $("#s-isim").textContent = isim.trim() + " ✦ İsim Titreşimi";
+  $("#numara").firstChild.textContent = r.ifade;
+  $("#usta").hidden = !a.usta;
+  $("#tema").textContent = a.tema;
+  $("#anahtar").textContent = a.anahtar;
+  $("#yorum").textContent = a.yorum;
+  const k = ANLAM[r.kalp];
+  $("#kalp").innerHTML = `<b>Kalp Sayın: ${r.kalp}${k.usta?" (usta)":""} — ${k.tema.replace(" İfade","").replace("Usta ","")}.</b> ` +
+    `İsimdeki sesli harflerin taşıdığı iç motivasyon; seni içten neyin beslediğini sembolize eder.`;
+  $("#adim").innerHTML =
+    r.adim.join(" &nbsp;") + `<br>Toplam: ${r.tumToplam} → <strong style="color:var(--gold)">${r.ifade}</strong>` +
+    (a.usta ? " (usta sayı — tek haneye indirgenmez)" : "") +
+    `<br><span style="opacity:.8">Sesliler toplamı: ${r.sesliToplam} → Kalp ${r.kalp}</span>`;
+  const s = $("#sonuc"); s.hidden = false; $("#foot").hidden = false;
+  requestAnimationFrame(()=> s.classList.add("goster"));
+  s.scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+function calis(){
+  const isim = $("#isim").value;
+  const err = $("#hata"); err.textContent = "";
+  const r = titresim(isim);
+  if(!isim.trim() || r.harfSayisi === 0){ err.textContent = "Lütfen harflerden oluşan bir isim yaz."; return; }
+  $("#sonuc").classList.remove("goster");
+  goster(isim, r);
+}
+
+$("#hesapla").addEventListener("click", calis);
+$("#isim").addEventListener("keydown", e=>{ if(e.key==="Enter") calis(); });
+
+// Keşfet açılır menüsü
+document.querySelectorAll(".dropdown").forEach(dd=>{
+  const btn=dd.querySelector(".drop-btn");
+  btn.addEventListener("click", e=>{ e.stopPropagation(); const o=dd.classList.toggle("open"); btn.setAttribute("aria-expanded", o?"true":"false"); });
+});
+document.addEventListener("click", e=>{ document.querySelectorAll(".dropdown.open").forEach(dd=>{ if(!dd.contains(e.target)){ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); } }); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".dropdown.open").forEach(dd=>{ dd.classList.remove("open"); dd.querySelector(".drop-btn")?.setAttribute("aria-expanded","false"); }); });
+</script>
+</body>
+</html>
