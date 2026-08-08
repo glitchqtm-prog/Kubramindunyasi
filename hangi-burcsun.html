@@ -107,28 +107,11 @@
   }
   @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
 </style>
+  <script src="/menu.js" defer></script>
 </head>
 <body>
 
-<nav>
-  <a class="brand" href="/" style="text-decoration:none">✦ ASTRO YUVAM</a>
-  <div class="links">
-    <div class="dropdown">
-      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="caret">▾</span></button>
-      <div class="drop-menu" role="menu">
-        <div class="drop-head">Ücretsiz Keşif</div>
-        <a href="/gokyuzu.html" role="menuitem">✦ Gökyüzü<span class="d-sub">Şu an gökyüzü &amp; günün fısıltısı</span></a>
-        <a href="/yildizlara-sor.html" role="menuitem">✦ Yıldızlara Sor<span class="d-sub">Kavramları sor, öğren</span></a>
-        <a href="/yasam-yolu.html" role="menuitem">✦ Yaşam Yolu Sayın<span class="d-sub">Doğum tarihinden anında</span></a>
-        <a href="/hangi-burcsun.html" role="menuitem" aria-current="page">✦ Hangi Burçsun?<span class="d-sub">10 soruluk eğlenceli test</span></a>
-        <a href="/isim-titresimi.html" role="menuitem">✦ İsminin Titreşimi<span class="d-sub">Bir ismin sayısal titreşimi</span></a>
-      </div>
-    </div>
-    <a href="/#nasil-calisir">Nasıl Çalışır?</a>
-    <a href="/#sss">S.S.S.</a>
-    <a href="/#cards" class="nav-cta">Raporlar</a>
-  </div>
-</nav>
+<div id="astro-menu"></div>
 
 <div class="wrap">
   <header class="hero">
