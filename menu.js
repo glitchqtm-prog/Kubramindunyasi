@@ -17,6 +17,7 @@
     { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",        alt:"Bugünün ay evresi ve ritüeli" }
   ];
   var LINKLER = [
+    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
     { href:"/#nasil-calisir", ad:"Nasıl Çalışır?" },
     { href:"/#sss",           ad:"S.S.S." }
   ];
