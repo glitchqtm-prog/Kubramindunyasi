@@ -5,16 +5,25 @@
    defer ile yükleyen bir script etiketi. */
 (function(){
   // ——— YENİ ARAÇ EKLEMEK İÇİN TEK YER ———
-  var ARACLAR = [
-    { href:"/gokyuzu.html",        ad:"✦ Gökyüzü",           alt:"Şu an gökyüzü & günün fısıltısı" },
-    { href:"/yildizlara-sor.html", ad:"✦ Yıldızlara Sor",    alt:"Kavramları sor, öğren" },
-    { href:"/yasam-yolu.html",     ad:"✦ Yaşam Yolu Sayın",  alt:"Doğum tarihinden anında" },
-    { href:"/hangi-burcsun.html",  ad:"✦ Hangi Burçsun?",    alt:"10 soruluk eğlenceli test" },
-    { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" },
-    { href:"/ruya-sembolu.html",   ad:"✦ Rüya Sembolü",      alt:"Rüyandaki motif ne anlatıyor?" },
-    { href:"/burclar.html",        ad:"✦ Burç Profilleri",   alt:"12 burcun karakteri ve özellikleri" },
-    { href:"/arkanalar.html",      ad:"✦ Arkana Profilleri", alt:"22 Majör Arkana ve anlamları" },
-    { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",        alt:"Bugünün ay evresi ve ritüeli" }
+  // Kategorili menü: her yeni araç ilgili grubun items dizisine tek satır.
+  var GRUPLAR = [
+    { baslik:"Gökyüzü & Ay", items:[
+      { href:"/gokyuzu.html",    ad:"✦ Gökyüzü",     alt:"Şu an gökyüzü & günün fısıltısı" },
+      { href:"/ay-takvimi.html", ad:"✦ Ay Takvimi",  alt:"Bugünün ay evresi ve ritüeli" }
+    ]},
+    { baslik:"Sor & Yorumla", items:[
+      { href:"/yildizlara-sor.html", ad:"✦ Yıldızlara Sor", alt:"Kavramları sor, öğren" },
+      { href:"/ruya-sembolu.html",   ad:"✦ Rüya Sembolü",   alt:"Rüyandaki motif ne anlatıyor?" }
+    ]},
+    { baslik:"Testler & Sayılar", items:[
+      { href:"/hangi-burcsun.html",  ad:"✦ Hangi Burçsun?",    alt:"10 soruluk eğlenceli test" },
+      { href:"/yasam-yolu.html",     ad:"✦ Yaşam Yolu Sayın",  alt:"Doğum tarihinden anında" },
+      { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" }
+    ]},
+    { baslik:"Rehberler", items:[
+      { href:"/burclar.html",   ad:"✦ Burç Profilleri",   alt:"12 burcun karakteri ve özellikleri" },
+      { href:"/arkanalar.html", ad:"✦ Arkana Profilleri", alt:"22 Majör Arkana ve anlamları" }
+    ]}
   ];
   var LINKLER = [
     { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
@@ -36,6 +45,7 @@
   + '.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:252px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}'
   + '.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible;transform:translateY(0)}'
   + '.am-drop-head{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#d9b96a;opacity:.85;padding:8px 12px 6px}'
+  + '.am-drop-menu a + .am-drop-head{margin-top:6px;border-top:1px solid #2c2545;padding-top:12px}'
   + '.am-drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:#f0e6d2;font-size:14.5px;text-decoration:none;transition:background .15s}'
   + '.am-drop-menu a:hover{background:rgba(217,185,106,.10);color:#e7cf95}'
   + '.am-drop-menu a[aria-current="page"]{color:#e7cf95;background:rgba(217,185,106,.08)}'
@@ -56,10 +66,13 @@
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
-    var araclarHTML = ARACLAR.map(function(t){
-      var dosya = t.href.split("/").pop().toLowerCase();
-      var current = (dosya === simdi) ? ' aria-current="page"' : '';
-      return '<a href="'+t.href+'" role="menuitem"'+current+'>'+esc(t.ad)+'<span class="am-sub">'+esc(t.alt)+'</span></a>';
+    var araclarHTML = GRUPLAR.map(function(g){
+      var linkler = g.items.map(function(t){
+        var dosya = t.href.split("/").pop().toLowerCase();
+        var current = (dosya === simdi) ? ' aria-current="page"' : '';
+        return '<a href="'+t.href+'" role="menuitem"'+current+'>'+esc(t.ad)+'<span class="am-sub">'+esc(t.alt)+'</span></a>';
+      }).join("");
+      return '<div class="am-drop-head">'+esc(g.baslik)+'</div>'+linkler;
     }).join("");
 
     var linklerHTML = LINKLER.map(function(l){ return '<a href="'+l.href+'">'+esc(l.ad)+'</a>'; }).join("");
@@ -70,7 +83,7 @@
     +   '<div class="am-links">'
     +     '<div class="am-dropdown">'
     +       '<button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="am-caret">▾</span></button>'
-    +       '<div class="am-drop-menu" role="menu"><div class="am-drop-head">Ücretsiz Keşif</div>'+araclarHTML+'</div>'
+    +       '<div class="am-drop-menu" role="menu">'+araclarHTML+'</div>'
     +     '</div>'
     +     linklerHTML
     +     '<a href="/#cards" class="am-cta">Raporlar</a>'
