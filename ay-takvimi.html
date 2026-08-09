@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Ay Takvimi — Bugünün Ay Evresi ve Ritüeli | Astro Yuvam</title>
+<meta name="description" content="Bugünün ay evresi nedir? Ay takvimi ile evreyi, aydınlanma oranını, evreye özel niyet ve ritüel önerisini gör. Sıradaki dolunay ve yeni ay tarihleri — ücretsiz ve anında.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{--bg-1:#0c0914;--bg-2:#14101f;--panel:#1c1733;--panel-2:#241c3d;--gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:#9a8fb8;--line:#332a4d}
+  *{box-sizing:border-box}html,body{margin:0}
+  body{background:radial-gradient(ellipse at 50% -10%, #2a2147 0%, var(--bg-2) 52%, var(--bg-1) 100%) fixed;color:var(--cream);font-family:Georgia,'Times New Roman',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 56px}
+  header.hero{text-align:center;padding:24px 0 4px}
+  .hero h1{font-size:32px;margin:6px 0 4px;font-weight:600}
+  .hero p.sub{color:var(--muted);margin:0 auto;font-size:15px;font-style:italic;max-width:440px;line-height:1.6}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:24px;margin:22px 0;box-shadow:0 10px 40px rgba(0,0,0,.38)}
+  .aycard{text-align:center}
+  .emoji{font-size:88px;line-height:1;filter:drop-shadow(0 0 22px rgba(217,185,106,.4));animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .evre-ad{font-size:26px;color:var(--gold-soft);margin:10px 0 2px}
+  .evre-meta{font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;color:var(--muted);letter-spacing:.5px}
+  .evre-meta b{color:var(--cream)}
+  .tema{font-size:18px;color:var(--cream);margin:16px 0 6px}
+  .mesaj{font-size:16px;color:#efe7f6;line-height:1.75;max-width:520px;margin:0 auto}
+  .ritual{margin-top:18px;background:rgba(217,185,106,.06);border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-align:left;font-family:'Segoe UI',system-ui,sans-serif}
+  .ritual .b{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin-bottom:6px}
+  .ritual .t{font-size:14.5px;color:var(--cream);line-height:1.65}
+  .enerji{margin-top:12px;font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted)}
+  .enerji span{display:inline-block;background:rgba(217,185,106,.08);border:1px solid var(--line);border-radius:20px;padding:4px 12px;margin:3px 3px 0 0;color:var(--cream)}
+
+  /* Tarih seçici */
+  .secici{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .secici label{font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;color:var(--muted)}
+  input[type=date]{background:var(--panel);border:1px solid var(--line);color:var(--cream);border-radius:10px;padding:10px 13px;font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;outline:none;color-scheme:dark;transition:border-color .2s}
+  input[type=date]:focus{border-color:var(--gold)}
+  .bugun-btn{background:none;border:1px solid var(--line);color:var(--gold);border-radius:20px;padding:9px 16px;cursor:pointer;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;transition:background .15s,border-color .15s}
+  .bugun-btn:hover{background:rgba(217,185,106,.10);border-color:var(--gold)}
+
+  /* Döngü şeridi */
+  .dongu{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:8px}
+  .dongu .e{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px;border-radius:10px;border:1px solid transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:10px;color:var(--muted);text-align:center;line-height:1.2}
+  .dongu .e .em{font-size:24px}
+  .dongu .e.aktif{border-color:var(--gold);background:rgba(217,185,106,.12);color:var(--cream)}
+  @media(max-width:560px){.dongu{grid-template-columns:repeat(4,1fr)}}
+
+  /* Sıradaki */
+  .siradaki{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .siradaki .s{flex:1 1 200px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;font-family:'Segoe UI',system-ui,sans-serif;text-align:center}
+  .siradaki .s .em{font-size:30px}
+  .siradaki .s .ad{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin:4px 0 2px}
+  .siradaki .s .tar{font-size:16px;color:var(--gold-soft)}
+
+  .baslik{text-align:center;font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:.85;margin:0 0 4px}
+  .foot{text-align:center;margin-top:26px}
+  .cta{display:inline-block;margin:6px 0 16px;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;padding:13px 26px;border-radius:30px;font-size:15px;font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);max-width:540px;margin:0 auto;line-height:1.6}
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<div id="astro-menu"></div>
+<script src="/menu.js" defer></script>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="emoji" id="ana-emoji">🌙</div>
+    <h1>Ay Takvimi</h1>
+    <p class="sub">Ay'ın evresi, ruh halimize ve niyetlerimize eşlik eden en eski takvimlerden biridir.</p>
+  </header>
+
+  <div class="card aycard">
+    <div class="secici">
+      <label for="tarih">Tarih:</label>
+      <input type="date" id="tarih">
+      <button class="bugun-btn" id="bugun">Bugüne dön</button>
+    </div>
+    <div class="evre-ad" id="evre-ad">—</div>
+    <div class="evre-meta" id="evre-meta"></div>
+    <div class="tema" id="tema"></div>
+    <div class="mesaj" id="mesaj"></div>
+    <div class="ritual">
+      <div class="b">Bu Evrenin Ritüeli</div>
+      <div class="t" id="ritual"></div>
+    </div>
+    <div class="enerji" id="enerji"></div>
+  </div>
+
+  <p class="baslik">Ay Döngüsü</p>
+  <div class="card" style="padding:16px">
+    <div class="dongu" id="dongu"></div>
+  </div>
+
+  <p class="baslik">Sıradaki Önemli Evreler</p>
+  <div class="siradaki" id="siradaki"></div>
+
+  <div class="foot">
+    <a class="cta" href="/#cards">Doğum haritanda Ay nerede? Raporunu al →</a>
+    <p class="disclaimer">
+      Ay takvimi ve ritüeller <strong>sembolik bir gelenektir</strong>; kesin bir kehanet değil, niyetlerine eşlik eden
+      bir ritim aracıdır. Ay evresi hesabı astronomik verilere dayanır. Kararlar her zaman senindir. 🌙
+    </p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const SYN = 29.530588853;
+const REF = Date.UTC(2000,0,6,18,14); // bilinen bir yeni ay (referans)
+const AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+
+const EVRELER = [
+  { ad:"Yeni Ay", emoji:"🌑", kisa:"Yeni Ay", tema:"Niyet Ekme Zamanı",
+    mesaj:"Yeni bir döngü başlıyor. Gökyüzü karanlık, ama bu boşluk bir tohumun toprağı gibidir; ne yeşertmek istediğini şimdi belirle.",
+    ritual:"Sessiz bir an ayır ve önümüzdeki döngüde büyütmek istediğin niyetleri yaz. Küçük, somut bir başlangıç seç.",
+    enerji:["Başlangıç","Tazelik","Tohum"] },
+  { ad:"Büyüyen Hilal", emoji:"🌒", kisa:"Büyüyen Hilal", tema:"İlk Adımlar",
+    mesaj:"Niyetin filizleniyor. Şimdi küçük ama kararlı adımlar atma; ekilen tohuma ışık verme zamanı.",
+    ritual:"Niyetine yönelik ilk somut adımı bugün at. Ne kadar küçük olursa olsun, harekete geçmek önemlidir.",
+    enerji:["Cesaret","İnisiyatif","Umut"] },
+  { ad:"İlk Dördün", emoji:"🌓", kisa:"İlk Dördün", tema:"Karar ve Eylem",
+    mesaj:"Yolda ilk engeller belirir. Bu bir sınav değil, bir davet: kararlılıkla harekete geç ve yönünü netleştir.",
+    ritual:"Yolundaki bir engeli belirle ve ona dair tek bir net karar ver. Ertelemek yerine bugün bir hamle yap.",
+    enerji:["İrade","Kararlılık","Direnç"] },
+  { ad:"Büyüyen Şişkin Ay", emoji:"🌔", kisa:"Şişkin Ay", tema:"İnce Ayar ve Sabır",
+    mesaj:"Neredeyse tamamlandı. Şimdi sabırla düzeltme, geliştirme ve emeğine güvenme zamanı.",
+    ritual:"Üzerinde çalıştığın şeyi gözden geçir; küçük iyileştirmeler yap. Mükemmeli değil, ilerlemeyi hedefle.",
+    enerji:["Sabır","Özen","Güven"] },
+  { ad:"Dolunay", emoji:"🌕", kisa:"Dolunay", tema:"Doruk, Kutlama ve Bırakma",
+    mesaj:"Enerji zirvede; duygular yoğun ve berrak. Başardıklarını kutla, şükret ve artık taşımadığını nazikçe bırak.",
+    ritual:"Bir başarını kutla. Sonra bırakmak istediğin bir düşünceyi ya da yükü sembolik olarak (yazıp, nefesle) serbest bırak.",
+    enerji:["Doruk","Farkındalık","Şükran"] },
+  { ad:"Küçülen Şişkin Ay", emoji:"🌖", kisa:"Küçülen Ay", tema:"Paylaşma ve Minnet",
+    mesaj:"Dolunayın bolluğu şimdi paylaşılmayı bekliyor. Topladığın bilgeliği ve şükranı çevrene aktar.",
+    ritual:"Birine içten bir teşekkür et ya da öğrendiğin bir şeyi paylaş. Minnet, bereketi çoğaltır.",
+    enerji:["Minnet","Cömertlik","Paylaşım"] },
+  { ad:"Son Dördün", emoji:"🌗", kisa:"Son Dördün", tema:"Bırakma ve Affetme",
+    mesaj:"Bir temizlik ve serbest bırakma zamanı. Artık sana hizmet etmeyeni bırakmak, yeni döngüye hafif girmeni sağlar.",
+    ritual:"İşe yaramayan bir alışkanlığı ya da bir kırgınlığı bırakmayı bilinçli olarak seç. Affetmek, önce sana alan açar.",
+    enerji:["Affetme","Arınma","Bırakma"] },
+  { ad:"Küçülen Hilal", emoji:"🌘", kisa:"Balzamik", tema:"Dinlenme ve İçe Dönüş",
+    mesaj:"Döngü kapanıyor. Şimdi yavaşlama, içe dönme ve yenilenmeye hazırlanma zamanı; her son yeni bir başlangıcın eşiğidir.",
+    ritual:"Kendine dinlenme izni ver. Bir sonraki yeni ay için içini sakinleştir; yorgun düşünceleri bırak.",
+    enerji:["Teslimiyet","Dinlenme","Yenilenme"] },
+];
+
+function evreHesapla(d){
+  const age = (((d.getTime()-REF)/86400000) % SYN + SYN) % SYN;
+  const frac = age/SYN;
+  const illum = Math.round((1-Math.cos(2*Math.PI*frac))/2*100);
+  const idx = Math.floor((frac*8)+0.5) % 8;
+  return { age, frac, illum, idx };
+}
+function trTarih(d){ return d.getUTCDate()+" "+AYLAR[d.getUTCMonth()]+" "+d.getUTCFullYear(); }
+function sonrakiEvre(d, hedefFrac){
+  const age = (((d.getTime()-REF)/86400000) % SYN + SYN) % SYN;
+  const frac = age/SYN;
+  let gun = ((hedefFrac - frac + 1) % 1) * SYN;
+  if(gun < 0.5) gun += SYN; // aynı gün değilse bir sonraki
+  return new Date(d.getTime() + gun*86400000);
+}
+
+function ciz(d){
+  const h = evreHesapla(d);
+  const e = EVRELER[h.idx];
+  $("#ana-emoji").textContent = e.emoji;
+  $("#evre-ad").textContent = e.ad;
+  $("#evre-meta").innerHTML = `${trTarih(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())))} · Aydınlanma: <b>%${h.illum}</b>`;
+  $("#tema").textContent = e.tema;
+  $("#mesaj").textContent = e.mesaj;
+  $("#ritual").textContent = e.ritual;
+  $("#enerji").innerHTML = e.enerji.map(x=>`<span>${x}</span>`).join("");
+
+  // döngü şeridi
+  $("#dongu").innerHTML = EVRELER.map((x,i)=>
+    `<div class="e${i===h.idx?' aktif':''}"><span class="em">${x.emoji}</span>${x.kisa}</div>`).join("");
+
+  // sıradaki dolunay & yeni ay
+  const df = sonrakiEvre(d,0.5), yf = sonrakiEvre(d,0);
+  $("#siradaki").innerHTML =
+    `<div class="s"><div class="em">🌕</div><div class="ad">Sıradaki Dolunay</div><div class="tar">${trTarih(df)}</div></div>` +
+    `<div class="s"><div class="em">🌑</div><div class="ad">Sıradaki Yeni Ay</div><div class="tar">${trTarih(yf)}</div></div>`;
+}
+
+// UTC öğlen referansıyla çalış (gün kayması olmasın)
+function gunuAl(str){ const [y,m,dd]=str.split("-").map(Number); return new Date(Date.UTC(y,m-1,dd,12,0,0)); }
+function bugunStr(){ const n=new Date(); return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0"); }
+
+$("#tarih").value = bugunStr();
+ciz(gunuAl($("#tarih").value));
+$("#tarih").addEventListener("change", ()=>{ if($("#tarih").value) ciz(gunuAl($("#tarih").value)); });
+$("#bugun").addEventListener("click", ()=>{ $("#tarih").value = bugunStr(); ciz(gunuAl($("#tarih").value)); });
+</script>
+</body>
+</html>

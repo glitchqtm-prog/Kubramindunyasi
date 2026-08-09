@@ -13,7 +13,8 @@
     { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" },
     { href:"/ruya-sembolu.html",   ad:"✦ Rüya Sembolü",      alt:"Rüyandaki motif ne anlatıyor?" },
     { href:"/burclar.html",        ad:"✦ Burç Profilleri",   alt:"12 burcun karakteri ve özellikleri" },
-    { href:"/arkanalar.html",      ad:"✦ Arkana Profilleri", alt:"22 Majör Arkana ve anlamları" }
+    { href:"/arkanalar.html",      ad:"✦ Arkana Profilleri", alt:"22 Majör Arkana ve anlamları" },
+    { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",        alt:"Bugünün ay evresi ve ritüeli" }
   ];
   var LINKLER = [
     { href:"/#nasil-calisir", ad:"Nasıl Çalışır?" },
