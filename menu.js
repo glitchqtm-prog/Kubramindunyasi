@@ -1,8 +1,13 @@
 /* menu.js — Astro Yuvam ortak üst menüsü.
-   Tek kaynak: yeni bir ücretsiz araç eklemek için yalnızca aşağıdaki ARACLAR dizisine
-   tek satır ekle; menü tüm sayfalarda otomatik güncellenir.
-   Her sayfada iki şey bulunur: bir "astro-menu" kimlikli boş div, ve /menu.js dosyasını
-   defer ile yükleyen bir script etiketi. */
+   Tek kaynak: yeni bir ücretsiz araç eklemek için yalnızca aşağıdaki GRUPLAR
+   dizisinde ilgili grubun items dizisine tek satır ekle; menü tüm sayfalarda
+   otomatik güncellenir.
+   Her sayfada iki şey bulunur: bir "astro-menu" kimlikli boş div, ve /menu.js
+   dosyasını defer ile yükleyen bir script etiketi.
+
+   KEŞFET MENÜSÜ = AKORDİYON: menü açıldığında yalnızca kategori başlıkları
+   görünür; bir başlığa tıklayınca o kategorinin araçları açılır, tekrar
+   tıklayınca kapanır. Menü kapanınca kategoriler sıfırlanır. */
 (function(){
   // ——— YENİ ARAÇ EKLEMEK İÇİN TEK YER ———
   // Kategorili menü: her yeni araç ilgili grubun items dizisine tek satır.
@@ -44,10 +49,19 @@
   + '.am-drop-btn:hover,.am-drop-btn[aria-expanded="true"]{opacity:1;color:#e7cf95}'
   + '.am-caret{font-size:11px;transition:transform .2s}'
   + '.am-drop-btn[aria-expanded="true"] .am-caret{transform:rotate(180deg)}'
-  + '.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:252px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}'
+  + '.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:262px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}'
   + '.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible;transform:translateY(0)}'
-  + '.am-drop-head{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#d9b96a;opacity:.85;padding:8px 12px 6px}'
-  + '.am-drop-menu a + .am-drop-head{margin-top:6px;border-top:1px solid #2c2545;padding-top:12px}'
+  // ——— AKORDİYON KATEGORİ ———
+  + '.am-cat + .am-cat{border-top:1px solid #2c2545;margin-top:2px}'
+  + '.am-cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;font:inherit;color:#d9b96a;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;opacity:.9;padding:12px 12px;text-align:left;border-radius:8px;transition:background .15s,color .15s,opacity .15s}'
+  + '.am-cat-btn:hover{opacity:1;color:#e7cf95;background:rgba(217,185,106,.06)}'
+  + '.am-cat-caret{font-size:10px;opacity:.75;transition:transform .22s}'
+  + '.am-cat.open>.am-cat-btn{color:#e7cf95;opacity:1}'
+  + '.am-cat.open>.am-cat-btn .am-cat-caret{transform:rotate(180deg)}'
+  + '.am-cat-items{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}'
+  + '.am-cat.open>.am-cat-items{grid-template-rows:1fr}'
+  + '.am-cat-inner{overflow:hidden;min-height:0}'
+  // ——— ARAÇ LİNKLERİ ———
   + '.am-drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:#f0e6d2;font-size:14.5px;text-decoration:none;transition:background .15s}'
   + '.am-drop-menu a:hover{background:rgba(217,185,106,.10);color:#e7cf95}'
   + '.am-drop-menu a[aria-current="page"]{color:#e7cf95;background:rgba(217,185,106,.08)}'
@@ -55,9 +69,9 @@
   + '.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}'
   + '.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}'
   + '@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center}'
-  + '.am-dropdown{position:static}.am-drop-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;margin:6px auto 0;display:none;min-width:220px}'
+  + '.am-dropdown{position:static}.am-drop-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;margin:6px auto 0;display:none;min-width:240px}'
   + '.am-dropdown.open .am-drop-menu{display:block}}'
-  + '@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-links>a,.am-cta{transition:none !important}}';
+  + '@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}';
 
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 
@@ -68,13 +82,17 @@
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
+    // Her kategori = tıklanınca açılıp kapanan bir blok
     var araclarHTML = GRUPLAR.map(function(g){
       var linkler = g.items.map(function(t){
         var dosya = t.href.split("/").pop().toLowerCase();
         var current = (dosya === simdi) ? ' aria-current="page"' : '';
         return '<a href="'+t.href+'" role="menuitem"'+current+'>'+esc(t.ad)+'<span class="am-sub">'+esc(t.alt)+'</span></a>';
       }).join("");
-      return '<div class="am-drop-head">'+esc(g.baslik)+'</div>'+linkler;
+      return '<div class="am-cat">'
+           +   '<button type="button" class="am-cat-btn" aria-expanded="false">'+esc(g.baslik)+'<span class="am-cat-caret">▾</span></button>'
+           +   '<div class="am-cat-items"><div class="am-cat-inner">'+linkler+'</div></div>'
+           + '</div>';
     }).join("");
 
     var linklerHTML = LINKLER.map(function(l){ return '<a href="'+l.href+'">'+esc(l.ad)+'</a>'; }).join("");
@@ -94,16 +112,47 @@
 
     var mount = document.getElementById("astro-menu");
     if(mount){ mount.innerHTML = html; }
-    else { document.body.insertAdjacentHTML("afterbegin", '<div id="astro-menu">'+html+'</div>'); }
+    else { document.body.insertAdjacentHTML("afterbegin", '<div id="astro-menu">'+html+'</div>'); mount = document.getElementById("astro-menu"); }
 
-    // Açılır menü davranışı
-    var dd = document.querySelector(".am-dropdown");
-    if(dd){
-      var btn = dd.querySelector(".am-drop-btn");
-      btn.addEventListener("click", function(e){ e.stopPropagation(); var o = dd.classList.toggle("open"); btn.setAttribute("aria-expanded", o ? "true":"false"); });
-      document.addEventListener("click", function(e){ if(dd.classList.contains("open") && !dd.contains(e.target)){ dd.classList.remove("open"); btn.setAttribute("aria-expanded","false"); } });
-      document.addEventListener("keydown", function(e){ if(e.key === "Escape" && dd.classList.contains("open")){ dd.classList.remove("open"); btn.setAttribute("aria-expanded","false"); } });
+    var dd = mount.querySelector(".am-dropdown");
+    if(!dd) return;
+    var btn = dd.querySelector(".am-drop-btn");
+
+    // Tüm kategorileri kapat (menü her açıldığında sadece başlıklar görünür)
+    function kategorileriKapat(){
+      var acik = dd.querySelectorAll(".am-cat.open");
+      Array.prototype.forEach.call(acik, function(c){
+        c.classList.remove("open");
+        var cb = c.querySelector(".am-cat-btn"); if(cb) cb.setAttribute("aria-expanded","false");
+      });
     }
+    function dropKapat(){
+      dd.classList.remove("open"); btn.setAttribute("aria-expanded","false"); kategorileriKapat();
+    }
+    function dropAc(){
+      dd.classList.add("open"); btn.setAttribute("aria-expanded","true");
+    }
+
+    // Keşfet aç/kapa
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      if(dd.classList.contains("open")) dropKapat(); else dropAc();
+    });
+
+    // Kategori başlıkları: aç/kapa (bağımsız — birden fazla açık olabilir)
+    var catBtns = dd.querySelectorAll(".am-cat-btn");
+    Array.prototype.forEach.call(catBtns, function(cb){
+      cb.addEventListener("click", function(e){
+        e.stopPropagation();
+        var cat = cb.parentNode;
+        var acildi = cat.classList.toggle("open");
+        cb.setAttribute("aria-expanded", acildi ? "true" : "false");
+      });
+    });
+
+    // Dışarı tıkla / Esc → kapat
+    document.addEventListener("click", function(e){ if(dd.classList.contains("open") && !dd.contains(e.target)) dropKapat(); });
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape" && dd.classList.contains("open")) dropKapat(); });
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
