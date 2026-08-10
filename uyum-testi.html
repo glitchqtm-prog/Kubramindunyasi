@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Uyum Testi — Sen & O Ne Kadar Uyumlusunuz? | Astro Yuvam</title>
+<meta name="description" content="İki doğum tarihiyle burç uyumunuzu keşfedin. Eğlenceli uyum yüzdesi, iletişim-tutku-güven analizi ve sembolik yorum. Ücretsiz, anında ve paylaşılası.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{--bg-1:#0c0914;--bg-2:#14101f;--panel:#1c1733;--panel-2:#241c3d;--gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:#9a8fb8;--line:#332a4d;--rose:#e08aa0}
+  *{box-sizing:border-box}html,body{margin:0}
+  body{background:radial-gradient(ellipse at 50% -10%, #2a1c33 0%, var(--bg-2) 52%, var(--bg-1) 100%) fixed;color:var(--cream);font-family:Georgia,'Times New Roman',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:660px;margin:0 auto;padding:0 20px 56px}
+  header.hero{text-align:center;padding:24px 0 4px}
+  .hero .hrt{font-size:34px;filter:drop-shadow(0 0 16px rgba(224,138,160,.5))}
+  .hero h1{font-size:32px;margin:8px 0 4px;font-weight:600}
+  .hero p.sub{color:var(--muted);margin:0 auto;font-size:15px;font-style:italic;max-width:440px;line-height:1.6}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:24px;margin:22px 0;box-shadow:0 10px 40px rgba(0,0,0,.38)}
+  .kisiler{display:flex;gap:14px;flex-wrap:wrap}
+  .kisi{flex:1 1 240px}
+  .kisi .b{font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.85;margin-bottom:8px}
+  input[type=text],input[type=date]{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--cream);border-radius:10px;padding:12px 14px;font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;outline:none;color-scheme:dark;transition:border-color .2s;margin-bottom:10px}
+  input:focus{border-color:var(--gold)}
+  .btn{display:block;width:100%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;border:none;border-radius:12px;padding:14px;font-size:16px;cursor:pointer;font-family:'Segoe UI',system-ui,sans-serif;transition:transform .12s,box-shadow .2s;margin-top:4px}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(217,185,106,.25)}
+  .hata{color:#e0794f;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;text-align:center;margin-top:10px;min-height:16px}
+
+  #sonuc{opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+  #sonuc.goster{opacity:1;transform:none}
+  .ciftbaslik{text-align:center;font-size:20px;color:var(--gold-soft);margin-bottom:4px}
+  .gliflar{text-align:center;font-size:15px;color:var(--muted);font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:14px}
+  .gliflar b{color:var(--cream)}
+  .yuzde{text-align:center;font-size:70px;line-height:1;color:var(--gold);font-weight:600;margin:6px 0 2px}
+  .yuzde small{font-size:30px}
+  .band{text-align:center;font-size:17px;color:var(--cream);margin-bottom:6px}
+  .kalp-bar{height:12px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;max-width:360px;margin:10px auto 20px}
+  .kalp-bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width 1s ease}
+  .altlar{display:flex;flex-direction:column;gap:12px;max-width:420px;margin:0 auto}
+  .alt .satir{display:flex;justify-content:space-between;font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:var(--cream);margin-bottom:4px}
+  .alt .satir span:last-child{color:var(--gold-soft)}
+  .alt .bar{height:8px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden}
+  .alt .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .9s ease}
+  .yorum{font-size:15.5px;line-height:1.75;color:#efe7f6;margin-top:20px;text-align:center}
+  .aksiyon{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+  .abtn{border:none;border-radius:30px;padding:12px 22px;font-size:14.5px;cursor:pointer;font-family:'Segoe UI',system-ui,sans-serif;transition:transform .12s,box-shadow .2s}
+  .abtn.gold{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold}
+  .abtn.gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(217,185,106,.28)}
+  .abtn.ghost{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+  .abtn.ghost:hover{background:rgba(217,185,106,.10)}
+  .toast{font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;color:var(--gold-soft);text-align:center;min-height:18px;margin-top:10px}
+
+  .foot{text-align:center;margin-top:24px}
+  .cta{display:inline-block;margin:6px 0 16px;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;padding:13px 26px;border-radius:30px;font-size:15px;font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.6}
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<div id="astro-menu"></div>
+<script src="/menu.js" defer></script>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hrt">💞</div>
+    <h1>Uyum Testi</h1>
+    <p class="sub">Sen &amp; O — yıldızların diliyle aranızdaki kimya ne kadar uyumlu?</p>
+  </header>
+
+  <div class="card">
+    <div class="kisiler">
+      <div class="kisi">
+        <div class="b">Sen</div>
+        <input type="text" id="ad1" placeholder="Adın" maxlength="24" autocomplete="off">
+        <input type="date" id="tarih1" min="1900-01-01" max="2025-12-31">
+      </div>
+      <div class="kisi">
+        <div class="b">O</div>
+        <input type="text" id="ad2" placeholder="Onun adı" maxlength="24" autocomplete="off">
+        <input type="date" id="tarih2" min="1900-01-01" max="2025-12-31">
+      </div>
+    </div>
+    <button class="btn" id="hesapla">Uyumu Gör 💞</button>
+    <div class="hata" id="hata"></div>
+  </div>
+
+  <div class="card" id="sonuc" hidden>
+    <div class="ciftbaslik" id="ciftbaslik"></div>
+    <div class="gliflar" id="gliflar"></div>
+    <div class="yuzde" id="yuzde">—</div>
+    <div class="band" id="band"></div>
+    <div class="kalp-bar"><i id="kalpfill"></i></div>
+    <div class="altlar" id="altlar"></div>
+    <div class="yorum" id="yorum"></div>
+    <div class="aksiyon">
+      <button class="abtn gold" id="paylas">Sonucu Paylaş 💞</button>
+      <button class="abtn ghost" id="tekrar">Yeni Test</button>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <div class="foot" id="foot" hidden>
+    <a class="cta" href="/#cards">Gerçek uyum analizi için Sinastri Raporu →</a>
+    <p class="disclaimer">
+      Bu test <strong>eğlence amaçlıdır</strong> ve güneş burçlarına dayanır; gerçek ilişki uyumu iki kişinin tüm doğum
+      haritasını içeren çok katmanlı bir konudur. Sembolik bir başlangıç olarak düşün. Kararlar her zaman senindir. 💫
+    </p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+
+const BURC = [
+  {ad:"Koç",glif:"♈",el:"ates",mod:"oncu"},{ad:"Boğa",glif:"♉",el:"toprak",mod:"sabit"},
+  {ad:"İkizler",glif:"♊",el:"hava",mod:"degisken"},{ad:"Yengeç",glif:"♋",el:"su",mod:"oncu"},
+  {ad:"Aslan",glif:"♌",el:"ates",mod:"sabit"},{ad:"Başak",glif:"♍",el:"toprak",mod:"degisken"},
+  {ad:"Terazi",glif:"♎",el:"hava",mod:"oncu"},{ad:"Akrep",glif:"♏",el:"su",mod:"sabit"},
+  {ad:"Yay",glif:"♐",el:"ates",mod:"degisken"},{ad:"Oğlak",glif:"♑",el:"toprak",mod:"oncu"},
+  {ad:"Kova",glif:"♒",el:"hava",mod:"sabit"},{ad:"Balık",glif:"♓",el:"su",mod:"degisken"}
+];
+// gün/ay → burç indeksi
+function burcBul(m,d){
+  const t=[[1,20,10],[2,19,11],[3,21,0],[4,20,1],[5,21,2],[6,21,3],[7,23,4],[8,23,5],[9,23,6],[10,23,7],[11,22,8],[12,22,9]];
+  const [,gun,idx]=t[m-1];
+  if(d>=gun) return idx;
+  return (idx+11)%12; // önceki burç
+}
+const ELAD={ates:"Ateş",toprak:"Toprak",hava:"Hava",su:"Su"};
+function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0);}
+
+function elementSkor(e1,e2){
+  if(e1===e2) return 82;
+  const p=[e1,e2].sort().join("-");
+  return {"ates-hava":90,"su-toprak":90,"ates-toprak":62,"hava-su":64,"ates-su":56,"hava-toprak":60}[p] ?? 70;
+}
+function yorumMetni(b1,b2,skor){
+  const band = skor>=85?"Yıldızlar bu ikiliye gülümsüyor.":skor>=70?"Aranızda güzel bir potansiyel var.":skor>=56?"İlginç ve öğretici bir eşleşme.":"Kolay değil ama imkânsız da değil — her zıtlık bir derstir.";
+  let el;
+  if(b1.el===b2.el) el=`İkiniz de ${ELAD[b1.el]} enerjisi taşıyorsunuz; birbirinizi derinden anlıyor, bazen de aynı ateşi körüklüyorsunuz.`;
+  else{
+    const p=[b1.el,b2.el].sort().join("-");
+    el={
+      "ates-hava":"Ateş ve Hava: biri kıvılcım, diğeri onu büyüten rüzgâr — birlikte ilham verici, hareketli bir enerji.",
+      "su-toprak":"Toprak ve Su: biri sağlam zemin, diğeri onu besleyen yağmur — şefkatli, büyüten bir uyum.",
+      "ates-toprak":"Ateş ve Toprak: biri hızlı, diğeri sabırlı — dengelenince güçlü, acele edince sürtüşmeli.",
+      "hava-su":"Hava ve Su: biri zihin, diğeri duygu — birbirinizden çok şey öğrenir, bazen farklı dillerde konuşursunuz.",
+      "ates-su":"Ateş ve Su: tutkulu ama zorlayıcı bir karışım — hem buhar hem çekim; yoğun bir enerji.",
+      "hava-toprak":"Hava ve Toprak: biri fikir, diğeri uygulama — birbirinizi tamamlar ya da temponuz farklı düşer."
+    }[p];
+  }
+  return `${band} ${el}`;
+}
+
+function altSkor(base, tohum, min, max){
+  const v = min + (tohum % (max-min+1));
+  return Math.round((v*0.5) + (base*0.5)); // temel ile harmanla
+}
+
+function hesapla(){
+  const ad1=$("#ad1").value.trim(), ad2=$("#ad2").value.trim();
+  const t1=$("#tarih1").value, t2=$("#tarih2").value;
+  const err=$("#hata"); err.textContent="";
+  if(!ad1||!ad2){ err.textContent="Lütfen iki isim de yaz."; return; }
+  if(!t1||!t2){ err.textContent="Lütfen iki doğum tarihi de seç."; return; }
+  const [y1,m1,d1]=t1.split("-").map(Number), [y2,m2,d2]=t2.split("-").map(Number);
+  const b1=BURC[burcBul(m1,d1)], b2=BURC[burcBul(m2,d2)];
+
+  const h=hash(ad1.toLocaleLowerCase("tr")+"|"+t1+"|"+ad2.toLocaleLowerCase("tr")+"|"+t2);
+  const ayniBurc = b1.ad===b2.ad;
+  let skor;
+  if(ayniBurc){ skor = 78 + (h%12); }
+  else{
+    const es=elementSkor(b1.el,b2.el);
+    const modAdj = (b1.mod===b2.mod)? -4 : 4;
+    const nuance = (h%13)-6;
+    skor = es + modAdj + nuance;
+  }
+  skor = Math.max(44, Math.min(98, skor));
+
+  // alt skorlar (belirlenimci, temel skorla harmanlı)
+  const iletisim = altSkor(skor, hash("i"+h), 55, 96);
+  const tutku    = altSkor(skor, hash("t"+h), 55, 98);
+  const uyum     = altSkor(skor, hash("u"+h), 55, 96);
+  const guven    = altSkor(skor, hash("g"+h), 55, 96);
+
+  $("#ciftbaslik").textContent = `${ad1} 💞 ${ad2}`;
+  $("#gliflar").innerHTML = `<b>${b1.glif} ${b1.ad}</b> &nbsp;×&nbsp; <b>${b2.glif} ${b2.ad}</b>`;
+  $("#band").textContent = skor>=85?"Muhteşem Uyum":skor>=70?"Güçlü Uyum":skor>=56?"Dengeli Uyum":"Zorlayıcı ama Öğretici";
+  $("#yorum").textContent = yorumMetni(b1,b2,skor);
+  $("#altlar").innerHTML = [["İletişim",iletisim],["Tutku",tutku],["Uyum",uyum],["Güven",guven]]
+    .map(([ad,v])=>`<div class="alt"><div class="satir"><span>${ad}</span><span>%${v}</span></div><div class="bar"><i data-w="${v}"></i></div></div>`).join("");
+
+  const s=$("#sonuc"); s.hidden=false; $("#foot").hidden=false; s.classList.remove("goster");
+  requestAnimationFrame(()=>{
+    s.classList.add("goster");
+    let n=0; const hedef=skor;
+    const say=setInterval(()=>{ n+=Math.max(1,Math.round(hedef/28)); if(n>=hedef){n=hedef;clearInterval(say);} $("#yuzde").innerHTML=n+'<small>%</small>'; },28);
+    setTimeout(()=>{ $("#kalpfill").style.width=skor+"%"; document.querySelectorAll("#altlar .bar i").forEach(i=>i.style.width=i.dataset.w+"%"); },120);
+  });
+  s.scrollIntoView({behavior:"smooth",block:"center"});
+  $("#paylas").dataset.metin = `${ad1} & ${ad2} uyumu: %${skor}! ${b1.ad} × ${b2.ad} ✦ Sen de dene:`;
+}
+
+async function paylas(){
+  const metin=$("#paylas").dataset.metin||"", url=location.origin+"/uyum-testi.html", toast=$("#toast");
+  if(navigator.share){ try{ await navigator.share({title:"Uyum Testi — Astro Yuvam",text:metin,url}); return; }catch(e){} }
+  try{ await navigator.clipboard.writeText(metin+" "+url); toast.textContent="Kopyalandı! Paylaşabilirsin. 💞"; }
+  catch(e){ toast.textContent="Link: "+url; }
+  setTimeout(()=>toast.textContent="",5000);
+}
+
+$("#hesapla").addEventListener("click", hesapla);
+$("#tekrar").addEventListener("click", ()=>{ $("#sonuc").hidden=true; $("#foot").hidden=true; window.scrollTo({top:0,behavior:"smooth"}); });
+$("#paylas").addEventListener("click", paylas);
+[ "#ad1","#ad2","#tarih1","#tarih2" ].forEach(s=>$(s).addEventListener("keydown",e=>{ if(e.key==="Enter") hesapla(); }));
+</script>
+</body>
+</html>
