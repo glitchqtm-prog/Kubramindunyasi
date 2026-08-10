@@ -55,6 +55,14 @@
   .foot{text-align:center;margin-top:24px}
   .cta{display:inline-block;margin:6px 0 16px;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;padding:13px 26px;border-radius:30px;font-size:15px;font-family:'Segoe UI',system-ui,sans-serif}
   .disclaimer{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.6}
+
+  /* ── Kozmik Kart (paylaşılabilir görsel) ── */
+  .kart-overlay{position:fixed;inset:0;background:rgba(6,4,12,.86);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+  .kart-overlay[hidden]{display:none}
+  .kart-box{max-width:440px;width:100%;text-align:center}
+  .kart-box img{width:100%;max-width:360px;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid var(--line)}
+  .kart-ipucu{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);margin:12px auto 0;max-width:340px;line-height:1.5}
+  .kart-aksiyon{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
@@ -95,7 +103,8 @@
     <div class="altlar" id="altlar"></div>
     <div class="yorum" id="yorum"></div>
     <div class="aksiyon">
-      <button class="abtn gold" id="paylas">Sonucu Paylaş 💞</button>
+      <button class="abtn gold" id="kartBtn">🎴 Kozmik Kart Oluştur</button>
+      <button class="abtn ghost" id="paylas">Metni Paylaş 💞</button>
       <button class="abtn ghost" id="tekrar">Yeni Test</button>
     </div>
     <div class="toast" id="toast"></div>
@@ -110,8 +119,23 @@
   </div>
 </div>
 
+<!-- Kozmik Kart önizleme penceresi -->
+<div class="kart-overlay" id="kartOverlay" hidden>
+  <div class="kart-box">
+    <img id="kartImg" alt="Kozmik Uyum Kartı">
+    <div class="kart-aksiyon">
+      <button class="abtn gold" id="kartPaylasImg" hidden>Paylaş 💞</button>
+      <button class="abtn gold" id="kartIndir">İndir 📥</button>
+      <button class="abtn ghost" id="kartKapat">Kapat</button>
+    </div>
+    <div class="toast" id="kartToast"></div>
+    <p class="kart-ipucu">İpucu: Telefonda görseli basılı tutarak da kaydedebilir, hikâyene ekleyebilirsin. 💫</p>
+  </div>
+</div>
+
 <script>
 const $ = s => document.querySelector(s);
+let sonKart = null; // son üretilen sonucun kart verisi
 
 const BURC = [
   {ad:"Koç",glif:"♈",el:"ates",mod:"oncu"},{ad:"Boğa",glif:"♉",el:"toprak",mod:"sabit"},
@@ -186,12 +210,22 @@ function hesapla(){
   const uyum     = altSkor(skor, hash("u"+h), 55, 96);
   const guven    = altSkor(skor, hash("g"+h), 55, 96);
 
+  const bandTxt = skor>=85?"Muhteşem Uyum":skor>=70?"Güçlü Uyum":skor>=56?"Dengeli Uyum":"Zorlayıcı ama Öğretici";
+  const yorumTxt = yorumMetni(b1,b2,skor);
+
   $("#ciftbaslik").textContent = `${ad1} 💞 ${ad2}`;
   $("#gliflar").innerHTML = `<b>${b1.glif} ${b1.ad}</b> &nbsp;×&nbsp; <b>${b2.glif} ${b2.ad}</b>`;
-  $("#band").textContent = skor>=85?"Muhteşem Uyum":skor>=70?"Güçlü Uyum":skor>=56?"Dengeli Uyum":"Zorlayıcı ama Öğretici";
-  $("#yorum").textContent = yorumMetni(b1,b2,skor);
+  $("#band").textContent = bandTxt;
+  $("#yorum").textContent = yorumTxt;
   $("#altlar").innerHTML = [["İletişim",iletisim],["Tutku",tutku],["Uyum",uyum],["Güven",guven]]
     .map(([ad,v])=>`<div class="alt"><div class="satir"><span>${ad}</span><span>%${v}</span></div><div class="bar"><i data-w="${v}"></i></div></div>`).join("");
+
+  // Kozmik Kart için sonucu sakla (testle birebir aynı veriler)
+  sonKart = {
+    ad1, ad2,
+    b1:{ad:b1.ad,glif:b1.glif}, b2:{ad:b2.ad,glif:b2.glif},
+    skor, band:bandTxt, iletisim, tutku, uyum, guven, yorum:yorumTxt, h
+  };
 
   const s=$("#sonuc"); s.hidden=false; $("#foot").hidden=false; s.classList.remove("goster");
   requestAnimationFrame(()=>{
@@ -212,9 +246,195 @@ async function paylas(){
   setTimeout(()=>toast.textContent="",5000);
 }
 
+/* ═══════════════ KOZMİK KART (paylaşılabilir story görseli) ═══════════════ */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+
+function kRoundRect(g,x,y,w,h,r){
+  r=Math.min(r,w/2,h/2);
+  g.beginPath();
+  g.moveTo(x+r,y);
+  g.arcTo(x+w,y,x+w,y+h,r);
+  g.arcTo(x+w,y+h,x,y+h,r);
+  g.arcTo(x,y+h,x,y,r);
+  g.arcTo(x,y,x+w,y,r);
+  g.closePath();
+}
+function kBar(g,x,y,w,h,pct,c1,c2,glow){
+  pct=Math.max(0,Math.min(1,pct));
+  g.fillStyle='rgba(255,255,255,.09)';
+  kRoundRect(g,x,y,w,h,h/2); g.fill();
+  if(pct>0){
+    g.save();
+    if(glow){ g.shadowColor='rgba(224,138,160,.55)'; g.shadowBlur=18; }
+    const grd=g.createLinearGradient(x,0,x+w,0); grd.addColorStop(0,c1); grd.addColorStop(1,c2);
+    g.fillStyle=grd;
+    kRoundRect(g,x,y,Math.max(h,w*pct),h,h/2); g.fill();
+    g.restore();
+  }
+}
+function kWrap(g,text,maxW){
+  const words=String(text).split(/\s+/); const lines=[]; let cur='';
+  for(const w of words){
+    const t=cur?cur+' '+w:w;
+    if(g.measureText(t).width>maxW && cur){ lines.push(cur); cur=w; }
+    else cur=t;
+  }
+  if(cur) lines.push(cur);
+  return lines;
+}
+function kIsimler(g,a1,a2,cx,y,maxW,cream,rose){
+  const sep=' ♥ ';
+  let fs=64;
+  for(;fs>=34;fs-=2){
+    g.font='600 '+fs+'px Georgia,serif';
+    if(g.measureText(a1+sep+a2).width<=maxW) break;
+  }
+  g.font='600 '+fs+'px Georgia,serif';
+  const w1=g.measureText(a1).width, ws=g.measureText(sep).width, w2=g.measureText(a2).width;
+  const total=w1+ws+w2; let x=cx-total/2;
+  g.textAlign='left';
+  g.fillStyle=cream; g.fillText(a1,x,y); x+=w1;
+  g.fillStyle=rose;  g.fillText(sep,x,y); x+=ws;
+  g.fillStyle=cream; g.fillText(a2,x,y);
+  g.textAlign='center';
+}
+
+function kozmikKartCiz(d){
+  const W=1080,H=1920,cx=W/2;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const g=cv.getContext('2d');
+  const gold='#d9b96a',goldS='#e7cf95',cream='#f0e6d2',muted='#9a8fb8',rose='#e08aa0';
+
+  // arka plan
+  const bg=g.createRadialGradient(cx,360,120, cx,1040,1520);
+  bg.addColorStop(0,'#2a1c3f'); bg.addColorStop(.55,'#14101f'); bg.addColorStop(1,'#09060f');
+  g.fillStyle=bg; g.fillRect(0,0,W,H);
+
+  // yıldızlar (çifte özel, sabit)
+  const rnd=mulberry32((d.h>>>0)||123456);
+  for(let i=0;i<120;i++){
+    const x=rnd()*W, y=rnd()*H, r=rnd()*1.9+0.4, a=rnd()*0.6+0.14;
+    g.globalAlpha=a; g.fillStyle=(rnd()>0.86)?goldS:'#ffffff';
+    g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.fill();
+  }
+  g.globalAlpha=1;
+
+  // çerçeve
+  g.strokeStyle='rgba(217,185,106,.55)'; g.lineWidth=2;
+  kRoundRect(g,44,44,W-88,H-88,30); g.stroke();
+  g.strokeStyle='rgba(217,185,106,.16)'; g.lineWidth=1;
+  kRoundRect(g,60,60,W-120,H-120,24); g.stroke();
+
+  g.textAlign='center'; g.textBaseline='alphabetic';
+
+  // marka
+  g.fillStyle=goldS; g.font='600 30px "Segoe UI",system-ui,sans-serif';
+  g.fillText('✦   A S T R O   Y U V A M   ✦', cx, 152);
+  // etiket
+  g.fillStyle=muted; g.font='27px "Segoe UI",system-ui,sans-serif';
+  g.fillText('K O Z M İ K   U Y U M   K A R T I', cx, 232);
+
+  // isimler
+  kIsimler(g, d.ad1, d.ad2, cx, 358, 900, cream, rose);
+
+  // burçlar
+  g.fillStyle=goldS; g.font='40px Georgia,serif';
+  g.fillText(`${d.b1.glif} ${d.b1.ad}    ×    ${d.b2.glif} ${d.b2.ad}`, cx, 452);
+
+  // büyük yüzde + üst köşe %
+  const pctStr=String(d.skor);
+  g.font='700 210px Georgia,serif'; const numW=g.measureText(pctStr).width;
+  g.font='700 82px Georgia,serif';  const pctW=g.measureText('%').width;
+  const gap=14, totalP=numW+gap+pctW, startX=cx-totalP/2;
+  g.textAlign='left';
+  g.save();
+  g.shadowColor='rgba(217,185,106,.45)'; g.shadowBlur=42;
+  g.fillStyle=gold; g.font='700 210px Georgia,serif';
+  g.fillText(pctStr, startX, 728);
+  g.restore();
+  g.fillStyle=gold; g.font='700 82px Georgia,serif';
+  g.fillText('%', startX+numW+gap, 618);
+  g.textAlign='center';
+
+  // bant
+  g.fillStyle=cream; g.font='46px Georgia,serif';
+  g.fillText(d.band, cx, 812);
+
+  // kalp barı
+  kBar(g, cx-360, 858, 720, 22, d.skor/100, rose, gold, true);
+
+  // alt çubuklar
+  let y=978;
+  const subs=[['İletişim',d.iletisim],['Tutku',d.tutku],['Uyum',d.uyum],['Güven',d.guven]];
+  subs.forEach(([ad,v])=>{
+    g.textAlign='left';  g.fillStyle=cream;  g.font='30px "Segoe UI",system-ui,sans-serif';
+    g.fillText(ad, cx-360, y);
+    g.textAlign='right'; g.fillStyle=goldS;
+    g.fillText('%'+v, cx+360, y);
+    kBar(g, cx-360, y+18, 720, 14, v/100, gold, goldS, false);
+    y+=104;
+  });
+  g.textAlign='center';
+
+  // yorum
+  y+=34;
+  g.fillStyle='#e9dff5'; g.font='italic 30px Georgia,serif';
+  kWrap(g, d.yorum, 858).forEach(ln=>{ g.fillText(ln, cx, y); y+=44; });
+
+  // alt bilgi
+  g.fillStyle=goldS; g.font='30px Georgia,serif';
+  g.fillText('✦', cx, 1770);
+  g.fillStyle=gold; g.font='600 34px "Segoe UI",system-ui,sans-serif';
+  g.fillText('astroyuvam.com', cx, 1824);
+  g.fillStyle=muted; g.font='23px "Segoe UI",system-ui,sans-serif';
+  g.fillText('Ücretsiz Uyum Testi · Sen & O', cx, 1862);
+
+  return cv;
+}
+
+let kartBlob=null, kartURL=null;
+function kartOlustur(){
+  if(!sonKart) return;
+  const btn=$("#kartBtn"); const eski=btn.textContent; btn.textContent="Hazırlanıyor…"; btn.disabled=true;
+  try{
+    const cv=kozmikKartCiz(sonKart);
+    cv.toBlob(b=>{
+      btn.textContent=eski; btn.disabled=false;
+      if(!b){ $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; return; }
+      if(kartURL) URL.revokeObjectURL(kartURL);
+      kartBlob=b; kartURL=URL.createObjectURL(b);
+      $("#kartImg").src=kartURL;
+      $("#kartOverlay").hidden=false; document.body.style.overflow='hidden';
+      const f=new File([b],"kozmik-uyum-karti.png",{type:"image/png"});
+      $("#kartPaylasImg").hidden = !(navigator.canShare && navigator.canShare({files:[f]}));
+    },'image/png');
+  }catch(e){
+    btn.textContent=eski; btn.disabled=false;
+    $("#toast").textContent="Görsel oluşturulamadı, tekrar dene.";
+  }
+}
+function kartIndir(){
+  if(!kartURL) return;
+  const a=document.createElement('a'); a.href=kartURL; a.download="kozmik-uyum-karti.png";
+  document.body.appendChild(a); a.click(); a.remove();
+  $("#kartToast").textContent="İndirildi! 📥"; setTimeout(()=>$("#kartToast").textContent="",4000);
+}
+async function kartPaylasImg(){
+  if(!kartBlob) return;
+  const f=new File([kartBlob],"kozmik-uyum-karti.png",{type:"image/png"});
+  const metin = sonKart ? `${sonKart.ad1} & ${sonKart.ad2} kozmik uyumu: %${sonKart.skor}! ✦ astroyuvam.com` : "";
+  try{ await navigator.share({files:[f], title:"Kozmik Uyum Kartı", text:metin}); }catch(e){}
+}
+function kartKapat(){ $("#kartOverlay").hidden=true; document.body.style.overflow=''; }
+
 $("#hesapla").addEventListener("click", hesapla);
 $("#tekrar").addEventListener("click", ()=>{ $("#sonuc").hidden=true; $("#foot").hidden=true; window.scrollTo({top:0,behavior:"smooth"}); });
 $("#paylas").addEventListener("click", paylas);
+$("#kartBtn").addEventListener("click", kartOlustur);
+$("#kartIndir").addEventListener("click", kartIndir);
+$("#kartPaylasImg").addEventListener("click", kartPaylasImg);
+$("#kartKapat").addEventListener("click", kartKapat);
+$("#kartOverlay").addEventListener("click", e=>{ if(e.target===$("#kartOverlay")) kartKapat(); });
 [ "#ad1","#ad2","#tarih1","#tarih2" ].forEach(s=>$(s).addEventListener("keydown",e=>{ if(e.key==="Enter") hesapla(); }));
 </script>
 </body>
