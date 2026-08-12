@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>✦ Astro İkizin — Mitolojik Kozmik İkizin Kim? | Astro Yuvam</title>
+<meta name="description" content="Doğum tarihinle mitolojik kozmik ikizini keşfet. Burcunun efsanevi arketipi, ışığın, gölgen ve armağanın — ücretsiz, anında ve paylaşılası.">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<style>
+  :root{--bg-1:#0c0914;--bg-2:#14101f;--panel:#1c1733;--panel-2:#241c3d;--gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:#9a8fb8;--line:#332a4d;--rose:#e08aa0}
+  *{box-sizing:border-box}html,body{margin:0}
+  body{background:radial-gradient(ellipse at 50% -10%, #2a1c33 0%, var(--bg-2) 52%, var(--bg-1) 100%) fixed;color:var(--cream);font-family:Georgia,'Times New Roman',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:660px;margin:0 auto;padding:0 20px 56px}
+  header.hero{text-align:center;padding:24px 0 4px}
+  .hero .hrt{font-size:34px;filter:drop-shadow(0 0 16px rgba(217,185,106,.5))}
+  .hero h1{font-size:32px;margin:8px 0 4px;font-weight:600}
+  .hero p.sub{color:var(--muted);margin:0 auto;font-size:15px;font-style:italic;max-width:460px;line-height:1.6}
+
+  .card{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:24px;margin:22px 0;box-shadow:0 10px 40px rgba(0,0,0,.38)}
+  .kisi .b{font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.85;margin-bottom:8px}
+  input[type=text],input[type=date]{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--cream);border-radius:10px;padding:12px 14px;font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;outline:none;color-scheme:dark;transition:border-color .2s;margin-bottom:10px}
+  input:focus{border-color:var(--gold)}
+  .btn{display:block;width:100%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;border:none;border-radius:12px;padding:14px;font-size:16px;cursor:pointer;font-family:'Segoe UI',system-ui,sans-serif;transition:transform .12s,box-shadow .2s;margin-top:4px}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(217,185,106,.25)}
+  .hata{color:#e0794f;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;text-align:center;margin-top:10px;min-height:16px}
+
+  #sonuc{opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+  #sonuc.goster{opacity:1;transform:none}
+  .ikiz-intro{text-align:center;color:var(--muted);font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;letter-spacing:1px;margin-bottom:4px}
+  .amblem{width:172px;height:172px;margin:10px auto 4px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 34px rgba(217,185,106,.22),inset 0 0 26px rgba(217,185,106,.08)}
+  .amblem::after{content:"";position:absolute;inset:11px;border-radius:50%;border:1px solid rgba(217,185,106,.28)}
+  .amblem .glif{font-size:86px;color:var(--gold);line-height:1}
+  .twin-ad{text-align:center;font-size:44px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-top:12px;line-height:1.05}
+  .twin-epithet{text-align:center;font-size:19px;color:var(--gold-soft);font-style:italic;margin-top:4px}
+  .burc-satir{text-align:center;color:var(--cream);font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;margin-top:12px;opacity:.92}
+  .ayrac{text-align:center;color:var(--gold);opacity:.6;margin:16px 0 2px;font-size:15px}
+  .mitos{font-size:16px;line-height:1.8;color:#efe7f6;text-align:center;margin:6px auto 0;max-width:520px}
+  .chipler{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .chip{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:11px 18px;font-family:'Segoe UI',system-ui,sans-serif;text-align:center;min-width:140px}
+  .chip b{display:block;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+  .chip.isik b{color:var(--gold)} .chip.golge b{color:var(--rose)}
+  .chip span{color:var(--cream);font-size:14px}
+  .armagan{text-align:center;font-size:15.5px;color:var(--cream);margin:20px auto 0;max-width:520px;line-height:1.7}
+  .armagan b{color:var(--gold-soft)}
+  .muhur{text-align:center;font-style:italic;color:var(--muted);font-size:14.5px;margin:16px auto 0;max-width:520px;line-height:1.7}
+
+  .aksiyon{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+  .abtn{border:none;border-radius:30px;padding:12px 22px;font-size:14.5px;cursor:pointer;font-family:'Segoe UI',system-ui,sans-serif;transition:transform .12s,box-shadow .2s}
+  .abtn.gold{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold}
+  .abtn.gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(217,185,106,.28)}
+  .abtn.ghost{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+  .abtn.ghost:hover{background:rgba(217,185,106,.10)}
+  .toast{font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;color:var(--gold-soft);text-align:center;min-height:18px;margin-top:10px}
+
+  .foot{text-align:center;margin-top:24px}
+  .cta{display:inline-block;margin:6px 0 16px;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;padding:13px 26px;border-radius:30px;font-size:15px;font-family:'Segoe UI',system-ui,sans-serif}
+  .disclaimer{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);max-width:530px;margin:0 auto;line-height:1.6}
+
+  .kart-overlay{position:fixed;inset:0;background:rgba(6,4,12,.86);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+  .kart-overlay[hidden]{display:none}
+  .kart-box{max-width:440px;width:100%;text-align:center}
+  .kart-box img{width:100%;max-width:360px;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid var(--line)}
+  .kart-ipucu{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);margin:12px auto 0;max-width:340px;line-height:1.5}
+  .kart-aksiyon{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<div id="astro-menu"></div>
+<script src="/menu.js" defer></script>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hrt">🪞</div>
+    <h1>Astro İkizin</h1>
+    <p class="sub">Doğduğun gün gökyüzü sana hangi efsaneyi fısıldadı? Mitolojik kozmik ikizini keşfet.</p>
+  </header>
+
+  <div class="card">
+    <div class="kisi">
+      <div class="b">Sen</div>
+      <input type="text" id="ad" placeholder="Adın" maxlength="24" autocomplete="off">
+      <input type="date" id="tarih" min="1900-01-01" max="2025-12-31">
+    </div>
+    <button class="btn" id="hesapla">Kozmik İkizimi Bul 🪞</button>
+    <div class="hata" id="hata"></div>
+  </div>
+
+  <div class="card" id="sonuc" hidden>
+    <div class="ikiz-intro" id="intro"></div>
+    <div class="amblem"><span class="glif" id="glif"></span></div>
+    <div class="twin-ad" id="twinad"></div>
+    <div class="twin-epithet" id="epithet"></div>
+    <div class="burc-satir" id="burcsatir"></div>
+    <div class="ayrac">✦</div>
+    <div class="mitos" id="mitos"></div>
+    <div class="chipler">
+      <div class="chip isik"><b>Işığın</b><span id="isik"></span></div>
+      <div class="chip golge"><b>Gölgen</b><span id="golge"></span></div>
+    </div>
+    <div class="armagan" id="armagan"></div>
+    <div class="muhur" id="muhur"></div>
+    <div class="aksiyon">
+      <button class="abtn gold" id="kartBtn">🎴 İkiz Kartı Oluştur</button>
+      <button class="abtn ghost" id="paylas">Metni Paylaş ✦</button>
+      <button class="abtn ghost" id="tekrar">Yeni</button>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <div class="foot" id="foot" hidden>
+    <a class="cta" href="/#cards">Tüm haritanı gör: Natal Harita Raporu →</a>
+    <p class="disclaimer">
+      Bu deneyim <strong>eğlence ve ilham amaçlıdır</strong>; güneş burcuna dayalı sembolik bir arketip eşleştirmesidir.
+      Gerçek bir kişilik portresi, tüm gezegenlerini içeren doğum haritanı gerektirir. Yıldızlar yol gösterir;
+      kararlar her zaman senindir. 💫
+    </p>
+  </div>
+</div>
+
+<!-- İkiz Kartı önizleme -->
+<div class="kart-overlay" id="kartOverlay" hidden>
+  <div class="kart-box">
+    <img id="kartImg" alt="Kozmik İkiz Kartı">
+    <div class="kart-aksiyon">
+      <button class="abtn gold" id="kartPaylasImg" hidden>Paylaş ✦</button>
+      <button class="abtn gold" id="kartIndir">İndir 📥</button>
+      <button class="abtn ghost" id="kartKapat">Kapat</button>
+    </div>
+    <div class="toast" id="kartToast"></div>
+    <p class="kart-ipucu">İpucu: Telefonda görseli basılı tutarak da kaydedebilir, hikâyene ekleyebilirsin. 💫</p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+let sonKart = null;
+
+const BURC = [
+  {ad:"Koç",glif:"♈",el:"ates",mod:"oncu"},{ad:"Boğa",glif:"♉",el:"toprak",mod:"sabit"},
+  {ad:"İkizler",glif:"♊",el:"hava",mod:"degisken"},{ad:"Yengeç",glif:"♋",el:"su",mod:"oncu"},
+  {ad:"Aslan",glif:"♌",el:"ates",mod:"sabit"},{ad:"Başak",glif:"♍",el:"toprak",mod:"degisken"},
+  {ad:"Terazi",glif:"♎",el:"hava",mod:"oncu"},{ad:"Akrep",glif:"♏",el:"su",mod:"sabit"},
+  {ad:"Yay",glif:"♐",el:"ates",mod:"degisken"},{ad:"Oğlak",glif:"♑",el:"toprak",mod:"oncu"},
+  {ad:"Kova",glif:"♒",el:"hava",mod:"sabit"},{ad:"Balık",glif:"♓",el:"su",mod:"degisken"}
+];
+const ELAD={ates:"Ateş",toprak:"Toprak",hava:"Hava",su:"Su"};
+const MODAD={oncu:"Öncü",sabit:"Sabit",degisken:"Değişken"};
+
+// BURC ile aynı indeks sırasında 12 mitolojik arketip
+const ARK = [
+  {twin:"HERAKLES", epithet:"Yılmaz Kahraman",
+   mitos:"Herakles önüne çıkan her imkânsızı yürek gücüyle aştı. Tıpkı senin gibi: bir yol kapandığında geri dönmez, yenisini açarsın — korku seni durdurmadan önce sen çoktan ilk adımı atmışsındır.",
+   isik:"Cesaret · Öncülük", golge:"Sabırsızlık",
+   armagan:"Herkesin çekindiği o ilk adımı atma gücü."},
+  {twin:"DEMETER", epithet:"Toprağın Bereketi",
+   mitos:"Demeter toprağı bereketlendiren, emeğiyle mevsimleri döndüren tanrıçadır. Sen de sabırla, sağlam ve şefkatli ellerle büyütürsün; acele etmez, kök salarsın — dokunduğun her şey zamanla meyveye durar.",
+   isik:"Sadakat · Kararlılık", golge:"İnatçılık",
+   armagan:"Fırtınada bile yerinde duran o sağlam zemin olmak."},
+  {twin:"HERMES", epithet:"Kanatlı Haberci",
+   mitos:"Hermes dünyalar arasında haber taşıyan, zekâsı ve diliyle her kapıyı açan tanrıdır. Sen de fikirden fikire bir kıvılcım gibi sıçrarsın; merakın hiç dinmez, her sohbetin küçük bir yolculuktur.",
+   isik:"Zekâ · Uyum", golge:"Dağınıklık",
+   armagan:"En karmaşık şeyi herkesin anlayacağı dile çevirmek."},
+  {twin:"SELENE", epithet:"Ayın Kızı",
+   mitos:"Selene geceye ışığını serpen ay tanrıçasıdır; gelgitleri, duyguları o yönetir. Sen de içindeki med-cezirleri hisseder, sevdiklerini bir liman gibi sararsın — hafızan güçlü, şefkatin derindir.",
+   isik:"Şefkat · Sezgi", golge:"Alınganlık",
+   armagan:"İnsanların yanında güvende hissettiği o sıcaklık olmak."},
+  {twin:"APOLLON", epithet:"Güneşin Çocuğu",
+   mitos:"Apollon güneşin, sanatın ve ışığın tanrısıdır; girdiği her yeri aydınlatır. Sen de doğuştan bir sahne ışığı taşırsın; cömert, gururlu ve içten — parladığında etrafındakileri de ısıtırsın.",
+   isik:"Cömertlik · Liderlik", golge:"Gurur",
+   armagan:"Varlığınla bir odayı canlandırıp ilham vermek."},
+  {twin:"HYGIEIA", epithet:"Şifanın Eli",
+   mitos:"Hygieia sağlığın, arınmanın ve özenli düzenin tanrıçasıdır. Sen de kaostan düzen çıkarır, ayrıntıda başkalarının göremediği çözümü fark edersin; sessizce iyileştirir, sessizce tamamlarsın.",
+   isik:"Özen · Analiz", golge:"Aşırı eleştiri",
+   armagan:"Dağınık olanı derleyip toparlayan o usta el olmak."},
+  {twin:"THEMIS", epithet:"Adaletin Terazisi",
+   mitos:"Themis elinde teraziyle dengeyi ve adaleti temsil eden bilge titandır. Sen de her tarafı tartar, kırılan uyumu onarır, güzelliğe ve hakkaniyete yönelirsin; kavga değil köprü kurarsın.",
+   isik:"Uyum · Zarafet", golge:"Kararsızlık",
+   armagan:"En gergin masaya bile huzuru getirmek."},
+  {twin:"PERSEPHONE", epithet:"Yeraltının Kraliçesi",
+   mitos:"Persephone hem baharın kızı hem yeraltının kraliçesidir; ölümle yeniden doğuş arasında yolculuk eder. Sen de yüzeyle yetinmez, derine iner, küllerinden yeniden doğmayı bilirsin — dönüşüm senin doğandır.",
+   isik:"Tutku · Derinlik", golge:"Kıskançlık",
+   armagan:"En karanlık dönemi bir yeniden doğuşa çevirmek."},
+  {twin:"CHIRON", epithet:"Yıldızlara Bakan Okçu",
+   mitos:"Chiron bilge bir kentaur, kahramanların öğretmeni ve gökyüzüne çevrili okuyla hakikatin avcısıdır. Sen de ufka bakar, anlamın peşinden gider, öğrendiğini paylaşırsın; özgürlük senin pusulandır.",
+   isik:"İyimserlik · Bilgelik", golge:"Patavatsızlık",
+   armagan:"Herkese daha büyük resmi gösterip ufuk açmak."},
+  {twin:"KRONOS", epithet:"Zamanın Efendisi",
+   mitos:"Kronos zamanı ve hasadı yöneten titandır; sabrın ve yapının efendisidir. Sen de uzun yolu göze alır, tuğla tuğla zirveye tırmanırsın; disiplinin sarsılmaz, sözün senettir.",
+   isik:"Disiplin · Kararlılık", golge:"Katılık",
+   armagan:"Hayal edileni zamanla gerçeğe dönüştürmek."},
+  {twin:"PROMETHEUS", epithet:"İnsanlığın Ateşi",
+   mitos:"Prometheus tanrılardan ateşi çalıp insanlığa armağan eden, geleceğe inanan isyankâr titandır. Sen de kalıpları kırar, herkesten önce yarını görür, iyilik uğruna sıra dışı olmayı göze alırsın.",
+   isik:"Özgünlük · Vizyon", golge:"Mesafe",
+   armagan:"Henüz kimsenin düşünmediğini düşleyip ileriyi görmek."},
+  {twin:"ORPHEUS", epithet:"Yıldızların Ozanı",
+   mitos:"Orpheus lirinden dökülen ezgiyle taşları bile yumuşatan, aşk için ölümü aşan ilahi ozandır. Sen de görünenin ötesini duyar, hayal ve şefkatle dünyaya dokunursun; sezginin ve merhametin dili sensin.",
+   isik:"Hayal gücü · Şefkat", golge:"Kaçış eğilimi",
+   armagan:"Kelimelerin yetmediği yeri hissettirerek doldurmak."}
+];
+
+const MUHUR = [
+  "Doğduğun an gökyüzü tam da bu tohumu senin avucuna bıraktı.",
+  "Bu arketip senin gölgende değil, ışığında yaşıyor.",
+  "Yıldızlar seni bu enerjiyle mühürlemiş; nasıl taşıyacağın sana kalmış.",
+  "Bu ikiz sana bir kader değil, bir ayna tutuyor.",
+  "İçindeki bu figürü tanıdıkça kendi hikâyeni daha net yazarsın.",
+  "Gökyüzü herkese farklı bir mit fısıldar; seninki bu.",
+  "Bu enerji senin ham cevherin — onu neye dönüştüreceğin senin elinde.",
+  "Yıldızların dilinde sen işte bu arketiple anılırsın."
+];
+
+function burcBul(m,d){
+  const t=[[1,20,10],[2,19,11],[3,21,0],[4,20,1],[5,21,2],[6,21,3],[7,23,4],[8,23,5],[9,23,6],[10,23,7],[11,22,8],[12,22,9]];
+  const [,gun,idx]=t[m-1];
+  if(d>=gun) return idx;
+  return (idx+11)%12;
+}
+function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0);}
+
+function hesapla(){
+  const ad=$("#ad").value.trim(), t=$("#tarih").value, err=$("#hata"); err.textContent="";
+  if(!ad){ err.textContent="Lütfen adını yaz."; return; }
+  if(!t){ err.textContent="Lütfen doğum tarihini seç."; return; }
+  const [y,m,d]=t.split("-").map(Number);
+  const idx=burcBul(m,d), b=BURC[idx], a=ARK[idx];
+  const h=hash(ad.toLocaleLowerCase("tr")+"|"+t);
+  const muhur=MUHUR[h%MUHUR.length];
+
+  $("#intro").textContent = `${ad}, kozmik ikizin…`;
+  $("#glif").textContent = b.glif;
+  $("#twinad").textContent = a.twin;
+  $("#epithet").textContent = "“"+a.epithet+"”";
+  $("#burcsatir").textContent = `${b.glif} ${b.ad}  ·  ${ELAD[b.el]}  ·  ${MODAD[b.mod]}`;
+  $("#mitos").textContent = a.mitos;
+  $("#isik").textContent = a.isik;
+  $("#golge").textContent = a.golge;
+  $("#armagan").innerHTML = `<b>Armağanın:</b> ${a.armagan}`;
+  $("#muhur").textContent = muhur;
+
+  sonKart = {ad, twin:a.twin, epithet:a.epithet, glif:b.glif,
+    burcAd:b.ad, el:ELAD[b.el], mod:MODAD[b.mod],
+    mitos:a.mitos, isik:a.isik, golge:a.golge, armagan:a.armagan, h};
+
+  const s=$("#sonuc"); s.hidden=false; $("#foot").hidden=false; s.classList.remove("goster");
+  requestAnimationFrame(()=>s.classList.add("goster"));
+  s.scrollIntoView({behavior:"smooth",block:"center"});
+  $("#paylas").dataset.metin = `${ad}'ın kozmik ikizi: ${a.twin} — "${a.epithet}" (${b.ad}) ✦ Sen de bul:`;
+}
+
+async function paylas(){
+  const metin=$("#paylas").dataset.metin||"", url=location.origin+"/astro-ikizin.html", toast=$("#toast");
+  if(navigator.share){ try{ await navigator.share({title:"Astro İkizin — Astro Yuvam",text:metin,url}); return; }catch(e){} }
+  try{ await navigator.clipboard.writeText(metin+" "+url); toast.textContent="Kopyalandı! Paylaşabilirsin. ✦"; }
+  catch(e){ toast.textContent="Link: "+url; }
+  setTimeout(()=>toast.textContent="",5000);
+}
+
+/* ═══════════ İKİZ KARTI (paylaşılabilir story görseli) ═══════════ */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+function kRoundRect(g,x,y,w,h,r){r=Math.min(r,w/2,h/2);g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
+function kWrap(g,text,maxW){const words=String(text).split(/\s+/);const lines=[];let cur='';for(const w of words){const t=cur?cur+' '+w:w;if(g.measureText(t).width>maxW&&cur){lines.push(cur);cur=w;}else cur=t;}if(cur)lines.push(cur);return lines;}
+function kFit(g,text,maxW,base,weight,fam){let fs=base;for(;fs>=28;fs-=2){g.font=(weight?weight+' ':'')+fs+'px '+fam;if(g.measureText(text).width<=maxW)break;}return fs;}
+
+function ikizKartCiz(d){
+  const W=1080,H=1920,cx=W/2;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const g=cv.getContext('2d');
+  const gold='#d9b96a',goldS='#e7cf95',cream='#f0e6d2',muted='#9a8fb8',rose='#e08aa0';
+
+  const bg=g.createRadialGradient(cx,360,120, cx,1040,1520);
+  bg.addColorStop(0,'#2a1c3f'); bg.addColorStop(.55,'#14101f'); bg.addColorStop(1,'#09060f');
+  g.fillStyle=bg; g.fillRect(0,0,W,H);
+
+  const rnd=mulberry32((d.h>>>0)||123456);
+  for(let i=0;i<120;i++){const x=rnd()*W,y=rnd()*H,r=rnd()*1.9+0.4,al=rnd()*0.6+0.14;g.globalAlpha=al;g.fillStyle=(rnd()>0.86)?goldS:'#fff';g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fill();}
+  g.globalAlpha=1;
+
+  g.strokeStyle='rgba(217,185,106,.55)'; g.lineWidth=2; kRoundRect(g,44,44,W-88,H-88,30); g.stroke();
+  g.strokeStyle='rgba(217,185,106,.16)'; g.lineWidth=1; kRoundRect(g,60,60,W-120,H-120,24); g.stroke();
+
+  g.textAlign='center'; g.textBaseline='alphabetic';
+  g.fillStyle=goldS; g.font='600 30px "Segoe UI",system-ui,sans-serif';
+  g.fillText('✦   A S T R O   Y U V A M   ✦', cx, 150);
+  g.fillStyle=muted; g.font='27px "Segoe UI",system-ui,sans-serif';
+  g.fillText('K O Z M İ K   İ K İ Z İ N', cx, 228);
+
+  // amblem (daire + glif)
+  const ey=430, er=118;
+  g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.stroke();
+  g.strokeStyle='rgba(217,185,106,.35)'; g.lineWidth=1.5; g.beginPath(); g.arc(cx,ey,er-14,0,Math.PI*2); g.stroke();
+  g.save(); g.shadowColor='rgba(217,185,106,.5)'; g.shadowBlur=26;
+  g.fillStyle=gold; g.font='150px Georgia,serif'; g.textBaseline='middle';
+  g.fillText(d.glif, cx, ey+6); g.restore(); g.textBaseline='alphabetic';
+
+  // intro
+  g.fillStyle=muted; g.font='italic 30px Georgia,serif';
+  g.fillText(`${d.ad}'ın kozmik ikizi`, cx, 622);
+
+  // ikiz adı (sığdırmalı)
+  const fs=kFit(g, d.twin, 900, 108, '700', 'Georgia,serif');
+  g.save(); g.shadowColor='rgba(217,185,106,.4)'; g.shadowBlur=34;
+  g.fillStyle=gold; g.font='700 '+fs+'px Georgia,serif';
+  g.fillText(d.twin, cx, 720); g.restore();
+
+  // epithet
+  g.fillStyle=goldS; g.font='italic 40px Georgia,serif';
+  g.fillText('“'+d.epithet+'”', cx, 782);
+
+  // burç satırı
+  g.fillStyle=cream; g.font='30px "Segoe UI",system-ui,sans-serif';
+  g.fillText(`${d.glif}  ${d.burcAd}   ·   ${d.el}   ·   ${d.mod}`, cx, 846);
+
+  g.fillStyle='rgba(217,185,106,.6)'; g.font='30px Georgia,serif';
+  g.fillText('✦', cx, 908);
+
+  // mitos
+  let y=968;
+  g.fillStyle='#e9dff5'; g.font='31px Georgia,serif';
+  kWrap(g, d.mitos, 872).forEach(ln=>{ g.fillText(ln, cx, y); y+=46; });
+
+  // ışık / gölge kutuları
+  y+=34;
+  const boxW=396, boxH=120, gap=40, bx1=cx-boxW-gap/2, bx2=cx+gap/2;
+  [['IŞIĞIN', d.isik, goldS, bx1],['GÖLGEN', d.golge, rose, bx2]].forEach(([et,val,col,bx])=>{
+    g.fillStyle='rgba(255,255,255,.045)'; kRoundRect(g,bx,y,boxW,boxH,18); g.fill();
+    g.strokeStyle='rgba(217,185,106,.22)'; g.lineWidth=1; kRoundRect(g,bx,y,boxW,boxH,18); g.stroke();
+    g.fillStyle=col; g.font='600 22px "Segoe UI",system-ui,sans-serif';
+    g.fillText(et, bx+boxW/2, y+44);
+    g.fillStyle=cream; g.font='28px "Segoe UI",system-ui,sans-serif';
+    const vf=kFit(g,val,boxW-40,28,'','"Segoe UI",system-ui,sans-serif');
+    g.font=vf+'px "Segoe UI",system-ui,sans-serif';
+    g.fillText(val, bx+boxW/2, y+86);
+  });
+  y+=boxH+70;
+
+  // armağan
+  g.fillStyle=goldS; g.font='600 28px "Segoe UI",system-ui,sans-serif';
+  g.fillText('ARMAĞANIN', cx, y); y+=48;
+  g.fillStyle=cream; g.font='italic 31px Georgia,serif';
+  kWrap(g, d.armagan, 872).forEach(ln=>{ g.fillText(ln, cx, y); y+=44; });
+
+  // alt bilgi
+  g.fillStyle=goldS; g.font='30px Georgia,serif'; g.fillText('✦', cx, 1770);
+  g.fillStyle=gold; g.font='600 34px "Segoe UI",system-ui,sans-serif';
+  g.fillText('astroyuvam.com', cx, 1824);
+  g.fillStyle=muted; g.font='23px "Segoe UI",system-ui,sans-serif';
+  g.fillText('Astro İkizin · Mitolojik Arketipin', cx, 1862);
+
+  return cv;
+}
+
+let kartBlob=null, kartURL=null;
+function kartOlustur(){
+  if(!sonKart) return;
+  const btn=$("#kartBtn"); const eski=btn.textContent; btn.textContent="Hazırlanıyor…"; btn.disabled=true;
+  try{
+    const cv=ikizKartCiz(sonKart);
+    cv.toBlob(b=>{
+      btn.textContent=eski; btn.disabled=false;
+      if(!b){ $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; return; }
+      if(kartURL) URL.revokeObjectURL(kartURL);
+      kartBlob=b; kartURL=URL.createObjectURL(b);
+      $("#kartImg").src=kartURL;
+      $("#kartOverlay").hidden=false; document.body.style.overflow='hidden';
+      const f=new File([b],"kozmik-ikiz-karti.png",{type:"image/png"});
+      $("#kartPaylasImg").hidden = !(navigator.canShare && navigator.canShare({files:[f]}));
+    },'image/png');
+  }catch(e){ btn.textContent=eski; btn.disabled=false; $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; }
+}
+function kartIndir(){
+  if(!kartURL) return;
+  const a=document.createElement('a'); a.href=kartURL; a.download="kozmik-ikiz-karti.png";
+  document.body.appendChild(a); a.click(); a.remove();
+  $("#kartToast").textContent="İndirildi! 📥"; setTimeout(()=>$("#kartToast").textContent="",4000);
+}
+async function kartPaylasImg(){
+  if(!kartBlob) return;
+  const f=new File([kartBlob],"kozmik-ikiz-karti.png",{type:"image/png"});
+  const metin=sonKart?`${sonKart.ad}'ın kozmik ikizi: ${sonKart.twin} — "${sonKart.epithet}" ✦ astroyuvam.com`:"";
+  try{ await navigator.share({files:[f], title:"Kozmik İkiz Kartı", text:metin}); }catch(e){}
+}
+function kartKapat(){ $("#kartOverlay").hidden=true; document.body.style.overflow=''; }
+
+$("#hesapla").addEventListener("click", hesapla);
+$("#tekrar").addEventListener("click", ()=>{ $("#sonuc").hidden=true; $("#foot").hidden=true; window.scrollTo({top:0,behavior:"smooth"}); });
+$("#paylas").addEventListener("click", paylas);
+$("#kartBtn").addEventListener("click", kartOlustur);
+$("#kartIndir").addEventListener("click", kartIndir);
+$("#kartPaylasImg").addEventListener("click", kartPaylasImg);
+$("#kartKapat").addEventListener("click", kartKapat);
+$("#kartOverlay").addEventListener("click", e=>{ if(e.target===$("#kartOverlay")) kartKapat(); });
+[ "#ad","#tarih" ].forEach(s=>$(s).addEventListener("keydown",e=>{ if(e.key==="Enter") hesapla(); }));
+</script>
+</body>
+</html>
