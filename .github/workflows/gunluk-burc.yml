@@ -1,1 +1,46 @@
+name: Günlük Burç Yorumları
 
+on:
+  schedule:
+    - cron: "0 4 * * *"      # her gün 04:00 UTC = 07:00 Türkiye
+  workflow_dispatch:          # "Run workflow" ile elle de tetiklenebilir
+
+permissions:
+  contents: write             # oluşan sayfaları repoya commit'lemek için
+
+concurrency:
+  group: gunluk-burc
+  cancel-in-progress: false
+
+jobs:
+  uret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu al
+        uses: actions/checkout@v4
+
+      - name: Node kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Bağımlılık (astronomy-engine)
+        run: npm install --no-save astronomy-engine
+
+      - name: Yorumları üret
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AI_MODEL: ${{ secrets.AI_MODEL }}
+        run: node gen-burc.mjs
+
+      - name: Değişiklikleri commit'le
+        run: |
+          git config user.name "astro-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add gunluk-burc-yorumlari.html haftalik-burc-yorumlari.html gunluk-burc-yorumlari haftalik-burc-yorumlari
+          if git diff --cached --quiet; then
+            echo "Değişiklik yok, commit atlanıyor."
+          else
+            git commit -m "Burç yorumları güncellendi: $(TZ=Europe/Istanbul date +%F)"
+            git push
+          fi
