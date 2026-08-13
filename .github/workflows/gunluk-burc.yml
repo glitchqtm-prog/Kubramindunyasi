@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 4 * * *"      # her gün 04:00 UTC = 07:00 Türkiye
   workflow_dispatch:          # "Run workflow" ile elle de tetiklenebilir
+    inputs:
+      force_weekly:
+        description: "Haftalık yorumları da yeniden üret (aynı hafta olsa bile)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write             # oluşan sayfaları repoya commit'lemek için
@@ -31,6 +36,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           AI_MODEL: ${{ secrets.AI_MODEL }}
+          FORCE_WEEKLY: ${{ inputs.force_weekly }}
         run: node gen-burc.mjs
 
       - name: Değişiklikleri commit'le
