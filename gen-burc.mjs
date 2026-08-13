@@ -81,22 +81,21 @@ function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;"
 /* ---------- Anthropic çağrısı ---------- */
 async function yorumUret(tur, gokMetni){
   const kapsam = tur==="gunluk" ? "BUGÜN" : "BU HAFTA";
-  const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan bir editörsün. Ton: sıcak, dürüst, öz-farkındalık odaklı; ASLA kesin kehanet ya da kader hükmü değil ("olacak" değil, "eğilim/enerji" dili). Kısa, akıcı, klişeden uzak. Bugünün gerçek gökyüzü: ${gokMetni}. Bu enerjiyi yorumlara hafifçe yansıt ama her burcu kendi doğasına göre farklılaştır.`;
+  const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan sıcak, olumlu ve güçlendirici bir editörsün. Ton: umut veren, yapıcı ve cesaret verici — bir zorluğu ya da riski dile getirirken bile MUTLAKA bir çıkış yolu, somut bir öneri ve olumlu bir bakış sun. ASLA kesin kehanet ya da kader hükmü değil ("olacak" değil, "eğilim/enerji/fırsat" dili). Klişeden uzak, akıcı, samimi ve okuyucuyu iyi hissettiren bir dil kullan. Bugünün gerçek gökyüzü: ${gokMetni}. Bu enerjiyi yorumlara doğal biçimde yansıt; her burcu kendi doğasına göre belirgin şekilde farklılaştır (hepsi aynı gibi olmasın).`;
   const siraliBurclar = BURCLAR.map((b,i)=>`${i}: ${b.ad} (${b.doga})`).join("\n");
-  const uzunluk = tur==="gunluk"
-    ? "genel/ask/is 2-3 cümle, tavsiye tek cümle, teaser en fazla 12 kelime"
-    : "genel/ask/is 2-3 cümle (haftalık bakış), tavsiye tek cümle, teaser en fazla 12 kelime";
+  const zaman = tur==="gunluk" ? "bugünün" : "bu haftanın";
+  const uzunluk = `genel, ask ve is bölümlerinin HER BİRİ 4-5 cümle olsun (dolgun ve doyurucu, tek-iki cümlelik kısa yorumlardan KAÇIN) ve şu akışı izlesin: (1) ${zaman} enerjisini/atmosferini tanı, (2) olası bir zorluğu ya da fırsatı nazikçe göster, (3) SOMUT ve uygulanabilir bir öneri ver, (4) cesaret veren, olumlu bir cümleyle kapat. tavsiye: tek, net, uygulanabilir ve olumlu bir cümle. teaser: en fazla 12 kelime, olumlu ve merak uyandıran`;
   const user = `${kapsam} için aşağıdaki 12 burcun her birine yorum yaz. Sadece GEÇERLİ JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
 Sıra tam olarak şu olmalı (0..11):
 ${siraliBurclar}
 
 Her öğe şu alanlara sahip olmalı: {"teaser": "...","genel":"...","ask":"...","is":"...","tavsiye":"..."}
-Uzunluk: ${uzunluk}. Türkçe yaz. 12 öğe döndür.`;
+Uzunluk ve akış: ${uzunluk}. Türkçe yaz, olumlu ve güçlendirici ol. 12 öğe döndür.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:4096, system:sys, messages:[{role:"user",content:user}] })
+    body: JSON.stringify({ model:MODEL, max_tokens:8192, system:sys, messages:[{role:"user",content:user}] })
   });
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
@@ -319,7 +318,7 @@ function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
   const hafta = isoHafta(now);
   const markerYol = "haftalik-burc-yorumlari/.hafta";
   const oncekiHafta = existsSync(markerYol) ? readFileSync(markerYol,"utf-8").trim() : "";
-  const haftalikGerek = (hafta!==oncekiHafta) || !existsSync("haftalik-burc-yorumlari.html");
+  const haftalikGerek = (hafta!==oncekiHafta) || !existsSync("haftalik-burc-yorumlari.html") || process.env.FORCE_WEEKLY==="true";
   let haftalikDosyalar = [];
   if(haftalikGerek){
     console.log("Haftalık yorumlar üretiliyor... (hafta "+hafta+")");
