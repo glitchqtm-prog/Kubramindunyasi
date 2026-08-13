@@ -20,15 +20,15 @@
     { baslik:"Sor & Yorumla", items:[
       { href:"/yildizlara-sor.html", ad:"✦ Yıldızlara Sor", alt:"Kavramları sor, öğren" },
       { href:"/ruya-sembolu.html",   ad:"✦ Rüya Sembolü",   alt:"Rüyandaki motif ne anlatıyor?" },
-      { href:"/gunun-kartin.html",   ad:"✦ Günün Kartın",   alt:"Bugüne özel arkana kartın" }
+      { href:"/gunun-kartin.html",   ad:"✦ Günün Kartın",   alt:"Bugüne özel arkana kartın" },
+       { href:"/kozmik-nabiz.html",   ad:"✦ Kozmik Nabzın",      alt:"Bugüne özel kelimen, rengin ve yansıman" }
     ]},
     { baslik:"Testler & Sayılar", items:[
       { href:"/hangi-burcsun.html",  ad:"✦ Hangi Burçsun?",    alt:"10 soruluk eğlenceli test" },
       { href:"/uyum-testi.html",     ad:"✦ Uyum Testi",        alt:"Sen & O ne kadar uyumlusunuz?" },
       { href:"/yasam-yolu.html",     ad:"✦ Yaşam Yolu Sayın",  alt:"Doğum tarihinden anında" },
       { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" },
-      { href:"/astro-ikizin.html",   ad:"✦ Astro İkizin",      alt:"Doğduğun günün mitolojik ikizi" },
-       { href:"/kozmik-nabiz.html",   ad:"✦ Kozmik Nabzın",      alt:"Bugüne özel kelimen, rengin ve yansıman" }
+      { href:"/astro-ikizin.html",   ad:"✦ Astro İkizin",      alt:"Doğduğun günün mitolojik ikizi" }
     ]},
     { baslik:"Rehberler", items:[
       { href:"/burclar.html",   ad:"✦ Burç Profilleri",   alt:"12 burcun karakteri ve özellikleri" },
