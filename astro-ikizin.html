@@ -32,6 +32,9 @@
   .amblem{width:172px;height:172px;margin:10px auto 4px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 34px rgba(217,185,106,.22),inset 0 0 26px rgba(217,185,106,.08)}
   .amblem::after{content:"";position:absolute;inset:11px;border-radius:50%;border:1px solid rgba(217,185,106,.28)}
   .amblem .glif{font-size:86px;color:var(--gold);line-height:1}
+  .amblem .portre{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px);border-radius:50%;object-fit:cover;object-position:center top;display:none}
+  .amblem.has-portre .portre{display:block}
+  .amblem.has-portre .glif{display:none}
   .twin-ad{text-align:center;font-size:44px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-top:12px;line-height:1.05}
   .twin-epithet{text-align:center;font-size:19px;color:var(--gold-soft);font-style:italic;margin-top:4px}
   .burc-satir{text-align:center;color:var(--cream);font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;margin-top:12px;opacity:.92}
@@ -73,7 +76,7 @@
 
 <div class="wrap">
   <header class="hero">
-    <div class="hrt">🪞</div>
+    <div class="hrt">✦</div>
     <h1>Astro İkizin</h1>
     <p class="sub">Doğduğun gün gökyüzü sana hangi efsaneyi fısıldadı? Mitolojik kozmik ikizini keşfet.</p>
   </header>
@@ -84,13 +87,13 @@
       <input type="text" id="ad" placeholder="Adın" maxlength="24" autocomplete="off">
       <input type="date" id="tarih" min="1900-01-01" max="2025-12-31">
     </div>
-    <button class="btn" id="hesapla">Kozmik İkizimi Bul 🪞</button>
+    <button class="btn" id="hesapla">Kozmik İkizimi Bul ✦</button>
     <div class="hata" id="hata"></div>
   </div>
 
   <div class="card" id="sonuc" hidden>
     <div class="ikiz-intro" id="intro"></div>
-    <div class="amblem"><span class="glif" id="glif"></span></div>
+    <div class="amblem" id="amblem"><img class="portre" id="portre" alt="" decoding="async"><span class="glif" id="glif"></span></div>
     <div class="twin-ad" id="twinad"></div>
     <div class="twin-epithet" id="epithet"></div>
     <div class="burc-satir" id="burcsatir"></div>
@@ -201,6 +204,9 @@ const ARK = [
    armagan:"Kelimelerin yetmediği yeri hissettirerek doldurmak."}
 ];
 
+// BURC/ARK ile aynı indeks sırasında portre dosya adları (repo kökünde .jpeg)
+const SLUG = ["koc","boga","ikizler","yengec","aslan","basak","terazi","akrep","yay","oglak","kova","balik"];
+
 const MUHUR = [
   "Doğduğun an gökyüzü tam da bu tohumu senin avucuna bıraktı.",
   "Bu arketip senin gölgende değil, ışığında yaşıyor.",
@@ -229,8 +235,15 @@ function hesapla(){
   const h=hash(ad.toLocaleLowerCase("tr")+"|"+t);
   const muhur=MUHUR[h%MUHUR.length];
 
+  const portreSrc = SLUG[idx] + ".jpeg";
   $("#intro").textContent = `${ad}, kozmik ikizin…`;
-  $("#glif").textContent = b.glif;
+  $("#glif").textContent = b.glif; // yedek (portre yüklenemezse görünür)
+  const amblem=$("#amblem"), portre=$("#portre");
+  amblem.classList.remove("has-portre");
+  portre.onload = ()=> amblem.classList.add("has-portre");
+  portre.onerror = ()=> amblem.classList.remove("has-portre");
+  portre.alt = a.twin;
+  portre.src = portreSrc;
   $("#twinad").textContent = a.twin;
   $("#epithet").textContent = "“"+a.epithet+"”";
   $("#burcsatir").textContent = `${b.glif} ${b.ad}  ·  ${ELAD[b.el]}  ·  ${MODAD[b.mod]}`;
@@ -240,7 +253,7 @@ function hesapla(){
   $("#armagan").innerHTML = `<b>Armağanın:</b> ${a.armagan}`;
   $("#muhur").textContent = muhur;
 
-  sonKart = {ad, twin:a.twin, epithet:a.epithet, glif:b.glif,
+  sonKart = {ad, twin:a.twin, epithet:a.epithet, glif:b.glif, portre:portreSrc,
     burcAd:b.ad, el:ELAD[b.el], mod:MODAD[b.mod],
     mitos:a.mitos, isik:a.isik, golge:a.golge, armagan:a.armagan, h};
 
@@ -264,7 +277,7 @@ function kRoundRect(g,x,y,w,h,r){r=Math.min(r,w/2,h/2);g.beginPath();g.moveTo(x+
 function kWrap(g,text,maxW){const words=String(text).split(/\s+/);const lines=[];let cur='';for(const w of words){const t=cur?cur+' '+w:w;if(g.measureText(t).width>maxW&&cur){lines.push(cur);cur=w;}else cur=t;}if(cur)lines.push(cur);return lines;}
 function kFit(g,text,maxW,base,weight,fam){let fs=base;for(;fs>=28;fs-=2){g.font=(weight?weight+' ':'')+fs+'px '+fam;if(g.measureText(text).width<=maxW)break;}return fs;}
 
-function ikizKartCiz(d){
+function ikizKartCiz(d, img){
   const W=1080,H=1920,cx=W/2;
   const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
   const g=cv.getContext('2d');
@@ -287,13 +300,22 @@ function ikizKartCiz(d){
   g.fillStyle=muted; g.font='27px "Segoe UI",system-ui,sans-serif';
   g.fillText('K O Z M İ K   İ K İ Z İ N', cx, 228);
 
-  // amblem (daire + glif)
+  // amblem (daire + portre; portre yoksa burç glifi)
   const ey=430, er=118;
-  g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.stroke();
-  g.strokeStyle='rgba(217,185,106,.35)'; g.lineWidth=1.5; g.beginPath(); g.arc(cx,ey,er-14,0,Math.PI*2); g.stroke();
-  g.save(); g.shadowColor='rgba(217,185,106,.5)'; g.shadowBlur=26;
-  g.fillStyle=gold; g.font='150px Georgia,serif'; g.textBaseline='middle';
-  g.fillText(d.glif, cx, ey+6); g.restore(); g.textBaseline='alphabetic';
+  if(img){
+    g.save();
+    g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.clip();
+    const s=Math.min(img.width,img.height), sx=(img.width-s)/2, sy=(img.height-s)/2;
+    g.drawImage(img, sx, sy, s, s, cx-er, ey-er, er*2, er*2);
+    g.restore();
+    g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.stroke();
+  } else {
+    g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.stroke();
+    g.strokeStyle='rgba(217,185,106,.35)'; g.lineWidth=1.5; g.beginPath(); g.arc(cx,ey,er-14,0,Math.PI*2); g.stroke();
+    g.save(); g.shadowColor='rgba(217,185,106,.5)'; g.shadowBlur=26;
+    g.fillStyle=gold; g.font='150px Georgia,serif'; g.textBaseline='middle';
+    g.fillText(d.glif, cx, ey+6); g.restore(); g.textBaseline='alphabetic';
+  }
 
   // intro
   g.fillStyle=muted; g.font='italic 30px Georgia,serif';
@@ -356,19 +378,28 @@ let kartBlob=null, kartURL=null;
 function kartOlustur(){
   if(!sonKart) return;
   const btn=$("#kartBtn"); const eski=btn.textContent; btn.textContent="Hazırlanıyor…"; btn.disabled=true;
-  try{
-    const cv=ikizKartCiz(sonKart);
-    cv.toBlob(b=>{
-      btn.textContent=eski; btn.disabled=false;
-      if(!b){ $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; return; }
-      if(kartURL) URL.revokeObjectURL(kartURL);
-      kartBlob=b; kartURL=URL.createObjectURL(b);
-      $("#kartImg").src=kartURL;
-      $("#kartOverlay").hidden=false; document.body.style.overflow='hidden';
-      const f=new File([b],"kozmik-ikiz-karti.png",{type:"image/png"});
-      $("#kartPaylasImg").hidden = !(navigator.canShare && navigator.canShare({files:[f]}));
-    },'image/png');
-  }catch(e){ btn.textContent=eski; btn.disabled=false; $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; }
+  const finish=(img)=>{
+    try{
+      const cv=ikizKartCiz(sonKart, img);
+      cv.toBlob(b=>{
+        btn.textContent=eski; btn.disabled=false;
+        if(!b){ $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; return; }
+        if(kartURL) URL.revokeObjectURL(kartURL);
+        kartBlob=b; kartURL=URL.createObjectURL(b);
+        $("#kartImg").src=kartURL;
+        $("#kartOverlay").hidden=false; document.body.style.overflow='hidden';
+        const f=new File([b],"kozmik-ikiz-karti.png",{type:"image/png"});
+        $("#kartPaylasImg").hidden = !(navigator.canShare && navigator.canShare({files:[f]}));
+      },'image/png');
+    }catch(e){ btn.textContent=eski; btn.disabled=false; $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; }
+  };
+  // Portreyi hazırla: DOM'daki #portre yüklüyse onu kullan, değilse yeniden yükle; olmazsa glife düş.
+  const dom=$("#portre");
+  if(dom && dom.complete && dom.naturalWidth>0){ finish(dom); return; }
+  const im=new Image();
+  im.onload=()=>finish(im);
+  im.onerror=()=>finish(null);
+  im.src=sonKart.portre;
 }
 function kartIndir(){
   if(!kartURL) return;
