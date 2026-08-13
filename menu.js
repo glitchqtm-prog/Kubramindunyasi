@@ -27,7 +27,8 @@
       { href:"/uyum-testi.html",     ad:"✦ Uyum Testi",        alt:"Sen & O ne kadar uyumlusunuz?" },
       { href:"/yasam-yolu.html",     ad:"✦ Yaşam Yolu Sayın",  alt:"Doğum tarihinden anında" },
       { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" },
-      { href:"/astro-ikizin.html",   ad:"✦ Astro İkizin",      alt:"Doğduğun günün mitolojik ikizi" }
+      { href:"/astro-ikizin.html",   ad:"✦ Astro İkizin",      alt:"Doğduğun günün mitolojik ikizi" },
+       { href:"/kozmik-nabiz.html",   ad:"✦ Kozmik Nabzın",      alt:"Bugüne özel kelimen, rengin ve yansıman" }
     ]},
     { baslik:"Rehberler", items:[
       { href:"/burclar.html",   ad:"✦ Burç Profilleri",   alt:"12 burcun karakteri ve özellikleri" },
