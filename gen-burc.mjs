@@ -15,7 +15,7 @@ import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
 import * as A from "astronomy-engine";
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
-const MODEL   = process.env.AI_MODEL || "claude-3-5-haiku-latest";
+const MODEL   = process.env.AI_MODEL || "claude-haiku-4-5-20251001";
 if (!API_KEY) { console.error("HATA: ANTHROPIC_API_KEY tanımlı değil."); process.exit(1); }
 
 /* ---------- Burç verisi (sıra sabit: prompt ve render aynı sırayı kullanır) ---------- */
