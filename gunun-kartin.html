@@ -330,6 +330,7 @@ function kartHesapla(ad, dateStr){
 
 /* ================= KART AMBLEMİ (SVG) ================= */
 function emblemSVG(kart, seed){
+  const numSize = [0,100,92,78,64,52][kart.num.length] || 78; // uzun rakamlar taşmasın
   const rnd = mulberry32(seed);
   let stars="";
   for(let i=0;i<26;i++){
@@ -341,9 +342,10 @@ function emblemSVG(kart, seed){
     ${stars}
     <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#d9b96a" stroke-opacity=".55" stroke-width="1.4"/>
     <rect x="14" y="14" width="172" height="292" rx="9" fill="none" stroke="#d9b96a" stroke-opacity=".22" stroke-width="1"/>
-    <text x="100" y="52" text-anchor="middle" fill="#d9b96a" font-size="18" font-family="Georgia,serif" letter-spacing="2">${kart.num}</text>
-    <text x="100" y="185" text-anchor="middle" fill="#f0e6d2" font-size="92" font-family="Georgia,serif">${kart.sym}</text>
-    <text x="100" y="280" text-anchor="middle" fill="#e7cf95" font-size="15" font-family="Georgia,serif" letter-spacing="1">${kart.ad}</text>
+    <text x="100" y="70" text-anchor="middle" fill="#d9b96a" fill-opacity=".8" font-size="22" font-family="Georgia,serif">✦</text>
+    <text x="100" y="192" text-anchor="middle" fill="#f0e6d2" font-size="${numSize}" font-family="Georgia,serif" letter-spacing="1">${kart.num}</text>
+    <text x="100" y="248" text-anchor="middle" fill="#d9b96a" fill-opacity=".55" font-size="16" font-family="Georgia,serif">· · ·</text>
+    <text x="100" y="284" text-anchor="middle" fill="#e7cf95" font-size="16" font-family="Georgia,serif" letter-spacing="1">${kart.ad}</text>
   </svg>`;
 }
 
@@ -407,11 +409,16 @@ function kartCiz(ctx, data, ad, dateStr){
   ctx.beginPath(); ctx.arc(cx,eY,eR,0,7);
   ctx.fillStyle="rgba(217,185,106,.06)"; ctx.fill();
   ctx.lineWidth=3; ctx.strokeStyle="rgba(217,185,106,.5)"; ctx.stroke();
-  // roman rakam + sembol
-  ctx.fillStyle="#d9b96a"; ctx.font="44px Georgia, serif";
-  ctx.fillText(kart.num, cx, eY-104);
-  ctx.fillStyle="#f0e6d2"; ctx.font="200px Georgia, serif";
-  ctx.fillText(kart.sym, cx, eY+80);
+  // roma rakamı (asıl figür) — daire merkezinde + ✦ süsü
+  ctx.fillStyle="rgba(217,185,106,.7)"; ctx.font="48px Georgia, serif";
+  ctx.fillText("✦", cx, eY-116);
+  ctx.textBaseline="middle";
+  const numSize=kFit(ctx, kart.num, 280, 176, "Georgia, serif", "");
+  ctx.fillStyle="#f0e6d2"; ctx.font=numSize+"px Georgia, serif";
+  ctx.fillText(kart.num, cx, eY+24);
+  ctx.textBaseline="alphabetic";
+  ctx.fillStyle="rgba(217,185,106,.55)"; ctx.font="34px Georgia, serif";
+  ctx.fillText("· · ·", cx, eY+150);
 
   // kart adı
   const nameSize=kFit(ctx,kart.ad,760,86,"Georgia, serif","");
