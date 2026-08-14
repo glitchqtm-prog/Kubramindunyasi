@@ -36,6 +36,7 @@
     ]}
   ];
   var LINKLER = [
+    { href:"/gunluk-burc-yorumlari.html", ad:"Burç Yorumları" },
     { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
     { href:"/#nasil-calisir", ad:"Nasıl Çalışır?" },
     { href:"/#sss",           ad:"S.S.S." }
