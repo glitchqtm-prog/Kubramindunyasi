@@ -15,7 +15,7 @@ import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
 import * as A from "astronomy-engine";
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
-const MODEL   = process.env.AI_MODEL || "claude-haiku-4-5-20251001";
+const MODEL   = process.env.AI_MODEL || "claude-sonnet-5"; // kaliteli Türkçe için Sonnet (Haiku imlada zayıftı)
 if (!API_KEY) { console.error("HATA: ANTHROPIC_API_KEY tanımlı değil."); process.exit(1); }
 
 /* ---------- Burç verisi (sıra sabit: prompt ve render aynı sırayı kullanır) ---------- */
@@ -34,6 +34,55 @@ const BURCLAR = [
   { slug:"balik",   ad:"Balık",   glif:"♓", aralik:"19 Şubat – 20 Mart",    doga:"su, değişken, hayalperest" },
 ];
 const BURC_ADLARI = BURCLAR.map(b=>b.ad); // gökyüzü burç adı için
+
+/* ---------- Solar ev (yaşam alanı) katmanı ----------
+   Her burç kendi güneş burcunu 1. ev kabul eder; gökteki bir cismin (Ay/Güneş)
+   o burca göre kaçıncı solar evde olduğunu ve o evin hayat temasını verir.
+   Günlük: Ay'ın evi (günün odağı). Haftalık: Güneş'in evi (haftanın/mevsimin odağı). */
+const EV_TEMA = [
+  "kimliğin, kendine bakışın ve yeni başlangıçlar",        // 1
+  "paran, gelirin, öz-değerin ve sahip oldukların",        // 2
+  "iletişim, öğrenme, kardeşler ve günlük konuşmalar",     // 3
+  "ev, aile, kökler ve iç huzurun",                        // 4
+  "aşk, flört, yaratıcılık ve kendini ifade etme",         // 5
+  "iş rutini, sağlık, düzen ve günlük görevler",           // 6
+  "ilişkiler, ortaklıklar ve karşındaki kişi",             // 7
+  "derin bağlar, ortak kaynaklar ve dönüşüm",              // 8
+  "seyahat, eğitim, inançlar ve ufkunu genişletmek",       // 9
+  "kariyer, hedefler, itibar ve toplum önündeki yerin",    // 10
+  "arkadaşlar, topluluk, umutlar ve gelecek planların",    // 11
+  "dinlenme, içe dönüş, sezgi ve geçmişi geride bırakmak", // 12
+];
+function evTema(burcIdx, cisimBurcIdx){
+  const ev = ((cisimBurcIdx - burcIdx) % 12 + 12) % 12; // 0..11
+  return { no: ev+1, tema: EV_TEMA[ev] };
+}
+
+/* ---------- Numeroloji: Evrensel Gün / Ay Sayısı ----------
+   Sayılar TARİHTEN gelir, burçtan değil → herkes için aynıdır (o günün/ayın titreşimi).
+   Usta sayılar (11, 22, 33) korunur; tek haneye indirilmez.
+   Günlük: Evrensel Gün Sayısı. Haftalık: Evrensel Ay Sayısı. */
+const SAYI_TEMA = {
+  1:"yeni başlangıçlar, cesaret ve bağımsızlık",
+  2:"uyum, işbirliği, sabır ve ilişkiler",
+  3:"yaratıcılık, kendini ifade ve neşe",
+  4:"düzen, disiplin ve sağlam temeller",
+  5:"değişim, özgürlük, hareket ve esneklik",
+  6:"sevgi, sorumluluk, aile ve şefkat",
+  7:"içe dönüş, sezgi, bilgelik ve dinginlik",
+  8:"güç, bereket, başarı ve maddi denge",
+  9:"tamamlanma, olgunluk ve cömertçe bırakma",
+  11:"yüksek sezgi, ilham ve ruhsal farkındalık (usta sayı)",
+  22:"büyük hedefler, yapıcı vizyon ve ustalık (usta sayı)",
+  33:"koşulsuz sevgi ve şefkatli rehberlik (usta sayı)",
+};
+function sayiIndir(n){
+  while(n>9 && n!==11 && n!==22 && n!==33){ n = String(n).split("").reduce((a,d)=>a+(+d),0); }
+  return n;
+}
+function rakamTopla(s){ return String(s).split("").reduce((a,d)=>a+(+d||0),0); }
+function evrenselGunSayisi(d){ return sayiIndir(rakamTopla(`${d.getFullYear()}${d.getMonth()+1}${d.getDate()}`)); }
+function evrenselAySayisi(d){ return sayiIndir(rakamTopla(`${d.getFullYear()}${d.getMonth()+1}`)); }
 
 /* ---------- Tarih / gökyüzü yardımcıları ---------- */
 const AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
@@ -79,23 +128,66 @@ function haftaAraligi(d){
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 /* ---------- Anthropic çağrısı ---------- */
-async function yorumUret(tur, gokMetni){
-  const kapsam = tur==="gunluk" ? "BUGÜN" : "BU HAFTA";
-  const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan sıcak, olumlu ve güçlendirici bir editörsün. Ton: umut veren, yapıcı ve cesaret verici — bir zorluğu ya da riski dile getirirken bile MUTLAKA bir çıkış yolu, somut bir öneri ve olumlu bir bakış sun. ASLA kesin kehanet ya da kader hükmü değil ("olacak" değil, "eğilim/enerji/fırsat" dili). Klişeden uzak, akıcı, samimi ve okuyucuyu iyi hissettiren bir dil kullan. Bugünün gerçek gökyüzü: ${gokMetni}. Bu enerjiyi yorumlara doğal biçimde yansıt; her burcu kendi doğasına göre belirgin şekilde farklılaştır (hepsi aynı gibi olmasın).`;
-  const siraliBurclar = BURCLAR.map((b,i)=>`${i}: ${b.ad} (${b.doga})`).join("\n");
-  const zaman = tur==="gunluk" ? "bugünün" : "bu haftanın";
-  const uzunluk = `genel, ask ve is bölümlerinin HER BİRİ 4-5 cümle olsun (dolgun ve doyurucu, tek-iki cümlelik kısa yorumlardan KAÇIN) ve şu akışı izlesin: (1) ${zaman} enerjisini/atmosferini tanı, (2) olası bir zorluğu ya da fırsatı nazikçe göster, (3) SOMUT ve uygulanabilir bir öneri ver, (4) cesaret veren, olumlu bir cümleyle kapat. tavsiye: tek, net, uygulanabilir ve olumlu bir cümle. teaser: en fazla 12 kelime, olumlu ve merak uyandıran`;
-  const user = `${kapsam} için aşağıdaki 12 burcun her birine yorum yaz. Sadece GEÇERLİ JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
-Sıra tam olarak şu olmalı (0..11):
+async function yorumUret(tur, sky){
+  const gunluk = tur==="gunluk";
+  const kapsam = gunluk ? "BUGÜN" : "BU HAFTA";
+  const zaman  = gunluk ? "bugünün" : "bu haftanın";
+  const sayi   = gunluk ? sky.gunSayi : sky.aySayi; // günlük: evrensel gün sayısı · haftalık: evrensel ay sayısı
+  // günlük: Ay'ın evi (günün hızlı odağı) · haftalık: Güneş'in evi (haftanın sürekli odağı)
+  const cisimIdx = gunluk ? sky.ayIdx : sky.gunIdx;
+  const siraliBurclar = BURCLAR.map((b,i)=>{
+    const f = evTema(i, cisimIdx);
+    return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}`;
+  }).join("\n");
+
+  const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan; sıcak, olumlu ve güçlendirici bir editörsün.
+
+DİL KURALLARI (kusursuz olmalı):
+- Kusursuz Türkçe imla ve dil bilgisi kullan. Metni yazdıktan sonra zihinsel olarak gözden geçir; tek bir yazım ya da anlam hatası bile bırakma.
+- ASLA yabancı kelime kullanma (İngilizce, Almanca vb.). Her kavramın Türkçe karşılığını yaz (örneğin "struktur" değil "yapı"; "focus" değil "odak").
+- Kesme işaretini yalnızca özel isimlerin çekim eklerinde kullan; sıradan kelimelerde kullanma (doğru: "fırsatını"; yanlış: "fırsat'sını").
+- Cümleler akıcı, tam ve anlamlı olsun; yarım ya da anlamı bozuk cümle kurma.
+
+TON: Umut veren, yapıcı, cesaret verici. Bir zorluğu ya da riski anarken bile mutlaka bir çıkış yolu, somut bir öneri ve olumlu bir bakış sun. ASLA kesin kehanet ya da kader hükmü verme ("olacak" değil; "eğilim, enerji, fırsat" dili). Klişeden uzak, samimi ve okuyucuyu iyi hissettiren ol.
+
+SOMUTLUK: Yorumlar havada kalmasın. genel, ask ve is bölümlerinde günlük hayattan SOMUT, ilişki kurulabilir örnekler ver (örneğin yanıtlamayı ertelediğin bir mesaj, bir arkadaşınla eski bir konuyu konuşmak, bütçeni gözden geçirmek). Bunu "belki", "olabilir", "bugünlerde" gibi nazik bir dille sun; kesin bir iddia gibi durmasın. Örnekler herkeste birebir tutmayabilir, bunu esnek bir dille ifade et.
+
+GERÇEK GÖKYÜZÜ: ${sky.gokKisa} Bu enerjiyi yorumlara doğal biçimde yansıt. Her burç için ayrıca "öne çıkan yaşam alanı (solar ev)" bilgisini vereceğim; o alanı yorumun merkezine al ve somut örnekleri oradan türet. Her burcu kendi doğasına göre belirgin biçimde farklılaştır; hiçbiri bir diğerine benzemesin.
+
+NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel sayısı"} ${sayi} — teması: ${SAYI_TEMA[sayi]}. Bu sayısal ton HERKES için aynıdır (kişiye ya da burca özel değildir), o yüzden onu bütün burçların yorumuna genel bir atmosfer olarak HAFİFÇE yansıt. Metinde "numeroloji" ya da rakamı teknik biçimde anmana gerek yok; sadece o enerjiyi (örneğin ${sayi} sayısında ${SAYI_TEMA[sayi].split(",")[0]}) sezdir.`;
+
+  const ortak = `- teaser: en fazla 12 kelime; olumlu ve merak uyandıran.
+- tavsiye: tek, net, uygulanabilir ve olumlu bir cümle.`;
+  const uzunluk = gunluk
+    ? `- genel: 5-6 cümle; dolgun ve akıcı, günlük hayattan somut bir örnek içersin; öne çıkan yaşam alanını doğal biçimde işle.
+- ask: 6-7 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, doğal bir akış içinde seslen (örneğin "İlişkin varsa..."; "Henüz yalnızsan ya da yeni birine açıksan...") — zorlama, akıcı olsun.
+- is: 5-6 cümle; uygun olduğunda hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; somut bir örnek içersin.
+- saglik: 3-4 cümle; bedensel ve duygusal enerji, öz bakım ve dengeye dair somut, uygulanabilir bir öneri.
+${ortak}`
+    : `- genel: 6-7 cümle; sadece bugünü değil HAFTANIN GENELİNİ ve gidişatını anlat, somut örnekler içersin; öne çıkan yaşam alanını merkeze al.
+- ask: 7-8 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, haftalık perspektifle ve doğal akışta seslen (örneğin "İlişkin varsa..."; "Henüz yalnızsan...").
+- is: 6-7 cümle; hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; somut örnekler içersin.
+- saglik: 4-5 cümle; hafta boyunca enerji, öz bakım ve denge.
+- oneCikan: 3-4 cümle; haftanın hangi bölümlerinin (örneğin hafta başı, hafta ortası, hafta sonu) hangi konular için daha uygun olabileceğini nazikçe belirt. Kesin tarih verme; "hafta ortasına doğru", "hafta sonu" gibi genel ifadeler kullan.
+${ortak}`;
+
+  const alanlar = gunluk
+    ? `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","tavsiye":"..."}`
+    : `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","oneCikan":"...","tavsiye":"..."}`;
+
+  const user = `${kapsam} için aşağıdaki 12 burcun her birine ${zaman} yorumunu yaz. Sadece GEÇERLİ JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
+Sıra tam olarak şu olmalı (0..11); her burcun öne çıkan yaşam alanı belirtilmiştir:
 ${siraliBurclar}
 
-Her öğe şu alanlara sahip olmalı: {"teaser": "...","genel":"...","ask":"...","is":"...","tavsiye":"..."}
-Uzunluk ve akış: ${uzunluk}. Türkçe yaz, olumlu ve güçlendirici ol. 12 öğe döndür.`;
+Her öğe şu alanlara sahip olmalı: ${alanlar}
+Uzunluk ve içerik:
+${uzunluk}
+Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam 12 öğe döndür.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, messages:[{role:"user",content:user}] })
+    body: JSON.stringify({ model:MODEL, max_tokens:32000, system:sys, messages:[{role:"user",content:user}] })
   });
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
@@ -104,12 +196,13 @@ Uzunluk ve akış: ${uzunluk}. Türkçe yaz, olumlu ve güçlendirici ol. 12 ö�
   if(bas<0||son<0) throw new Error("JSON dizisi bulunamadı: "+metin.slice(0,200));
   const arr = JSON.parse(metin.slice(bas, son+1));
   if(!Array.isArray(arr)||arr.length!==12) throw new Error("12 öğe bekleniyordu, gelen: "+(Array.isArray(arr)?arr.length:typeof arr));
-  for(const it of arr){ for(const k of ["teaser","genel","ask","is","tavsiye"]){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); } }
+  const alanListe = gunluk ? ["teaser","genel","ask","is","saglik","tavsiye"] : ["teaser","genel","ask","is","saglik","oneCikan","tavsiye"];
+  for(const it of arr){ for(const k of alanListe){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); } }
   return arr;
 }
-async function yorumUretRetry(tur, gokMetni){
-  try { return await yorumUret(tur, gokMetni); }
-  catch(e){ console.error(`${tur} 1. deneme hata: ${e.message} — tekrar deneniyor...`); await new Promise(r=>setTimeout(r,3000)); return await yorumUret(tur, gokMetni); }
+async function yorumUretRetry(tur, sky){
+  try { return await yorumUret(tur, sky); }
+  catch(e){ console.error(`${tur} 1. deneme hata: ${e.message} — tekrar deneniyor...`); await new Promise(r=>setTimeout(r,3000)); return await yorumUret(tur, sky); }
 }
 
 /* ---------- Ortak CSS (sitedeki şablonla birebir) ---------- */
@@ -133,6 +226,10 @@ const CSS = `
   header.hero p.sub{color:var(--muted);font-size:15px;font-style:italic;max-width:520px;margin:8px auto 0;line-height:1.6}
   .gokyuzu{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:var(--cream);background:rgba(217,185,106,.06);border:1px solid var(--line);border-radius:12px;padding:12px 16px;max-width:560px;margin:18px auto 0;text-align:center}
   .gokyuzu b{color:var(--gold-soft)}
+  .ozet{background:rgba(217,185,106,.06);border:1px solid var(--line);border-radius:14px;padding:16px 18px;max-width:580px;margin:18px auto 0;font-family:'Segoe UI',system-ui,sans-serif}
+  .ozet-b{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.9;text-align:center;margin-bottom:10px}
+  .ozet-satir{font-size:13.5px;color:var(--cream);line-height:1.75;text-align:center}
+  .ozet-satir b{color:var(--gold-soft)}
   hr.ayrac{border:none;border-top:1px solid var(--line);max-width:80px;margin:24px auto}
   h2{font-size:19px;color:var(--gold-soft);margin:26px 0 6px;font-weight:600;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:.3px}
   p{font-size:16.5px;color:#efe7f6}
@@ -205,6 +302,8 @@ function renderSign(tur, b, y, ctx){
   const digerTur = gunluk ? "haftalik-burc-yorumlari" : "gunluk-burc-yorumlari";
   const digerAd  = gunluk ? `${b.ad} haftalık yorum` : `${b.ad} günlük yorum`;
   const tavsiyeEt = gunluk ? "Günün tavsiyesi" : "Haftanın tavsiyesi";
+  const odak = evTema(BURCLAR.indexOf(b), gunluk ? ctx.ayIdx : ctx.gunIdx);
+  const sayi = gunluk ? ctx.gunSayi : ctx.aySayi;
 
   return `${head(title, desc, canonical, jsonld)}
 <article class="wrap">
@@ -216,7 +315,12 @@ function renderSign(tur, b, y, ctx){
       <div class="yazi-meta">${esc(metaSat)}</div>
     </div>
   </div>
-  <div class="gokyuzu">🌙 ${esc(ctx.gokKisa)}</div>
+  <div class="ozet">
+    <div class="ozet-b">${gunluk?"Bugünün":"Bu Haftanın"} Kozmik Özeti</div>
+    <div class="ozet-satir">🌙 ${esc(ctx.gokKisa)}</div>
+    <div class="ozet-satir">🎯 <b>Öne çıkan alanın:</b> ${odak.no}. ev — ${esc(odak.tema)}</div>
+    <div class="ozet-satir">🔢 <b>${gunluk?"Günün":"Ayın"} sayısı ${sayi}:</b> ${esc(SAYI_TEMA[sayi])}</div>
+  </div>
   <hr class="ayrac">
   <h2>Genel</h2>
   <p>${esc(y.genel)}</p>
@@ -224,6 +328,10 @@ function renderSign(tur, b, y, ctx){
   <p>${esc(y.ask)}</p>
   <h2>İş & Para</h2>
   <p>${esc(y.is)}</p>
+  <h2>Sağlık & Enerji</h2>
+  <p>${esc(y.saglik)}</p>${gunluk?"":`
+  <h2>Öne Çıkan Günler</h2>
+  <p>${esc(y.oneCikan)}</p>`}
   <div class="tavsiye"><b>${tavsiyeEt}:</b> ${esc(y.tavsiye)}</div>
   <div class="komsu">
     <a href="/${yol}/${onceki.slug}.html">← ${onceki.ad}</a>
@@ -270,7 +378,7 @@ function renderHub(tur, yorumlar, ctx){
     <h1>${ustBaslik}</h1>
     <div class="tarih">${esc(ustTarih)}</div>
     <p class="sub">12 burç için ${gunluk?"bugünün":"bu haftanın"} enerjisi — aşk, iş ve genel ruh hâli. Gerçek gökyüzüne dayalı, dürüst yorumlar.</p>
-    <div class="gokyuzu">🌙 ${esc(ctx.gokKisa)}</div>
+    <div class="gokyuzu">🌙 ${esc(ctx.gokKisa)} &nbsp;·&nbsp; 🔢 ${gunluk?"Günün":"Ayın"} sayısı ${gunluk?ctx.gunSayi:ctx.aySayi}: ${esc(SAYI_TEMA[gunluk?ctx.gunSayi:ctx.aySayi])}</div>
   </header>
   <div class="grid">
 ${kartlar}
@@ -301,14 +409,18 @@ function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
   };
   const ayB = ayBurcu(now), gunB = gunesBurcu(now), evre = ayEvresi(now);
   ctx.gokKisa = `Bugün Ay ${ayB} burcunda (${evre}); Güneş ${gunB} mevsiminde.`;
-  const gokMetni = `Ay burcu: ${ayB}, ay evresi: ${evre}, Güneş burcu (mevsim): ${gunB}.`;
+  ctx.ayIdx = BURC_ADLARI.indexOf(ayB);
+  ctx.gunIdx = BURC_ADLARI.indexOf(gunB);
+  ctx.gunSayi = evrenselGunSayisi(now);
+  ctx.aySayi = evrenselAySayisi(now);
+  const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi };
 
   mkdirSync("gunluk-burc-yorumlari", {recursive:true});
   mkdirSync("haftalik-burc-yorumlari", {recursive:true});
 
   // --- GÜNLÜK: her gün üret ---
-  console.log("Günlük yorumlar üretiliyor... ("+gokMetni+")");
-  const gunlukY = await yorumUretRetry("gunluk", gokMetni);
+  console.log("Günlük yorumlar üretiliyor... ("+ctx.gokKisa+")");
+  const gunlukY = await yorumUretRetry("gunluk", sky);
   // önce hepsini render et (bellekte), sonra yaz
   const gunlukDosyalar = [];
   BURCLAR.forEach((b,i)=> gunlukDosyalar.push([`gunluk-burc-yorumlari/${b.slug}.html`, renderSign("gunluk", b, gunlukY[i], ctx)]));
@@ -322,7 +434,7 @@ function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
   let haftalikDosyalar = [];
   if(haftalikGerek){
     console.log("Haftalık yorumlar üretiliyor... (hafta "+hafta+")");
-    const haftalikY = await yorumUretRetry("haftalik", gokMetni);
+    const haftalikY = await yorumUretRetry("haftalik", sky);
     BURCLAR.forEach((b,i)=> haftalikDosyalar.push([`haftalik-burc-yorumlari/${b.slug}.html`, renderSign("haftalik", b, haftalikY[i], ctx)]));
     haftalikDosyalar.push(["haftalik-burc-yorumlari.html", renderHub("haftalik", haftalikY, ctx)]);
     haftalikDosyalar.push([markerYol, hafta+"\n"]);
