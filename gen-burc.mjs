@@ -128,6 +128,22 @@ function haftaAraligi(d){
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 /* ---------- Anthropic çağrısı ---------- */
+const BATCH = 4; // 12 burcu 4'er 4'er (3 çağrı) üret → her çağrı kısa/hızlı biter, zaman aşımına takılmaz
+async function apiCagri(sys, user){
+  const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(240000) : undefined; // 4 dk güvenlik ağı
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method:"POST",
+    headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
+    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, messages:[{role:"user",content:user}] }),
+    signal: gsignal
+  });
+  if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
+  const data = await res.json();
+  const metin = (data.content||[]).map(x=>x.type==="text"?x.text:"").join("");
+  const bas=metin.indexOf("["), son=metin.lastIndexOf("]");
+  if(bas<0||son<0) throw new Error("JSON dizisi bulunamadı: "+metin.slice(0,200));
+  return JSON.parse(metin.slice(bas, son+1));
+}
 async function yorumUret(tur, sky){
   const gunluk = tur==="gunluk";
   const kapsam = gunluk ? "BUGÜN" : "BU HAFTA";
@@ -135,10 +151,6 @@ async function yorumUret(tur, sky){
   const sayi   = gunluk ? sky.gunSayi : sky.aySayi; // günlük: evrensel gün sayısı · haftalık: evrensel ay sayısı
   // günlük: Ay'ın evi (günün hızlı odağı) · haftalık: Güneş'in evi (haftanın sürekli odağı)
   const cisimIdx = gunluk ? sky.ayIdx : sky.gunIdx;
-  const siraliBurclar = BURCLAR.map((b,i)=>{
-    const f = evTema(i, cisimIdx);
-    return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}`;
-  }).join("\n");
 
   const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan; sıcak, olumlu ve güçlendirici bir editörsün.
 
@@ -175,30 +187,32 @@ ${ortak}`;
     ? `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","tavsiye":"..."}`
     : `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","oneCikan":"...","tavsiye":"..."}`;
 
-  const user = `${kapsam} için aşağıdaki 12 burcun her birine ${zaman} yorumunu yaz. Sadece GEÇERLİ JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
-Sıra tam olarak şu olmalı (0..11); her burcun öne çıkan yaşam alanı belirtilmiştir:
+  const alanListe = gunluk ? ["teaser","genel","ask","is","saglik","tavsiye"] : ["teaser","genel","ask","is","saglik","oneCikan","tavsiye"];
+  const sonuc = new Array(BURCLAR.length);
+  for(let start=0; start<BURCLAR.length; start+=BATCH){
+    const dilim = BURCLAR.slice(start, start+BATCH);
+    const siraliBurclar = dilim.map((b,j)=>{
+      const i = start+j, f = evTema(i, cisimIdx);
+      return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}`;
+    }).join("\n");
+    const user = `${kapsam} için aşağıdaki ${dilim.length} burcun her birine ${zaman} yorumunu yaz. Sadece GEÇERLİ JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
+Sıra ve indeksler tam olarak şöyle olmalı; her burcun öne çıkan yaşam alanı belirtilmiştir:
 ${siraliBurclar}
 
 Her öğe şu alanlara sahip olmalı: ${alanlar}
 Uzunluk ve içerik:
 ${uzunluk}
-Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam 12 öğe döndür.`;
+Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dilim.length} öğe döndür (yukarıdaki sırayla).`;
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method:"POST",
-    headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:32000, system:sys, messages:[{role:"user",content:user}] })
-  });
-  if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
-  const data = await res.json();
-  const metin = (data.content||[]).map(x=>x.type==="text"?x.text:"").join("");
-  const bas=metin.indexOf("["), son=metin.lastIndexOf("]");
-  if(bas<0||son<0) throw new Error("JSON dizisi bulunamadı: "+metin.slice(0,200));
-  const arr = JSON.parse(metin.slice(bas, son+1));
-  if(!Array.isArray(arr)||arr.length!==12) throw new Error("12 öğe bekleniyordu, gelen: "+(Array.isArray(arr)?arr.length:typeof arr));
-  const alanListe = gunluk ? ["teaser","genel","ask","is","saglik","tavsiye"] : ["teaser","genel","ask","is","saglik","oneCikan","tavsiye"];
-  for(const it of arr){ for(const k of alanListe){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); } }
-  return arr;
+    const arr = await apiCagri(sys, user);
+    if(!Array.isArray(arr)||arr.length!==dilim.length) throw new Error(`${dilim.length} öğe bekleniyordu, gelen: `+(Array.isArray(arr)?arr.length:typeof arr));
+    for(let j=0;j<dilim.length;j++){
+      const it = arr[j];
+      for(const k of alanListe){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); }
+      sonuc[start+j] = it;
+    }
+  }
+  return sonuc;
 }
 async function yorumUretRetry(tur, sky){
   try { return await yorumUret(tur, sky); }
