@@ -79,6 +79,21 @@
   .tool-card .td{color:var(--ay-muted);font-size:12.5px;line-height:1.5;margin-top:3px}
   .tools-more{text-align:center;margin-top:22px;font-size:14px}
   .tools-more a{color:var(--ay-gold)}
+  /* Öne çıkan: Günlük Burç Yorumları */
+  .tool-feature{display:flex;align-items:center;gap:18px;max-width:920px;margin:0 auto 16px;
+    background:linear-gradient(120deg,rgba(217,185,106,.15),rgba(124,108,240,.10));
+    border:1px solid var(--ay-gold);border-radius:16px;padding:20px 24px;text-decoration:none;
+    box-shadow:0 8px 30px rgba(217,185,106,.08);transition:transform .1s,box-shadow .2s}
+  .tool-feature:hover{transform:translateY(-2px);box-shadow:0 12px 44px rgba(217,185,106,.18);border-color:var(--ay-gold)}
+  .tool-feature .fic{flex:none;width:54px;height:54px;border-radius:50%;border:1px solid var(--ay-gold);
+    background:rgba(217,185,106,.08);display:flex;align-items:center;justify-content:center;color:var(--ay-gold);font-size:26px}
+  .tool-feature .ftx{flex:1;min-width:0}
+  .tool-feature .fbadge{display:inline-block;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;
+    color:#241a06;background:linear-gradient(180deg,#e7cf95,var(--ay-gold));padding:3px 11px;border-radius:20px;font-weight:bold;margin-bottom:7px}
+  .tool-feature .ftt{color:var(--ay-ink);font-size:19px;font-weight:bold;line-height:1.25}
+  .tool-feature .ftd{color:var(--ay-muted);font-size:13.5px;line-height:1.55;margin-top:4px}
+  .tool-feature .farrow{flex:none;color:var(--ay-gold);font-size:24px;margin-left:6px}
+  @media(max-width:560px){.tool-feature{gap:14px;padding:18px}.tool-feature .farrow{display:none}}
 </style>
   <script src="/menu.js" defer></script>
 </head>
@@ -104,6 +119,15 @@
 <section class="section-block" id="araclar">
   <h2>Ücretsiz Araçlar</h2>
   <p class="sub">Rapor almadan önce keşfet: gökyüzü, sayılar, semboller ve daha fazlası — hepsi ücretsiz, anında.</p>
+  <a class="tool-feature" href="/gunluk-burc-yorumlari.html">
+    <span class="fic">✦</span>
+    <span class="ftx">
+      <span class="fbadge">★ Her gün güncellenir</span>
+      <span class="ftt">Günlük Burç Yorumları</span>
+      <span class="ftd">12 burç için bugünün aşk, iş ve genel enerjisi — gerçek gökyüzüne dayalı, dürüst yorumlar. Haftalık yorumlar da burada.</span>
+    </span>
+    <span class="farrow">→</span>
+  </a>
   <div class="tools-grid">
     <a class="tool-card" href="/gokyuzu.html"><span class="ic">✦</span><span class="tx"><span class="tt">Gökyüzü</span><span class="td">Şu an gökyüzü & günün fısıltısı</span></span></a>
     <a class="tool-card" href="/ay-takvimi.html"><span class="ic">☾</span><span class="tx"><span class="tt">Ay Takvimi</span><span class="td">Bugünün ay evresi ve ritüeli</span></span></a>

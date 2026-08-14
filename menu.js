@@ -33,13 +33,15 @@
     { baslik:"Rehberler", items:[
       { href:"/burclar.html",   ad:"✦ Burç Profilleri",   alt:"12 burcun karakteri ve özellikleri" },
       { href:"/arkanalar.html", ad:"✦ Arkana Profilleri", alt:"22 Majör Arkana ve anlamları" }
+    ]},
+    { baslik:"Hakkında", items:[
+      { href:"/#nasil-calisir", ad:"✦ Nasıl Çalışır?", alt:"4 adımda kişisel raporun" },
+      { href:"/#sss",           ad:"✦ Sıkça Sorulanlar", alt:"Merak edilenlerin cevabı" }
     ]}
   ];
   var LINKLER = [
     { href:"/gunluk-burc-yorumlari.html", ad:"Burç Yorumları" },
-    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
-    { href:"/#nasil-calisir", ad:"Nasıl Çalışır?" },
-    { href:"/#sss",           ad:"S.S.S." }
+    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" }
   ];
 
   var CSS = ''

@@ -95,7 +95,7 @@ Uzunluk ve akış: ${uzunluk}. Türkçe yaz, olumlu ve güçlendirici ol. 12 ö�
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:8192, system:sys, messages:[{role:"user",content:user}] })
+    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, messages:[{role:"user",content:user}] })
   });
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
