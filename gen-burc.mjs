@@ -128,7 +128,6 @@ function haftaAraligi(d){
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 /* ---------- Anthropic çağrısı ---------- */
-const BATCH = 4; // 12 burcu 4'er 4'er (3 çağrı) üret → her çağrı kısa/hızlı biter, zaman aşımına takılmaz
 async function apiCagri(sys, user, alanListe){
   const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(240000) : undefined; // 4 dk güvenlik ağı
   const props = {}; for(const k of alanListe) props[k] = { type:"string" };
@@ -141,11 +140,12 @@ async function apiCagri(sys, user, alanListe){
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, tools:[tool], tool_choice:{ type:"tool", name:"burc_yorumlari" }, messages:[{role:"user",content:user}] }),
+    body: JSON.stringify({ model:MODEL, max_tokens:24000, system:sys, tools:[tool], tool_choice:{ type:"tool", name:"burc_yorumlari" }, messages:[{role:"user",content:user}] }),
     signal: gsignal
   });
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
+  if(data.stop_reason==="max_tokens") throw new Error("Yanıt max_tokens'e takıldı (çıktı çok uzun) — daha küçük grup gerekiyor");
   const tu = (data.content||[]).find(x=>x.type==="tool_use");
   if(!tu || !tu.input || !Array.isArray(tu.input.yorumlar)) throw new Error("Beklenen araç yanıtı gelmedi: "+JSON.stringify(data).slice(0,200));
   return tu.input.yorumlar;
@@ -157,6 +157,7 @@ async function yorumUret(tur, sky){
   const sayi   = gunluk ? sky.gunSayi : sky.aySayi; // günlük: evrensel gün sayısı · haftalık: evrensel ay sayısı
   // günlük: Ay'ın evi (günün hızlı odağı) · haftalık: Güneş'in evi (haftanın sürekli odağı)
   const cisimIdx = gunluk ? sky.ayIdx : sky.gunIdx;
+  const BATCH = gunluk ? 4 : 2; // haftalık yorumlar uzun → küçük grup ki çıktı sınırına takılmasın
 
   const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan; sıcak, olumlu ve güçlendirici bir editörsün.
 
