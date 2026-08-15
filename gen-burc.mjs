@@ -128,27 +128,32 @@ function haftaAraligi(d){
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 /* ---------- Anthropic çağrısı ---------- */
-async function apiCagri(sys, user, alanListe){
+async function apiCagri(sys, user){
   const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(240000) : undefined; // 4 dk güvenlik ağı
-  const props = {}; for(const k of alanListe) props[k] = { type:"string" };
-  // Yapılandırılmış çıktı: model yorumları bir aracın girdisi olarak verir → API biçimi doğrular, bozuk JSON İMKANSIZ
-  const tool = {
-    name:"burc_yorumlari",
-    description:"İstenen sıradaki burçların her biri için tek bir yorum nesnesi içeren dizi.",
-    input_schema:{ type:"object", properties:{ yorumlar:{ type:"array", items:{ type:"object", properties:props, required:alanListe } } }, required:["yorumlar"] }
-  };
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:24000, system:sys, tools:[tool], tool_choice:{ type:"tool", name:"burc_yorumlari" }, messages:[{role:"user",content:user}] }),
+    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, messages:[{role:"user",content:user}] }),
     signal: gsignal
   });
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
-  if(data.stop_reason==="max_tokens") throw new Error("Yanıt max_tokens'e takıldı (çıktı çok uzun) — daha küçük grup gerekiyor");
-  const tu = (data.content||[]).find(x=>x.type==="tool_use");
-  if(!tu || !tu.input || !Array.isArray(tu.input.yorumlar)) throw new Error("Beklenen araç yanıtı gelmedi: "+JSON.stringify(data).slice(0,200));
-  return tu.input.yorumlar;
+  if(data.stop_reason==="max_tokens") throw new Error("Yanıt max_tokens'e takıldı (çıktı çok uzun)");
+  const metin = (data.content||[]).map(x=>x.type==="text"?x.text:"").join("");
+  const bas=metin.indexOf("["), son=metin.lastIndexOf("]");
+  if(bas<0||son<0) throw new Error("JSON dizisi bulunamadı: "+metin.slice(0,200));
+  // JSON'u bozabilecek görünmez kontrol karakterlerini temizle (satır sonu/tab hariç)
+  const ham = metin.slice(bas, son+1).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"");
+  return JSON.parse(ham);
+}
+// Her grup için otomatik tekrar: tek bir aksama tüm işi çökertmesin, kendi kendini onarsın
+async function apiCagriTekrarli(sys, user, deneme=3){
+  let sonHata;
+  for(let i=0;i<deneme;i++){
+    try { return await apiCagri(sys, user); }
+    catch(e){ sonHata=e; console.error(`  grup denemesi ${i+1}/${deneme} başarısız: ${e.message}`); await new Promise(r=>setTimeout(r,2500)); }
+  }
+  throw sonHata;
 }
 async function yorumUret(tur, sky){
   const gunluk = tur==="gunluk";
@@ -157,7 +162,7 @@ async function yorumUret(tur, sky){
   const sayi   = gunluk ? sky.gunSayi : sky.aySayi; // günlük: evrensel gün sayısı · haftalık: evrensel ay sayısı
   // günlük: Ay'ın evi (günün hızlı odağı) · haftalık: Güneş'in evi (haftanın sürekli odağı)
   const cisimIdx = gunluk ? sky.ayIdx : sky.gunIdx;
-  const BATCH = gunluk ? 4 : 2; // haftalık yorumlar uzun → küçük grup ki çıktı sınırına takılmasın
+  const BATCH = 2; // 2'şerli küçük gruplar → çıktı sınırına takılma yok, bozuk JSON riski çok düşük, aksarsa grup tekrar edilir
 
   const sys = `Sen Astro Yuvam için Türkçe burç yorumu yazan; sıcak, olumlu ve güçlendirici bir editörsün.
 
@@ -173,7 +178,9 @@ SOMUTLUK: Yorumlar havada kalmasın. genel, ask ve is bölümlerinde günlük ha
 
 GERÇEK GÖKYÜZÜ: ${sky.gokKisa} Bu enerjiyi yorumlara doğal biçimde yansıt. Her burç için ayrıca "öne çıkan yaşam alanı (solar ev)" bilgisini vereceğim; o alanı yorumun merkezine al ve somut örnekleri oradan türet. Her burcu kendi doğasına göre belirgin biçimde farklılaştır; hiçbiri bir diğerine benzemesin.
 
-NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel sayısı"} ${sayi} — teması: ${SAYI_TEMA[sayi]}. Bu sayısal ton HERKES için aynıdır (kişiye ya da burca özel değildir), o yüzden onu bütün burçların yorumuna genel bir atmosfer olarak HAFİFÇE yansıt. Metinde "numeroloji" ya da rakamı teknik biçimde anmana gerek yok; sadece o enerjiyi (örneğin ${sayi} sayısında ${SAYI_TEMA[sayi].split(",")[0]}) sezdir.`;
+NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel sayısı"} ${sayi} — teması: ${SAYI_TEMA[sayi]}. Bu sayısal ton HERKES için aynıdır (kişiye ya da burca özel değildir), o yüzden onu bütün burçların yorumuna genel bir atmosfer olarak HAFİFÇE yansıt. Metinde "numeroloji" ya da rakamı teknik biçimde anmana gerek yok; sadece o enerjiyi (örneğin ${sayi} sayısında ${SAYI_TEMA[sayi].split(",")[0]}) sezdir.
+
+ÇIKTI BİÇİMİ (çok önemli): Yanıtın SADECE geçerli bir JSON dizisi olacak; başında ya da sonunda hiçbir açıklama, başlık ya da markdown olmayacak. Metin değerlerinin İÇİNDE çift tırnak (") KULLANMA — vurgu gerekiyorsa tek tırnak (') kullan. JSON'u bozacak hiçbir karakter kullanma. Değerlerde satır başı (yeni satır) koyma; her alan tek paragraf olsun.`;
 
   const ortak = `- teaser: en fazla 12 kelime; olumlu ve merak uyandıran.
 - tavsiye: tek, net, uygulanabilir ve olumlu bir cümle.`;
@@ -202,16 +209,16 @@ ${ortak}`;
       const i = start+j, f = evTema(i, cisimIdx);
       return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}`;
     }).join("\n");
-    const user = `${kapsam} için aşağıdaki ${dilim.length} burcun her birine ${zaman} yorumunu yaz ve sonucu "burc_yorumlari" aracıyla ver.
+    const user = `${kapsam} için aşağıdaki ${dilim.length} burcun her birine ${zaman} yorumunu yaz. SADECE geçerli bir JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
 Sıra ve indeksler tam olarak şöyle olmalı; her burcun öne çıkan yaşam alanı belirtilmiştir:
 ${siraliBurclar}
 
-Her yorum nesnesi şu alanlara sahip olmalı: ${alanlar}
+Her öğe şu alanlara sahip olmalı: ${alanlar}
 Uzunluk ve içerik:
 ${uzunluk}
-Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dilim.length} yorum ver (yukarıdaki sırayla).`;
+Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dilim.length} öğe döndür (yukarıdaki sırayla).`;
 
-    const arr = await apiCagri(sys, user, alanListe);
+    const arr = await apiCagriTekrarli(sys, user);
     if(!Array.isArray(arr)||arr.length!==dilim.length) throw new Error(`${dilim.length} öğe bekleniyordu, gelen: `+(Array.isArray(arr)?arr.length:typeof arr));
     for(let j=0;j<dilim.length;j++){
       const it = arr[j];
