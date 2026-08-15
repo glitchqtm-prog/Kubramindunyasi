@@ -129,20 +129,26 @@ function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;"
 
 /* ---------- Anthropic çağrısı ---------- */
 const BATCH = 4; // 12 burcu 4'er 4'er (3 çağrı) üret → her çağrı kısa/hızlı biter, zaman aşımına takılmaz
-async function apiCagri(sys, user){
+async function apiCagri(sys, user, alanListe){
   const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(240000) : undefined; // 4 dk güvenlik ağı
+  const props = {}; for(const k of alanListe) props[k] = { type:"string" };
+  // Yapılandırılmış çıktı: model yorumları bir aracın girdisi olarak verir → API biçimi doğrular, bozuk JSON İMKANSIZ
+  const tool = {
+    name:"burc_yorumlari",
+    description:"İstenen sıradaki burçların her biri için tek bir yorum nesnesi içeren dizi.",
+    input_schema:{ type:"object", properties:{ yorumlar:{ type:"array", items:{ type:"object", properties:props, required:alanListe } } }, required:["yorumlar"] }
+  };
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, messages:[{role:"user",content:user}] }),
+    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, tools:[tool], tool_choice:{ type:"tool", name:"burc_yorumlari" }, messages:[{role:"user",content:user}] }),
     signal: gsignal
   });
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
-  const metin = (data.content||[]).map(x=>x.type==="text"?x.text:"").join("");
-  const bas=metin.indexOf("["), son=metin.lastIndexOf("]");
-  if(bas<0||son<0) throw new Error("JSON dizisi bulunamadı: "+metin.slice(0,200));
-  return JSON.parse(metin.slice(bas, son+1));
+  const tu = (data.content||[]).find(x=>x.type==="tool_use");
+  if(!tu || !tu.input || !Array.isArray(tu.input.yorumlar)) throw new Error("Beklenen araç yanıtı gelmedi: "+JSON.stringify(data).slice(0,200));
+  return tu.input.yorumlar;
 }
 async function yorumUret(tur, sky){
   const gunluk = tur==="gunluk";
@@ -195,16 +201,16 @@ ${ortak}`;
       const i = start+j, f = evTema(i, cisimIdx);
       return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}`;
     }).join("\n");
-    const user = `${kapsam} için aşağıdaki ${dilim.length} burcun her birine ${zaman} yorumunu yaz. Sadece GEÇERLİ JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
+    const user = `${kapsam} için aşağıdaki ${dilim.length} burcun her birine ${zaman} yorumunu yaz ve sonucu "burc_yorumlari" aracıyla ver.
 Sıra ve indeksler tam olarak şöyle olmalı; her burcun öne çıkan yaşam alanı belirtilmiştir:
 ${siraliBurclar}
 
-Her öğe şu alanlara sahip olmalı: ${alanlar}
+Her yorum nesnesi şu alanlara sahip olmalı: ${alanlar}
 Uzunluk ve içerik:
 ${uzunluk}
-Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dilim.length} öğe döndür (yukarıdaki sırayla).`;
+Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dilim.length} yorum ver (yukarıdaki sırayla).`;
 
-    const arr = await apiCagri(sys, user);
+    const arr = await apiCagri(sys, user, alanListe);
     if(!Array.isArray(arr)||arr.length!==dilim.length) throw new Error(`${dilim.length} öğe bekleniyordu, gelen: `+(Array.isArray(arr)?arr.length:typeof arr));
     for(let j=0;j<dilim.length;j++){
       const it = arr[j];
