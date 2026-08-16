@@ -35,6 +35,10 @@
   .amblem .portre{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px);border-radius:50%;object-fit:cover;object-position:center top;display:none}
   .amblem.has-portre .portre{display:block}
   .amblem.has-portre .glif{display:none}
+  .efsane-blok{margin-top:22px;text-align:left;background:rgba(217,185,106,.05);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .efsane-etiket{font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.9;text-align:center;margin-bottom:6px}
+  .efsane-ad{font-family:Georgia,'Times New Roman',serif;font-size:17px;color:var(--gold-soft);text-align:center;margin-bottom:8px}
+  .efsane-metin{font-size:15.5px;color:#efe7f6;line-height:1.75}
   .twin-ad{text-align:center;font-size:44px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-top:12px;line-height:1.05}
   .twin-epithet{text-align:center;font-size:19px;color:var(--gold-soft);font-style:italic;margin-top:4px}
   .burc-satir{text-align:center;color:var(--cream);font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;margin-top:12px;opacity:.92}
@@ -105,6 +109,11 @@
     </div>
     <div class="armagan" id="armagan"></div>
     <div class="muhur" id="muhur"></div>
+    <div class="efsane-blok">
+      <div class="efsane-etiket">✦ Burcunun Efsanesi ✦</div>
+      <div class="efsane-ad" id="efsaneAd"></div>
+      <div class="efsane-metin" id="efsaneMetin"></div>
+    </div>
     <div class="aksiyon">
       <button class="abtn gold" id="kartBtn">🎴 İkiz Kartı Oluştur</button>
       <button class="abtn ghost" id="paylas">Metni Paylaş ✦</button>
@@ -204,6 +213,22 @@ const ARK = [
    armagan:"Kelimelerin yetmediği yeri hissettirerek doldurmak."}
 ];
 
+// BURC/ARK ile aynı indeks sırasında 12 takımyıldız efsanesi (gerçek Yunan mitolojisi)
+const EFSANE = [
+  {ad:"Chrysomallos — Altın Post", metin:"Chrysomallos, altın postuyla parıldayan kanatlı bir koçtu. İki çocuğu, Phriksos ile Helle'yi sırtına alıp denizler aşırı taşıdı ve onları kötü bir kaderden kurtardı. Zeus bu cesur kurtarıcıyı ödüllendirip yıldızların arasına yerleştirdi; Koç burcu böyle doğdu. Tıpkı senin gibi: tehlikeyi görünce kaçmaz, öne atılır ve yol açarsın."},
+  {ad:"Beyaz Boğa — Europa'nın Yolculuğu", metin:"Zeus, güzel Europa'ya duyduğu sevgiyle bembeyaz, uysal bir boğaya dönüştü. Europa güvenle sırtına çıktığında boğa denizi yarıp onu ta Girit'e taşıdı. Gökyüzüne yükselen bu boğa, sarsılmaz gücü ve sadık doğasıyla Boğa burcu oldu. Sen de yumuşak ama sağlamsın; bir kez güvendiğinde sonuna kadar taşırsın."},
+  {ad:"Kastor ve Polluks — Ölümsüz Kardeşlik", metin:"Kastor ile Polluks, birbirine sıkıca bağlı ikiz kardeşlerdi; biri ölümlü, biri ölümsüz. Kastor öldüğünde Polluks, ölümsüzlüğünü kardeşiyle paylaşmak için Zeus'a yalvardı. Zeus ikisini de gökyüzüne çıkardı ki sonsuza dek birlikte kalsınlar; İkizler burcu bu kardeş sevgisinin yıldızıdır. Sen de bağ kurar, iki dünya arasında köprü olursun."},
+  {ad:"Karkinos — Vefalı Yengeç", metin:"Karkinos, Herakles Hydra ile savaşırken onu oyalamak için gönderilen dev bir yengeçti. Ezildiği hâlde görevinden dönmedi; bu sadakati karşılıksız kalmadı ve Hera onu gökyüzüne aldı. Yengeç burcu, verdiği söz uğruna sonuna dek direnen bu vefanın yıldızıdır. Sen de sevdiklerini bir kabuk gibi korur, kolay kolay bırakmazsın."},
+  {ad:"Nemea Aslanı — Yenilmez İhtişam", metin:"Nemea Aslanı, hiçbir silahın delemediği postuyla korku salan yenilmez bir canavardı. Herakles onu çıplak elleriyle alt etti; öyle görkemliydi ki gökyüzüne yükseltildi. Aslan burcu, bu ihtişamın ve yılmaz gururun yıldızıdır. Sen de girdiğin yeri aydınlatır, doğuştan bir sahne ışığı taşırsın."},
+  {ad:"Dike — Gökyüzüne Çekilen Adalet", metin:"Dike, Altın Çağ'da insanların arasında yaşayan adalet tanrıçasıydı; doğruyu, dürüstlüğü ve düzeni korurdu. İnsanlık açgözlülüğe ve kavgaya yenik düşünce Dike buna daha fazla dayanamadı ve gökyüzüne çekildi; bugün onu Başak takımyıldızı olarak görüyoruz. Sen de adaleti, özeni ve saflığı taşır; kırılan uyumu onarmaya çalışırsın."},
+  {ad:"Adaletin Terazisi", metin:"Terazi, gökyüzünün tek cansız burcudur; komşusu Başak'ın, yani adalet tanrıçası Dike'nin elindeki teraziyi temsil eder. İyiyle kötüyü, hakla haksızı tartan bu terazi; dengenin ve hakkaniyetin sembolüdür. Sen de her tarafı dinler, uyumu ve adaleti ararsın; kavga değil köprü kurarsın."},
+  {ad:"Orion'un Akrebi", metin:"Bu akrep, kibirlenen dev avcı Orion'u durdurmak için gönderildi ve tek bir sokuşuyla onu alt etti. İkisi de gökyüzüne çıkarıldı, ama karşılıklı iki uca; biri doğarken diğeri batar, hiç karşılaşmazlar. Akrep burcu, bu derin gücün ve dönüştürücü tutkunun yıldızıdır. Sen de yüzeyle yetinmez, en derine iner ve küllerinden yeniden doğmayı bilirsin."},
+  {ad:"Gökyüzünün Okçusu", metin:"Yay, yayını gerip okunu tam Akrep'in kalbine doğrultmuş ölümsüz bir okçudur; çoğu zaman bilge kentaur Chiron ile anılır. Kahramanların öğretmeni olan bu okçu, hakikatin ve ufkun peşindeydi; gökyüzüne çıkıp yolculara yön gösterdi. Sen de ufka bakar, anlamın izini sürer, öğrendiğini paylaşırsın."},
+  {ad:"Deniz Keçisi — Pan'ın Kurtuluşu", metin:"Canavar Typhon saldırdığında tanrı Pan telaşla Nil'e atladı; suya giren yarısı balığa, karada kalan yarısı keçiye dönüştü. Zeus bu tuhaf ama becerikli kurtuluşu beğenip deniz-keçisini gökyüzüne aldı; Oğlak burcu böyle doğdu. Sen de zorlukta soğukkanlılığını korur, sabır ve akılla zirveye tırmanırsın."},
+  {ad:"Ganymedes — Gökyüzünün Sakisi", metin:"Ganymedes ölümlülerin en güzeliydi; Zeus onu gökyüzüne çıkarıp tanrıların sofrasına ölümsüzlük sunan sakisi yaptı. Elindeki testiden gökyüzüne hayat veren suları döktü. Kova burcu, bu cömert paylaşımın ve insanlığa akan ilhamın yıldızıdır. Sen de kalıpları aşar, herkese fayda olsun diye ileriyi görürsün."},
+  {ad:"Aphrodite ve Eros — Bağlı Kalan İki Balık", metin:"Canavar Typhon'dan kaçmak için Aphrodite ile oğlu Eros iki balığa dönüştü; birbirlerini kaybetmemek için kuyruklarını bir iple bağladılar. Böylece hep birlikte, hep bağlı kaldılar; Balık burcu bu koşulsuz sevginin ve bağın yıldızıdır. Sen de görünenin ötesini hisseder, şefkat ve hayalle dünyaya dokunursun."}
+];
+
 // BURC/ARK ile aynı indeks sırasında portre dosya adları (repo kökünde .jpeg)
 const SLUG = ["koc","boga","ikizler","yengec","aslan","basak","terazi","akrep","yay","oglak","kova","balik"];
 
@@ -252,10 +277,14 @@ function hesapla(){
   $("#golge").textContent = a.golge;
   $("#armagan").innerHTML = `<b>Armağanın:</b> ${a.armagan}`;
   $("#muhur").textContent = muhur;
+  const ef = EFSANE[idx];
+  $("#efsaneAd").textContent = ef.ad;
+  $("#efsaneMetin").textContent = ef.metin;
 
   sonKart = {ad, twin:a.twin, epithet:a.epithet, glif:b.glif, portre:portreSrc,
     burcAd:b.ad, el:ELAD[b.el], mod:MODAD[b.mod],
-    mitos:a.mitos, isik:a.isik, golge:a.golge, armagan:a.armagan, h};
+    mitos:a.mitos, isik:a.isik, golge:a.golge, armagan:a.armagan, h,
+    efsaneAd:ef.ad, efsaneMetin:ef.metin};
 
   const s=$("#sonuc"); s.hidden=false; $("#foot").hidden=false; s.classList.remove("goster");
   requestAnimationFrame(()=>s.classList.add("goster"));
