@@ -39,6 +39,14 @@
   .efsane-etiket{font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.9;text-align:center;margin-bottom:6px}
   .efsane-ad{font-family:Georgia,'Times New Roman',serif;font-size:17px;color:var(--gold-soft);text-align:center;margin-bottom:8px}
   .efsane-metin{font-size:15.5px;color:#efe7f6;line-height:1.75}
+  .mod-sec{display:flex;gap:10px;justify-content:center;margin:0 auto 16px;max-width:440px}
+  .mod{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--cream);border-radius:30px;padding:12px 10px;font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+  .mod.aktif{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-weight:bold;border-color:var(--gold)}
+  .cift-amblemler{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px auto 2px}
+  .cift-amblemler .amblem{width:132px;height:132px;margin:0}
+  .cift-amblemler .amblem .glif{font-size:66px}
+  .cift-kalp{font-size:34px;line-height:1}
+  .cift-adlar{text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:25px;color:var(--gold-soft);margin-top:8px}
   .twin-ad{text-align:center;font-size:44px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-top:12px;line-height:1.05}
   .twin-epithet{text-align:center;font-size:19px;color:var(--gold-soft);font-style:italic;margin-top:4px}
   .burc-satir{text-align:center;color:var(--cream);font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;margin-top:12px;opacity:.92}
@@ -85,7 +93,12 @@
     <p class="sub">Doğduğun gün gökyüzü sana hangi efsaneyi fısıldadı? Mitolojik kozmik ikizini keşfet.</p>
   </header>
 
-  <div class="card">
+  <div class="mod-sec">
+    <button class="mod aktif" id="modBireysel">🌙 Kendim için</button>
+    <button class="mod" id="modCift">💞 İkimiz için</button>
+  </div>
+
+  <div class="card" id="girisBireysel">
     <div class="kisi">
       <div class="b">Sen</div>
       <input type="text" id="ad" placeholder="Adın" maxlength="24" autocomplete="off">
@@ -93,6 +106,21 @@
     </div>
     <button class="btn" id="hesapla">Kozmik İkizimi Bul ✦</button>
     <div class="hata" id="hata"></div>
+  </div>
+
+  <div class="card" id="girisCift" hidden>
+    <div class="kisi">
+      <div class="b">İlk kişi</div>
+      <input type="text" id="ad1" placeholder="Adı" maxlength="24" autocomplete="off">
+      <input type="date" id="tarih1" min="1900-01-01" max="2025-12-31">
+    </div>
+    <div class="kisi">
+      <div class="b">İkinci kişi</div>
+      <input type="text" id="ad2" placeholder="Adı" maxlength="24" autocomplete="off">
+      <input type="date" id="tarih2" min="1900-01-01" max="2025-12-31">
+    </div>
+    <button class="btn" id="hesaplaCift">İkinizin Efsanesini Bul 💞</button>
+    <div class="hata" id="hataCift"></div>
   </div>
 
   <div class="card" id="sonuc" hidden>
@@ -122,6 +150,33 @@
     <div class="toast" id="toast"></div>
   </div>
 
+  <div class="card" id="sonucCift" hidden>
+    <div class="ikiz-intro" id="introCift"></div>
+    <div class="cift-amblemler">
+      <div class="amblem" id="amblem1"><img class="portre" id="portre1" alt="" decoding="async"><span class="glif" id="glif1"></span></div>
+      <div class="cift-kalp">💞</div>
+      <div class="amblem" id="amblem2"><img class="portre" id="portre2" alt="" decoding="async"><span class="glif" id="glif2"></span></div>
+    </div>
+    <div class="cift-adlar" id="ciftAdlar"></div>
+    <div class="burc-satir" id="ciftBurclar"></div>
+    <div class="ayrac">✦</div>
+    <div class="efsane-blok">
+      <div class="efsane-etiket">✦ İkinizin Efsanesi ✦</div>
+      <div class="efsane-metin" id="ciftEfsane"></div>
+    </div>
+    <div class="efsane-blok" style="margin-top:14px">
+      <div class="efsane-etiket">💞 Aranızdaki Dinamik</div>
+      <div class="efsane-metin" id="ciftDinamik"></div>
+    </div>
+    <div class="muhur" id="ciftMuhur"></div>
+    <div class="aksiyon">
+      <button class="abtn gold" id="ciftKartBtn">🎴 Çift Kartı Oluştur</button>
+      <button class="abtn ghost" id="ciftPaylas">Metni Paylaş ✦</button>
+      <button class="abtn ghost" id="ciftTekrar">Yeni</button>
+    </div>
+    <div class="toast" id="ciftToast"></div>
+  </div>
+
   <div class="foot" id="foot" hidden>
     <a class="cta" href="/#cards">Tüm haritanı gör: Natal Harita Raporu →</a>
     <p class="disclaimer">
@@ -148,7 +203,7 @@
 
 <script>
 const $ = s => document.querySelector(s);
-let sonKart = null;
+let sonKart = null, sonCift = null, kartMeta = {name:"kozmik-ikiz-karti.png", text:""};
 
 const BURC = [
   {ad:"Koç",glif:"♈",el:"ates",mod:"oncu"},{ad:"Boğa",glif:"♉",el:"toprak",mod:"sabit"},
@@ -415,9 +470,10 @@ function kartOlustur(){
         if(!b){ $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; return; }
         if(kartURL) URL.revokeObjectURL(kartURL);
         kartBlob=b; kartURL=URL.createObjectURL(b);
+        kartMeta={name:"kozmik-ikiz-karti.png", text:`${sonKart.ad}'ın kozmik ikizi: ${sonKart.twin} — "${sonKart.epithet}" ✦ astroyuvam.com`};
         $("#kartImg").src=kartURL;
         $("#kartOverlay").hidden=false; document.body.style.overflow='hidden';
-        const f=new File([b],"kozmik-ikiz-karti.png",{type:"image/png"});
+        const f=new File([b],kartMeta.name,{type:"image/png"});
         $("#kartPaylasImg").hidden = !(navigator.canShare && navigator.canShare({files:[f]}));
       },'image/png');
     }catch(e){ btn.textContent=eski; btn.disabled=false; $("#toast").textContent="Görsel oluşturulamadı, tekrar dene."; }
@@ -432,15 +488,15 @@ function kartOlustur(){
 }
 function kartIndir(){
   if(!kartURL) return;
-  const a=document.createElement('a'); a.href=kartURL; a.download="kozmik-ikiz-karti.png";
+  const a=document.createElement('a'); a.href=kartURL; a.download=kartMeta.name;
   document.body.appendChild(a); a.click(); a.remove();
   $("#kartToast").textContent="İndirildi! 📥"; setTimeout(()=>$("#kartToast").textContent="",4000);
 }
 async function kartPaylasImg(){
   if(!kartBlob) return;
-  const f=new File([kartBlob],"kozmik-ikiz-karti.png",{type:"image/png"});
+  const f=new File([kartBlob],kartMeta.name,{type:"image/png"});
   const metin=sonKart?`${sonKart.ad}'ın kozmik ikizi: ${sonKart.twin} — "${sonKart.epithet}" ✦ astroyuvam.com`:"";
-  try{ await navigator.share({files:[f], title:"Kozmik İkiz Kartı", text:metin}); }catch(e){}
+  try{ await navigator.share({files:[f], title:"Astro Yuvam", text:kartMeta.text}); }catch(e){}
 }
 function kartKapat(){ $("#kartOverlay").hidden=true; document.body.style.overflow=''; }
 
@@ -453,6 +509,164 @@ $("#kartPaylasImg").addEventListener("click", kartPaylasImg);
 $("#kartKapat").addEventListener("click", kartKapat);
 $("#kartOverlay").addEventListener("click", e=>{ if(e.target===$("#kartOverlay")) kartKapat(); });
 [ "#ad","#tarih" ].forEach(s=>$(s).addEventListener("keydown",e=>{ if(e.key==="Enter") hesapla(); }));
+
+/* ========== ÇİFTLER MODU ========== */
+const OZ = [
+  "cesur bir kurtarıcının atılganlığını","sarsılmaz, sadık bir gücü","ölümsüz bir kardeşlik bağını",
+  "sonuna dek vazgeçmeyen bir vefayı","yenilmez, görkemli bir gururu","gökyüzüne çekilen bir adaleti",
+  "her şeyi tartan bir dengeyi","derin, dönüştürücü bir gücü","ufka çevrili bir arayışı",
+  "sabırla zirveye tırmanan bir aklı","cömertçe akan bir ilhamı","birbirine bağlı, koşulsuz bir sevgiyi"
+];
+const DINAMIK = {
+  "ates|ates":"İkiniz de ateş taşıyorsunuz: tutku, cesaret ve canlılık. Birlikte parlak bir alev olur, birbirinizi hep ileri iter, kolay kolay sönmezsiniz — yeter ki alevi paylaşmayı unutmayın.",
+  "ates|toprak":"Ateş ile toprak: biriniz kıvılcım, diğeriniz sağlam zemin. Ateşin heyecanı toprağın sabrıyla buluşunca hayaller gerçeğe dönüşür; biri ilham verir, diğeri kök salar.",
+  "ates|hava":"Ateş ile hava: hava ateşi büyütür, ateş havaya yön verir. Birlikte fikir ve heyecan dolu, canlı ve ilham veren bir bağ kurarsınız — ne sohbetiniz biter ne tutkunuz.",
+  "ates|su":"Ateş ile su: biri alev, biri derin deniz. Tutku ile duygu buluşunca yoğun bir bağ doğar; bazen buhar, bazen denge — birbirinizi anlamaya çalıştıkça büyürsünüz.",
+  "toprak|toprak":"İkiniz de toprak: sağlamlık, sadakat ve güven. Acele etmeden, sağlam temeller üzerine kurulan, yıllara meydan okuyan bir bağınız olur.",
+  "hava|toprak":"Toprak ile hava: biri gökte fikir, biri yerde eylem. Hayaller ile pratiklik buluşunca havanın ilhamı toprakta somut bir şeye dönüşür; birbirinizi güzelce dengelersiniz.",
+  "su|toprak":"Toprak ile su: su toprağı besler, toprak suya yatak olur. Şefkat ile güven buluşunca sıcak, besleyici ve huzurlu bir bağ doğar — birbirinizin limanı olursunuz.",
+  "hava|hava":"İkiniz de hava: fikir, merak ve özgürlük. Sohbetiniz hiç bitmez, birbirinizin zihnini beslersiniz; hafif, eğlenceli ve ilham dolu bir bağınız olur.",
+  "hava|su":"Hava ile su: biri düşünce, biri duygu. Fikirler ile hisler buluşunca hayal gücü yüksek, şiirsel bir bağ doğar; kelimeler ile kalp arasında köprü kurarsınız.",
+  "su|su":"İkiniz de su: derin duygular, güçlü sezgiler. Birbirinizi kelimesiz anlar, aynı derinlikte buluşursunuz — şefkatli, sezgisel ve derin bir bağınız olur."
+};
+function dinamikBul(e1,e2){ return DINAMIK[[e1,e2].sort().join("|")]; }
+const CIFTMUHUR = [
+  "İki ayrı efsane, tek bir gökyüzünde buluştu.",
+  "Yıldızlar ikinizi aynı hikâyenin iki satırı yapmış.",
+  "Bu bir kader değil; birlikte yazacağınız bir efsanenin başlangıcı.",
+  "Gökyüzü herkese bir mit fısıldar; ikinize aynı anda fısıldadı."
+];
+function kKalp(g,x,y,s,col){ g.save(); g.translate(x,y); g.fillStyle=col; g.beginPath(); g.moveTo(0,s*0.35); g.bezierCurveTo(-s,-s*0.5,-s*0.55,-s,0,-s*0.32); g.bezierCurveTo(s*0.55,-s,s,-s*0.5,0,s*0.35); g.closePath(); g.fill(); g.restore(); }
+
+function ciftKartCiz(d, img1, img2){
+  const W=1080,H=1920,cx=W/2;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const g=cv.getContext('2d');
+  const gold='#d9b96a',goldS='#e7cf95',cream='#f0e6d2',muted='#9a8fb8',rose='#e08aa0';
+  const bg=g.createRadialGradient(cx,360,120, cx,1040,1520);
+  bg.addColorStop(0,'#2a1c3f'); bg.addColorStop(.55,'#14101f'); bg.addColorStop(1,'#09060f');
+  g.fillStyle=bg; g.fillRect(0,0,W,H);
+  const rnd=mulberry32((d.h>>>0)||654321);
+  for(let i=0;i<120;i++){const x=rnd()*W,y=rnd()*H,r=rnd()*1.9+0.4,al=rnd()*0.6+0.14;g.globalAlpha=al;g.fillStyle=(rnd()>0.86)?goldS:'#fff';g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fill();}
+  g.globalAlpha=1;
+  g.strokeStyle='rgba(217,185,106,.55)'; g.lineWidth=2; kRoundRect(g,44,44,W-88,H-88,30); g.stroke();
+  g.strokeStyle='rgba(217,185,106,.16)'; g.lineWidth=1; kRoundRect(g,60,60,W-120,H-120,24); g.stroke();
+  g.textAlign='center'; g.textBaseline='alphabetic';
+  g.fillStyle=goldS; g.font='600 30px "Segoe UI",system-ui,sans-serif'; g.fillText('✦   A S T R O   Y U V A M   ✦', cx, 150);
+  g.fillStyle=muted; g.font='26px "Segoe UI",system-ui,sans-serif'; g.fillText('İ K İ N İ Z İ N   E F S A N E S İ', cx, 226);
+  const ey=442, er=150, off=205;
+  const drawP=(img,pcx,glif)=>{
+    if(img && img.naturalWidth>0){
+      g.save(); g.beginPath(); g.arc(pcx,ey,er,0,Math.PI*2); g.clip();
+      const ss=Math.min(img.width,img.height), sx=(img.width-ss)/2, sy=(img.height-ss)/2;
+      g.drawImage(img, sx, sy, ss, ss, pcx-er, ey-er, er*2, er*2); g.restore();
+      g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(pcx,ey,er,0,Math.PI*2); g.stroke();
+    } else {
+      g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(pcx,ey,er,0,Math.PI*2); g.stroke();
+      g.save(); g.fillStyle=gold; g.font='118px Georgia,serif'; g.textBaseline='middle'; g.fillText(glif,pcx,ey+4); g.restore(); g.textBaseline='alphabetic';
+    }
+  };
+  drawP(img1, cx-off, d.b1glif); drawP(img2, cx+off, d.b2glif);
+  kKalp(g, cx, ey, 42, rose);
+  const adlar=`${d.ad1}  &  ${d.ad2}`;
+  const fs=kFit(g, adlar, 900, 74, '700', 'Georgia,serif');
+  g.save(); g.shadowColor='rgba(217,185,106,.4)'; g.shadowBlur=30; g.fillStyle=gold; g.font='700 '+fs+'px Georgia,serif'; g.fillText(adlar, cx, 706); g.restore();
+  g.fillStyle=cream; g.font='30px "Segoe UI",system-ui,sans-serif'; g.fillText(`${d.b1glif} ${d.b1ad}    ·    ${d.b2glif} ${d.b2ad}`, cx, 760);
+  g.fillStyle='rgba(217,185,106,.6)'; g.font='30px Georgia,serif'; g.fillText('✦', cx, 818);
+  let y=874;
+  g.fillStyle='#e9dff5'; g.font='30px Georgia,serif';
+  kWrap(g, d.ciftEfsane, 884).forEach(ln=>{ g.fillText(ln, cx, y); y+=44; });
+  y+=30; g.fillStyle=goldS; g.font='600 25px "Segoe UI",system-ui,sans-serif'; g.fillText('A R A N I Z D A K İ   D İ N A M İ K', cx, y); y+=48;
+  g.fillStyle=cream; g.font='italic 29px Georgia,serif';
+  kWrap(g, d.dinamik, 884).forEach(ln=>{ g.fillText(ln, cx, y); y+=42; });
+  y+=26; g.fillStyle=muted; g.font='italic 26px Georgia,serif';
+  kWrap(g, d.muhur, 860).forEach(ln=>{ g.fillText(ln, cx, y); y+=38; });
+  g.fillStyle=goldS; g.font='30px Georgia,serif'; g.fillText('✦', cx, 1772);
+  g.fillStyle=gold; g.font='600 34px "Segoe UI",system-ui,sans-serif'; g.fillText('astroyuvam.com', cx, 1826);
+  g.fillStyle=muted; g.font='23px "Segoe UI",system-ui,sans-serif'; g.fillText('Astro İkizin · İkinizin Efsanesi', cx, 1864);
+  return cv;
+}
+
+function ciftKartOlustur(){
+  if(!sonCift) return;
+  const btn=$("#ciftKartBtn"); const eski=btn.textContent; btn.textContent="Hazırlanıyor…"; btn.disabled=true;
+  const done=(im1,im2)=>{
+    try{
+      const cv=ciftKartCiz(sonCift, im1, im2);
+      cv.toBlob(b=>{
+        btn.textContent=eski; btn.disabled=false;
+        if(!b){ $("#ciftToast").textContent="Görsel oluşturulamadı, tekrar dene."; return; }
+        if(kartURL) URL.revokeObjectURL(kartURL);
+        kartBlob=b; kartURL=URL.createObjectURL(b);
+        kartMeta={name:"ikinizin-efsanesi.png", text:`${sonCift.ad1} & ${sonCift.ad2}'ın kozmik efsanesi ✦ astroyuvam.com`};
+        $("#kartImg").src=kartURL;
+        $("#kartOverlay").hidden=false; document.body.style.overflow='hidden';
+        const f=new File([b],kartMeta.name,{type:"image/png"});
+        $("#kartPaylasImg").hidden = !(navigator.canShare && navigator.canShare({files:[f]}));
+      },'image/png');
+    }catch(e){ btn.textContent=eski; btn.disabled=false; $("#ciftToast").textContent="Görsel oluşturulamadı, tekrar dene."; }
+  };
+  const yukle=(src)=>new Promise(res=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=()=>res(null); im.src=src; });
+  Promise.all([yukle(sonCift.portre1), yukle(sonCift.portre2)]).then(([a,b])=>done(a,b));
+}
+
+async function ciftPaylas(){
+  const metin=sonCift?`${sonCift.ad1} & ${sonCift.ad2}'ın kozmik efsanesi ✦ Sen de bul:`:"";
+  const url=location.origin+"/astro-ikizin.html", toast=$("#ciftToast");
+  if(navigator.share){ try{ await navigator.share({title:"İkinizin Efsanesi — Astro Yuvam",text:metin,url}); return; }catch(e){} }
+  try{ await navigator.clipboard.writeText(metin+" "+url); toast.textContent="Kopyalandı! Paylaşabilirsin. ✦"; setTimeout(()=>toast.textContent="",4000); }
+  catch(e){ toast.textContent="Link: "+url; }
+}
+
+function ciftHesapla(){
+  const ad1=$("#ad1").value.trim(), t1=$("#tarih1").value;
+  const ad2=$("#ad2").value.trim(), t2=$("#tarih2").value;
+  const err=$("#hataCift"); err.textContent="";
+  if(!ad1||!ad2){ err.textContent="Lütfen iki isim de yaz."; return; }
+  if(!t1||!t2){ err.textContent="Lütfen iki doğum tarihini de seç."; return; }
+  const p1=t1.split("-").map(Number), p2=t2.split("-").map(Number);
+  const i1=burcBul(p1[1],p1[2]), i2=burcBul(p2[1],p2[2]);
+  const b1=BURC[i1], b2=BURC[i2], ef1=EFSANE[i1], ef2=EFSANE[i2];
+  const h=hash((ad1+"|"+t1+"|"+ad2+"|"+t2).toLocaleLowerCase("tr"));
+  const efAd1=ef1.ad.split("—")[0].trim(), efAd2=ef2.ad.split("—")[0].trim();
+  const ciftEfsane=`${ad1}, ${b1.ad} burcunun yıldızını taşır — efsanesinde ${OZ[i1]}. ${ad2} ise ${b2.ad}; ${OZ[i2]}. Gökyüzü bu iki kadim hikâyeyi aynı gecede buluşturmuş: ${efAd1} ile ${efAd2} yan yana parlıyor.`;
+  const dinamik=dinamikBul(b1.el,b2.el);
+  const muhur=CIFTMUHUR[h%CIFTMUHUR.length];
+  $("#introCift").textContent=`${ad1} & ${ad2}, kozmik efsaneniz…`;
+  const set=(aId,pId,gId,idx,tw)=>{
+    const amblem=$(aId), portre=$(pId);
+    $(gId).textContent=BURC[idx].glif;
+    amblem.classList.remove("has-portre");
+    portre.onload=()=>amblem.classList.add("has-portre");
+    portre.onerror=()=>amblem.classList.remove("has-portre");
+    portre.alt=tw; portre.src=SLUG[idx]+".jpeg";
+  };
+  set("#amblem1","#portre1","#glif1",i1,ARK[i1].twin);
+  set("#amblem2","#portre2","#glif2",i2,ARK[i2].twin);
+  $("#ciftAdlar").textContent=`${ad1} & ${ad2}`;
+  $("#ciftBurclar").textContent=`${b1.glif} ${b1.ad}   💞   ${b2.glif} ${b2.ad}`;
+  $("#ciftEfsane").textContent=ciftEfsane;
+  $("#ciftDinamik").textContent=dinamik;
+  $("#ciftMuhur").textContent=muhur;
+  sonCift={ad1,ad2,b1glif:b1.glif,b1ad:b1.ad,b2glif:b2.glif,b2ad:b2.ad,portre1:SLUG[i1]+".jpeg",portre2:SLUG[i2]+".jpeg",ciftEfsane,dinamik,muhur,h};
+  const sc=$("#sonucCift"); sc.hidden=false; $("#foot").hidden=false;
+  sc.classList.remove("goster"); requestAnimationFrame(()=>sc.classList.add("goster"));
+  try{ sc.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){}
+}
+
+function modSec(cift){
+  $("#modCift").classList.toggle("aktif",cift);
+  $("#modBireysel").classList.toggle("aktif",!cift);
+  $("#girisCift").hidden=!cift; $("#girisBireysel").hidden=cift;
+  $("#sonuc").hidden=true; $("#sonucCift").hidden=true; $("#foot").hidden=true;
+}
+$("#modBireysel").addEventListener("click",()=>modSec(false));
+$("#modCift").addEventListener("click",()=>modSec(true));
+$("#hesaplaCift").addEventListener("click", ciftHesapla);
+$("#ciftKartBtn").addEventListener("click", ciftKartOlustur);
+$("#ciftPaylas").addEventListener("click", ciftPaylas);
+$("#ciftTekrar").addEventListener("click", ()=>{ $("#sonucCift").hidden=true; $("#foot").hidden=true; window.scrollTo({top:0,behavior:"smooth"}); });
+[ "#ad1","#tarih1","#ad2","#tarih2" ].forEach(s=>$(s).addEventListener("keydown",e=>{ if(e.key==="Enter") ciftHesapla(); }));
 </script>
 </body>
 </html>
