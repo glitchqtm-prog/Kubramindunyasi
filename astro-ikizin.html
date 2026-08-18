@@ -389,7 +389,7 @@ function ikizKartCiz(d, img){
   if(img){
     g.save();
     g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.clip();
-    const s=Math.min(img.width,img.height), sx=(img.width-s)/2, sy=(img.height-s)/2;
+    const s=Math.min(img.width,img.height), sx=(img.width-s)/2, sy=0; // üstten hizala (sayfadaki object-position:center top ile aynı) → yüz görünür
     g.drawImage(img, sx, sy, s, s, cx-er, ey-er, er*2, er*2);
     g.restore();
     g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(cx,ey,er,0,Math.PI*2); g.stroke();
@@ -558,7 +558,7 @@ function ciftKartCiz(d, img1, img2){
   const drawP=(img,pcx,glif)=>{
     if(img && img.naturalWidth>0){
       g.save(); g.beginPath(); g.arc(pcx,ey,er,0,Math.PI*2); g.clip();
-      const ss=Math.min(img.width,img.height), sx=(img.width-ss)/2, sy=(img.height-ss)/2;
+      const ss=Math.min(img.width,img.height), sx=(img.width-ss)/2, sy=0; // üstten hizala (madalyonla aynı) → yüz görünür
       g.drawImage(img, sx, sy, ss, ss, pcx-er, ey-er, er*2, er*2); g.restore();
       g.strokeStyle='rgba(217,185,106,.9)'; g.lineWidth=3; g.beginPath(); g.arc(pcx,ey,er,0,Math.PI*2); g.stroke();
     } else {
