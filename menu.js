@@ -9,6 +9,23 @@
    görünür; bir başlığa tıklayınca o kategorinin araçları açılır, tekrar
    tıklayınca kapanır. Menü kapanınca kategoriler sıfırlanır. */
 (function(){
+  // ——— Google Analytics 4 — GÖRÜNMEZ ölçüm (ziyaretçiye hiçbir şey göstermez;
+  //     veriyi yalnızca site sahibi kendi GA panelinden görür). Tüm sayfalarda çalışır. ———
+  (function loadGA(){
+    var GA_ID = "G-QQ0SREFL4L";
+    if(window.__gaYuklendi) return;   // aynı sayfada iki kez yüklenmesin
+    window.__gaYuklendi = true;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", GA_ID);
+  })();
+
   // ——— YENİ ARAÇ EKLEMEK İÇİN TEK YER ———
   // Kategorili menü: her yeni araç ilgili grubun items dizisine tek satır.
   var GRUPLAR = [

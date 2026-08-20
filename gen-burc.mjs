@@ -294,6 +294,9 @@ function head(title, desc, canonical, jsonld){
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics 4 (görünmez ölçüm) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QQ0SREFL4L"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QQ0SREFL4L');</script>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">
