@@ -100,9 +100,12 @@
   + '.am-sub{display:block;font-size:12px;color:#9a8fb8;margin-top:2px}'
   + '.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}'
   + '.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}'
-  + '@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center}'
-  + '.am-dropdown{position:static}.am-drop-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;margin:6px auto 0;display:none;min-width:240px}'
-  + '.am-dropdown.open .am-drop-menu{display:block}}'
+  + '@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}'
+  // Mobilde menü sayfanın ÜSTÜNE yüzer (düzeni itmez) ve menü çubuğunun altında TAM ORTADA açılır.
+  // .am-dropdown static → menü .am-links'e göre konumlanır (ekran ortası), kenara taşmaz.
+  + '.am-dropdown{position:static}'
+  + '.am-drop-menu{left:50%;right:auto;transform:translate(-50%,-6px);width:min(88vw,320px);min-width:0}'
+  + '.am-dropdown.open .am-drop-menu{transform:translate(-50%,0)}}'
   + '@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}';
 
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
