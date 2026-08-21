@@ -7,7 +7,10 @@
 
    KEŞFET MENÜSÜ = AKORDİYON: menü açıldığında yalnızca kategori başlıkları
    görünür; bir başlığa tıklayınca o kategorinin araçları açılır, tekrar
-   tıklayınca kapanır. Menü kapanınca kategoriler sıfırlanır. */
+   tıklayınca kapanır. Menü kapanınca kategoriler sıfırlanır.
+
+   BURÇ YORUMLARI MENÜSÜ = BASİT AÇILIR: tıklayınca doğrudan iki seçenek
+   görünür — Günlük ve Haftalık. Kategori/akordiyon yoktur. */
 (function(){
   // ——— Google Analytics 4 — GÖRÜNMEZ ölçüm (ziyaretçiye hiçbir şey göstermez;
   //     veriyi yalnızca site sahibi kendi GA panelinden görür). Tüm sayfalarda çalışır. ———
@@ -56,8 +59,14 @@
       { href:"/#sss",           ad:"✦ Sıkça Sorulanlar", alt:"Merak edilenlerin cevabı" }
     ]}
   ];
+
+  // ——— BURÇ YORUMLARI açılır menüsü (basit — iki doğrudan seçenek) ———
+  var BURC = [
+    { href:"/gunluk-burc-yorumlari.html",   ad:"✦ Günlük Burç Yorumları",   alt:"12 burç için bugünün enerjisi" },
+    { href:"/haftalik-burc-yorumlari.html", ad:"✦ Haftalık Burç Yorumları", alt:"Bu haftanın genel gidişatı" }
+  ];
+
   var LINKLER = [
-    { href:"/gunluk-burc-yorumlari.html", ad:"Burç Yorumları" },
     { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" }
   ];
 
@@ -98,6 +107,16 @@
 
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 
+  // Düz bir link listesini (BURÇ gibi) menü <a> etiketlerine çevirir
+  function linkItemsHTML(list, simdi){
+    return list.map(function(t){
+      var dosya = t.href.split("/").pop().toLowerCase();
+      var current = (dosya === simdi) ? ' aria-current="page"' : '';
+      var altHTML = t.alt ? '<span class="am-sub">'+esc(t.alt)+'</span>' : '';
+      return '<a href="'+t.href+'" role="menuitem"'+current+'>'+esc(t.ad)+altHTML+'</a>';
+    }).join("");
+  }
+
   function init(){
     // Stil
     var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
@@ -105,7 +124,7 @@
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
-    // Her kategori = tıklanınca açılıp kapanan bir blok
+    // Keşfet: her kategori = tıklanınca açılıp kapanan bir blok
     var araclarHTML = GRUPLAR.map(function(g){
       var linkler = g.items.map(function(t){
         var dosya = t.href.split("/").pop().toLowerCase();
@@ -118,6 +137,9 @@
            + '</div>';
     }).join("");
 
+    // Burç Yorumları: iki doğrudan seçenek
+    var burcHTML = linkItemsHTML(BURC, simdi);
+
     var linklerHTML = LINKLER.map(function(l){ return '<a href="'+l.href+'">'+esc(l.ad)+'</a>'; }).join("");
 
     var html = ''
@@ -128,6 +150,10 @@
     +       '<button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="am-caret">▾</span></button>'
     +       '<div class="am-drop-menu" role="menu">'+araclarHTML+'</div>'
     +     '</div>'
+    +     '<div class="am-dropdown">'
+    +       '<button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Burç Yorumları <span class="am-caret">▾</span></button>'
+    +       '<div class="am-drop-menu" role="menu">'+burcHTML+'</div>'
+    +     '</div>'
     +     linklerHTML
     +     '<a href="/#cards" class="am-cta">Raporlar</a>'
     +   '</div>'
@@ -137,45 +163,63 @@
     if(mount){ mount.innerHTML = html; }
     else { document.body.insertAdjacentHTML("afterbegin", '<div id="astro-menu">'+html+'</div>'); mount = document.getElementById("astro-menu"); }
 
-    var dd = mount.querySelector(".am-dropdown");
-    if(!dd) return;
-    var btn = dd.querySelector(".am-drop-btn");
+    // Sayfada birden fazla açılır menü olabilir (Keşfet + Burç Yorumları)
+    var dropdowns = mount.querySelectorAll(".am-dropdown");
+    if(!dropdowns.length) return;
 
-    // Tüm kategorileri kapat (menü her açıldığında sadece başlıklar görünür)
-    function kategorileriKapat(){
+    // Bir menünün içindeki akordiyon kategorileri kapat (varsa — Keşfet'te var)
+    function kategorileriKapat(dd){
       var acik = dd.querySelectorAll(".am-cat.open");
       Array.prototype.forEach.call(acik, function(c){
         c.classList.remove("open");
         var cb = c.querySelector(".am-cat-btn"); if(cb) cb.setAttribute("aria-expanded","false");
       });
     }
-    function dropKapat(){
-      dd.classList.remove("open"); btn.setAttribute("aria-expanded","false"); kategorileriKapat();
+    function dropKapat(dd){
+      dd.classList.remove("open");
+      var b = dd.querySelector(".am-drop-btn"); if(b) b.setAttribute("aria-expanded","false");
+      kategorileriKapat(dd);
     }
-    function dropAc(){
-      dd.classList.add("open"); btn.setAttribute("aria-expanded","true");
+    function hepsiniKapat(haric){
+      Array.prototype.forEach.call(dropdowns, function(dd){ if(dd !== haric) dropKapat(dd); });
     }
 
-    // Keşfet aç/kapa
-    btn.addEventListener("click", function(e){
-      e.stopPropagation();
-      if(dd.classList.contains("open")) dropKapat(); else dropAc();
-    });
+    Array.prototype.forEach.call(dropdowns, function(dd){
+      var btn = dd.querySelector(".am-drop-btn");
+      if(!btn) return;
 
-    // Kategori başlıkları: aç/kapa (bağımsız — birden fazla açık olabilir)
-    var catBtns = dd.querySelectorAll(".am-cat-btn");
-    Array.prototype.forEach.call(catBtns, function(cb){
-      cb.addEventListener("click", function(e){
+      // Menü başlığı aç/kapa — açarken diğer menüleri kapat
+      btn.addEventListener("click", function(e){
         e.stopPropagation();
-        var cat = cb.parentNode;
-        var acildi = cat.classList.toggle("open");
-        cb.setAttribute("aria-expanded", acildi ? "true" : "false");
+        if(dd.classList.contains("open")){
+          dropKapat(dd);
+        } else {
+          hepsiniKapat(dd);
+          dd.classList.add("open");
+          btn.setAttribute("aria-expanded","true");
+        }
+      });
+
+      // Akordiyon kategori başlıkları (yalnızca Keşfet'te var; Burç Yorumları'nda yok)
+      var catBtns = dd.querySelectorAll(".am-cat-btn");
+      Array.prototype.forEach.call(catBtns, function(cb){
+        cb.addEventListener("click", function(e){
+          e.stopPropagation();
+          var cat = cb.parentNode;
+          var acildi = cat.classList.toggle("open");
+          cb.setAttribute("aria-expanded", acildi ? "true" : "false");
+        });
       });
     });
 
-    // Dışarı tıkla / Esc → kapat
-    document.addEventListener("click", function(e){ if(dd.classList.contains("open") && !dd.contains(e.target)) dropKapat(); });
-    document.addEventListener("keydown", function(e){ if(e.key === "Escape" && dd.classList.contains("open")) dropKapat(); });
+    // Dışarı tıkla → açık olan menüleri kapat
+    document.addEventListener("click", function(e){
+      Array.prototype.forEach.call(dropdowns, function(dd){
+        if(dd.classList.contains("open") && !dd.contains(e.target)) dropKapat(dd);
+      });
+    });
+    // Esc → hepsini kapat
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape") hepsiniKapat(null); });
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
