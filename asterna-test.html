@@ -31,6 +31,8 @@
   #panel.phidden{opacity:0;pointer-events:none;transform:translateX(-12px)}
   #panel .caret{float:right;cursor:pointer;color:var(--gold-soft);font-size:12px;padding:0 4px}
   #panel.collapsed #panelBody{display:none}
+  #panel select{font-family:inherit;font-size:12px;background:#1b1938;color:var(--cream);border:1px solid rgba(217,185,106,.3);border-radius:9px;padding:6px 4px;width:100%}
+  #panel select.full{grid-column:1 / -1}
 
   #hero{position:fixed;inset:0;z-index:9995;display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;transition:opacity 1s ease}
   #hero.hide{opacity:0}
@@ -144,19 +146,38 @@
   var autoOn=true,busy=false,pauseUntil=0,chatOpen=false,introDone=false,voiceOn=false,poseT=null;
 
   /* ---- ses (tarayıcının kendi Türkçe sesi, ücretsiz) ---- */
-  var VOICES=[];
-  function loadVoices(){ try{VOICES=window.speechSynthesis.getVoices()||[];}catch(e){} }
+  var VOICES=[], chosenVoiceName="";
+  var FEMALE_HINTS=["emel","yelda","filiz","seda","aylin","zeynep","elif","defne","google turkce","google türkçe","kadin","female","woman"];
+  var MALE_HINTS=["ahmet","tolga","cem","mesut","baris","erkek","male"," man"];
+  function loadVoices(){ try{VOICES=window.speechSynthesis.getVoices()||[];}catch(e){} populateVoiceSelect(); }
   if("speechSynthesis" in window){ loadVoices(); window.speechSynthesis.onvoiceschanged=loadVoices; }
+  function trVoices(){ return VOICES.filter(function(v){ return /tr[-_]?tr/i.test(v.lang)||/turk/i.test(v.name); }); }
+  function hint(nm,arr){ nm=(nm||"").toLowerCase(); for(var i=0;i<arr.length;i++){ if(nm.indexOf(arr[i])>-1) return true; } return false; }
+  function pickVoice(){
+    var list=trVoices(); if(!list.length) return null; var i;
+    for(i=0;i<list.length;i++){ if(hint(list[i].name,FEMALE_HINTS)) return list[i]; }
+    for(i=0;i<list.length;i++){ if(!hint(list[i].name,MALE_HINTS)) return list[i]; }
+    return list[0];
+  }
+  function chosenVoice(){
+    if(chosenVoiceName){ for(var i=0;i<VOICES.length;i++){ if(VOICES[i].name===chosenVoiceName) return VOICES[i]; } }
+    return pickVoice();
+  }
+  function populateVoiceSelect(){
+    var sel=document.getElementById("voiceSel"); if(!sel) return;
+    var list=trVoices();
+    if(!list.length){ sel.innerHTML='<option value="">(cihazda Türkçe ses yok)</option>'; return; }
+    var cur=sel.value, html='<option value="">Ses: otomatik (kadın)</option>';
+    for(var i=0;i<list.length;i++){ var nm=list[i].name; html+='<option value="'+nm.replace(/"/g,"")+'">'+nm+'</option>'; }
+    sel.innerHTML=html; if(cur) sel.value=cur;
+  }
   function speak(t){
     if(!voiceOn || !("speechSynthesis" in window)) return;
     try{
       var clean=t.replace(/[\u2600-\u27BF\uD83C-\uDBFF\uDC00-\uDFFF\u2190-\u21FF\u2B00-\u2BFF]/g,"").trim();
       if(!clean) return;
-      var u=new SpeechSynthesisUtterance(clean); u.lang="tr-TR"; u.rate=1; u.pitch=1.06;
-      var v=null;
-      for(var i=0;i<VOICES.length;i++){ if(/tr[-_]?tr/i.test(VOICES[i].lang)){v=VOICES[i];break;} }
-      if(!v){ for(var j=0;j<VOICES.length;j++){ if(/turk/i.test(VOICES[j].name)){v=VOICES[j];break;} } }
-      if(v) u.voice=v;
+      var u=new SpeechSynthesisUtterance(clean); u.lang="tr-TR"; u.rate=1; u.pitch=1.08;
+      var v=chosenVoice(); if(v) u.voice=v;
       window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
     }catch(e){}
   }
@@ -274,10 +295,14 @@
     '<button data-pose="dingin">Dingin</button><button data-pose="sakar">Sakar</button></div>'+
     '<div class="sep"></div><div class="grid">'+
     '<button class="full toggle off" id="btnVoice">🔊 Ses: Kapalı</button>'+
+    '<select class="full" id="voiceSel"><option value="">Ses: otomatik (kadın)</option></select>'+
     '<button class="full primary" id="btnIntro">Girişi tekrar oynat</button>'+
     '<button class="toggle" id="btnAuto">Otomatik: Açık</button><button id="btnHide">Gizle</button></div></div>';
   document.body.appendChild(panel);
   document.getElementById("panelCaret").addEventListener("click", function(){ panel.classList.toggle("collapsed"); this.textContent=panel.classList.contains("collapsed")?"▸":"▾"; });
+  populateVoiceSelect();
+  var voiceSel=document.getElementById("voiceSel");
+  if(voiceSel){ voiceSel.addEventListener("change", function(){ chosenVoiceName=this.value; if(!voiceOn){ toggleVoice(true); } else { speak("Merhaba, sesim şimdi böyle."); } }); }
   panel.querySelectorAll("button[data-pose]").forEach(function(b){ b.addEventListener("click", function(){ pauseUntil=Date.now()+15000; busy=false; var k=b.getAttribute("data-pose"); setPose(k); say(POSES[k].line); }); });
   document.getElementById("btnVoice").addEventListener("click", function(){ toggleVoice(); });
   document.getElementById("btnIntro").addEventListener("click", function(){ pauseUntil=Date.now()+6000; closeChat(); playIntro(); });
