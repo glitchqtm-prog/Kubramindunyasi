@@ -7,6 +7,13 @@ const REPORTS = [
     needsTwoPeople: false,
   },
   {
+    id: "cocuk",
+    title: "Çocuğunu Tanı Raporu",
+    short: "Çocuğun doğum haritasını yaşına göre yorumlayan; öğrenme stilini, güçlü yanlarını, duygusal ihtiyaçlarını, sosyal gelişimini ve yeteneklerini ele alan, sonunda ebeveyne özel uygulama rehberi sunan 14+ sayfalık gelişim ve eğitim raporu.",
+    price: 500,
+    needsTwoPeople: false,
+  },
+  {
     id: "solar_return",
     title: "Solar Return Raporu",
     short: "Güneş'in natal pozisyonuna döndüğü an için çıkarılan, kişisel yeni yılını temsil eden 14+ sayfalık rapor.",

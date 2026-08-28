@@ -105,6 +105,7 @@ const API = "https://astro-rapor.onrender.com";
 
 const REPORTS = {
   natal:        { name: "Haritanı Tanı Raporu",       price: 500 },
+  cocuk:        { name: "Çocuğunu Tanı Raporu",        price: 500 },
   solar_return: { name: "Solar Return Raporu",        price: 250 },
   lunar_return: { name: "Lunar Return Raporu",        price: 150 },
   sinastri:     { name: "Sinastri Raporu",            price: 500 },
@@ -128,24 +129,39 @@ if (isNumerology) {
   });
 }
 
+// ÇOCUK raporu: muhatap ebeveyndir; ilişki durumu anlamsız olduğu için hiç sorulmaz.
+const isChild = type === "cocuk";
+
 // İlişki durumu seçenekleri — çift raporlarında farklı, tekli raporlarda farklı
 const REL_TEKLI = ["Bekar","İlişkim var","Nişanlı","Evli","Boşanmış"];
 const REL_CIFT  = ["Yeni tanışıyoruz","Flört/İlişki","Nişanlı","Evli"];
-document.getElementById("relLabel").textContent = needsPartner ? "İlişkiniz Ne Aşamada? *" : "İlişki Durumun *";
 let relationship = "";
 const relBox = document.getElementById("relBox");
-(needsPartner ? REL_CIFT : REL_TEKLI).forEach(opt => {
-  const b = document.createElement("button");
-  b.type = "button"; b.textContent = opt; b.style.flex = "1 1 30%";
-  b.onclick = () => {
-    relBox.querySelectorAll("button").forEach(x => x.classList.remove("active"));
-    b.classList.add("active"); relationship = opt;
-  };
-  relBox.appendChild(b);
-});
+if (isChild) {
+  // İlişki durumu alanını tamamen gizle
+  document.getElementById("relLabel").style.display = "none";
+  relBox.style.display = "none";
+} else {
+  document.getElementById("relLabel").textContent = needsPartner ? "İlişkiniz Ne Aşamada? *" : "İlişki Durumun *";
+  (needsPartner ? REL_CIFT : REL_TEKLI).forEach(opt => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = opt; b.style.flex = "1 1 30%";
+    b.onclick = () => {
+      relBox.querySelectorAll("button").forEach(x => x.classList.remove("active"));
+      b.classList.add("active"); relationship = opt;
+    };
+    relBox.appendChild(b);
+  });
+}
 
 let gender = "Kadın";
 const genderBox = document.getElementById("genderBox");
+// ÇOCUK raporunda cinsiyet etiketleri "Kız / Erkek" olur (varsayılan Kız).
+if (isChild) {
+  const gb = genderBox.querySelectorAll("button");
+  gb[0].textContent = "Kız"; gb[0].dataset.g = "Kız";
+  gender = "Kız";
+}
 genderBox.querySelectorAll("button").forEach(b => b.onclick = () => {
   genderBox.querySelectorAll("button").forEach(x => x.classList.remove("active"));
   b.classList.add("active"); gender = b.dataset.g;
@@ -161,7 +177,7 @@ btn.onclick = async () => {
     statusEl.textContent = "Devam etmek için KVKK ve satış sözleşmesi onayını işaretlemelisin.";
     return;
   }
-  if (!relationship) {
+  if (!isChild && !relationship) {
     statusEl.className = "status err";
     statusEl.textContent = needsPartner ? "Lütfen ilişkinizin aşamasını seçin." : "Lütfen ilişki durumunu seç.";
     return;
