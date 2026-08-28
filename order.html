@@ -16,7 +16,8 @@
   *{box-sizing:border-box;margin:0}
   body{background:radial-gradient(ellipse at 50% -10%,#1d1533 0%,var(--bg) 60%);min-height:100vh;font-family:Georgia,serif;color:var(--ink)}
   header{padding:22px 34px;border-bottom:1px solid var(--line)}
-  header .logo{color:var(--gold);font-size:20px;letter-spacing:1px}
+  header .logo{color:var(--gold);font-size:20px;letter-spacing:1px;text-decoration:none;display:inline-block}
+  header .logo:hover{opacity:.85}
   .card{max-width:520px;margin:48px auto;background:var(--panel);border:1px solid var(--gold2);border-radius:14px;padding:38px 34px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
   .badge{text-align:center;color:var(--gold);font-size:12px;letter-spacing:3px;margin-bottom:14px}
   .rname{text-align:center;color:var(--muted);font-size:15px}
@@ -40,7 +41,7 @@
 </style>
 </head>
 <body>
-<header><div class="logo">✦ Astro Yuvam</div></header>
+<header><a href="/" class="logo">✦ Astro Yuvam</a></header>
 
 <div class="card">
   <div class="badge">✦ EN ÇOK TERCİH EDİLEN ✦</div>
