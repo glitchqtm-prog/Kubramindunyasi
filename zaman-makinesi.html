@@ -102,6 +102,10 @@
   .pl .n{font-size:12px; color:var(--muted)}
   .pl .s{font-size:15px; color:var(--cream)}
   .retro{display:inline-block; margin-left:6px; font-size:10px; color:#f0b8b8; border:1px solid rgba(240,160,160,.4); border-radius:6px; padding:1px 5px; vertical-align:middle}
+  .pl .g{font-family:"Segoe UI Symbol","Noto Sans Symbols2","Apple Symbols",serif}
+  .pl .desc{font-size:11px; color:var(--muted); opacity:.85; margin-top:3px; line-height:1.35}
+  .pl.point .g{color:var(--gold)}
+  .pt-note{font-size:12.5px; color:var(--muted); margin:-4px 0 12px; opacity:.9; line-height:1.6}
 
   .elements{display:grid; gap:9px}
   .el-row{display:grid; grid-template-columns:78px 1fr 34px; align-items:center; gap:10px; font-size:13px}
@@ -170,6 +174,8 @@
 
 <!-- Gökyüzü motoru: sitede barındırılıyor (dış kaynak yok) -->
 <script src="/astronomy.browser.min.js"></script>
+<!-- Gizli Harita noktaları efemeris tablosu (Chiron, asteroitler, Lilith) -->
+<script src="/gizli-noktalar.js"></script>
 <script src="/menu.js" defer></script>
 <script>
 (function(){
@@ -227,6 +233,18 @@
     {b:"Neptune",ad:"Neptün",g:"♆"},{b:"Pluto", ad:"Plüton",g:"♇"}
   ];
 
+  // Gizli Harita noktaları — 6'sı tablodan (gizli-noktalar.js), 2 düğüm canlı hesaptan
+  var EKSTRA = [
+    {key:"chiron", ad:"Chiron",          g:"⚷", src:"ephe", desc:"kapanmayan yara ve şifa yeteneği"},
+    {key:"lilith", ad:"Lilith",          g:"⚸", src:"ephe", desc:"bastırılan, evcilleşmeyi reddeden taraf"},
+    {key:"juno",   ad:"Juno",            g:"⚵", src:"ephe", desc:"bağlılık ve eş seçiminde aranan"},
+    {key:"ceres",  ad:"Ceres",           g:"⚳", src:"ephe", desc:"besleme, sahiplenme, kayıp ve kavuşma"},
+    {key:"vesta",  ad:"Vesta",           g:"⚶", src:"ephe", desc:"adanmışlık ve içteki kutsal ateş"},
+    {key:"pallas", ad:"Pallas",          g:"⚴", src:"ephe", desc:"zekâ, strateji, örüntü görme"},
+    {key:"node_n", ad:"Kuzey Ay Düğümü", g:"☊", src:"node", desc:"bu yaşamın büyüme ve gelişme yönü"},
+    {key:"node_s", ad:"Güney Ay Düğümü", g:"☋", src:"node", desc:"geçmişten getirilen, tanıdık konfor"}
+  ];
+
   function signOf(lon){
     lon = ((lon % 360) + 360) % 360;
     var idx = Math.floor(lon / 30);
@@ -238,6 +256,23 @@
   function geoLon(body, d){
     var gv = Astronomy.GeoVector(Astronomy.Body[body], d, true);
     return ((Astronomy.Ecliptic(gv).elon % 360) + 360) % 360;
+  }
+
+  // Gerçek Ay Düğümü (osküle): Ay'ın anlık yörünge düzleminin ekliptiği kestiği yön.
+  // Yalnızca aracın zaten kullandığı EclipticGeoMoon'a dayanır. Swiss Ephemeris "True Node" ile ~0.01° uyumlu.
+  function moonEclVec(d){
+    var m = Astronomy.EclipticGeoMoon(d); // of-date ekliptik: {lat, lon, dist}
+    var la = m.lat*Math.PI/180, lo = m.lon*Math.PI/180, r = m.dist;
+    return { x:r*Math.cos(la)*Math.cos(lo), y:r*Math.cos(la)*Math.sin(lo), z:r*Math.sin(la) };
+  }
+  function trueNodeLon(d){
+    var MS=86400000, dt=0.02;
+    var a=moonEclVec(new Date(d.getTime()-dt*MS)), b=moonEclVec(new Date(d.getTime()+dt*MS));
+    var x=(a.x+b.x)/2, y=(a.y+b.y)/2, z=(a.z+b.z)/2;
+    var vx=b.x-a.x, vy=b.y-a.y, vz=b.z-a.z;
+    var hx=y*vz-z*vy, hy=z*vx-x*vz;                 // yörünge açısal momentumu
+    var Om=Math.atan2(hx, -hy)*180/Math.PI;         // çıkış düğümü boylamı
+    return ((Om%360)+360)%360;
   }
 
   // Ay evresi SVG — gerçek terminatör (clipPath + elips). illum:0..1, waxing:bool
@@ -385,6 +420,34 @@
     });
     html += '</div>';
 
+    // --- Gizli Harita noktaları (Chiron, asteroitler, Lilith, Ay düğümleri) ---
+    var lilithShare = "";
+    try {
+      if (window.GizliEphe && window.GizliEphe.pos && typeof Astronomy.EclipticGeoMoon === "function") {
+        var nodeLon = trueNodeLon(dt);
+        html += '<h3 class="sec">Gizli Harita noktaları</h3>';
+        html += '<p class="pt-note">Herkes Güneş ve yükselenini bilir. Bunlar haritanın daha az bakılan tarafı — Chiron, asteroitler, Lilith ve Ay düğümlerinin o günkü gerçek konumları:</p>';
+        html += '<div class="planets">';
+        EKSTRA.forEach(function(p){
+          var lon, isRetro=false;
+          if (p.src === "node") {
+            lon = (p.key === "node_n") ? nodeLon : ((nodeLon+180)%360);
+          } else {
+            var r = window.GizliEphe.pos(p.key, dt);
+            lon = r.lon; isRetro = r.retro;
+          }
+          var s = signOf(lon);
+          if (p.key === "lilith") lilithShare = ", Lilith "+s.sign;
+          var badge = isRetro ? '<span class="retro">℞ retro</span>' : '';
+          html += '<div class="pl point"><div class="g">'+p.g+'</div><div>'
+                + '<div class="n">'+p.ad+'</div>'
+                + '<div class="s">'+s.glyph+' '+s.sign+' '+Math.floor(s.deg)+'°'+badge+'</div>'
+                + '<div class="desc">'+p.desc+'</div></div></div>';
+        });
+        html += '</div>';
+      }
+    } catch(exx){ /* ekstra noktalar hesaplanamazsa aracın geri kalanı normal çalışmaya devam eder */ }
+
     // element dengesi
     html += '<h3 class="sec">Element dengesi</h3><div class="elements">';
     ["ates","toprak","hava","su"].forEach(function(k){
@@ -397,7 +460,7 @@
     html += '</div>';
 
     // paylaş
-    var shareText = "🌌 "+currentLabel+" ("+fmtDateTR(dt,hasTime)+") gökyüzü: Güneş "+pos.Sun.sign+", Ay "+pos.Moon.sign+" — "+ph.ad+". Sen de kendi anının göğünü keşfet:";
+    var shareText = "🌌 "+currentLabel+" ("+fmtDateTR(dt,hasTime)+") gökyüzü: Güneş "+pos.Sun.sign+", Ay "+pos.Moon.sign+lilithShare+" — "+ph.ad+". Sen de kendi anının göğünü keşfet:";
     html += '<div class="actions">';
     html +=   '<a class="btn2" id="shareBtn">📤 Paylaş</a>';
     html +=   '<a class="btn2" id="againBtn">🔄 Başka bir gün</a>';
@@ -410,7 +473,7 @@
           + '<a class="ghost" href="/#cards">🌟 Doğum Haritası Raporu</a></div>';
 
     // feragat
-    html += '<div class="disc">Buradaki gezegen ve Ay konumları, seçtiğin tarih için <b>astronomik olarak gerçek</b> değerlerdir (raporlarımızla aynı motorla hesaplanır). Yorumlar semboliktir; ilham ve eğlence içindir, kesin bir kader okuması değildir. Yükselen ve ev hesapları için doğum saati ve yeri gerekir — bunları gerçek raporlarda buluruz.</div>';
+    html += '<div class="disc">Buradaki gezegen ve Ay konumları, seçtiğin tarih için <b>astronomik olarak gerçek</b> değerlerdir (raporlarımızla aynı motorla hesaplanır). Chiron, Ceres, Pallas, Juno, Vesta ve Lilith de gerçek efemeris değerleridir; Lilith “Ortalama Kara Ay”, Ay düğümleri “Gerçek Düğüm” yöntemiyle hesaplanır (Astro-Seek gibi kaynaklarla aynı). Yorumlar semboliktir; ilham ve eğlence içindir, kesin bir kader okuması değildir. Yükselen ve ev hesapları için doğum saati ve yeri gerekir — bunları gerçek raporlarda buluruz.</div>';
 
     html += '</div>'; // card
 
