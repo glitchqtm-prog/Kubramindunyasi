@@ -97,6 +97,18 @@
   .tool-feature .ftd{color:var(--ay-muted);font-size:13.5px;line-height:1.55;margin-top:4px}
   .tool-feature .farrow{flex:none;color:var(--ay-gold);font-size:24px;margin-left:6px}
   @media(max-width:560px){.tool-feature{gap:14px;padding:18px}.tool-feature .farrow{display:none}}
+  /* — Rapor kartları: kategoriler + eşit yükseklik + açılır açıklama (style.css'i bozmadan) — */
+  #cards{padding-top:6px}
+  .rapor-kategori{max-width:1120px;margin:0 auto;padding:0 22px}
+  .rapor-kategori .kat-h{color:var(--ay-gold);font-size:22px;text-align:center;margin:48px 0 4px}
+  .rapor-kategori .kat-sub{color:var(--ay-muted);text-align:center;font-size:13.5px;margin-bottom:24px}
+  .rapor-grid{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-items:stretch}
+  .rapor-grid > .card{flex:0 1 320px;max-width:340px;width:auto!important;margin:0!important;display:flex;flex-direction:column}
+  .rapor-grid > .card > p{overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+  .rapor-grid > .card.acik > p{-webkit-line-clamp:unset;display:block}
+  .rapor-grid > .card .meta{margin-top:auto}
+  .kart-detay{background:none;border:none;color:var(--ay-gold);font:inherit;font-size:12.5px;cursor:pointer;padding:6px 0 2px;text-align:left;align-self:flex-start;opacity:.9}
+  .kart-detay:hover{opacity:1;text-decoration:underline}
 </style>
   <script src="/menu.js" defer></script>
 </head>
@@ -117,7 +129,7 @@
   <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, yapay zekâ destekli, kişiye özel astroloji ve kader matrisi raporların. Hazır olduğunda otomatik olarak e-postana gönderilir.</p>
 </section>
 
-<section class="cards" id="cards"></section>
+<section id="cards"></section>
 
 <section class="section-block" id="araclar">
   <h2>Ücretsiz Araçlar</h2>
@@ -198,26 +210,67 @@
 
 <script src="reports-data.js"></script>
 <script>
+  // Raporları kategorilere ayır (yeni rapor eklendikçe ilgili gruba düşer, düzen bozulmaz).
+  const KATEGORILER = [
+    { ad:"Kişisel Haritalar", alt:"Kendi doğum haritan ve kişisel döngülerin", ids:["natal","cocuk","solar_return","lunar_return","transit"] },
+    { ad:"İlişki Raporları",  alt:"İki kişinin uyumu ve ilişki dinamiği",      ids:["sinastri","matrix_uyum"] },
+    { ad:"Numeroloji & Soru Astrolojisi", alt:"Sayıların dili ve tek soruna anlık yanıt", ids:["matrix","horary"] }
+  ];
+  const byId = Object.fromEntries(REPORTS.map(r => [r.id, r]));
   const container = document.getElementById("cards");
-  REPORTS.forEach(r => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="icon-orbit">
-        <div class="ring"></div>
-        <div class="ring in"></div>
-        <div class="core"></div>
-      </div>
+
+  function kartHTML(r){
+    const uzun = (r.short || "").length > 130;
+    return `
+      <div class="icon-orbit"><div class="ring"></div><div class="ring in"></div><div class="core"></div></div>
       <h3>${r.title}</h3>
       <p>${r.short}</p>
+      ${uzun ? `<button type="button" class="kart-detay">Detayları gör ▾</button>` : ``}
       <div class="meta">
         <div class="price">₺${r.price}</div>
         <div class="delivery">~15 dk içinde teslimat</div>
       </div>
-      <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>
-    `;
-    container.appendChild(card);
+      <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>`;
+  }
+
+  KATEGORILER.forEach(kat => {
+    const raporlar = kat.ids.map(id => byId[id]).filter(Boolean);
+    if (!raporlar.length) return;
+    const bolum = document.createElement("div");
+    bolum.className = "rapor-kategori";
+    bolum.innerHTML = `<h2 class="kat-h">${kat.ad}</h2><div class="kat-sub">${kat.alt}</div><div class="rapor-grid"></div>`;
+    const grid = bolum.querySelector(".rapor-grid");
+    raporlar.forEach(r => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = kartHTML(r);
+      const btn = card.querySelector(".kart-detay");
+      if (btn) btn.addEventListener("click", () => {
+        const acik = card.classList.toggle("acik");
+        btn.textContent = acik ? "Gizle ▴" : "Detayları gör ▾";
+      });
+      grid.appendChild(card);
+    });
+    container.appendChild(bolum);
   });
+
+  // Kategorisiz kalan rapor olursa (yeni eklenip gruba yazılmadıysa) en alta "Diğer" grubunda göster.
+  const kategorili = new Set(KATEGORILER.flatMap(k => k.ids));
+  const digerler = REPORTS.filter(r => !kategorili.has(r.id));
+  if (digerler.length){
+    const bolum = document.createElement("div");
+    bolum.className = "rapor-kategori";
+    bolum.innerHTML = `<h2 class="kat-h">Diğer Raporlar</h2><div class="kat-sub">Yeni eklenenler</div><div class="rapor-grid"></div>`;
+    const grid = bolum.querySelector(".rapor-grid");
+    digerler.forEach(r => {
+      const card = document.createElement("div");
+      card.className = "card"; card.innerHTML = kartHTML(r);
+      const btn = card.querySelector(".kart-detay");
+      if (btn) btn.addEventListener("click", () => { const a=card.classList.toggle("acik"); btn.textContent=a?"Gizle ▴":"Detayları gör ▾"; });
+      grid.appendChild(card);
+    });
+    container.appendChild(bolum);
+  }
 </script>
 <script>
   // Keşfet açılır menüsü: tıkla-aç/kapa, dışarı tıkla ve Esc ile kapan
