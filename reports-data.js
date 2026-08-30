@@ -55,4 +55,11 @@ const REPORTS = [
     price: 300,
     needsTwoPeople: false,
   },
+  {
+    id: "horary",
+    title: "Soru Astrolojisi (Horary) Raporu",
+    short: "Aklındaki tek bir somut soruya, tam o soruyu sorduğun anın gökyüzünden yanıt arayan kadim bir yöntem. Doğum bilgisi gerekmez — yalnızca net bir soru yeterli. Kayıp bir eşyanın yeri, bir işin olup olmayacağı, iki seçenek arasındaki tercih ya da bir konunun nasıl gelişeceği gibi merak ettiğini; kişiye özel, akıcı ve dürüst bir okumayla yanıtlayan 3-4 sayfalık soru raporu. Kesin kehanet değildir; gökyüzü net konuşmadığında bunu da dürüstçe söyleriz.",
+    price: 450,
+    needsTwoPeople: false,
+  },
 ];

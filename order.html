@@ -23,8 +23,11 @@
   .rname{text-align:center;color:var(--muted);font-size:15px}
   .price{text-align:center;font-size:38px;margin:14px 0 26px}
   label{display:block;font-size:12px;color:var(--muted);letter-spacing:.5px;margin:16px 0 6px;font-weight:bold}
-  input,select{width:100%;padding:12px 14px;background:#0f0b1a;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:inherit;font-size:14px}
-  input:focus{outline:none;border-color:var(--gold2)}
+  input,select,textarea{width:100%;padding:12px 14px;background:#0f0b1a;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:inherit;font-size:14px}
+  textarea{resize:vertical;line-height:1.6}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold2)}
+  .ex-chip{background:#0f0b1a;border:1px solid var(--line);border-radius:16px;padding:7px 12px;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit}
+  .ex-chip:hover{border-color:var(--gold2);color:var(--ink)}
   .row{display:flex;gap:12px}.row>div{flex:1}
   .genders{display:flex;gap:12px}
   .genders button{flex:1;padding:12px;border-radius:8px;border:1px solid var(--line);background:#0f0b1a;color:var(--ink);font-family:inherit;cursor:pointer}
@@ -53,6 +56,28 @@
 
   <label>E-posta *</label>
   <input id="email" type="email" placeholder="Rapor bu adrese gönderilecek">
+
+  <!-- HORARY: doğum verisi gerekmez; konu + soru -->
+  <div id="horaryBox" style="display:none">
+    <label>Konu</label>
+    <select id="hKonu">
+      <option>Genel</option>
+      <option>İş/Kariyer</option>
+      <option>Aşk/İlişki</option>
+      <option>Para</option>
+      <option>Sağlık</option>
+      <option>Kayıp Eşya</option>
+      <option>Eğitim/Yurtdışı</option>
+      <option>Hukuk/Dava</option>
+    </select>
+    <label>Sorunuz *</label>
+    <textarea id="hSoru" rows="3" maxlength="400" placeholder="Aklındaki tek, net soruyu yaz. En iyi sonuç için soru odaklı ve somut olmalı."></textarea>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Örnek sorulardan birine dokunarak başlayabilirsin:</div>
+    <div id="hExamples" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px"></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6;padding:12px;background:#0f0b1a;border:1px solid var(--line);border-radius:8px">
+      🌙 Horary, tam da sorduğun anın gökyüzünden <strong>tek sorunu</strong> yanıtlar; doğum bilgisi gerekmez. Kesin kehanet değildir — gökyüzü net konuşmadığında bunu da dürüstçe söyleriz.
+    </div>
+  </div>
 
   <div class="row">
     <div><label>Doğum Tarihi *</label><input id="birthDate" type="date"></div>
@@ -112,7 +137,8 @@ const REPORTS = {
   sinastri:     { name: "Sinastri Raporu",            price: 500 },
   matrix:       { name: "Kader Matrisi Raporu",       price: 400 },
   matrix_uyum:  { name: "Kader Matrisi Uyum Raporu",  price: 500 },
-  transit:      { name: "Transit Raporu",             price: 300 }
+  transit:      { name: "Transit Raporu",             price: 300 },
+  horary:       { name: "Soru Astrolojisi (Horary) Raporu", price: 450 }
 };
 const type = new URLSearchParams(location.search).get("type") || "natal";
 const info = REPORTS[type] || REPORTS.natal;
@@ -121,6 +147,32 @@ document.getElementById("price").innerHTML = "&#8378;" + info.price + " <span st
 
 const needsPartner = ["sinastri","matrix_uyum"].includes(type);
 if (needsPartner) document.getElementById("partnerBox").classList.add("show");
+
+// HORARY: doğum verisi/ilişki/cinsiyet GEREKMEZ — sadece konu + soru.
+const isHorary = type === "horary";
+if (isHorary) {
+  // Doğum-verisi ve ilişki alanlarını gizle
+  ["birthDate","birthTime"].forEach(id => { const el=document.getElementById(id); if(el){ const w=el.closest(".row")||el.parentElement; if(w) w.style.display="none"; } });
+  ["timeWrap","placeWrap","genderBox","relBox"].forEach(id => { const el=document.getElementById(id); if(el) el.style.display="none"; });
+  const gl=document.querySelector('label[id="relLabel"]'); if(gl) gl.style.display="none";
+  // "Cinsiyet" etiketini gizle (genderBox'ın hemen üstündeki label)
+  const genderLabel = document.getElementById("genderBox").previousElementSibling; if(genderLabel && genderLabel.tagName==="LABEL") genderLabel.style.display="none";
+  document.getElementById("relLabel").style.display="none";
+  // Soru kutusunu göster
+  document.getElementById("horaryBox").style.display="block";
+  // Örnek soru çipleri
+  const ornekler = [
+    "İş görüşmem olumlu sonuçlanır mı?",
+    "Kaybettiğim yüzüğüm nerede, bulabilir miyim?",
+    "A işini mi B işini mi kabul etmeliyim?",
+    "Sınavdan sonra nasıl bir işe girerim?",
+    "Bu ev için verdiğim teklif kabul edilir mi?"
+  ];
+  const exBox = document.getElementById("hExamples");
+  ornekler.forEach(q => { const c=document.createElement("div"); c.className="ex-chip"; c.textContent=q; c.onclick=()=>{ document.getElementById("hSoru").value=q; }; exBox.appendChild(c); });
+  // Rozeti sadeleştir
+  const badge=document.querySelector(".badge"); if(badge) badge.textContent="✦ SORU ASTROLOJİSİ ✦";
+}
 
 // Numeroloji raporları (Kader Matrisi / Uyum) yalnızca doğum TARİHİ ister — saat/yer gerekmez.
 const isNumerology = ["matrix","matrix_uyum"].includes(type);
@@ -178,16 +230,27 @@ btn.onclick = async () => {
     statusEl.textContent = "Devam etmek için KVKK ve satış sözleşmesi onayını işaretlemelisin.";
     return;
   }
-  if (!isChild && !relationship) {
+  if (!isChild && !isHorary && !relationship) {
     statusEl.className = "status err";
     statusEl.textContent = needsPartner ? "Lütfen ilişkinizin aşamasını seçin." : "Lütfen ilişki durumunu seç.";
     return;
   }
-  const body = { type, name: $("name"), email: $("email"), birthDate: $("birthDate"), gender, relationship };
-  if (!isNumerology) { body.birthTime = $("birthTime") || "12:00"; body.birthPlace = $("birthPlace"); }
-  if (needsPartner) {
-    body.partner = { name: $("pName"), birthDate: $("pDate") };
-    if (!isNumerology) { body.partner.birthTime = $("pTime") || "12:00"; body.partner.birthPlace = $("pPlace"); }
+  let body;
+  if (isHorary) {
+    const soru = document.getElementById("hSoru").value.trim();
+    if (!soru || soru.length < 5) {
+      statusEl.className = "status err";
+      statusEl.textContent = "Lütfen sorunuzu yazın (en az 5 karakter).";
+      return;
+    }
+    body = { type, name: $("name"), email: $("email"), soru, konu: document.getElementById("hKonu").value };
+  } else {
+    body = { type, name: $("name"), email: $("email"), birthDate: $("birthDate"), gender, relationship };
+    if (!isNumerology) { body.birthTime = $("birthTime") || "12:00"; body.birthPlace = $("birthPlace"); }
+    if (needsPartner) {
+      body.partner = { name: $("pName"), birthDate: $("pDate") };
+      if (!isNumerology) { body.partner.birthTime = $("pTime") || "12:00"; body.partner.birthPlace = $("pPlace"); }
+    }
   }
 
   btn.disabled = true; btn.textContent = "GÖNDERİLİYOR…";
