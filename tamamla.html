@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Bilgilerini Tamamla — Astro Yuvam ✦</title>
+<style>
+  :root{ --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --bg:#14101f; --panel:#1c1730; --line:#2c2442; --muted:#8f83a6; --text:#cfc6de; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--cream); font-family:Georgia,'Times New Roman',serif; line-height:1.6; }
+  .top{ padding:20px 24px; }
+  .top a{ color:var(--gold); font-size:22px; font-weight:bold; text-decoration:none; letter-spacing:.5px; }
+  .wrap{ max-width:560px; margin:10px auto 60px; padding:0 18px; }
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:30px 26px; box-shadow:0 10px 40px rgba(0,0,0,.35); }
+  .eyebrow{ text-align:center; color:var(--gold-soft); letter-spacing:3px; font-size:12px; text-transform:uppercase; }
+  h1{ text-align:center; color:var(--cream); font-size:26px; margin:.3em 0 .1em; }
+  .lead{ text-align:center; color:var(--text); font-size:15px; margin:0 0 22px; }
+  label{ display:block; margin:16px 0 6px; color:var(--gold-soft); font-size:14px; font-weight:bold; }
+  input[type=text], input[type=date], input[type=time], textarea, select{
+    width:100%; padding:12px 14px; background:#120e1c; border:1px solid var(--line); border-radius:10px;
+    color:var(--cream); font-family:inherit; font-size:15px; }
+  textarea{ min-height:96px; resize:vertical; }
+  .hint{ color:var(--muted); font-size:12.5px; margin-top:5px; }
+  .seg{ display:flex; flex-wrap:wrap; gap:10px; }
+  .seg button{ flex:1 1 auto; min-width:110px; padding:12px 10px; background:#120e1c; border:1px solid var(--line);
+    border-radius:10px; color:var(--text); font-family:inherit; font-size:14px; cursor:pointer; transition:.15s; }
+  .seg button.active{ background:var(--gold); border-color:var(--gold); color:#14101f; font-weight:bold; }
+  .partner{ margin-top:18px; padding:16px; border:1px dashed var(--line); border-radius:12px; }
+  .partner h3{ margin:0 0 4px; color:var(--gold-soft); font-size:15px; }
+  .go{ width:100%; margin-top:26px; padding:15px; background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    border:none; border-radius:12px; color:#14101f; font-family:inherit; font-weight:bold; font-size:17px; cursor:pointer; letter-spacing:.3px; }
+  .go:disabled{ opacity:.6; cursor:default; }
+  .msg{ margin-top:18px; padding:14px 16px; border-radius:10px; font-size:14.5px; display:none; }
+  .msg.err{ display:block; background:#3a1720; border:1px solid #7a2b3b; color:#f3c9d2; }
+  .msg.ok{ display:block; background:#16301f; border:1px solid #2f6b45; color:#c7ecd4; }
+  .center{ text-align:center; }
+  .foot{ text-align:center; color:var(--muted); font-size:12px; margin-top:22px; }
+</style>
+</head>
+<body>
+  <div class="top"><a href="/">✦ Astro Yuvam</a></div>
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="eyebrow">✦ Son Bir Adım ✦</div>
+      <h1 id="baslik">Bilgilerini Tamamla</h1>
+      <p class="lead" id="lead">Yükleniyor…</p>
+      <div id="form" style="display:none"></div>
+      <button class="go" id="go" style="display:none" onclick="gonder()">Raporumu Oluştur →</button>
+      <div class="msg" id="msg"></div>
+      <p class="foot">Ödemen bize ulaştı; bu adımda tekrar ödeme alınmaz.</p>
+    </div>
+  </div>
+
+<script>
+const API = "https://astro-rapor.onrender.com";
+const RAPOR_ADI = {
+  natal:"Doğum Haritası", cocuk:"Çocuğunu Tanı", solar_return:"Solar Return", lunar_return:"Lunar Return",
+  sinastri:"Sinastri Uyum", matrix:"Kader Matrisi", matrix_uyum:"Kader Matrisi Uyum",
+  transit:"Transit", horary:"Soru Astrolojisi (Horary)"
+};
+const TEKLI = ["Bekar","İlişkim var","Nişanlı","Evli","Boşanmış"];
+const CIFT  = ["Yeni tanışıyoruz","Flört/İlişki","Nişanlı","Evli"];
+const KONULAR = ["Genel","İş & Kariyer","Aşk & İlişki","Para","Sağlık","Kayıp Eşya","Eğitim & Yurtdışı","Hukuk & Dava"];
+
+const qs = new URLSearchParams(location.search);
+const token = qs.get("token") || "";
+let type = qs.get("type") || "";
+const state = { gender:"", relationship:"", konu:"Genel" };
+
+function el(html){ const d=document.createElement("div"); d.innerHTML=html.trim(); return d.firstChild; }
+function msg(text, kind){ const m=document.getElementById("msg"); m.textContent=text; m.className="msg "+kind; }
+
+function isNumerology(t){ return t==="matrix" || t==="matrix_uyum"; }
+function needsPartner(t){ return t==="sinastri" || t==="matrix_uyum"; }
+
+function segSec(grup, deger, btn){
+  document.querySelectorAll(`[data-seg="${grup}"] button`).forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active"); state[grup]=deger;
+}
+
+function formuKur(){
+  const f = document.getElementById("form");
+  let h = "";
+  if(type === "horary"){
+    h += `<label>Konu</label><div class="seg" data-seg="konu">` +
+         KONULAR.map((k,i)=>`<button type="button" onclick="segSec('konu','${k}',this)"${i===0?' class="active"':''}>${k}</button>`).join("") + `</div>`;
+    h += `<label>Sorun</label><textarea id="soru" placeholder="Net, tek bir soru yaz (ör. 'Bu işe girer miyim?')"></textarea>
+          <div class="hint">Horary tek ve net bir soruya en iyi cevabı verir.</div>`;
+  } else {
+    h += `<label>Doğum Tarihi</label><input type="date" id="birthDate">`;
+    if(!isNumerology(type)){
+      h += `<label>Doğum Saati <span style="color:var(--muted);font-weight:normal">(bilmiyorsan boş bırak)</span></label><input type="time" id="birthTime">`;
+      h += `<label>Doğum Yeri</label><input type="text" id="birthPlace" placeholder="Şehir, Ülke (ör. İstanbul, Türkiye)">`;
+    }
+    // cinsiyet
+    const gLabels = (type==="cocuk") ? ["Kız","Erkek"] : ["Kadın","Erkek"];
+    h += `<label>Cinsiyet</label><div class="seg" data-seg="gender">` +
+         gLabels.map(g=>`<button type="button" onclick="segSec('gender','${g}',this)">${g}</button>`).join("") + `</div>`;
+    // ilişki durumu (çocuk hariç)
+    if(type !== "cocuk"){
+      const opts = needsPartner(type) ? CIFT : TEKLI;
+      h += `<label>İlişki Durumun</label><div class="seg" data-seg="relationship">` +
+           opts.map(o=>`<button type="button" onclick="segSec('relationship','${o}',this)">${o}</button>`).join("") + `</div>`;
+    }
+    // partner (sinastri, matrix_uyum)
+    if(needsPartner(type)){
+      h += `<div class="partner"><h3>Partner Bilgileri</h3>
+              <label>Partner Ad Soyad</label><input type="text" id="pName" placeholder="Partnerin adı">
+              <label>Partner Doğum Tarihi</label><input type="date" id="pDate">`;
+      if(!isNumerology(type)){
+        h += `<label>Partner Doğum Saati <span style="color:var(--muted);font-weight:normal">(opsiyonel)</span></label><input type="time" id="pTime">
+              <label>Partner Doğum Yeri</label><input type="text" id="pPlace" placeholder="Şehir, Ülke">`;
+      }
+      h += `</div>`;
+    }
+  }
+  f.innerHTML = h;
+  f.style.display = "block";
+  document.getElementById("go").style.display = "block";
+}
+
+function val(id){ const e=document.getElementById(id); return e ? e.value.trim() : ""; }
+
+async function gonder(){
+  const go = document.getElementById("go");
+  const body = { token, type };
+  if(type === "horary"){
+    body.konu = state.konu; body.soru = val("soru");
+    if(!body.soru || body.soru.length < 5){ return msg("Lütfen sorunu yaz (en az 5 karakter).","err"); }
+  } else {
+    body.birthDate = val("birthDate");
+    body.gender = state.gender || (type==="cocuk"?"Kız":"belirtilmedi");
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(body.birthDate)){ return msg("Lütfen doğum tarihini gir.","err"); }
+    if(!isNumerology(type)){
+      body.birthTime = val("birthTime");
+      body.birthPlace = val("birthPlace");
+      if(!body.birthPlace){ return msg("Lütfen doğum yerini gir.","err"); }
+    }
+    if(type !== "cocuk" && !state.relationship){ return msg("Lütfen ilişki durumunu seç.","err"); }
+    body.relationship = state.relationship;
+    if(needsPartner(type)){
+      const p = { name: val("pName"), birthDate: val("pDate") };
+      if(!isNumerology(type)){ p.birthTime = val("pTime"); p.birthPlace = val("pPlace"); }
+      if(!p.name || !/^\d{4}-\d{2}-\d{2}$/.test(p.birthDate)){ return msg("Lütfen partner ad ve doğum tarihini gir.","err"); }
+      if(type==="sinastri" && !p.birthPlace){ return msg("Lütfen partnerin doğum yerini gir.","err"); }
+      body.partner = p;
+    }
+  }
+  go.disabled = true; msg("Gönderiliyor…","ok");
+  try{
+    const r = await fetch(API + "/api/tamamla", {
+      method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body)
+    });
+    const data = await r.json();
+    if(r.ok && data.ok){
+      document.getElementById("form").style.display="none";
+      go.style.display="none";
+      msg(data.message || "Bilgilerin alındı! Raporun birkaç dakika içinde e-postana gelecek. ✦","ok");
+    } else {
+      go.disabled=false;
+      msg((data.errors && data.errors.join(" ")) || "Bir sorun oldu, lütfen tekrar dene.","err");
+    }
+  }catch(e){
+    go.disabled=false;
+    msg("Bağlantı hatası. İnternetini kontrol edip tekrar dener misin?","err");
+  }
+}
+
+async function baslat(){
+  if(!token){
+    document.getElementById("lead").textContent = "";
+    document.getElementById("baslik").textContent = "Bağlantı Geçersiz";
+    return msg("Bu bağlantı eksik görünüyor. Lütfen sana gönderdiğimiz e-postadaki bağlantıyı kullan ya da astroyuvam@gmail.com'a yaz.","err");
+  }
+  // token'ı doğrula + rapor adını al (mümkünse); başarısızsa yine de type varsa formu kur
+  try{
+    const r = await fetch(API + "/api/tamamla-bilgi?token=" + encodeURIComponent(token));
+    if(r.ok){
+      const d = await r.json();
+      if(d.ok){
+        if(d.type) type = d.type;
+        if(d.used){
+          document.getElementById("lead").textContent = "";
+          document.getElementById("baslik").textContent = "Bilgilerin Alınmıştı";
+          return msg("Bu form için bilgilerin daha önce alınmış; raporun hazırlanıyor. ✦","ok");
+        }
+      } else {
+        document.getElementById("baslik").textContent = "Bağlantı Geçersiz";
+        document.getElementById("lead").textContent = "";
+        return msg("Bu bağlantının süresi dolmuş olabilir (7 gün). Lütfen astroyuvam@gmail.com'a yaz, hemen yardımcı olalım.","err");
+      }
+    }
+  }catch(e){ /* sunucu uykudaysa: type URL'de olduğu için yine de devam et */ }
+
+  if(!type || !RAPOR_ADI[type]){
+    document.getElementById("baslik").textContent = "Bağlantı Geçersiz";
+    document.getElementById("lead").textContent = "";
+    return msg("Rapor türü belirlenemedi. Lütfen astroyuvam@gmail.com'a yaz.","err");
+  }
+  document.getElementById("baslik").textContent = RAPOR_ADI[type] + " Raporun";
+  document.getElementById("lead").textContent = "Ödemen bize ulaştı ✦ Raporu hazırlayabilmemiz için birkaç bilgini girmen yeterli.";
+  formuKur();
+}
+baslat();
+</script>
+</body>
+</html>
