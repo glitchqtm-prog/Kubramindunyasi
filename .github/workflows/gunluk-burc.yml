@@ -2,7 +2,7 @@ name: Günlük Burç Yorumları
 
 on:
   schedule:
-    - cron: "0 4 * * *"      # her gün 04:00 UTC = 07:00 Türkiye
+    - cron: "37 3 * * *"      # her gün 04:00 UTC = 07:00 Türkiye
   workflow_dispatch:          # "Run workflow" ile elle de tetiklenebilir
     inputs:
       force_weekly:
