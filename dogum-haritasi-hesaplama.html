@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ücretsiz Doğum Haritası Hesaplama | Astro Yuvam</title>
+<meta name="description" content="Doğum tarihi, saati ve yerini gir; gerçek doğum haritanı (natal harita) ücretsiz çıkar. Yükselen burcunu, gezegen ve ev yerleşimlerini, element dengeni anında gör.">
+<link rel="canonical" href="https://astroyuvam.com/dogum-haritasi-hesaplama.html">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/logo-512.png">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Astro Yuvam">
+<meta property="og:title" content="Ücretsiz Doğum Haritası Hesaplama | Astro Yuvam">
+<meta property="og:description" content="Gerçek doğum haritanı ücretsiz çıkar: yükselen burcun, gezegen ve ev yerleşimlerin, element dengen anında gözünün önünde.">
+<meta property="og:url" content="https://astroyuvam.com/dogum-haritasi-hesaplama.html">
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ücretsiz Doğum Haritası Hesaplama | Astro Yuvam">
+<meta name="twitter:description" content="Gerçek doğum haritanı ücretsiz çıkar; yükselen ve gezegen yerleşimlerini anında gör.">
+<meta name="twitter:image" content="https://astroyuvam.com/logo-512.png">
+
+<!-- FAQ zengin sonuç -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Doğum haritası hesaplama ücretsiz mi?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Evet. Doğum tarihi, saati ve yerini girerek gerçek doğum haritanı (natal harita) Astro Yuvam'da tamamen ücretsiz çıkarabilir; yükselen burcunu, gezegen ve ev yerleşimlerini görebilirsin." }
+    },
+    {
+      "@type": "Question",
+      "name": "Doğum saatimi bilmiyorsam harita çıkar mı?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Çıkar; ancak yükselen burç, ev yerleşimleri ve Ay derecesi doğum saatine bağlıdır. Saat girilmediğinde harita öğlen varsayımıyla çizilir ve bu bölümler yaklaşık olur. Gezegenlerin burçları büyük ölçüde doğru kalır." }
+    },
+    {
+      "@type": "Question",
+      "name": "Doğum haritamın kişiye özel yorumunu nasıl alırım?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Haritanın kendisi (çark ve yerleşimler) ücretsizdir. Bu yerleşimlerin senin için ne anlama geldiğini anlatan derin, kişiye özel yorumu ise Astro Yuvam Doğum Haritası raporundan alabilirsin." }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --bg:#14101f; --bg2:#1b1630; --card:#211a38; --line:#3a2f5c;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2; --muted:#b8afce;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%, #241c40 0%, var(--bg) 60%);
+       color:var(--cream);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+  a{color:var(--gold-soft)}
+  .wrap{max-width:920px;margin:0 auto;padding:24px 18px 64px}
+  h1{font-family:Georgia,"Times New Roman",serif;color:var(--gold);font-size:2rem;line-height:1.2;margin:.2em 0 .3em}
+  h2{font-family:Georgia,serif;color:var(--gold-soft);font-size:1.3rem;margin:1.6em 0 .5em}
+  .lede{color:var(--muted);max-width:70ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0;
+        box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  label{display:block;font-size:.86rem;color:var(--gold-soft);margin:0 0 6px;letter-spacing:.02em}
+  .row{display:flex;flex-wrap:wrap;gap:14px}
+  .row > div{flex:1 1 180px;min-width:150px}
+  input,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);
+        background:var(--bg2);color:var(--cream);font-size:1rem}
+  input::placeholder{color:#8d84a6}
+  .triple{display:flex;gap:8px}
+  .triple select{padding:11px 6px}
+  .chk{display:flex;align-items:center;gap:9px;margin-top:10px;color:var(--muted);font-size:.92rem;cursor:pointer}
+  .chk input{width:auto}
+  .btn{display:inline-block;border:none;cursor:pointer;font-size:1.05rem;font-weight:600;
+       padding:14px 26px;border-radius:12px;color:#241a05;
+       background:linear-gradient(135deg,var(--gold-soft),var(--gold));margin-top:16px;
+       transition:transform .12s ease, box-shadow .12s ease}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(217,185,106,.28)}
+  .btn[disabled]{opacity:.6;cursor:default;transform:none;box-shadow:none}
+  .hint{color:var(--muted);font-size:.82rem;margin-top:8px}
+  .loading{display:none;text-align:center;padding:26px 10px}
+  .loading .orb{width:54px;height:54px;margin:0 auto 14px;border-radius:50%;
+       background:radial-gradient(circle at 35% 30%, var(--gold-soft), #7a5c1a 70%, #2a1f06);
+       box-shadow:0 0 26px rgba(217,185,106,.5);animation:pulse 1.5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(.9);opacity:.75}50%{transform:scale(1.08);opacity:1}}
+  .err{display:none;background:#3a1720;border:1px solid #7a2a3a;color:#ffd9df;border-radius:12px;padding:14px 16px;margin:14px 0}
+  #result{display:none}
+  .summary{color:var(--muted);font-size:.95rem;margin-bottom:6px}
+  .chartbox{background:#fff;border-radius:16px;padding:8px;margin:14px 0;overflow:hidden}
+  .chartbox svg{display:block;width:100%;height:auto}
+  .bigpoints{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+  .bigpoints .pill{flex:1 1 140px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .bigpoints .pill b{display:block;color:var(--gold);font-size:1.15rem}
+  .bigpoints .pill span{color:var(--muted);font-size:.8rem}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95rem}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--gold-soft);font-weight:600;font-size:.82rem;letter-spacing:.03em}
+  td .g{color:var(--gold);font-size:1.05rem;margin-right:4px}
+  .retro{color:#e59bb0;font-size:.8rem;margin-left:4px}
+  .elements{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .elrow{display:flex;align-items:center;gap:10px}
+  .elrow .name{width:70px;color:var(--gold-soft);font-size:.9rem}
+  .bar{flex:1;height:14px;background:var(--bg2);border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft))}
+  .elrow .val{width:26px;text-align:right;color:var(--muted);font-size:.85rem}
+  .note{background:#2a2413;border:1px solid #5c4d1f;color:var(--gold-soft);border-radius:12px;padding:12px 15px;margin:14px 0;font-size:.92rem}
+  .cta{background:linear-gradient(135deg,#241a3f,#2f2154);border:1px solid var(--gold);border-radius:16px;
+       padding:22px;margin:22px 0;text-align:center}
+  .cta h3{font-family:Georgia,serif;color:var(--gold);margin:.1em 0 .4em;font-size:1.35rem}
+  .cta p{color:var(--cream);max-width:60ch;margin:0 auto 14px}
+  .disc{color:#8d84a6;font-size:.8rem;margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  .faq{margin-top:10px}
+  .faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px 16px;margin:10px 0}
+  .faq summary{cursor:pointer;color:var(--gold-soft);font-weight:600;padding:10px 0}
+  .faq p{color:var(--muted);margin:.2em 0 12px}
+</style>
+</head>
+<body>
+
+<div id="astro-menu"></div>
+
+<div class="wrap">
+  <h1>Ücretsiz Doğum Haritası Hesaplama</h1>
+  <p class="lede">Doğum tarihini, saatini ve yerini gir; doğduğun andaki gerçek gökyüzünü — yükselen burcunu, gezegen ve ev yerleşimlerini, element dengeni — anında ücretsiz çıkar. Bu harita, ücretli raporlarımızın kullandığı <b>aynı</b> hassas motorla hesaplanır; yani gördüğün yerleşimler gerçektir.</p>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label for="ad">İsim (isteğe bağlı)</label>
+        <input id="ad" type="text" placeholder="Haritanın üstünde görünür" maxlength="60" autocomplete="off">
+      </div>
+      <div>
+        <label>Doğum Tarihi</label>
+        <div class="triple">
+          <select id="gun" aria-label="Gün"></select>
+          <select id="ay" aria-label="Ay"></select>
+          <select id="yil" aria-label="Yıl"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:14px">
+      <div>
+        <label>Doğum Saati</label>
+        <div class="triple">
+          <select id="saat" aria-label="Saat"></select>
+          <select id="dakika" aria-label="Dakika"></select>
+        </div>
+        <label class="chk"><input id="saatyok" type="checkbox"> Doğum saatimi bilmiyorum</label>
+      </div>
+      <div>
+        <label for="yer">Doğum Yeri</label>
+        <input id="yer" type="text" placeholder="Örn: İstanbul" autocomplete="off">
+        <div class="hint">Şehir adı yeterli (Türkiye ya da dünya).</div>
+      </div>
+    </div>
+
+    <button id="git" class="btn">✦ Haritamı Çıkar</button>
+    <div class="hint">Not: Sunucu bir süre boştaysa ilk hesaplama birkaç saniye sürebilir.</div>
+  </div>
+
+  <div class="err" id="err"></div>
+
+  <div class="loading" id="loading">
+    <div class="orb"></div>
+    <div>Haritan hazırlanıyor…</div>
+  </div>
+
+  <div id="result">
+    <div class="summary" id="ozet"></div>
+    <div class="chartbox" id="cark"></div>
+
+    <div class="bigpoints" id="bigpoints"></div>
+
+    <div class="note" id="note" style="display:none"></div>
+
+    <h2>Gezegen ve Nokta Yerleşimleri</h2>
+    <table id="tablo"><thead><tr><th>Gezegen</th><th>Burç</th><th>Derece</th><th>Ev</th></tr></thead><tbody></tbody></table>
+
+    <h2>Element Dengen</h2>
+    <div class="elements" id="elements"></div>
+
+    <div class="cta">
+      <h3>Bu senin doğum haritan. Peki sana ne söylüyor?</h3>
+      <p>Yukarıdaki yerleşimler haritanın iskeleti. Karakterini, güçlü yönlerini, ilişki ve kariyer temalarını, önündeki dönemi kişiye özel ve derinlemesine anlatan <b>Doğum Haritası Raporu</b> ile haritanın sesini duy.</p>
+      <a class="btn" href="/#cards">Doğum Haritası Raporunu İncele →</a>
+    </div>
+  </div>
+
+  <h2>Sıkça Sorulan Sorular</h2>
+  <div class="faq">
+    <details><summary>Doğum haritası hesaplama ücretsiz mi?</summary>
+      <p>Evet. Doğum tarihi, saati ve yerini girerek gerçek doğum haritanı bu sayfada tamamen ücretsiz çıkarabilir; yükselen burcunu, gezegen ve ev yerleşimlerini görebilirsin. Kişiye özel derin yorum ise ücretli raporun kapsamındadır.</p>
+    </details>
+    <details><summary>Doğum saatimi bilmiyorsam ne olur?</summary>
+      <p>Harita yine çıkar, ama yükselen burç, ev yerleşimleri ve Ay derecesi doğum saatine bağlı olduğundan bu bölümler yaklaşık olur. Gezegenlerin bulunduğu burçlar büyük ölçüde doğru kalır. En doğru sonuç için nüfus kaydı ya da hastane kaydından saatini öğrenmen yeterli.</p>
+    </details>
+    <details><summary>Yükselen burç neden önemli?</summary>
+      <p>Yükselen, doğduğun anda ufukta yükselen burçtur; haritanın ev sistemini ve dışa yansıyan yüzünü belirler. Bu yüzden doğum saatine ihtiyaç duyar ve çoğu zaman Güneş burcu kadar belirleyicidir.</p>
+    </details>
+    <details><summary>Bu harita gerçek mi, yoksa yaklaşık mı?</summary>
+      <p>Harita gerçek astronomik konumlardan hesaplanır (Placidus ev sistemi, yüksek hassasiyetli efemeris). Yorum tarafı ise sembolik bir dildir; astroloji eğlence ve içsel farkındalık amaçlıdır, kesin kehanet değildir.</p>
+    </details>
+  </div>
+
+  <p class="disc">Astro Yuvam · Doğum haritası hesaplama aracı. Sonuçlar gerçek astronomik konumlara dayanır; yorumlar semboliktir ve eğlence/kişisel farkındalık amaçlıdır. Kesin kehanet niteliği taşımaz.</p>
+</div>
+
+<script src="/menu.js" defer></script>
+<script>
+(function(){
+  "use strict";
+  var API = "https://astro-rapor.onrender.com/api/harita";
+  var AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  var SIGN_GLYPH = {"Koç":"♈","Boğa":"♉","İkizler":"♊","Yengeç":"♋","Aslan":"♌","Başak":"♍","Terazi":"♎","Akrep":"♏","Yay":"♐","Oğlak":"♑","Kova":"♒","Balık":"♓"};
+  var PL_GLYPH = {"Güneş":"☉","Ay":"☽","Merkür":"☿","Venüs":"♀","Mars":"♂","Jüpiter":"♃","Satürn":"♄","Uranüs":"♅","Neptün":"♆","Plüton":"♇","Kuzey Ay Düğümü":"☊","Güney Ay Düğümü":"☋","Chiron":"⚷","Chiron (yaklaşık)":"⚷"};
+  var EL_ICON = {"Ateş":"🔥","Toprak":"⛰️","Hava":"🌬️","Su":"💧"};
+
+  function $(id){ return document.getElementById(id); }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function opt(sel, val, text, selected){
+    var o=document.createElement("option"); o.value=val; o.textContent=text; if(selected)o.selected=true; sel.appendChild(o);
+  }
+
+  // Seçicileri doldur
+  var gun=$("gun"), ay=$("ay"), yil=$("yil"), saat=$("saat"), dakika=$("dakika");
+  opt(gun,"","Gün",true); for(var d=1;d<=31;d++) opt(gun,pad(d),pad(d));
+  opt(ay,"","Ay",true); for(var m=0;m<12;m++) opt(ay,pad(m+1),AYLAR[m]);
+  var thisYear=new Date().getFullYear();
+  opt(yil,"","Yıl",true); for(var y=thisYear;y>=1920;y--) opt(yil,String(y),String(y));
+  opt(saat,"","Saat",true); for(var h=0;h<24;h++) opt(saat,pad(h),pad(h));
+  opt(dakika,"","Dk",true); for(var mi=0;mi<60;mi++) opt(dakika,pad(mi),pad(mi));
+
+  var saatyok=$("saatyok");
+  saatyok.addEventListener("change", function(){
+    var off=saatyok.checked; saat.disabled=off; dakika.disabled=off;
+    if(off){ saat.value=""; dakika.value=""; }
+  });
+
+  function goster(el){ el.style.display="block"; }
+  function gizle(el){ el.style.display="none"; }
+
+  function hata(msg){
+    var e=$("err"); e.innerHTML=msg; goster(e); gizle($("loading"));
+    if(e.scrollIntoView) e.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+
+  function elementBar(deng){
+    var box=$("elements"); box.innerHTML="";
+    if(!deng){ return; }
+    var toplam=0, keys=["Ateş","Toprak","Hava","Su"];
+    keys.forEach(function(k){ toplam += (deng[k]||0); });
+    if(toplam<=0) toplam=1;
+    keys.forEach(function(k){
+      var v=deng[k]||0, pct=Math.round(v/toplam*100);
+      var row=document.createElement("div"); row.className="elrow";
+      row.innerHTML='<span class="name">'+(EL_ICON[k]||"")+' '+k+'</span>'+
+                    '<span class="bar"><i style="width:'+pct+'%"></i></span>'+
+                    '<span class="val">'+v+'</span>';
+      box.appendChild(row);
+    });
+  }
+
+  function tabloDoldur(gezegenler){
+    var tb=$("tablo").getElementsByTagName("tbody")[0]; tb.innerHTML="";
+    (gezegenler||[]).forEach(function(p){
+      var tr=document.createElement("tr");
+      var g=SIGN_GLYPH[p.burc]||"";
+      tr.innerHTML='<td>'+(PL_GLYPH[p.ad]||"")+' '+p.ad+'</td>'+
+                   '<td><span class="g">'+g+'</span>'+p.burc+(p.retro?'<span class="retro">℞</span>':'')+'</td>'+
+                   '<td>'+Math.floor(p.derece)+'°</td>'+
+                   '<td>'+(p.ev?p.ev:"—")+'</td>';
+      tb.appendChild(tr);
+    });
+  }
+
+  function bigPoints(data){
+    var box=$("bigpoints"); box.innerHTML="";
+    var gunes=(data.gezegenler||[]).filter(function(p){return p.ad==="Güneş";})[0];
+    var ay=(data.gezegenler||[]).filter(function(p){return p.ad==="Ay";})[0];
+    function pill(baslik, deger){
+      var d=document.createElement("div"); d.className="pill";
+      d.innerHTML='<b>'+deger+'</b><span>'+baslik+'</span>'; box.appendChild(d);
+    }
+    if(gunes) pill("Güneş burcu", (SIGN_GLYPH[gunes.burc]||"")+" "+gunes.burc);
+    if(ay)    pill("Ay burcu", (SIGN_GLYPH[ay.burc]||"")+" "+ay.burc);
+    if(data.yukselen) pill("Yükselen", (SIGN_GLYPH[data.yukselen.burc]||"")+" "+data.yukselen.burc);
+    if(data.mc)       pill("Tepe Noktası (MC)", (SIGN_GLYPH[data.mc.burc]||"")+" "+data.mc.burc);
+  }
+
+  function ciz(data){
+    var d=data.dogumBilgi||{};
+    var ozet=(d.isim?d.isim+" — ":"")+(d.tarih||"")+(d.saat?(" • "+d.saat):" • saat yok")+(d.yer?(" • "+d.yer):"");
+    $("ozet").textContent=ozet;
+    $("cark").innerHTML=data.cark||"";
+    bigPoints(data);
+    tabloDoldur(data.gezegenler);
+    elementBar(data.elementDengesi);
+    var note=$("note");
+    if(data.not){ note.textContent=data.not; goster(note); } else { gizle(note); note.textContent=""; }
+    goster($("result"));
+    if($("result").scrollIntoView) $("result").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function gonder(){
+    gizle($("err")); gizle($("result"));
+    var isim=$("ad").value.trim();
+    var g=gun.value, a=ay.value, y=yil.value;
+    var yer=$("yer").value.trim();
+    if(!g||!a||!y){ return hata("Lütfen doğum tarihini eksiksiz seç (gün, ay, yıl)."); }
+    if(!yer){ return hata("Lütfen doğum yerini yaz (örn: İstanbul)."); }
+    var birthDate=y+"-"+a+"-"+g;
+    var body={ name:isim, birthDate:birthDate, birthPlace:yer };
+    if(!saatyok.checked && saat.value!=="" && dakika.value!==""){
+      body.birthTime=saat.value+":"+dakika.value;
+    }
+    var btn=$("git"); btn.disabled=true;
+    goster($("loading"));
+    if($("loading").scrollIntoView) $("loading").scrollIntoView({behavior:"smooth",block:"center"});
+
+    fetch(API,{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body) })
+      .then(function(r){ return r.json().then(function(j){ return {status:r.status, j:j}; }); })
+      .then(function(res){
+        btn.disabled=false;
+        var j=res.j||{};
+        if(res.status===429){ return hata(j.mesaj||"Bugünlük harita hakkın doldu, yarın tekrar bekleriz. ✦"); }
+        if(res.status===400){ return hata((j.errors&&j.errors.join("<br>"))||"Bilgileri kontrol eder misin?"); }
+        if(!j.ok){ return hata(j.mesaj||"Harita şu an hesaplanamadı, birazdan tekrar dene."); }
+        gizle($("loading"));
+        ciz(j);
+      })
+      .catch(function(){
+        btn.disabled=false;
+        hata("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dener misin? (Sunucu uykudaysa birkaç saniye sonra tekrar dene.)");
+      });
+  }
+
+  $("git").addEventListener("click", gonder);
+})();
+</script>
+</body>
+</html>

@@ -33,6 +33,7 @@
   // Kategorili menü: her yeni araç ilgili grubun items dizisine tek satır.
   var GRUPLAR = [
     { baslik:"Gökyüzü & Ay", items:[
+      { href:"/dogum-haritasi-hesaplama.html", ad:"✦ Doğum Haritası", alt:"Haritanı ücretsiz çıkar" },
       { href:"/gokyuzu.html",        ad:"✦ Gökyüzü",                alt:"Şu an gökyüzü & günün fısıltısı" },
       { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",             alt:"Bugünün ay evresi ve ritüeli" },
       { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" }
