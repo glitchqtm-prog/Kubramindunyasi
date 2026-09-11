@@ -7,6 +7,8 @@
 <meta name="description" content="Doğum tarihi, saati ve yerini gir; gerçek doğum haritanı (natal harita) ücretsiz çıkar. Yükselen burcunu, gezegen ve ev yerleşimlerini, element dengeni anında gör.">
 <link rel="canonical" href="https://astroyuvam.com/dogum-haritasi-hesaplama.html">
 <meta name="robots" content="index, follow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
 <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/logo-512.png">
@@ -179,6 +181,11 @@
     <h2>Gezegen ve Nokta Yerleşimleri</h2>
     <table id="tablo"><thead><tr><th>Gezegen</th><th>Burç</th><th>Derece</th><th>Ev</th></tr></thead><tbody></tbody></table>
 
+    <div id="acilar-bolum" style="display:none">
+      <h2>Açılar</h2>
+      <table id="acilar-tablo"><thead><tr><th>Nokta</th><th>Açı</th><th>Nokta</th><th>Orb</th></tr></thead><tbody></tbody></table>
+    </div>
+
     <h2>Element Dengen</h2>
     <div class="elements" id="elements"></div>
 
@@ -215,8 +222,10 @@
   var API = "https://astro-rapor.onrender.com/api/harita";
   var AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
   var SIGN_GLYPH = {"Koç":"♈","Boğa":"♉","İkizler":"♊","Yengeç":"♋","Aslan":"♌","Başak":"♍","Terazi":"♎","Akrep":"♏","Yay":"♐","Oğlak":"♑","Kova":"♒","Balık":"♓"};
-  var PL_GLYPH = {"Güneş":"☉","Ay":"☽","Merkür":"☿","Venüs":"♀","Mars":"♂","Jüpiter":"♃","Satürn":"♄","Uranüs":"♅","Neptün":"♆","Plüton":"♇","Kuzey Ay Düğümü":"☊","Güney Ay Düğümü":"☋","Chiron":"⚷","Chiron (yaklaşık)":"⚷"};
+  var PL_GLYPH = {"Güneş":"☉","Ay":"☽","Merkür":"☿","Venüs":"♀","Mars":"♂","Jüpiter":"♃","Satürn":"♄","Uranüs":"♅","Neptün":"♆","Plüton":"♇","Kuzey Ay Düğümü":"☊","Güney Ay Düğümü":"☋","Chiron":"⚷","Chiron (yaklaşık)":"⚷","Lilith":"⚸","Juno":"⚵","Ceres":"⚳","Vesta":"⚶","Pallas":"⚴"};
   var EL_ICON = {"Ateş":"🔥","Toprak":"⛰️","Hava":"🌬️","Su":"💧"};
+  var ASP_GLYPH = {"Kavuşum":"☌","Sekstil":"✶","Kare":"□","Üçgen":"△","Karşıt":"☍","Quincunx":"⚻"};
+  var ASP_COLOR = {"Kavuşum":"#d68910","Sekstil":"#1e8449","Kare":"#c0392b","Üçgen":"#2471a3","Karşıt":"#922b21","Quincunx":"#909497"};
 
   function $(id){ return document.getElementById(id); }
   function pad(n){ return (n<10?"0":"")+n; }
@@ -276,6 +285,23 @@
     });
   }
 
+  function acilarDoldur(acilar){
+    var bolum=$("acilar-bolum");
+    var tb=$("acilar-tablo").getElementsByTagName("tbody")[0]; tb.innerHTML="";
+    var liste=(acilar||[]).slice().sort(function(a,b){ return (a.orb||0)-(b.orb||0); }); // en dar açı üstte
+    if(!liste.length){ bolum.style.display="none"; return; }
+    liste.forEach(function(a){
+      var g=ASP_GLYPH[a.aspect]||"", c=ASP_COLOR[a.aspect]||"#888";
+      var tr=document.createElement("tr");
+      tr.innerHTML='<td>'+(PL_GLYPH[a.a]||"")+' '+a.a+'</td>'+
+                   '<td><span class="g" style="color:'+c+'">'+g+'</span>'+a.aspect+'</td>'+
+                   '<td>'+(PL_GLYPH[a.b]||"")+' '+a.b+'</td>'+
+                   '<td>'+(typeof a.orb==="number"?a.orb.toFixed(1):a.orb)+'°</td>';
+      tb.appendChild(tr);
+    });
+    bolum.style.display="block";
+  }
+
   function bigPoints(data){
     var box=$("bigpoints"); box.innerHTML="";
     var gunes=(data.gezegenler||[]).filter(function(p){return p.ad==="Güneş";})[0];
@@ -297,6 +323,7 @@
     $("cark").innerHTML=data.cark||"";
     bigPoints(data);
     tabloDoldur(data.gezegenler);
+    acilarDoldur(data.acilar);
     elementBar(data.elementDengesi);
     var note=$("note");
     if(data.not){ note.textContent=data.not; goster(note); } else { gizle(note); note.textContent=""; }
