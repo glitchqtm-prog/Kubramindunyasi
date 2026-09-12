@@ -39,6 +39,7 @@ const REPORTS = [
   },
   {
     id: "matrix",
+    page: "kader-matrisi-analizi.html",
     title: "Kader Matrisi Raporu",
     short: "Doğum tarihinden hesaplanan 22 Arkana (Ladini yöntemi) oktagramıyla karakterini; karmik kuyruğunu, aşk, para ve yetenek hat kombinasyonlarını, çakralarını, yaşam blokajlarını ve yaş dönemlerini tek tek çözen 24+ sayfalık numeroloji raporu.",
     price: 400,
