@@ -109,6 +109,8 @@
   .rapor-grid > .card .meta{margin-top:auto}
   .kart-detay{background:none;border:none;color:var(--ay-gold);font:inherit;font-size:12.5px;cursor:pointer;padding:6px 0 2px;text-align:left;align-self:flex-start;opacity:.9}
   .kart-detay:hover{opacity:1;text-decoration:underline}
+  .kart-satis{display:block;text-align:center;color:var(--ay-gold);font-size:13px;text-decoration:none;margin-top:10px;opacity:.92}
+  .kart-satis:hover{opacity:1;text-decoration:underline}
 </style>
   <script src="/menu.js" defer></script>
 </head>
@@ -126,7 +128,7 @@
     <div class="orbit-dot" style="top:60px;left:8px;"></div>
   </div>
   <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
-  <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, yapay zekâ destekli, kişiye özel astroloji ve kader matrisi raporların. Hazır olduğunda otomatik olarak e-postana gönderilir.</p>
+  <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, kişiye özel astroloji ve kader matrisi raporların. Hazır olduğunda gün içinde e-postana gönderilir.</p>
 </section>
 
 <section id="cards"></section>
@@ -173,7 +175,7 @@
     <div class="step"><div class="num">1</div><h3>Raporunu Seç</h3><p>İhtiyacına uygun rapor türünü seç.</p></div>
     <div class="step"><div class="num">2</div><h3>Bilgilerini Gir</h3><p>Doğum tarihi, yeri ve birkaç detay yeterli.</p></div>
     <div class="step"><div class="num">3</div><h3>Güvenle Öde</h3><p>Güvenli ödeme altyapısıyla ödemeni tamamla.</p></div>
-    <div class="step"><div class="num">4</div><h3>E-postana Gelsin</h3><p>Raporun ~15 dk içinde PDF olarak e-postanda.</p></div>
+    <div class="step"><div class="num">4</div><h3>E-postana Gelsin</h3><p>Raporun gün içinde PDF olarak e-postanda.</p></div>
   </div>
 </section>
 
@@ -185,7 +187,7 @@
       <div class="ans">Evet. Doğum saatiniz yoksa varsayılan olarak 12:00 kullanılır. Bu durumda gezegen konumları ve burçlar doğru hesaplanır; yalnızca yükselen burç ve ev konumları saate bağlı olduğu için tam kesinlik taşımayabilir. Saatinizi biliyorsanız girmeniz raporu daha isabetli kılar.</div>
     </details>
     <details><summary>Raporum ne kadar sürede gelir?</summary>
-      <div class="ans">Siparişiniz sonrası raporunuz otomatik hazırlanır ve genellikle ~15 dakika içinde e-postanıza PDF olarak ulaşır. Yoğunluk durumunda bu süre biraz uzayabilir. Gelen kutunuzda göremezseniz spam/gereksiz klasörünü kontrol etmeyi unutmayın.</div>
+      <div class="ans">Siparişiniz sonrası raporunuz otomatik hazırlanır ve gün içinde e-postanıza PDF olarak ulaşır. Gelen kutunuzda göremezseniz spam/gereksiz klasörünü kontrol etmeyi unutmayın.</div>
     </details>
     <details><summary>İade veya iptal mümkün mü?</summary>
       <div class="ans">Raporlar size özel, anında üretilen dijital ürünlerdir; bu nedenle üretim sonrası iade edilemez. Ancak teknik bir hata nedeniyle raporunuz üretilmez veya ulaşmazsa, yeniden üretir ya da ücretinizi iade ederiz. Detaylar için <a href="mesafeli-satis.html" style="color:var(--ay-gold)">Mesafeli Satış Sözleşmemize</a> bakabilirsiniz.</div>
@@ -237,9 +239,10 @@
       ${uzun ? `<button type="button" class="kart-detay">Detayları gör ▾</button>` : ``}
       <div class="meta">
         <div class="price">₺${r.price}</div>
-        <div class="delivery">~15 dk içinde teslimat</div>
+        <div class="delivery">Gün içinde teslimat</div>
       </div>
-      <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>`;
+      <a class="btn btn-primary btn-block" href="order.html?type=${r.id}">✦ Hızlı Sipariş Ver</a>
+      ${r.page ? `<a class="kart-satis" href="${r.page}">Detaylı bilgi →</a>` : ``}`;
   }
 
   KATEGORILER.forEach(kat => {
