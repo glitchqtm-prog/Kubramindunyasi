@@ -47,6 +47,7 @@ const REPORTS = [
   },
   {
     id: "matrix_uyum",
+    page: "kader-matrisi-uyum-analizi.html",
     title: "Kader Matrisi Uyum Raporu",
     short: "İki kişinin oktagramlarının birleşiminden doğan ortak enerjileri; her iki tarafın hat kombinasyonlarını, bağlanma dinamiklerini, ilişki–para–karmik bağ blokajlarını ve ilişkinin karmik misyonunu derinlemesine analiz eden 30+ sayfalık uyum raporu.",
     price: 500,
