@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kişiye Özel Doğum Haritası Analizi – 20+ Sayfa PDF Rapor | Astro Yuvam</title>
+<meta name="description" content="Doğduğun andaki gerçek gezegen konumlarıyla hazırlanan, 20+ sayfalık kişiye özel doğum haritası analizi. 8 bölüm, 12 evin tek tek yorumu, kariyer, ilişki ve geleceğe dair öngörüler. Gün içinde e-postanda PDF olarak." />
+<link rel="canonical" href="https://astroyuvam.com/dogum-haritasi-analizi.html" />
+<meta property="og:type" content="product" />
+<meta property="og:title" content="Kişiye Özel Doğum Haritası Analizi – PDF Rapor | Astro Yuvam" />
+<meta property="og:description" content="Gerçek gökyüzü verisiyle hazırlanan 20+ sayfalık doğum haritası analizin. 8 bölüm, 12 evin tek tek yorumu, kariyer, ilişki ve geleceğe dair öngörüler." />
+<meta property="og:url" content="https://astroyuvam.com/dogum-haritasi-analizi.html" />
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Kişiye Özel Doğum Haritası Analizi Raporu",
+  "image": "https://astroyuvam.com/logo-512.png",
+  "description": "Doğduğun andaki gerçek gezegen konumlarıyla (Placidus ev sistemi + Swiss Ephemeris) hazırlanan, 20+ sayfalık kişiye özel doğum haritası analizi. 8 bölüm, 47 alt başlık, 12 evin tek tek yorumu, kariyer, ilişki ve geleceğe dair öngörüler.",
+  "brand": { "@type": "Brand", "name": "Astro Yuvam" },
+  "offers": {
+    "@type": "Offer",
+    "price": "500",
+    "priceCurrency": "TRY",
+    "availability": "https://schema.org/InStock",
+    "url": "https://astroyuvam.com/order.html?type=natal"
+  }
+}
+</script>
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* === Doğum Haritası Analizi satış sayfası — sayfaya özel stiller (global style.css'i bozmadan, .dh- öneki) === */
+  :root{
+    --dh-gold:#d9b96a; --dh-gold-soft:#e8d3a3; --dh-panel:#161022; --dh-panel-2:#12101d;
+    --dh-line:#2a2140; --dh-ink:#efe9dc; --dh-muted:#b9aecb; --dh-violet:#7c6cf0;
+  }
+  html{scroll-behavior:smooth}
+
+  /* ---- Hero ---- */
+  .dh-hero{max-width:960px;margin:0 auto;padding:48px 22px 8px;text-align:center}
+  .dh-eyebrow{display:inline-block;color:var(--dh-gold);font-size:12px;letter-spacing:.22em;
+    font-weight:700;text-transform:uppercase;border:1px solid var(--dh-line);border-radius:20px;
+    padding:6px 16px;margin-bottom:22px}
+  .dh-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(31px,5.4vw,50px);
+    line-height:1.12;margin:0 0 16px}
+  .dh-hero h1 em{font-style:italic;color:var(--dh-gold-soft)}
+  .dh-lead{color:var(--dh-muted);max-width:600px;margin:0 auto;font-size:16px;line-height:1.7}
+
+  .dh-orbit{position:relative;width:150px;height:150px;margin:6px auto 26px}
+  .dh-orbit .r{position:absolute;inset:0;border-radius:50%;border:1px solid}
+  .dh-orbit .r1{inset:0;border-color:rgba(124,108,240,.5)}
+  .dh-orbit .r2{inset:22px;border-color:rgba(217,185,106,.5)}
+  .dh-orbit .r3{inset:46px;border-color:rgba(255,255,255,.12)}
+  .dh-orbit .core{position:absolute;inset:0;margin:auto;width:38px;height:38px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#ffe9b8,var(--dh-gold) 70%);box-shadow:0 0 34px rgba(217,185,106,.5)}
+  .dh-orbit .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--violet-soft)}
+
+  .dh-facts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:680px;margin:26px auto 0}
+  .dh-facts span{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:10px;
+    padding:9px 15px;font-size:13.5px;color:var(--dh-ink)}
+  .dh-facts span b{color:var(--dh-gold-soft);font-weight:700}
+
+  .dh-cta-wrap{margin:30px auto 6px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .dh-price{font-family:var(--serif);font-size:20px;color:var(--dh-ink)}
+  .dh-price s{color:var(--dh-muted);font-size:15px;margin-right:8px;opacity:.7}
+  .dh-price b{color:var(--dh-gold-soft)}
+  .dh-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;
+    border-radius:12px;padding:16px 32px;font-family:var(--sans);font-weight:700;font-size:16px;
+    cursor:pointer;text-decoration:none;color:#fff;
+    background:linear-gradient(120deg,var(--dh-violet),#5546d6);
+    box-shadow:0 10px 30px rgba(124,108,240,.28);transition:filter .2s,transform .15s}
+  .dh-btn:hover{filter:brightness(1.09)}
+  .dh-btn:active{transform:scale(.985)}
+  .dh-btn.gold{background:linear-gradient(120deg,var(--dh-gold),#c9a34e);color:#241a06;box-shadow:0 10px 30px rgba(217,185,106,.22)}
+  .dh-micro{color:var(--dh-muted);font-size:12.5px}
+
+  /* ---- Güven şeridi ---- */
+  .dh-trust{max-width:960px;margin:34px auto 0;padding:0 22px;display:grid;
+    grid-template-columns:repeat(4,1fr);gap:14px}
+  .dh-trust div{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:12px;
+    padding:16px 14px;text-align:center}
+  .dh-trust .t-ic{color:var(--dh-gold);font-size:20px;margin-bottom:7px}
+  .dh-trust .t-tt{color:var(--dh-ink);font-size:13.5px;font-weight:600}
+  .dh-trust .t-td{color:var(--dh-muted);font-size:11.5px;margin-top:2px;line-height:1.4}
+  @media(max-width:680px){.dh-trust{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---- Genel bölüm sarmalı ---- */
+  .dh-sec{max-width:960px;margin:76px auto 0;padding:0 22px}
+  .dh-sec.tight{margin-top:56px}
+  .dh-sec h2{font-family:var(--serif);font-weight:500;color:var(--dh-gold-soft);
+    font-size:clamp(24px,3.6vw,32px);text-align:center;margin:0 0 10px;line-height:1.2}
+  .dh-sec .sub{color:var(--dh-muted);text-align:center;font-size:15px;line-height:1.65;
+    max-width:640px;margin:0 auto 34px}
+
+  /* ---- İçerik haritası: istatistik bandı ---- */
+  .dh-statband{display:flex;flex-wrap:wrap;justify-content:center;gap:0;max-width:760px;
+    margin:0 auto 40px;border:1px solid var(--dh-line);border-radius:14px;overflow:hidden;
+    background:linear-gradient(120deg,rgba(217,185,106,.08),rgba(124,108,240,.06))}
+  .dh-statband div{flex:1 1 130px;text-align:center;padding:20px 12px;border-right:1px solid var(--dh-line)}
+  .dh-statband div:last-child{border-right:none}
+  .dh-statband .n{font-family:var(--serif);font-size:30px;color:var(--dh-gold-soft);line-height:1}
+  .dh-statband .l{color:var(--dh-muted);font-size:12px;margin-top:6px;letter-spacing:.04em}
+  @media(max-width:560px){.dh-statband div{flex-basis:50%;border-bottom:1px solid var(--dh-line)}
+    .dh-statband div:nth-child(2){border-right:none}}
+
+  /* ---- İçerik haritası: bölüm panelleri ---- */
+  .dh-map{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.dh-map{grid-template-columns:1fr}}
+  .dh-block{background:linear-gradient(180deg,var(--dh-panel),var(--dh-panel-2));
+    border:1px solid var(--dh-line);border-radius:16px;padding:24px 22px;display:flex;flex-direction:column}
+  .dh-block.wide{grid-column:1 / -1}
+  .dh-block .bnum{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+    border-radius:9px;background:rgba(217,185,106,.12);border:1px solid rgba(217,185,106,.35);
+    color:var(--dh-gold-soft);font-family:var(--serif);font-size:17px;margin-bottom:14px}
+  .dh-block h3{font-family:var(--serif);font-weight:600;color:var(--dh-ink);font-size:19px;margin:0 0 8px}
+  .dh-block .bdesc{color:var(--dh-muted);font-size:13.5px;line-height:1.6;margin:0 0 16px}
+  .dh-block ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .dh-block li{position:relative;padding-left:22px;color:var(--dh-ink);font-size:13.8px;line-height:1.5}
+  .dh-block li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--dh-gold);font-size:11px}
+  .dh-block .houses{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  @media(max-width:520px){.dh-block .houses{grid-template-columns:1fr}}
+
+  /* ---- Örnek rapor / alıntı ---- */
+  .dh-excerpt{max-width:760px;margin:0 auto;background:#0f0d18;border:1px solid var(--dh-line);
+    border-radius:16px;padding:30px 30px 26px;position:relative}
+  .dh-excerpt .tag{position:absolute;top:-13px;left:26px;background:linear-gradient(180deg,#e7cf95,var(--dh-gold));
+    color:#241a06;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:5px 14px;border-radius:20px}
+  .dh-excerpt h4{font-family:var(--serif);color:var(--dh-gold-soft);font-size:17px;margin:8px 0 12px}
+  .dh-excerpt p{color:var(--dh-muted);font-size:14.5px;line-height:1.85;margin:0 0 12px}
+  .dh-excerpt .pill{display:inline-block;background:var(--dh-panel);border:1px solid var(--dh-line);
+    color:var(--dh-ink);font-size:12.5px;border-radius:8px;padding:6px 12px;margin:4px 6px 0 0}
+  .dh-fade{background:linear-gradient(180deg,rgba(15,13,24,0),#0f0d18);height:60px;margin-top:-60px;position:relative;border-radius:0 0 16px 16px}
+  .dh-excerpt-cta{text-align:center;margin-top:24px}
+
+  /* ---- Nasıl hesaplıyoruz (metodoloji) ---- */
+  .dh-method{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px;margin:0 auto}
+  @media(max-width:680px){.dh-method{grid-template-columns:1fr}}
+  .dh-method .m{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:14px;padding:22px 20px}
+  .dh-method .m .mic{color:var(--dh-gold);font-size:20px;margin-bottom:10px}
+  .dh-method .m h3{color:var(--dh-ink);font-size:15.5px;margin:0 0 7px;font-weight:600}
+  .dh-method .m p{color:var(--dh-muted);font-size:13.5px;line-height:1.65;margin:0}
+  .dh-method .m a{color:var(--dh-gold-soft)}
+
+  /* ---- Metrik / vitrin ---- */
+  .dh-metrics{max-width:820px;margin:0 auto;background:linear-gradient(180deg,var(--dh-panel),var(--dh-panel-2));
+    border:1px solid var(--dh-line);border-radius:18px;padding:30px 28px}
+  .dh-metrics .mrow{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .dh-metrics .mrow:last-child{margin-bottom:0}
+  .dh-metrics .mlab{flex:0 0 200px;color:var(--dh-ink);font-size:14px}
+  .dh-metrics .mlab small{display:block;color:var(--dh-muted);font-size:11.5px;margin-top:2px}
+  .dh-metrics .bar{flex:1;height:9px;background:#0c0a15;border-radius:20px;overflow:hidden;border:1px solid var(--dh-line)}
+  .dh-metrics .bar i{display:block;height:100%;border-radius:20px;
+    background:linear-gradient(90deg,var(--dh-violet),var(--dh-gold))}
+  .dh-metrics .pct{flex:0 0 46px;text-align:right;color:var(--dh-gold-soft);font-family:var(--serif);font-size:17px}
+  @media(max-width:560px){.dh-metrics .mlab{flex-basis:130px;font-size:13px}}
+  .dh-metrics .mnote{color:var(--dh-muted);font-size:12px;text-align:center;margin-top:20px;line-height:1.6}
+
+  /* ---- Öngörü şeridi ---- */
+  .dh-fore{max-width:820px;margin:0 auto;border:1px solid rgba(217,185,106,.3);border-radius:16px;
+    padding:28px 26px;background:linear-gradient(120deg,rgba(217,185,106,.08),rgba(124,108,240,.06))}
+  .dh-fore p{color:var(--dh-muted);font-size:14.5px;line-height:1.8;margin:0 0 14px}
+  .dh-fore .q{color:var(--dh-ink);font-style:italic;border-left:2px solid var(--dh-gold);
+    padding-left:16px;margin:0 0 6px;font-size:14.5px;line-height:1.7}
+
+  /* ---- Kimler için ---- */
+  .dh-who{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto}
+  @media(max-width:680px){.dh-who{grid-template-columns:1fr}}
+  .dh-who .w{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:14px;padding:22px 20px;text-align:center}
+  .dh-who .w .wic{color:var(--dh-gold);font-size:24px;margin-bottom:10px}
+  .dh-who .w h3{color:var(--dh-ink);font-size:15.5px;margin:0 0 7px}
+  .dh-who .w p{color:var(--dh-muted);font-size:13px;line-height:1.6;margin:0}
+
+  /* ---- Adımlar ---- */
+  .dh-steps{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  .dh-steps .st{flex:1 1 240px;max-width:280px;background:var(--dh-panel);border:1px solid var(--dh-line);
+    border-radius:14px;padding:26px 22px;text-align:center}
+  .dh-steps .st .num{width:44px;height:44px;line-height:44px;margin:0 auto 14px;border-radius:50%;
+    background:linear-gradient(180deg,var(--dh-gold),#c9a34e);color:#241a06;font-weight:bold;font-size:19px}
+  .dh-steps .st h3{color:var(--dh-ink);font-size:16px;margin:0 0 8px}
+  .dh-steps .st p{color:var(--dh-muted);font-size:13.5px;line-height:1.6;margin:0}
+
+  /* ---- SSS ---- */
+  .dh-faq{max-width:760px;margin:0 auto}
+  .dh-faq details{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:12px;
+    margin-bottom:12px;padding:0 20px;overflow:hidden}
+  .dh-faq summary{cursor:pointer;padding:18px 0;font-size:15.5px;color:var(--dh-ink);
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .dh-faq summary::-webkit-details-marker{display:none}
+  .dh-faq summary::after{content:"+";color:var(--dh-gold);font-size:22px;transition:transform .2s}
+  .dh-faq details[open] summary::after{content:"−"}
+  .dh-faq details[open] summary{border-bottom:1px solid var(--dh-line)}
+  .dh-faq .ans{padding:16px 0 20px;color:var(--dh-muted);font-size:14px;line-height:1.78}
+  .dh-faq .ans a{color:var(--dh-gold-soft)}
+
+  /* ---- Kapanış CTA ---- */
+  .dh-close{max-width:760px;margin:72px auto 0;padding:0 22px;text-align:center}
+  .dh-close .box{background:linear-gradient(180deg,var(--dh-panel),var(--dh-panel-2));
+    border:1px solid rgba(217,185,106,.35);border-radius:20px;padding:44px 30px}
+  .dh-close h2{font-family:var(--serif);font-weight:500;color:var(--dh-ink);font-size:clamp(24px,4vw,32px);margin:0 0 10px}
+  .dh-close p{color:var(--dh-muted);font-size:15px;line-height:1.6;margin:0 auto 24px;max-width:460px}
+
+  /* ---- Dürüst not ---- */
+  .dh-note{max-width:760px;margin:40px auto 0;padding:16px 22px;border:1px dashed var(--dh-line);
+    border-radius:12px;color:var(--dh-muted);font-size:12.5px;line-height:1.7;text-align:center}
+
+  footer{text-align:center;color:var(--dh-muted);font-size:12px;padding:40px 26px 30px}
+  footer a{color:var(--dh-muted)}
+</style>
+<script src="/menu.js" defer></script>
+</head>
+<body>
+<div id="astro-menu"></div>
+
+<!-- ===================== HERO ===================== -->
+<section class="dh-hero">
+  <div class="dh-orbit">
+    <div class="r r1"></div><div class="r r2"></div><div class="r r3"></div>
+    <div class="core"></div>
+    <div class="dot" style="top:2px;left:50%"></div>
+    <div class="dot" style="bottom:20px;right:10px;background:var(--dh-gold)"></div>
+    <div class="dot" style="top:52px;left:6px"></div>
+  </div>
+  <div class="dh-eyebrow">Doğum Haritası Analizi · PDF Rapor</div>
+  <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
+  <p class="dh-lead">Doğduğun andaki <b style="color:var(--dh-ink)">gerçek gezegen konumlarıyla</b> hazırlanan, kişiye özel doğum haritası analizin. Kim olduğunu, ilişkilerini, kariyerini ve önündeki dönemi; her konuyu kendi başlığı altında, açık ve derinlemesine anlatır.</p>
+
+  <div class="dh-facts">
+    <span><b>20+</b> sayfa</span>
+    <span><b>8</b> ana bölüm</span>
+    <span><b>47</b> alt başlık</span>
+    <span><b>12</b> evin tek tek analizi</span>
+    <span>Gün içinde <b>PDF</b></span>
+  </div>
+
+  <div class="dh-cta-wrap">
+    <div class="dh-price"><b>₺500</b> · tek seferlik ödeme</div>
+    <a class="dh-btn" href="order.html?type=natal">✦ Raporumu Hazırlat</a>
+    <div class="dh-micro">Gün içinde e-postanda · PDF olarak ömür boyu senin</div>
+  </div>
+</section>
+
+<!-- ===================== GÜVEN ŞERİDİ ===================== -->
+<section class="dh-trust">
+  <div><div class="t-ic">✦</div><div class="t-tt">Tamamen kişiye özel</div><div class="t-td">Senin gerçek haritana göre baştan hazırlanır</div></div>
+  <div><div class="t-ic">🌙</div><div class="t-tt">Gün içinde teslim</div><div class="t-td">E-postana PDF olarak gönderilir</div></div>
+  <div><div class="t-ic">🔒</div><div class="t-tt">Güvenli ödeme</div><div class="t-td">SSL şifreli · kart bilgisi saklanmaz</div></div>
+  <div><div class="t-ic">∞</div><div class="t-tt">Ömür boyu erişim</div><div class="t-td">PDF senin — istediğin zaman tekrar oku</div></div>
+</section>
+
+<!-- ===================== İÇERİK HARİTASI ===================== -->
+<section class="dh-sec">
+  <h2>Tam olarak ne alıyorsun?</h2>
+  <p class="sub">Belirsizlik yok. Raporun içindeki her bölümü ve her başlığı satın almadan önce burada görüyorsun. Hayatının her alanı — ilişkiden kariyere, ruhsal yolundan geleceğe — kendi başlığı altında derinlemesine ele alınıyor.</p>
+
+  <div class="dh-statband">
+    <div><div class="n">20+</div><div class="l">sayfa</div></div>
+    <div><div class="n">8</div><div class="l">ana bölüm</div></div>
+    <div><div class="n">47</div><div class="l">alt başlık</div></div>
+    <div><div class="n">12</div><div class="l">evin analizi</div></div>
+  </div>
+
+  <div class="dh-map">
+
+    <div class="dh-block">
+      <div class="bnum">I</div>
+      <h3>Sana Dair — Güneş, Ay, Yükselen</h3>
+      <p class="bdesc">Kim olduğunu üç katmanda ortaya çıkaran temel göstergeler: yüzeyde göründüğün, içinde hissettiğin ve özünde olduğun.</p>
+      <ul>
+        <li>Güneş burcun ve gerçek kimliğin</li>
+        <li>Ay burcun ve duygusal ihtiyaçların</li>
+        <li>Yükselen burcun ve dışa yansıttığın imaj</li>
+        <li>Güneş–Ay–Yükselen kombinasyonun nasıl çalışıyor</li>
+        <li>İçsel çelişkilerin nereden geliyor</li>
+        <li>Element dengen ve mizacın</li>
+        <li>Aralarındaki uyum ve gerilim noktaları</li>
+        <li>Nitelik dengen ve kişilik yapın</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">II</div>
+      <h3>Aşk, İlişkiler ve Partner Potansiyeli</h3>
+      <p class="bdesc">İlişkilerine dair yıllardır sorduğun soruların cevabı tek bölümde — kendi kalıpların ve neye ihtiyaç duyduğun.</p>
+      <ul>
+        <li>Aşk dilin: nasıl sevip nasıl sevilmek istiyorsun</li>
+        <li>İdeal partner profili (kişilik, enerji, değerler)</li>
+        <li>Karşına çıkabilecek ilişki problem örüntüleri</li>
+        <li>Hangi konularda taviz veriyorsun, vermemelisin</li>
+        <li>Partnerinin mesleği neler olabilir</li>
+        <li>Uzun ilişki / evlilik potansiyelini gösteren işaretler</li>
+        <li>Partnerinle nerede tanışabilirsin</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">III</div>
+      <h3>Kariyer, Yetenek ve Para</h3>
+      <p class="bdesc">Doğal olarak iyi olduğun şey, hangi alanda parladığın, neden bazı işlerde tükendiğin — para ile ilişkin de burada.</p>
+      <ul>
+        <li>Doğal yeteneklerin ve ortaya çıkarmanın yolları</li>
+        <li>Para kazanma dinamiklerin</li>
+        <li>Sana uygun kariyer alanları ve sektörler</li>
+        <li>Elinden ne iş gelir, neyi başarıyla yaparsın</li>
+        <li>Potansiyelini parlatacak işler ve yetenekler</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">IV</div>
+      <h3>Yaşam Amacın ve Ruhsal Yön</h3>
+      <p class="bdesc">Bu hayatta keşfetmek için geldiğin tema; konfor alanın ile büyüme alanın arasındaki gerilim.</p>
+      <ul>
+        <li>Kuzey Düğüm — yaşam amacın</li>
+        <li>Güney Düğüm — geçmişten getirdiğin yetenekler ve seni tüketen örüntüler</li>
+        <li>Konfor alanından çıkma çağrısı</li>
+        <li>Karmik dersler ve dönüşüm noktaları</li>
+        <li>Hayat boyu seni izleyen tema</li>
+        <li>Yaşayabileceğin büyük değişimler hangi konularda</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">V</div>
+      <h3>Satürn ve Hayattaki Sınavların</h3>
+      <p class="bdesc">Seni en çok zorlayacak ama aynı zamanda en çok büyütecek alan. Satürn bir ceza değil, en adil öğretmendir.</p>
+      <ul>
+        <li>Seni en çok zorlayacak, sınayacak ve büyütecek konu</li>
+        <li>Üstesinden geldikçe en çok güçleneceğin konu</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">VI</div>
+      <h3>Chiron — Yaraların ve Şifa Yolların</h3>
+      <p class="bdesc">Haritanın en hassas noktası. Chiron yarayı gösterir; ama şifanın da tam adresini işaret eder.</p>
+      <ul>
+        <li>En savunmasız hissettiğin, en çok acı çektiğin konu</li>
+        <li>Kendine bakım verdikçe en çok güçleneceğin konu</li>
+      </ul>
+    </div>
+
+    <div class="dh-block wide">
+      <div class="bnum">VII</div>
+      <h3>Ev Ev Doğum Haritan — 12 Evin Detaylı Analizi</h3>
+      <p class="bdesc">Çoğu raporun atladığı bölüm. Hayatının 12 alanını temsil eden 12 evin tamamını tek tek geziyoruz — ev uçları, yöneticileri ve içindeki gezegenlerle birlikte, senin haritana özel.</p>
+      <div class="houses">
+        <ul>
+          <li>1. Ev — Kimlik, beden ve ilk izlenim</li>
+          <li>2. Ev — Para, değerler ve öz-değer</li>
+          <li>3. Ev — İletişim, zihin ve yakın çevre</li>
+          <li>4. Ev — Kökler, aile ve iç dünya</li>
+          <li>5. Ev — Yaratıcılık, aşk macerası ve sevinç</li>
+          <li>6. Ev — Sağlık, iş ve günlük rutin</li>
+        </ul>
+        <ul>
+          <li>7. Ev — İlişkiler, evlilik ve ortaklıklar</li>
+          <li>8. Ev — Dönüşüm, miras ve paylaşılan kaynaklar</li>
+          <li>9. Ev — Felsefe, yüksek öğrenim ve yurt dışı</li>
+          <li>10. Ev — Kariyer, statü ve toplumsal kimlik</li>
+          <li>11. Ev — Arkadaşlar, topluluk ve hayaller</li>
+          <li>12. Ev — Bilinçdışı, gizlilik ve ruhsal derinlik</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dh-block wide">
+      <div class="bnum">VIII</div>
+      <h3>Kişisel Potansiyel Metrikleri, Özet ve Gelecek</h3>
+      <p class="bdesc">Raporu bütünleştiren kapanış bölümü — ve önündeki döneme dair somut öngörüler.</p>
+      <div class="houses">
+        <ul>
+          <li>Kişisel potansiyel metrikleri (görsel göstergeler)</li>
+          <li>Raporun 5 ana teması</li>
+          <li>Hayatının her alanına uygulayabileceğin öneriler</li>
+        </ul>
+        <ul>
+          <li>2026–2027 transit takvimi — tarih tarih öngörüler</li>
+          <li>Sana özel rehber cümle</li>
+          <li>Teknik ek: gezegen konumları, ev çizgileri ve açı tablosu</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="sub" style="margin-top:30px;margin-bottom:0">Her raporun başında, sana özel çizilmiş <b style="color:var(--dh-ink)">doğum haritası çarkın</b> da yer alır.</p>
+</section>
+
+<!-- ===================== ÖRNEK RAPOR ===================== -->
+<section class="dh-sec">
+  <h2>Satın almadan önce gör</h2>
+  <p class="sub">Ne aldığını merak etmene gerek yok. İşte raporun dilinden gerçek bir bölüm — her yerleşim, sana ne söylediği ve ne yapabileceğinle birlikte anlatılıyor.</p>
+
+  <div class="dh-excerpt">
+    <span class="tag">Rapordan bir bölüm</span>
+    <h4>Güneş Burcun ve Gerçek Kimliğin</h4>
+    <p>Güneşin Yengeç burcunda, 6. Evde konumlanan bir yerleşim, özünde ne olduğunu anlatır: derine giden duygu katmanları, koruduğun şeylere sahip çıkma içgüdüsü ve çevreni beslemek için duyduğun içsel bir çağrı. 6. Evdeki Güneş ise bu özü günlük hayatın ritmine, işe ve hizmete bağlar — kimliğini bulmanın yolu soyut ideallerden değil, her gün somut katkılar sağlamaktan geçer.</p>
+    <div>
+      <span class="pill">🔮 Şu olaylar yaşanabilir…</span>
+      <span class="pill">⚠️ Sorun ne olabilir…</span>
+      <span class="pill">🌱 Bu sana ne öğretmek istiyor…</span>
+      <span class="pill">✅ Çözüm ne olabilir…</span>
+    </div>
+    <div class="dh-fade"></div>
+  </div>
+  <div class="dh-excerpt-cta">
+    <a class="dh-btn gold" href="ornek-dogum-haritasi-raporu.pdf" target="_blank" rel="noopener">📄 Örnek raporun tamamını incele</a>
+  </div>
+</section>
+
+<!-- ===================== NASIL HESAPLIYORUZ ===================== -->
+<section class="dh-sec">
+  <h2>Peki bu rapor neye dayanıyor?</h2>
+  <p class="sub">Yorumun güvenilir olması için, önce hesabın doğru olması gerekir. Raporun, tahmini ya da hazır kalıplarla değil; senin doğduğun andaki gerçek gökyüzüyle hazırlanır.</p>
+
+  <div class="dh-method">
+    <div class="m">
+      <div class="mic">🛰️</div>
+      <h3>Gerçek astronomik veri</h3>
+      <p>Gezegen konumları, profesyonel astroloji yazılımlarının standardı olan <b style="color:var(--dh-ink)">Swiss Ephemeris</b> ile, yüksek hassasiyetle hesaplanır. Tahmin yok — doğduğun anki gökyüzü.</p>
+    </div>
+    <div class="m">
+      <div class="mic">🏛️</div>
+      <h3>En yaygın kullanılan yöntem</h3>
+      <p>Haritan, dünya genelinde astrologların en çok tercih ettiği <b style="color:var(--dh-ink)">Placidus ev sistemi</b> ve tropikal zodyak ile kurulur — en yaygın kabul gören, en çok güvenilen çerçeve.</p>
+    </div>
+    <div class="m">
+      <div class="mic">🌍</div>
+      <h3>Saat dilimi doğru işlenir</h3>
+      <p>Doğum yerine ve tarihine göre tarihsel saat dilimi ve yaz saati farkları hesaba katılır. Yükselen burcun ve ev konumların bu yüzden isabetli çıkar.</p>
+    </div>
+    <div class="m">
+      <div class="mic">🔗</div>
+      <h3>Ücretsiz araçla birebir aynı</h3>
+      <p>Rapor, <a href="/dogum-haritasi-hesaplama.html">ücretsiz doğum haritası hesaplayıcımızın</a> kullandığı motorla aynı sonucu verir. Önce ücretsiz dene, tutarlılığı kendin gör.</p>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:26px;margin-bottom:0;max-width:680px">
+    Yorumları, bu gerçek verilere dayanarak senin için hazırlarız. Her rapor hazır bir kalıp değil, senin haritandaki gerçek yerleşimlere göre baştan yazılır — ve bunu ileri teknolojiyle, tutarlı bir kalitede yapabiliyoruz.
+  </p>
+</section>
+
+<!-- ===================== METRİK VİTRİN ===================== -->
+<section class="dh-sec">
+  <h2>Sadece metin değil — görsel bir bütün</h2>
+  <p class="sub">Raporun sonunda, haritandaki vurguları tek bakışta gösteren kişisel potansiyel göstergelerin yer alır. (Aşağıdaki değerler örnektir; seninkiler haritana göre hesaplanır.)</p>
+
+  <div class="dh-metrics">
+    <div class="mrow">
+      <div class="mlab">Duygusal Derinlik<small>Su elementi vurgusu</small></div>
+      <div class="bar"><i style="width:88%"></i></div><div class="pct">88</div>
+    </div>
+    <div class="mrow">
+      <div class="mlab">Dönüşüm Kapasitesi<small>8. ev & Plüton etkisi</small></div>
+      <div class="bar"><i style="width:91%"></i></div><div class="pct">91</div>
+    </div>
+    <div class="mrow">
+      <div class="mlab">İlişki Büyüme Alanı<small>Kuzey Düğüm yönelimi</small></div>
+      <div class="bar"><i style="width:79%"></i></div><div class="pct">79</div>
+    </div>
+    <div class="mrow">
+      <div class="mlab">Kariyer Yönelim Netliği<small>10. ev & MC</small></div>
+      <div class="bar"><i style="width:74%"></i></div><div class="pct">74</div>
+    </div>
+    <div class="mnote">Bu oranlar bir ölçüm değil; haritandaki vurguları görselleştiren sembolik göstergelerdir.</div>
+  </div>
+</section>
+
+<!-- ===================== ÖNGÖRÜ ===================== -->
+<section class="dh-sec">
+  <h2>Geleceğe dair de konuşur</h2>
+  <p class="sub">Doğum haritan yalnızca "kimsin" demez; "önünde ne olabilir" sorusuna da yanıt arar.</p>
+  <div class="dh-fore">
+    <p>Rapor, geneli anlatıp bırakmaz. Her önemli yerleşimde <b style="color:var(--dh-ink)">"şu olaylar yaşanabilir…"</b> başlığıyla, günlük hayatına dokunan somut senaryolar verir. Sonunda ise <b style="color:var(--dh-ink)">2026–2027 transit takvimi</b> ile önündeki dönemi tarih tarih yorumlar.</p>
+    <p class="q">"Bu dönemde eylem ile kısıtlama arasında gerginlik hissedebilirsin; planların beklenenden yavaş ilerliyorsa bunun bir nedeni olabilir. Küçük adımlara odaklan…"</p>
+    <p style="margin-bottom:0">Öngörülerimizi her zaman gerekçesiyle ve <b style="color:var(--dh-ink)">"olabilir / yaşanabilir / denk gelebilir"</b> diliyle veririz — çünkü haritan bir eğilim gösterir, kesin bir kader dayatmaz. Kararlar her zaman senindir.</p>
+  </div>
+</section>
+
+<!-- ===================== KİMLER İÇİN ===================== -->
+<section class="dh-sec">
+  <h2>Kimler için?</h2>
+  <div class="dh-who">
+    <div class="w"><div class="wic">✦</div><h3>Kendini tanımak isteyen</h3><p>Neden böyle hissettiğini, hangi kalıpları tekrarladığını merak edenler için bir ayna.</p></div>
+    <div class="w"><div class="wic">🧭</div><h3>Bir yol ayrımında olan</h3><p>İlişki ya da kariyer kararında, kendi eğilimlerini net görmek isteyenlere.</p></div>
+    <div class="w"><div class="wic">🎁</div><h3>Anlamlı bir hediye arayan</h3><p>Sevdiğin biri için: sadece doğum bilgileri yeterli, gerisini biz hazırlarız.</p></div>
+  </div>
+</section>
+
+<!-- ===================== NASIL ÇALIŞIR ===================== -->
+<section class="dh-sec">
+  <h2>Nasıl çalışır?</h2>
+  <p class="sub">Üç adımda raporun e-postanda.</p>
+  <div class="dh-steps">
+    <div class="st"><div class="num">1</div><h3>Bilgilerini gir</h3><p>Doğum tarihi, saati ve yerin — 30 saniye sürer. Saatini bilmiyorsan da alabilirsin.</p></div>
+    <div class="st"><div class="num">2</div><h3>Güvenle öde</h3><p>Güvenli ödeme altyapısıyla kartından ödemeni tamamla. Kart bilgin saklanmaz.</p></div>
+    <div class="st"><div class="num">3</div><h3>Gün içinde gelsin</h3><p>Raporun hazırlanıp aynı gün içinde PDF olarak e-postana ulaşır. Ömür boyu senin.</p></div>
+  </div>
+  <div class="dh-cta-wrap" style="margin-top:34px">
+    <a class="dh-btn" href="order.html?type=natal">✦ Raporumu Hazırlat — ₺500</a>
+  </div>
+</section>
+
+<!-- ===================== SSS ===================== -->
+<section class="dh-sec">
+  <h2>Sıkça sorulan sorular</h2>
+  <p class="sub">Aklına takılanların cevabı burada.</p>
+  <div class="dh-faq">
+    <details>
+      <summary>Doğum saatimi bilmiyorum, yine de alabilir miyim?</summary>
+      <div class="ans">Alabilirsin. Saatini bilmiyorsan varsayılan olarak 12:00 kullanılır; gezegen konumların ve burçların yine doğru hesaplanır. Yalnızca yükselen burç ve ev konumları saate bağlı olduğu için tam kesinlik taşımayabilir. Saatini biliyorsan girmen raporu belirgin şekilde isabetli kılar.</div>
+    </details>
+    <details>
+      <summary>Rapor gerçekten kişiye özel mi?</summary>
+      <div class="ans">Evet. Doğum tarihin, saatin ve yerinden hesaplanan gerçek gezegen konumlarına göre her rapor sıfırdan hazırlanır. Hazır bir metin değil; senin haritandaki yerleşimlere, açılara ve evlere göre baştan yazılır.</div>
+    </details>
+    <details>
+      <summary>Raporum ne kadar sürede gelir?</summary>
+      <div class="ans">Ödemen onaylandıktan sonra raporun hazırlanır ve gün içinde e-postana PDF olarak ulaşır. Gelen kutunda göremezsen spam / gereksiz klasörünü kontrol etmeyi unutma.</div>
+    </details>
+    <details>
+      <summary>Astrolojiye inanmıyorum ama merak ediyorum — bana uygun mu?</summary>
+      <div class="ans">Sorun değil, çoğu okuyucu öyle başlıyor. Raporu bir kader okuması gibi değil, kendini tanıman için düşündürücü bir kişilik aynası olarak da okuyabilirsin. Hesaplama kısmı gerçek ve hassastır; yorumları ise sana kalmış bir rehberlik çerçevesidir.</div>
+    </details>
+    <details>
+      <summary>Rapor hangi formatta ve ne kadar uzunlukta geliyor?</summary>
+      <div class="ans">Rapor, e-postana PDF olarak gelir ve 20+ sayfadır (haritandaki yoğunluğa göre biraz daha uzun olabilir). Bilgisayarda, telefonda ya da baskıda rahatça okuyabilir; ömür boyu saklayabilirsin.</div>
+    </details>
+    <details>
+      <summary>Ödeme güvenli mi?</summary>
+      <div class="ans">Evet. Ödemen güvenli ödeme altyapısı üzerinden, SSL şifrelemeyle alınır; kart bilgilerin tarafımızca saklanmaz. Doğum bilgilerin yalnızca raporunu hazırlamak için kullanılır, üçüncü kişilerle paylaşılmaz.</div>
+    </details>
+    <details>
+      <summary>İade veya iptal mümkün mü?</summary>
+      <div class="ans">Raporlar sana özel, anında üretilen dijital ürünlerdir; bu nedenle üretim sonrası iade edilemez. Ancak teknik bir hata nedeniyle raporun üretilmez veya ulaşmazsa, yeniden üretir ya da ücretini iade ederiz. Detaylar <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmemizde</a>.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== KAPANIŞ CTA ===================== -->
+<section class="dh-close">
+  <div class="box">
+    <h2>Kendini tanımanın en net yolu</h2>
+    <p>Doğduğun andaki gökyüzü, senin hakkında düşündüğünden fazlasını söylüyor. Gel, birlikte okuyalım.</p>
+    <div class="dh-cta-wrap">
+      <div class="dh-price"><b>₺500</b> · tek seferlik ödeme</div>
+      <a class="dh-btn" href="order.html?type=natal">✦ Raporumu Hazırlat</a>
+      <div class="dh-micro">Gün içinde e-postanda · PDF olarak ömür boyu senin</div>
+    </div>
+  </div>
+
+  <div class="dh-note">
+    Astro Yuvam raporları öz-farkındalık ve rehberlik amaçlıdır. Kesin kehanet niteliği taşımaz; tıbbi, psikolojik, hukuki veya finansal tavsiye yerine geçmez. Kararlarınız her zaman size aittir.
+  </div>
+</section>
+
+<footer>
+  © 2026 Astro Yuvam — Tüm hakları saklıdır.<br>
+  <a href="gizlilik-kvkk.html">Gizlilik &amp; KVKK Aydınlatma Metni</a> ·
+  <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a>
+</footer>
+
+</body>
+</html>
