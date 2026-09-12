@@ -9,6 +9,7 @@ const REPORTS = [
   },
   {
     id: "cocuk",
+    page: "cocugunu-tani-analizi.html",
     title: "Çocuğunu Tanı Raporu",
     short: "Çocuğun doğum haritasını yaşına göre yorumlayan; öğrenme stilini, güçlü yanlarını, duygusal ihtiyaçlarını, sosyal gelişimini ve yeteneklerini ele alan, sonunda ebeveyne özel uygulama rehberi sunan 14+ sayfalık gelişim ve eğitim raporu.",
     price: 500,
@@ -30,6 +31,7 @@ const REPORTS = [
   },
   {
     id: "sinastri",
+    page: "sinastri-uyum-analizi.html",
     title: "Sinastri Raporu",
     short: "İki kişinin doğum haritaları arasındaki etkileşimi analiz eden 18+ sayfalık ilişki uyum raporu.",
     price: 500,
