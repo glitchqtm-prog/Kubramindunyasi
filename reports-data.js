@@ -17,6 +17,7 @@ const REPORTS = [
   },
   {
     id: "solar_return",
+    page: "solar-return-analizi.html",
     title: "Solar Return Raporu",
     short: "Güneş'in natal pozisyonuna döndüğü an için çıkarılan, kişisel yeni yılını temsil eden 14+ sayfalık rapor.",
     price: 250,
@@ -24,6 +25,7 @@ const REPORTS = [
   },
   {
     id: "lunar_return",
+    page: "lunar-return-analizi.html",
     title: "Lunar Return Raporu",
     short: "Ay'ın natal pozisyonuna döndüğü an için çıkarılan, aylık duygusal döngünü anlatan 12+ sayfalık rapor.",
     price: 150,
