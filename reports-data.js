@@ -57,6 +57,7 @@ const REPORTS = [
   },
   {
     id: "transit",
+    page: "transit-analizi.html",
     title: "Transit Raporu",
     short: "Ev geçişleri, açılar ve ev yöneticilikleriyle önümüzdeki 12 ayı tarih tarih yorumlayan 11+ sayfalık öngörü raporu.",
     price: 300,

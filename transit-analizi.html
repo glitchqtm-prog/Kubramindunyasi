@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Transit Raporu – Önümüzdeki 12 Ayın Gökyüzü Öngörüsü (11+ Sayfa) | Astro Yuvam</title>
+<meta name="description" content="Bugünün gökyüzünü doğum haritanın üzerine koyup önündeki yaklaşık 12 ayı tarih tarih okuyan transit öngörü raporu. Fırsat pencereleri, sınav dönemleri ve dönüşüm eşikleri. Gün içinde e-postanda PDF." />
+<link rel="canonical" href="https://astroyuvam.com/transit-analizi.html" />
+<meta property="og:type" content="product" />
+<meta property="og:title" content="Transit Raporu – Önümüzdeki 12 Ayın Gökyüzü Öngörüsü | Astro Yuvam" />
+<meta property="og:description" content="Bugünden itibaren ~12 ayı tarih tarih okuyan transit öngörü raporu. 7 bölüm, tarihli dönem takvimi, natal + transit çark." />
+<meta property="og:url" content="https://astroyuvam.com/transit-analizi.html" />
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Transit (Zamanın Enerjisi) Raporu",
+  "image": "https://astroyuvam.com/logo-512.png",
+  "description": "Bugünün gökyüzünü doğum haritanın üzerine yerleştirip önündeki yaklaşık 12 ayı tarih tarih okuyan 11+ sayfalık transit öngörü raporu. 7 bölüm ve tarihli dönem takvimi: dönemin havası, ilişkiler, iş, dönüşüm ve fırsat transitleri. Swiss Ephemeris + Placidus.",
+  "brand": { "@type": "Brand", "name": "Astro Yuvam" },
+  "offers": {
+    "@type": "Offer",
+    "price": "300",
+    "priceCurrency": "TRY",
+    "availability": "https://schema.org/InStock",
+    "url": "https://astroyuvam.com/order.html?type=transit"
+  }
+}
+</script>
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* === Doğum Haritası Analizi satış sayfası — sayfaya özel stiller (global style.css'i bozmadan, .dh- öneki) === */
+  :root{
+    --dh-gold:#d9b96a; --dh-gold-soft:#e8d3a3; --dh-panel:#161022; --dh-panel-2:#12101d;
+    --dh-line:#2a2140; --dh-ink:#efe9dc; --dh-muted:#b9aecb; --dh-violet:#7c6cf0;
+  }
+  html{scroll-behavior:smooth}
+
+  /* ---- Hero ---- */
+  .dh-hero{max-width:960px;margin:0 auto;padding:48px 22px 8px;text-align:center}
+  .dh-eyebrow{display:inline-block;color:var(--dh-gold);font-size:12px;letter-spacing:.22em;
+    font-weight:700;text-transform:uppercase;border:1px solid var(--dh-line);border-radius:20px;
+    padding:6px 16px;margin-bottom:22px}
+  .dh-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(31px,5.4vw,50px);
+    line-height:1.12;margin:0 0 16px}
+  .dh-hero h1 em{font-style:italic;color:var(--dh-gold-soft)}
+  .dh-lead{color:var(--dh-muted);max-width:600px;margin:0 auto;font-size:16px;line-height:1.7}
+
+  .dh-orbit{position:relative;width:150px;height:150px;margin:6px auto 26px}
+  .dh-orbit .r{position:absolute;inset:0;border-radius:50%;border:1px solid}
+  .dh-orbit .r1{inset:0;border-color:rgba(124,108,240,.5)}
+  .dh-orbit .r2{inset:22px;border-color:rgba(217,185,106,.5)}
+  .dh-orbit .r3{inset:46px;border-color:rgba(255,255,255,.12)}
+  .dh-orbit .core{position:absolute;inset:0;margin:auto;width:52px;height:52px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#ffe9b8,var(--dh-gold) 70%);box-shadow:0 0 34px rgba(217,185,106,.5);
+    display:flex;align-items:center;justify-content:center}
+  .dh-orbit .core span{font-family:var(--serif);font-weight:600;font-size:26px;color:#241a06;line-height:1}
+  .dh-orbit .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--violet-soft)}
+
+  .dh-facts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:680px;margin:26px auto 0}
+  .dh-facts span{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:10px;
+    padding:9px 15px;font-size:13.5px;color:var(--dh-ink)}
+  .dh-facts span b{color:var(--dh-gold-soft);font-weight:700}
+
+  .dh-cta-wrap{margin:30px auto 6px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .dh-price{font-family:var(--serif);font-size:20px;color:var(--dh-ink)}
+  .dh-price s{color:var(--dh-muted);font-size:15px;margin-right:8px;opacity:.7}
+  .dh-price b{color:var(--dh-gold-soft)}
+  .dh-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;
+    border-radius:12px;padding:16px 32px;font-family:var(--sans);font-weight:700;font-size:16px;
+    cursor:pointer;text-decoration:none;color:#fff;
+    background:linear-gradient(120deg,var(--dh-violet),#5546d6);
+    box-shadow:0 10px 30px rgba(124,108,240,.28);transition:filter .2s,transform .15s}
+  .dh-btn:hover{filter:brightness(1.09)}
+  .dh-btn:active{transform:scale(.985)}
+  .dh-btn.gold{background:linear-gradient(120deg,var(--dh-gold),#c9a34e);color:#241a06;box-shadow:0 10px 30px rgba(217,185,106,.22)}
+  .dh-micro{color:var(--dh-muted);font-size:12.5px}
+
+  /* ---- Güven şeridi ---- */
+  .dh-trust{max-width:960px;margin:34px auto 0;padding:0 22px;display:grid;
+    grid-template-columns:repeat(4,1fr);gap:14px}
+  .dh-trust div{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:12px;
+    padding:16px 14px;text-align:center}
+  .dh-trust .t-ic{color:var(--dh-gold);font-size:20px;margin-bottom:7px}
+  .dh-trust .t-tt{color:var(--dh-ink);font-size:13.5px;font-weight:600}
+  .dh-trust .t-td{color:var(--dh-muted);font-size:11.5px;margin-top:2px;line-height:1.4}
+  @media(max-width:680px){.dh-trust{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---- Genel bölüm sarmalı ---- */
+  .dh-sec{max-width:960px;margin:76px auto 0;padding:0 22px}
+  .dh-sec.tight{margin-top:56px}
+  .dh-sec h2{font-family:var(--serif);font-weight:500;color:var(--dh-gold-soft);
+    font-size:clamp(24px,3.6vw,32px);text-align:center;margin:0 0 10px;line-height:1.2}
+  .dh-sec .sub{color:var(--dh-muted);text-align:center;font-size:15px;line-height:1.65;
+    max-width:640px;margin:0 auto 34px}
+
+  /* ---- İçerik haritası: istatistik bandı ---- */
+  .dh-statband{display:flex;flex-wrap:wrap;justify-content:center;gap:0;max-width:760px;
+    margin:0 auto 40px;border:1px solid var(--dh-line);border-radius:14px;overflow:hidden;
+    background:linear-gradient(120deg,rgba(217,185,106,.08),rgba(124,108,240,.06))}
+  .dh-statband div{flex:1 1 130px;text-align:center;padding:20px 12px;border-right:1px solid var(--dh-line)}
+  .dh-statband div:last-child{border-right:none}
+  .dh-statband .n{font-family:var(--serif);font-size:30px;color:var(--dh-gold-soft);line-height:1}
+  .dh-statband .l{color:var(--dh-muted);font-size:12px;margin-top:6px;letter-spacing:.04em}
+  @media(max-width:560px){.dh-statband div{flex-basis:50%;border-bottom:1px solid var(--dh-line)}
+    .dh-statband div:nth-child(2){border-right:none}}
+
+  /* ---- İçerik haritası: bölüm panelleri ---- */
+  .dh-map{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.dh-map{grid-template-columns:1fr}}
+  .dh-block{background:linear-gradient(180deg,var(--dh-panel),var(--dh-panel-2));
+    border:1px solid var(--dh-line);border-radius:16px;padding:24px 22px;display:flex;flex-direction:column}
+  .dh-block.wide{grid-column:1 / -1}
+  .dh-block .bnum{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+    border-radius:9px;background:rgba(217,185,106,.12);border:1px solid rgba(217,185,106,.35);
+    color:var(--dh-gold-soft);font-family:var(--serif);font-size:17px;margin-bottom:14px}
+  .dh-block h3{font-family:var(--serif);font-weight:600;color:var(--dh-ink);font-size:19px;margin:0 0 8px}
+  .dh-block .bdesc{color:var(--dh-muted);font-size:13.5px;line-height:1.6;margin:0 0 16px}
+  .dh-block ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .dh-block li{position:relative;padding-left:22px;color:var(--dh-ink);font-size:13.8px;line-height:1.5}
+  .dh-block li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--dh-gold);font-size:11px}
+  .dh-block .houses{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  @media(max-width:520px){.dh-block .houses{grid-template-columns:1fr}}
+
+  /* ---- Örnek rapor / alıntı ---- */
+  .dh-excerpt{max-width:760px;margin:0 auto;background:#0f0d18;border:1px solid var(--dh-line);
+    border-radius:16px;padding:30px 30px 26px;position:relative}
+  .dh-excerpt .tag{position:absolute;top:-13px;left:26px;background:linear-gradient(180deg,#e7cf95,var(--dh-gold));
+    color:#241a06;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:5px 14px;border-radius:20px}
+  .dh-excerpt h4{font-family:var(--serif);color:var(--dh-gold-soft);font-size:17px;margin:8px 0 12px}
+  .dh-excerpt p{color:var(--dh-muted);font-size:14.5px;line-height:1.85;margin:0 0 12px}
+  .dh-excerpt .pill{display:inline-block;background:var(--dh-panel);border:1px solid var(--dh-line);
+    color:var(--dh-ink);font-size:12.5px;border-radius:8px;padding:6px 12px;margin:4px 6px 0 0}
+  .dh-fade{background:linear-gradient(180deg,rgba(15,13,24,0),#0f0d18);height:60px;margin-top:-60px;position:relative;border-radius:0 0 16px 16px}
+  .dh-excerpt-cta{text-align:center;margin-top:24px}
+
+  /* ---- Nasıl hesaplıyoruz (metodoloji) ---- */
+  .dh-method{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px;margin:0 auto}
+  @media(max-width:680px){.dh-method{grid-template-columns:1fr}}
+  .dh-method .m{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:14px;padding:22px 20px}
+  .dh-method .m .mic{color:var(--dh-gold);font-size:20px;margin-bottom:10px}
+  .dh-method .m h3{color:var(--dh-ink);font-size:15.5px;margin:0 0 7px;font-weight:600}
+  .dh-method .m p{color:var(--dh-muted);font-size:13.5px;line-height:1.65;margin:0}
+  .dh-method .m a{color:var(--dh-gold-soft)}
+
+  /* ---- Metrik / vitrin ---- */
+  .dh-metrics{max-width:820px;margin:0 auto;background:linear-gradient(180deg,var(--dh-panel),var(--dh-panel-2));
+    border:1px solid var(--dh-line);border-radius:18px;padding:30px 28px}
+  .dh-metrics .mrow{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .dh-metrics .mrow:last-child{margin-bottom:0}
+  .dh-metrics .mlab{flex:0 0 200px;color:var(--dh-ink);font-size:14px}
+  .dh-metrics .mlab small{display:block;color:var(--dh-muted);font-size:11.5px;margin-top:2px}
+  .dh-metrics .bar{flex:1;height:9px;background:#0c0a15;border-radius:20px;overflow:hidden;border:1px solid var(--dh-line)}
+  .dh-metrics .bar i{display:block;height:100%;border-radius:20px;
+    background:linear-gradient(90deg,var(--dh-violet),var(--dh-gold))}
+  .dh-metrics .pct{flex:0 0 46px;text-align:right;color:var(--dh-gold-soft);font-family:var(--serif);font-size:17px}
+  @media(max-width:560px){.dh-metrics .mlab{flex-basis:130px;font-size:13px}}
+  .dh-metrics .mnote{color:var(--dh-muted);font-size:12px;text-align:center;margin-top:20px;line-height:1.6}
+
+  /* ---- Öngörü şeridi ---- */
+  .dh-fore{max-width:820px;margin:0 auto;border:1px solid rgba(217,185,106,.3);border-radius:16px;
+    padding:28px 26px;background:linear-gradient(120deg,rgba(217,185,106,.08),rgba(124,108,240,.06))}
+  .dh-fore p{color:var(--dh-muted);font-size:14.5px;line-height:1.8;margin:0 0 14px}
+  .dh-fore .q{color:var(--dh-ink);font-style:italic;border-left:2px solid var(--dh-gold);
+    padding-left:16px;margin:0 0 6px;font-size:14.5px;line-height:1.7}
+
+  /* ---- Kimler için ---- */
+  .dh-who{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto}
+  @media(max-width:680px){.dh-who{grid-template-columns:1fr}}
+  .dh-who .w{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:14px;padding:22px 20px;text-align:center}
+  .dh-who .w .wic{color:var(--dh-gold);font-size:24px;margin-bottom:10px}
+  .dh-who .w h3{color:var(--dh-ink);font-size:15.5px;margin:0 0 7px}
+  .dh-who .w p{color:var(--dh-muted);font-size:13px;line-height:1.6;margin:0}
+
+  /* ---- Adımlar ---- */
+  .dh-steps{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  .dh-steps .st{flex:1 1 240px;max-width:280px;background:var(--dh-panel);border:1px solid var(--dh-line);
+    border-radius:14px;padding:26px 22px;text-align:center}
+  .dh-steps .st .num{width:44px;height:44px;line-height:44px;margin:0 auto 14px;border-radius:50%;
+    background:linear-gradient(180deg,var(--dh-gold),#c9a34e);color:#241a06;font-weight:bold;font-size:19px}
+  .dh-steps .st h3{color:var(--dh-ink);font-size:16px;margin:0 0 8px}
+  .dh-steps .st p{color:var(--dh-muted);font-size:13.5px;line-height:1.6;margin:0}
+
+  /* ---- SSS ---- */
+  .dh-faq{max-width:760px;margin:0 auto}
+  .dh-faq details{background:var(--dh-panel);border:1px solid var(--dh-line);border-radius:12px;
+    margin-bottom:12px;padding:0 20px;overflow:hidden}
+  .dh-faq summary{cursor:pointer;padding:18px 0;font-size:15.5px;color:var(--dh-ink);
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .dh-faq summary::-webkit-details-marker{display:none}
+  .dh-faq summary::after{content:"+";color:var(--dh-gold);font-size:22px;transition:transform .2s}
+  .dh-faq details[open] summary::after{content:"−"}
+  .dh-faq details[open] summary{border-bottom:1px solid var(--dh-line)}
+  .dh-faq .ans{padding:16px 0 20px;color:var(--dh-muted);font-size:14px;line-height:1.78}
+  .dh-faq .ans a{color:var(--dh-gold-soft)}
+
+  /* ---- Kapanış CTA ---- */
+  .dh-close{max-width:760px;margin:72px auto 0;padding:0 22px;text-align:center}
+  .dh-close .box{background:linear-gradient(180deg,var(--dh-panel),var(--dh-panel-2));
+    border:1px solid rgba(217,185,106,.35);border-radius:20px;padding:44px 30px}
+  .dh-close h2{font-family:var(--serif);font-weight:500;color:var(--dh-ink);font-size:clamp(24px,4vw,32px);margin:0 0 10px}
+  .dh-close p{color:var(--dh-muted);font-size:15px;line-height:1.6;margin:0 auto 24px;max-width:460px}
+
+  /* ---- Dürüst not ---- */
+  .dh-note{max-width:760px;margin:40px auto 0;padding:16px 22px;border:1px dashed var(--dh-line);
+    border-radius:12px;color:var(--dh-muted);font-size:12.5px;line-height:1.7;text-align:center}
+
+  footer{text-align:center;color:var(--dh-muted);font-size:12px;padding:40px 26px 30px}
+  footer a{color:var(--dh-muted)}
+</style>
+<script src="/menu.js" defer></script>
+</head>
+<body>
+<div id="astro-menu"></div>
+<!-- ===================== HERO ===================== -->
+<section class="dh-hero">
+  <div class="dh-orbit">
+    <div class="r r1"></div><div class="r r2"></div><div class="r r3"></div>
+    <div class="core"><span>↻</span></div>
+    <div class="dot" style="top:2px;left:50%"></div>
+    <div class="dot" style="bottom:20px;right:10px;background:var(--dh-gold)"></div>
+    <div class="dot" style="top:52px;left:6px"></div>
+  </div>
+  <div class="dh-eyebrow">Transit · Zamanın Enerjisi Raporu</div>
+  <h1>Önümüzdeki bir yıl <em>sana ne getiriyor?</em></h1>
+  <p class="dh-lead">Gezegenler sürekli hareket eder; bugünkü konumları doğum haritanın üzerinden geçerken (transit) belirli dönemleri aktive eder. Bu rapor, <b style="color:var(--dh-ink)">bugünden itibaren yaklaşık 12 ayı tarih tarih</b> okur: fırsat pencerelerini, sınav dönemlerini ve dönüşüm eşiklerini. Yıldızlar yönü gösterir — direksiyonu tutan her zaman sensin.</p>
+
+  <div class="dh-facts">
+    <span><b>11+</b> sayfa</span>
+    <span><b>7</b> ana bölüm</span>
+    <span><b>12</b> ay tarih tarih</span>
+    <span>Natal + transit <b>çark</b></span>
+    <span>Gün içinde <b>PDF</b></span>
+  </div>
+
+  <div class="dh-cta-wrap">
+    <div class="dh-price"><b>₺300</b> · tek seferlik ödeme</div>
+    <a class="dh-btn" href="order.html?type=transit">✦ Transit Raporumu Hazırlat</a>
+    <div class="dh-micro">Gün içinde e-postanda · PDF olarak ömür boyu senin</div>
+  </div>
+</section>
+
+<!-- ===================== GÜVEN ŞERİDİ ===================== -->
+<section class="dh-trust">
+  <div><div class="t-ic">↻</div><div class="t-tt">12 ay öngörü</div><div class="t-td">Bugünden itibaren önündeki dönem</div></div>
+  <div><div class="t-ic">🗓️</div><div class="t-tt">Tarih tarih takvim</div><div class="t-td">Dönem dönem, tarihli yorum</div></div>
+  <div><div class="t-ic">🌙</div><div class="t-tt">Gün içinde teslim</div><div class="t-td">E-postana PDF olarak gönderilir</div></div>
+  <div><div class="t-ic">🔒</div><div class="t-tt">Güvenli ödeme</div><div class="t-td">SSL şifreli · kart bilgisi saklanmaz</div></div>
+</section>
+
+<!-- ===================== TRANSIT NEDİR ===================== -->
+<section class="dh-sec">
+  <h2>Transit nedir?</h2>
+  <p class="sub">Doğum haritan, doğduğun andaki gökyüzünü dondurur ve ömür boyu değişmez. Ama gökyüzü durmaz: gezegenler hareketine devam eder. Bugünkü gezegenlerin, senin doğum haritandaki noktaların üzerinden geçmesine "transit" denir — ve her geçiş, hayatının bir alanını belirli bir dönemde aktive eder.</p>
+  <div class="dh-fore">
+    <p>Bu rapor, <b style="color:var(--dh-ink)">bugünün gökyüzünü doğum haritanın üzerine yerleştirir</b> (içte doğum haritan, dışta bugünün gezegenleri = bi-wheel çark) ve önündeki yaklaşık bir yılın en önemli geçişlerini okur. Hangi kapı ne zaman aralanıyor, hangi dönem seni sınıyor, hangi eşikte dönüşüyorsun?</p>
+    <p style="margin-bottom:0">En güçlü yanı: soyut kalmaz. Son bölümde önündeki 12 ayı <b style="color:var(--dh-ink)">dönem dönem, tarih vererek</b> anlatır — her dönemin temasıyla, fırsatıyla ve dikkat noktasıyla.</p>
+  </div>
+</section>
+
+<!-- ===================== İÇERİK HARİTASI ===================== -->
+<section class="dh-sec">
+  <h2>Tam olarak ne alıyorsun?</h2>
+  <p class="sub">Belirsizlik yok. Raporundaki her bölümü satın almadan önce burada görüyorsun. Önündeki dönemin her katmanı — duygusal alandan işe, dönüşümden fırsatlara — kendi başlığı altında, tarihleriyle ele alınıyor.</p>
+
+  <div class="dh-statband">
+    <div><div class="n">11+</div><div class="l">sayfa</div></div>
+    <div><div class="n">7</div><div class="l">ana bölüm</div></div>
+    <div><div class="n">12 ay</div><div class="l">tarih tarih</div></div>
+    <div><div class="n">Gün içinde</div><div class="l">PDF e-postanda</div></div>
+  </div>
+
+  <div class="dh-map">
+
+    <div class="dh-block">
+      <div class="bnum">I</div>
+      <h3>Dönemin Genel Havası</h3>
+      <p class="bdesc">Önündeki dönemin çatısı: en güçlü birkaç transit ve hepsini birbirine bağlayan tema.</p>
+      <ul>
+        <li>Dönemin en öne çıkan transitleri</li>
+        <li>Bunların kurduğu ortak tema örgüsü</li>
+        <li>Dönemin tek cümlelik sloganı</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">II</div>
+      <h3>Duygusal Alan ve İlişkiler</h3>
+      <p class="bdesc">Bu dönem ilişkilerinde ve kalp konularında hangi kapıların açıldığı, hangi sınırların netleştiği.</p>
+      <ul>
+        <li>İlişki alanını etkileyen transitler tek tek</li>
+        <li>"Şu olaylar yaşanabilir…" — somut senaryolar</li>
+        <li>Fırsatlar, tuzaklar ve çözüm önerileri</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">III</div>
+      <h3>İş, Sorumluluk ve Günlük Hayat</h3>
+      <p class="bdesc">Kariyer hamleleri, sorumluluklar ve günlük rutininde hangi enerjinin çalıştığı.</p>
+      <ul>
+        <li>İş ve sorumluluk transitleri</li>
+        <li>Kariyer fırsatı pencereleri</li>
+        <li>Dikkat edilmesi gereken eğilimler</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">IV</div>
+      <h3>Dönüşüm Transitları</h3>
+      <p class="bdesc">Derinlerdeki yeniden yapılanma — kimlik, güç ve köklü değişim getiren yavaş ama derin geçişler.</p>
+      <ul>
+        <li>Plüton, Satürn ve düğüm geçişleri</li>
+        <li>Karmik olgunlaşma noktaları</li>
+        <li>Eski kalıpların bırakılma çağrısı</li>
+      </ul>
+    </div>
+
+    <div class="dh-block">
+      <div class="bnum">V</div>
+      <h3>Fırsat Transitları</h3>
+      <p class="bdesc">Aralanan kapılar — büyüme, iyileşme ve şansın öne çıktığı destekleyici geçişler.</p>
+      <ul>
+        <li>Jüpiter ve uyumlu açıların açtığı kapılar</li>
+        <li>İyileşme ve genişleme pencereleri</li>
+        <li>Değerlendirilmesi gereken anlar</li>
+      </ul>
+    </div>
+
+    <div class="dh-block wide">
+      <div class="bnum">VI</div>
+      <h3>Önümüzdeki 12 Ay — Tarihli Dönem Takvimi</h3>
+      <p class="bdesc">Raporun kalbi. Önündeki bir yılı <b style="color:var(--dh-ink)">dönem dönem, tarih vererek</b> geziyoruz — her dönemin kendi teması, "şu olaylar yaşanabilir", olası sorunu, öğrettiği ders ve somut çözümüyle. Soyut değil; takvimine işleyebileceğin bir yol haritası.</p>
+      <div class="houses">
+        <ul>
+          <li>Her dönem net tarih aralığıyla</li>
+          <li>Döneme özel bir başlık ve tema</li>
+          <li>"Şu olaylar yaşanabilir…" senaryoları</li>
+        </ul>
+        <ul>
+          <li>Dönemin olası zorluğu ve dersi</li>
+          <li>Her döneme somut çözüm önerisi</li>
+          <li>Fırsat ve sınav pencereleri ayrı ayrı</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dh-block wide">
+      <div class="bnum">VII</div>
+      <h3>Kapanış, Bütüncül Bakış ve Teknik Ek</h3>
+      <p class="bdesc">Tüm dönemi bir araya getiren kapanış — ve meraklısı için tekniğin açıldığı ek.</p>
+      <div class="houses">
+        <ul>
+          <li>Bir yıla bütüncül bakış</li>
+          <li>Seni en çok destekleyecek alışkanlıklar</li>
+          <li>Sana özel rehber cümle</li>
+        </ul>
+        <ul>
+          <li>Kişisel potansiyel metrikleri (görsel)</li>
+          <li>Sana özel natal + transit çarkın</li>
+          <li>Teknik ek: konumlar ve ev çizgileri</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="sub" style="margin-top:30px;margin-bottom:0">Her raporda, içte doğum haritan dışta bugünün gökyüzü olacak şekilde çizilmiş <b style="color:var(--dh-ink)">natal + transit çarkın</b> da yer alır.</p>
+</section>
+
+<!-- ===================== ÖRNEK RAPOR ===================== -->
+<section class="dh-sec">
+  <h2>Satın almadan önce gör</h2>
+  <p class="sub">Ne aldığını merak etmene gerek yok. İşte tarihli dönem takviminden gerçek bir bölüm — her dönem, tarihi, teması ve sana ne söylediğiyle birlikte anlatılıyor.</p>
+
+  <div class="dh-excerpt">
+    <span class="tag">Rapordan bir bölüm</span>
+    <h4>Dönem 1: Eylül 2026 — Ekim 2026 Ortası · "Zemin Hazırlanıyor"</h4>
+    <p>Bu dönem, birden fazla güçlü transitin aynı anda aktif olduğu bir başlangıç noktasıdır. Sosyal çevrende ya da bir etkinlikte biriyle beklenmedik ama anlamlı bir bağ kurabilirsin. Zihninde uzun süredir dolaşan bir fikir, artık somutlaşmak için baskı yapmaya başlıyor olabilir — bir iş fikri, bir eğitim planı ya da yaratıcı bir proje. İş yerinde ya da bir ağ içinde seni gören ve değer veren biriyle tanışma olasılığı yüksek…</p>
+    <div>
+      <span class="pill">🔮 Şu olaylar yaşanabilir…</span>
+      <span class="pill">⚠️ Sorun ne olabilir…</span>
+      <span class="pill">🌱 Bu sana ne öğretmek istiyor…</span>
+      <span class="pill">✅ Çözüm ne olabilir…</span>
+    </div>
+    <div class="dh-fade"></div>
+  </div>
+  <div class="dh-excerpt-cta">
+    <a class="dh-btn gold" href="ornek-transit-raporu.pdf" target="_blank" rel="noopener">📄 Örnek raporun tamamını incele</a>
+  </div>
+</section>
+
+<!-- ===================== NASIL HESAPLIYORUZ ===================== -->
+<section class="dh-sec">
+  <h2>Peki bu rapor neye dayanıyor?</h2>
+  <p class="sub">Yorumun güvenilir olması için önce hesabın doğru olması gerekir. Raporun, tahminle değil; bugünün gerçek gökyüzü ile doğum haritanın karşılaştırmasıyla hazırlanır.</p>
+
+  <div class="dh-method">
+    <div class="m">
+      <div class="mic">🛰️</div>
+      <h3>Gerçek astronomik veri</h3>
+      <p>Hem doğum hem bugünün gezegen konumları, profesyonel astroloji yazılımlarının standardı olan <b style="color:var(--dh-ink)">Swiss Ephemeris</b> ile yüksek hassasiyetle hesaplanır.</p>
+    </div>
+    <div class="m">
+      <div class="mic">↻</div>
+      <h3>Bugünün gökyüzü, senin haritan</h3>
+      <p>Rapor, <b style="color:var(--dh-ink)">bugünün gerçek gezegen konumlarını doğum haritanın üzerine</b> yerleştirir ve geçişleri (transitleri) tarih tarih hesaplar.</p>
+    </div>
+    <div class="m">
+      <div class="mic">🏛️</div>
+      <h3>En yaygın kullanılan yöntem</h3>
+      <p>Harita, dünya genelinde astrologların en çok tercih ettiği <b style="color:var(--dh-ink)">Placidus ev sistemi</b> ve tropikal zodyak ile kurulur.</p>
+    </div>
+    <div class="m">
+      <div class="mic">🔗</div>
+      <h3>Açı orbları hassas hesaplanır</h3>
+      <p>Her transitin doğum noktana ne kadar yaklaştığı (orb) tek tek hesaplanır — en dar orblu, en etkili geçişler öne çıkarılır.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ÖNGÖRÜ / DÜRÜSTLÜK ===================== -->
+<section class="dh-sec">
+  <h2>Geleceğe dair konuşur — ama kesin kader dayatmaz</h2>
+  <p class="sub">Bu rapor baştan sona bir öngörü raporudur; ama öngörülerini her zaman dürüst bir dille verir.</p>
+  <div class="dh-fore">
+    <p>Her dönemde <b style="color:var(--dh-ink)">"şu olaylar yaşanabilir…"</b> başlığıyla, günlük hayatına dokunan somut senaryolar bulursun. Ama bunları bir kehanet gibi değil, bir <b style="color:var(--dh-ink)">eğilim</b> gibi okuruz.</p>
+    <p class="q">"Bu dönemde iç dünyanla dışarıya yansıttığın arasındaki tutarsızlık yüzeye çıkabilir; sürtüşmeler anlamsız tartışmalar olarak dışa vurabilir. Düzenli hareket ve dürüst ifade bu dönemde sağaltıcı olabilir…"</p>
+    <p style="margin-bottom:0">Öngörülerimizi her zaman gerekçesiyle ve <b style="color:var(--dh-ink)">"olabilir / yaşanabilir / denk gelebilir"</b> diliyle veririz — çünkü gökyüzü bir eğilim gösterir, kesin bir kader dayatmaz. Kararlar her zaman senindir.</p>
+  </div>
+</section>
+
+<!-- ===================== METRİK VİTRİN ===================== -->
+<section class="dh-sec">
+  <h2>Sadece metin değil — görsel bir bütün</h2>
+  <p class="sub">Raporda, bu dönemin vurgularını tek bakışta gösteren kişisel potansiyel göstergelerin yer alır. (Aşağıdaki değerler örnektir; seninkiler haritana göre hesaplanır.)</p>
+
+  <div class="dh-metrics">
+    <div class="mrow">
+      <div class="mlab">Dönüşüm Kapasitesi<small>Bu dönemin derin değişim gücü</small></div>
+      <div class="bar"><i style="width:91%"></i></div><div class="pct">91</div>
+    </div>
+    <div class="mrow">
+      <div class="mlab">Duygusal Yoğunluk<small>Dönemin hissiyat tonu</small></div>
+      <div class="bar"><i style="width:85%"></i></div><div class="pct">85</div>
+    </div>
+    <div class="mrow">
+      <div class="mlab">Fırsat Açıklığı<small>Aralanan kapılar</small></div>
+      <div class="bar"><i style="width:78%"></i></div><div class="pct">78</div>
+    </div>
+    <div class="mrow">
+      <div class="mlab">Sınav / Olgunlaşma Basıncı<small>Zorlayan ama büyüten geçişler</small></div>
+      <div class="bar"><i style="width:72%"></i></div><div class="pct">72</div>
+    </div>
+    <div class="mnote">Bu oranlar bir ölçüm değil; bu dönemin vurgularını görselleştiren sembolik göstergelerdir.</div>
+  </div>
+</section>
+
+<!-- ===================== KİMLER İÇİN ===================== -->
+<section class="dh-sec">
+  <h2>Kimler için?</h2>
+  <div class="dh-who">
+    <div class="w"><div class="wic">🧭</div><h3>Yılını planlamak isteyen</h3><p>Önündeki 12 ayın fırsat ve sınav dönemlerini tarih tarih görmek isteyenler için.</p></div>
+    <div class="w"><div class="wic">🚪</div><h3>Bir dönemece hazırlanan</h3><p>Kariyer, ilişki ya da hayatında bir eşikte olan; ne zaman ne olacağını merak edenlere.</p></div>
+    <div class="w"><div class="wic">🌱</div><h3>Zamanlamayı önemseyen</h3><p>Doğru adımı doğru zamanda atmak; enerjinin ne zaman lehine olduğunu bilmek isteyenlere.</p></div>
+  </div>
+</section>
+
+<!-- ===================== NASIL ÇALIŞIR ===================== -->
+<section class="dh-sec">
+  <h2>Nasıl çalışır?</h2>
+  <p class="sub">Üç adımda raporun e-postanda.</p>
+  <div class="dh-steps">
+    <div class="st"><div class="num">1</div><h3>Bilgilerini gir</h3><p>Doğum tarihi, saati ve yerin — 30 saniye sürer. Saatini bilmiyorsan da alabilirsin.</p></div>
+    <div class="st"><div class="num">2</div><h3>Güvenle öde</h3><p>Güvenli ödeme altyapısıyla kartından ödemeni tamamla. Kart bilgin saklanmaz.</p></div>
+    <div class="st"><div class="num">3</div><h3>Gün içinde gelsin</h3><p>Raporun hazırlanıp aynı gün içinde PDF olarak e-postana ulaşır. Ömür boyu senin.</p></div>
+  </div>
+  <div class="dh-cta-wrap" style="margin-top:34px">
+    <a class="dh-btn" href="order.html?type=transit">✦ Transit Raporumu Hazırlat — ₺300</a>
+  </div>
+</section>
+
+<!-- ===================== SSS ===================== -->
+<section class="dh-sec">
+  <h2>Sıkça sorulan sorular</h2>
+  <p class="sub">Aklına takılanların cevabı burada.</p>
+  <div class="dh-faq">
+    <details>
+      <summary>Transit raporu hangi dönemi kapsıyor?</summary>
+      <div class="ans">Raporun hazırlandığı günden itibaren yaklaşık 12 ayı kapsar. Bu dönem, tarihli bir dönem takvimiyle (dönem dönem, tarih verilerek) ele alınır — böylece ne zaman ne olabileceğini takvimine işleyebilirsin.</div>
+    </details>
+    <details>
+      <summary>Doğum haritası ve Solar Return'den farkı ne?</summary>
+      <div class="ans">Doğum haritası "kim olduğunu" (sabit) anlatır; Solar Return bir yılın genel temasını çıkarır. Transit ise bugünün gökyüzünü doğum haritanın üzerine koyup önündeki dönemi tarih tarih, geçiş geçiş okur — "ne zaman ne olabilir" sorusuna en doğrudan yanıt veren rapordur.</div>
+    </details>
+    <details>
+      <summary>Doğum saatimi bilmiyorum, yine de alabilir miyim?</summary>
+      <div class="ans">Alabilirsin. Saatini bilmiyorsan varsayılan olarak 12:00 kullanılır; gezegen geçişleri yine doğru hesaplanır. Yalnızca yükselen ve evlere bağlı transitler saate bağlı olduğu için tam kesinlik taşımayabilir. Saatini biliyorsan girmen raporu belirgin şekilde isabetli kılar.</div>
+    </details>
+    <details>
+      <summary>Rapor kesin olayları mı söylüyor?</summary>
+      <div class="ans">Hayır. Her dönemi "şu olaylar yaşanabilir…" gibi bir eğilim diliyle, gerekçesiyle veririz. Gökyüzü bir eğilim gösterir; kesin bir kader dayatmaz. Rapor sana zamanlamayı ve olası temaları gösterir, kararlar her zaman sana aittir.</div>
+    </details>
+    <details>
+      <summary>Raporum ne kadar sürede ve hangi formatta gelir?</summary>
+      <div class="ans">Ödemen onaylandıktan sonra raporun hazırlanır ve gün içinde e-postana PDF olarak ulaşır (11+ sayfa). Gelen kutunda göremezsen spam / gereksiz klasörünü kontrol etmeyi unutma.</div>
+    </details>
+    <details>
+      <summary>İade veya iptal mümkün mü?</summary>
+      <div class="ans">Raporlar sana özel, o güne özgü olarak üretilen dijital ürünlerdir; bu nedenle üretim sonrası iade edilemez. Ancak teknik bir hata nedeniyle raporun üretilmez veya ulaşmazsa, yeniden üretir ya da ücretini iade ederiz. Detaylar <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmemizde</a>.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== KAPANIŞ CTA ===================== -->
+<section class="dh-close">
+  <div class="box">
+    <h2>Önündeki yolu önceden gör</h2>
+    <p>Gökyüzü önümüzdeki bir yılda hangi kapıları aralıyor? Gel, tarih tarih birlikte okuyalım.</p>
+    <div class="dh-cta-wrap">
+      <div class="dh-price"><b>₺300</b> · tek seferlik ödeme</div>
+      <a class="dh-btn" href="order.html?type=transit">✦ Transit Raporumu Hazırlat</a>
+      <div class="dh-micro">Gün içinde e-postanda · PDF olarak ömür boyu senin</div>
+    </div>
+  </div>
+
+  <div class="dh-note">
+    Bu rapor öz-farkındalık ve rehberlik amaçlıdır; kesin kehanet niteliği taşımaz; tıbbi, psikolojik, hukuki veya finansal tavsiye yerine geçmez. Kararlarınız her zaman size aittir.
+  </div>
+</section>
+
+<footer>
+  © 2026 Astro Yuvam — Tüm hakları saklıdır.<br>
+  <a href="gizlilik-kvkk.html">Gizlilik &amp; KVKK Aydınlatma Metni</a> ·
+  <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a>
+</footer>
+
+</body>
+</html>
