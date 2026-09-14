@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giriş Yap / Üye Ol · Astro Yuvam</title>
+<meta name="description" content="Astro Yuvam hesabına giriş yap ya da yeni bir hesap oluştur. Aldığın raporlara buradan ulaşırsın.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/logo-512.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#14101f;
+    --panel:#1d1730;
+    --field:#241d38;
+    --gold:#d9b96a;
+    --gold-soft:#e7cf95;
+    --cream:#f0e6d2;
+    --muted:rgba(240,230,210,.58);
+    --line:rgba(217,185,106,.22);
+    --error:#e7a17a;
+    --ok:#a9d3a0;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(1100px 620px at 50% -160px, rgba(217,185,106,.14), transparent 70%),
+      radial-gradient(900px 500px at 85% 110%, rgba(120,90,180,.10), transparent 70%),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* faint starfield */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(1.4px 1.4px at 20% 30%, rgba(240,230,210,.35), transparent),
+      radial-gradient(1.2px 1.2px at 70% 20%, rgba(240,230,210,.28), transparent),
+      radial-gradient(1.3px 1.3px at 40% 75%, rgba(240,230,210,.22), transparent),
+      radial-gradient(1.1px 1.1px at 88% 62%, rgba(240,230,210,.30), transparent),
+      radial-gradient(1.2px 1.2px at 12% 82%, rgba(240,230,210,.20), transparent);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 18px 64px;
+  }
+
+  .card{
+    width:100%;
+    max-width:412px;
+    background:linear-gradient(180deg, rgba(255,255,255,.02), transparent), var(--panel);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:38px 30px 30px;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(217,185,106,.35);
+    animation:rise .6s ease both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){.card{animation:none;}}
+
+  .brand{text-align:center;margin-bottom:22px;}
+  .brand img{
+    width:62px;height:62px;border-radius:50%;
+    border:1px solid var(--line);
+    box-shadow:0 0 26px -6px rgba(217,185,106,.5);
+  }
+  h1{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-weight:600;
+    font-size:29px;
+    letter-spacing:.3px;
+    margin:16px 0 6px;
+    color:var(--gold-soft);
+  }
+  .brand p{margin:0;color:var(--muted);font-size:14px;line-height:1.5;}
+
+  /* tabs */
+  .tabs{
+    display:flex;
+    gap:6px;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:5px;
+    margin:24px 0 22px;
+  }
+  .tab{
+    flex:1;
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    font-family:inherit;
+    font-size:15px;
+    font-weight:600;
+    padding:10px 0;
+    border-radius:8px;
+    cursor:pointer;
+    transition:color .2s, background .2s;
+  }
+  .tab.active{
+    color:#1a1428;
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+  }
+  .tab:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
+
+  form{display:flex;flex-direction:column;gap:14px;}
+  .field-group{display:flex;flex-direction:column;gap:6px;}
+  label{font-size:13px;color:var(--muted);padding-left:2px;}
+  input{
+    width:100%;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:13px 14px;
+    color:var(--cream);
+    font-family:inherit;
+    font-size:15px;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  input::placeholder{color:rgba(240,230,210,.34);}
+  input:focus{
+    outline:none;
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(217,185,106,.18);
+  }
+  .hint{font-size:12px;color:var(--muted);padding-left:2px;}
+
+  .submit{
+    margin-top:4px;
+    border:0;
+    border-radius:11px;
+    padding:14px;
+    font-family:inherit;
+    font-size:15.5px;
+    font-weight:600;
+    color:#1a1428;
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    cursor:pointer;
+    transition:filter .2s, transform .05s;
+  }
+  .submit:hover{filter:brightness(1.06);}
+  .submit:active{transform:translateY(1px);}
+  .submit:disabled{opacity:.6;cursor:default;filter:none;}
+  .submit:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
+
+  .msg{
+    margin-top:16px;
+    font-size:14px;
+    line-height:1.55;
+    padding:12px 14px;
+    border-radius:10px;
+    display:none;
+  }
+  .msg.show{display:block;}
+  .msg.error{background:rgba(231,161,122,.10);border:1px solid rgba(231,161,122,.4);color:var(--error);}
+  .msg.ok{background:rgba(169,211,160,.10);border:1px solid rgba(169,211,160,.4);color:var(--ok);}
+
+  .foot{
+    margin-top:22px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .foot a{color:var(--gold-soft);text-decoration:none;}
+  .foot a:hover{text-decoration:underline;}
+
+  /* logged-in view */
+  .welcome{text-align:center;display:none;}
+  .welcome.show{display:block;}
+  .welcome h2{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-weight:600;font-size:26px;color:var(--gold-soft);
+    margin:6px 0 10px;
+  }
+  .welcome p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 22px;}
+  .auth-body.hidden{display:none;}
+
+  .ghost-btn{
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--cream);
+    font-family:inherit;font-size:15px;font-weight:500;
+    padding:12px 22px;border-radius:11px;cursor:pointer;
+    transition:background .2s,border-color .2s;
+  }
+  .ghost-btn:hover{background:var(--field);border-color:var(--gold);}
+  .ghost-btn:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<div id="astro-menu"></div>
+
+<div class="wrap">
+  <main class="card">
+
+    <div class="brand">
+      <img src="/logo-512.png" alt="Astro Yuvam">
+      <h1>Astro Yuvam hesabın</h1>
+      <p>Aldığın raporlara buradan ulaşırsın. Giriş yap ya da yeni bir hesap oluştur.</p>
+    </div>
+
+    <!-- Giriş / kayıt gövdesi -->
+    <div class="auth-body" id="authBody">
+      <div class="tabs" role="tablist">
+        <button class="tab active" id="tabLogin" role="tab">Giriş Yap</button>
+        <button class="tab" id="tabSignup" role="tab">Üye Ol</button>
+      </div>
+
+      <form id="authForm" autocomplete="on" novalidate>
+        <div class="field-group" id="nameGroup" style="display:none;">
+          <label for="name">Adın</label>
+          <input type="text" id="name" placeholder="İsteğe bağlı" autocomplete="name">
+        </div>
+
+        <div class="field-group">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" placeholder="ornek@eposta.com" autocomplete="email" required>
+        </div>
+
+        <div class="field-group">
+          <label for="password">Şifre</label>
+          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+          <span class="hint" id="pwHint" style="display:none;">En az 6 karakter olmalı.</span>
+        </div>
+
+        <button type="submit" class="submit" id="submitBtn">Giriş Yap</button>
+      </form>
+
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+
+      <div class="foot">
+        Bilgilerin güvende; yalnızca hesabın için kullanılır.<br>
+        <a href="/">← Ana sayfaya dön</a>
+      </div>
+    </div>
+
+    <!-- Giriş yapılmış görünüm -->
+    <div class="welcome" id="welcome">
+      <h2 id="welcomeTitle">Hoş geldin 🌙</h2>
+      <p>Giriş yaptın. "Raporlarım" sayfası çok yakında tam burada olacak.</p>
+      <button class="ghost-btn" id="logoutBtn">Çıkış Yap</button>
+      <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Supabase kütüphanesi -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Site menüsü -->
+<script src="/menu.js" defer></script>
+
+<script>
+(function(){
+  "use strict";
+
+  var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  var mode = "login"; // "login" | "signup"
+
+  var authBody   = document.getElementById("authBody");
+  var welcome    = document.getElementById("welcome");
+  var welcomeTitle = document.getElementById("welcomeTitle");
+  var tabLogin   = document.getElementById("tabLogin");
+  var tabSignup  = document.getElementById("tabSignup");
+  var nameGroup  = document.getElementById("nameGroup");
+  var pwHint     = document.getElementById("pwHint");
+  var form       = document.getElementById("authForm");
+  var emailEl    = document.getElementById("email");
+  var passEl     = document.getElementById("password");
+  var nameEl     = document.getElementById("name");
+  var submitBtn  = document.getElementById("submitBtn");
+  var msg        = document.getElementById("msg");
+  var logoutBtn  = document.getElementById("logoutBtn");
+
+  function showMsg(text, type){
+    msg.textContent = text;
+    msg.className = "msg show " + (type === "ok" ? "ok" : "error");
+  }
+  function clearMsg(){ msg.className = "msg"; msg.textContent = ""; }
+
+  function setMode(next){
+    mode = next;
+    clearMsg();
+    var isSignup = (mode === "signup");
+    tabLogin.classList.toggle("active", !isSignup);
+    tabSignup.classList.toggle("active", isSignup);
+    nameGroup.style.display = isSignup ? "flex" : "none";
+    pwHint.style.display = isSignup ? "block" : "none";
+    passEl.setAttribute("autocomplete", isSignup ? "new-password" : "current-password");
+    submitBtn.textContent = isSignup ? "Üye Ol" : "Giriş Yap";
+  }
+
+  tabLogin.addEventListener("click", function(){ setMode("login"); });
+  tabSignup.addEventListener("click", function(){ setMode("signup"); });
+
+  function turkceHata(raw){
+    var m = (raw || "").toLowerCase();
+    if(m.indexOf("invalid login credentials") !== -1) return "E-posta veya şifre hatalı. Lütfen kontrol et.";
+    if(m.indexOf("email not confirmed") !== -1) return "E-postanı henüz onaylamadın. Gelen kutunu ve spam klasörünü kontrol et.";
+    if(m.indexOf("already registered") !== -1 || m.indexOf("already been registered") !== -1) return "Bu e-posta zaten kayıtlı. Giriş yapmayı deneyebilirsin.";
+    if(m.indexOf("password should be at least") !== -1) return "Şifre en az 6 karakter olmalı.";
+    if(m.indexOf("invalid email") !== -1 || m.indexOf("unable to validate email") !== -1) return "E-posta adresi geçersiz görünüyor.";
+    if(m.indexOf("rate limit") !== -1 || m.indexOf("too many") !== -1) return "Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.";
+    if(m.indexOf("for security purposes") !== -1) return "Kısa süre önce denedin. Birkaç saniye bekleyip tekrar dene.";
+    return "Bir şeyler ters gitti. Lütfen tekrar dene.";
+  }
+
+  function busy(on){
+    submitBtn.disabled = on;
+    submitBtn.textContent = on ? "Lütfen bekle…" : (mode === "signup" ? "Üye Ol" : "Giriş Yap");
+  }
+
+  form.addEventListener("submit", async function(e){
+    e.preventDefault();
+    clearMsg();
+
+    var email = emailEl.value.trim();
+    var password = passEl.value;
+    var name = nameEl.value.trim();
+
+    if(!email){ showMsg("E-posta adresini gir.", "error"); return; }
+    if(!password){ showMsg("Şifreni gir.", "error"); return; }
+    if(mode === "signup" && password.length < 6){ showMsg("Şifre en az 6 karakter olmalı.", "error"); return; }
+
+    busy(true);
+    try{
+      if(mode === "signup"){
+        var res = await sb.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: { full_name: name },
+            emailRedirectTo: "https://astroyuvam.com/giris.html"
+          }
+        });
+        if(res.error){ showMsg(turkceHata(res.error.message), "error"); }
+        else{
+          form.reset();
+          showMsg("Hesabın oluşturuldu! E-posta adresine bir onay bağlantısı gönderdik. Bağlantıya tıkladıktan sonra giriş yapabilirsin. (Mail birkaç dakika gecikebilir; spam klasörünü de kontrol et.)", "ok");
+        }
+      }else{
+        var login = await sb.auth.signInWithPassword({ email: email, password: password });
+        if(login.error){ showMsg(turkceHata(login.error.message), "error"); }
+        else{ showLoggedIn(login.data.user); }
+      }
+    }catch(err){
+      showMsg("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dene.", "error");
+    }finally{
+      busy(false);
+    }
+  });
+
+  function showLoggedIn(user){
+    var ad = (user && user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name : (user ? user.email : "");
+    welcomeTitle.textContent = "Hoş geldin, " + ad + " 🌙";
+    authBody.classList.add("hidden");
+    welcome.classList.add("show");
+  }
+  function showLoggedOut(){
+    welcome.classList.remove("show");
+    authBody.classList.remove("hidden");
+    clearMsg();
+    form.reset();
+    setMode("login");
+  }
+
+  logoutBtn.addEventListener("click", async function(){
+    logoutBtn.disabled = true;
+    try{ await sb.auth.signOut(); }catch(e){}
+    logoutBtn.disabled = false;
+    showLoggedOut();
+  });
+
+  // Sayfa açılınca oturum var mı diye bak (onay linkinden dönüşte de yakalar)
+  (async function init(){
+    try{
+      var sess = await sb.auth.getSession();
+      if(sess && sess.data && sess.data.session){
+        showLoggedIn(sess.data.session.user);
+      }
+    }catch(e){}
+  })();
+
+})();
+</script>
+
+</body>
+</html>
