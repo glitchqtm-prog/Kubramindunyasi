@@ -12,8 +12,9 @@
    BURÇ YORUMLARI MENÜSÜ = BASİT AÇILIR: tıklayınca doğrudan iki seçenek
    görünür — Günlük ve Haftalık. Kategori/akordiyon yoktur. */
 (function(){
-  // ——— Google Analytics 4 — tüm ziyaretçilerde çalışır (bilgilendirme modu) ———
-  function gaBaslat(){
+  // ——— Google Analytics 4 — GÖRÜNMEZ ölçüm (ziyaretçiye hiçbir şey göstermez;
+  //     veriyi yalnızca site sahibi kendi GA panelinden görür). Tüm sayfalarda çalışır. ———
+  (function loadGA(){
     var GA_ID = "G-QQ0SREFL4L";
     if(window.__gaYuklendi) return;   // aynı sayfada iki kez yüklenmesin
     window.__gaYuklendi = true;
@@ -26,40 +27,7 @@
     window.gtag = gtag;
     gtag("js", new Date());
     gtag("config", GA_ID);
-  }
-
-  // ——— Çerez bilgilendirme bandı: bir kez gösterilir, "Tamam"a basınca hatırlanır ———
-  var CEREZ_KEY = "ay_cerez_bilgi_v1";
-  function cerezGorulduMu(){ try{ return localStorage.getItem(CEREZ_KEY) === "1"; }catch(e){ return false; } }
-  function cerezKapat(){ try{ localStorage.setItem(CEREZ_KEY, "1"); }catch(e){} }
-
-  function cerezBandiGoster(){
-    if(cerezGorulduMu() || document.getElementById("ay-cerez")) return;
-    var bar = document.createElement("div");
-    bar.id = "ay-cerez";
-    bar.setAttribute("role","note");
-    bar.setAttribute("aria-label","Çerez bilgilendirmesi");
-    bar.innerHTML =
-        '<div class="ay-cerez-in">'
-      +   '<p class="ay-cerez-tx">Deneyimini iyileştirmek ve ziyaret istatistikleri için çerezler kullanıyoruz. Ayrıntılar için <a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a> metnimize göz atabilirsin.</p>'
-      +   '<div class="ay-cerez-bt">'
-      +     '<button type="button" class="ay-cerez-kabul">Tamam</button>'
-      +   '</div>'
-      + '</div>';
-    document.body.appendChild(bar);
-    requestAnimationFrame(function(){ bar.classList.add("ac-in"); });
-    bar.querySelector(".ay-cerez-kabul").addEventListener("click", function(){
-      cerezKapat();
-      bar.classList.remove("ac-in");
-      setTimeout(function(){ if(bar.parentNode) bar.parentNode.removeChild(bar); }, 320);
-    });
-  }
-
-  // GA herkese açık yüklenir; bant yalnızca bilgi amaçlı gösterilir.
-  function cerezBaslat(){
-    gaBaslat();
-    cerezBandiGoster();
-  }
+  })();
 
   // ——— YENİ ARAÇ EKLEMEK İÇİN TEK YER ———
   // Kategorili menü: her yeni araç ilgili grubun items dizisine tek satır.
@@ -100,8 +68,7 @@
   ];
 
   var LINKLER = [
-    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
-    { href:"/giris.html", ad:"Giriş" }
+    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" }
   ];
 
   var CSS = ''
@@ -140,16 +107,6 @@
   + '.am-dropdown{position:static}'
   + '.am-drop-menu{left:50%;right:auto;transform:translate(-50%,-6px);width:min(88vw,320px);min-width:0}'
   + '.am-dropdown.open .am-drop-menu{transform:translate(-50%,0)}}'
-  + '#ay-cerez{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1b1530;border-top:1px solid #332a4d;box-shadow:0 -12px 34px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .32s ease;font-family:"Segoe UI",system-ui,sans-serif}'
-  + '#ay-cerez.ac-in{transform:translateY(0)}'
-  + '.ay-cerez-in{max-width:980px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}'
-  + '.ay-cerez-tx{margin:0;color:#f0e6d2;opacity:.9;font-size:13.5px;line-height:1.55;flex:1;min-width:230px}'
-  + '.ay-cerez-tx a{color:#e7cf95;text-decoration:underline}'
-  + '.ay-cerez-bt{display:flex;gap:10px;flex-shrink:0}'
-  + '.ay-cerez-kabul{background:linear-gradient(180deg,#e7cf95,#d9b96a);border:none;color:#1a1428;font:inherit;font-weight:bold;font-size:13.5px;padding:9px 26px;border-radius:20px;cursor:pointer;transition:filter .2s}'
-  + '.ay-cerez-kabul:hover{filter:brightness(1.06)}'
-  + '@media (max-width:600px){.ay-cerez-in{padding:12px 16px}.ay-cerez-bt{width:100%}.ay-cerez-kabul{flex:1}}'
-  + '@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}'
   + '@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}';
 
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -167,9 +124,6 @@
   function init(){
     // Stil
     var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
-
-    // Çerez onayı bandı + onaya bağlı GA
-    cerezBaslat();
 
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
