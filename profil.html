@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profilim · Astro Yuvam</title>
-<meta name="description" content="Astro Yuvam hesap bilgilerini görüntüle ve doğum bilgilerini düzenle.">
+<meta name="description" content="Astro Yuvam hesap bilgilerini görüntüle, doğum bilgilerini düzenle ve kayıtlı kişilerini yönet.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -40,79 +40,74 @@
       radial-gradient(1.1px 1.1px at 88% 62%, rgba(240,230,210,.30), transparent),
       radial-gradient(1.2px 1.2px at 12% 82%, rgba(240,230,210,.20), transparent);
   }
-  .wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:34px 16px 60px;}
+  .wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:34px 16px 70px;}
+  .stack{width:100%;max-width:460px;display:flex;flex-direction:column;gap:20px;}
   .card{
-    width:100%;max-width:440px;background:var(--panel);border:1px solid var(--line);
-    border-radius:20px;padding:36px 30px 30px;
-    box-shadow:0 30px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(217,185,106,.32);
-    animation:rise .6s ease both;
+    background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:34px 30px 30px;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(217,185,106,.30);
+    animation:rise .55s ease both;
   }
   @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
   @media (prefers-reduced-motion:reduce){.card{animation:none;}}
 
   .brand{text-align:center;margin-bottom:22px;}
-  .brand img{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 26px -6px rgba(217,185,106,.5);}
-  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:28px;letter-spacing:.3px;margin:14px 0 6px;color:var(--gold-soft);}
+  .brand img{width:58px;height:58px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 26px -6px rgba(217,185,106,.5);}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:27px;letter-spacing:.3px;margin:13px 0 6px;color:var(--gold-soft);}
   .brand p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5;}
+  h2.sec{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:23px;color:var(--gold-soft);margin:0 0 4px;}
+  .sec-sub{margin:0 0 18px;color:var(--muted);font-size:12.5px;line-height:1.5;}
 
-  .state{display:none;}
-  .state.show{display:block;}
-  .center{text-align:center;}
+  .state{display:none;} .state.show{display:block;} .center{text-align:center;}
 
-  form{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+  form{display:flex;flex-direction:column;gap:13px;margin-top:6px;}
   .field-group{display:flex;flex-direction:column;gap:6px;}
-  .row{display:flex;gap:12px;}
-  .row .field-group{flex:1;}
+  .row{display:flex;gap:12px;} .row .field-group{flex:1;}
   label{font-size:13px;color:var(--muted);padding-left:2px;}
-  input[type=text],input[type=date],input[type=time]{
+  input[type=text],input[type=date],input[type=time],select{
     width:100%;background:var(--field);border:1px solid var(--line);border-radius:10px;
-    padding:13px 14px;color:var(--cream);font-family:inherit;font-size:15px;
+    padding:12px 13px;color:var(--cream);font-family:inherit;font-size:15px;
     transition:border-color .2s,box-shadow .2s;
   }
   input::placeholder{color:rgba(240,230,210,.32);}
-  input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,185,106,.18);}
+  input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,185,106,.18);}
   input[type=date],input[type=time]{color-scheme:dark;}
-  .readonly-box{
-    background:rgba(217,185,106,.05);border:1px dashed var(--line);border-radius:10px;
-    padding:13px 14px;color:var(--muted);font-size:15px;word-break:break-all;
-  }
-  .birth-note{
-    font-size:12px;color:var(--muted);line-height:1.5;
-    background:rgba(217,185,106,.06);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
-  }
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23d9b96a' d='M6 8 0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;}
+  .readonly-box{background:rgba(217,185,106,.05);border:1px dashed var(--line);border-radius:10px;padding:12px 13px;color:var(--muted);font-size:15px;word-break:break-all;}
+  .birth-note{font-size:12px;color:var(--muted);line-height:1.5;background:rgba(217,185,106,.06);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
 
-  .submit{
-    margin-top:4px;border:0;border-radius:11px;padding:14px;font-family:inherit;font-size:15.5px;font-weight:600;
-    color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));cursor:pointer;
-    transition:filter .2s,transform .05s;
-  }
-  .submit:hover{filter:brightness(1.06);}
-  .submit:active{transform:translateY(1px);}
+  .submit{margin-top:2px;border:0;border-radius:11px;padding:13px;font-family:inherit;font-size:15px;font-weight:600;color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));cursor:pointer;transition:filter .2s,transform .05s;}
+  .submit:hover{filter:brightness(1.06);} .submit:active{transform:translateY(1px);}
   .submit:disabled{opacity:.6;cursor:default;filter:none;}
   .submit:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
 
-  .msg{margin-top:14px;font-size:14px;line-height:1.55;padding:12px 14px;border-radius:10px;display:none;}
+  .msg{margin-top:12px;font-size:13.5px;line-height:1.5;padding:11px 13px;border-radius:10px;display:none;}
   .msg.show{display:block;}
   .msg.error{background:rgba(231,161,122,.10);border:1px solid rgba(231,161,122,.4);color:var(--error);}
   .msg.ok{background:rgba(169,211,160,.10);border:1px solid rgba(169,211,160,.4);color:var(--ok);}
 
-  .ghost-btn{
-    width:100%;margin-top:14px;border:1px solid var(--line);background:transparent;color:var(--cream);
-    font-family:inherit;font-size:15px;font-weight:500;padding:12px 22px;border-radius:11px;cursor:pointer;
-    transition:background .2s,border-color .2s;
-  }
+  .ghost-btn{width:100%;margin-top:12px;border:1px solid var(--line);background:transparent;color:var(--cream);font-family:inherit;font-size:15px;font-weight:500;padding:12px 22px;border-radius:11px;cursor:pointer;transition:background .2s,border-color .2s;}
   .ghost-btn:hover{background:var(--field);border-color:var(--gold);}
   .ghost-btn:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
+  .gold-btn{display:inline-block;margin-top:6px;border:0;border-radius:11px;padding:13px 26px;font-family:inherit;font-size:15px;font-weight:600;color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));cursor:pointer;text-decoration:none;}
+  .link-btn{background:none;border:0;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:6px 2px;}
+  .link-btn:hover{color:var(--gold-soft);}
 
-  .gold-btn{
-    display:inline-block;margin-top:6px;border:0;border-radius:11px;padding:13px 26px;font-family:inherit;
-    font-size:15px;font-weight:600;color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));
-    cursor:pointer;text-decoration:none;
-  }
-  .foot{margin-top:20px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;}
-  .foot a{color:var(--gold-soft);text-decoration:none;}
-  .foot a:hover{text-decoration:underline;}
+  .foot{margin-top:18px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;}
+  .foot a{color:var(--gold-soft);text-decoration:none;} .foot a:hover{text-decoration:underline;}
   .loading{color:var(--muted);font-size:14px;text-align:center;padding:16px 0;}
+
+  /* Kayıtlı kişiler listesi */
+  .people-list{display:flex;flex-direction:column;gap:10px;margin:16px 0 4px;}
+  .person{display:flex;align-items:center;gap:12px;background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .person-info{flex:1;min-width:0;}
+  .person-name{font-size:14.5px;font-weight:600;color:var(--cream);}
+  .person-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+  .person-actions{display:flex;gap:6px;flex-shrink:0;}
+  .icon-btn{background:none;border:1px solid var(--line);color:var(--muted);font:inherit;font-size:12.5px;padding:6px 11px;border-radius:8px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
+  .icon-btn:hover{background:var(--field-2);color:var(--gold-soft);border-color:var(--gold);}
+  .icon-btn.danger:hover{color:var(--error);border-color:var(--error);}
+  .empty{color:var(--muted);font-size:13px;text-align:center;padding:14px 0;line-height:1.5;}
+  .add-title{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:.85;margin:4px 0 2px;}
 </style>
 </head>
 <body>
@@ -120,72 +115,106 @@
 <div id="astro-menu"></div>
 
 <div class="wrap">
-  <main class="card">
+  <div class="stack">
 
-    <div class="brand">
-      <img src="/logo-512.png" alt="Astro Yuvam">
-      <h1>Profilim</h1>
-      <p>Bilgilerini görüntüle ve güncelle.</p>
-    </div>
+    <!-- ===== KART 1: Profilim ===== -->
+    <main class="card">
+      <div class="brand">
+        <img src="/logo-512.png" alt="Astro Yuvam">
+        <h1>Profilim</h1>
+        <p>Kendi bilgilerini görüntüle ve güncelle.</p>
+      </div>
 
-    <!-- Yükleniyor -->
-    <div class="state show" id="loadingState">
-      <div class="loading">Yükleniyor…</div>
-    </div>
+      <div class="state show" id="loadingState"><div class="loading">Yükleniyor…</div></div>
 
-    <!-- Giriş gerekli -->
-    <div class="state" id="needLoginState">
-      <p class="center" style="color:var(--muted);font-size:14px;line-height:1.6;margin:6px 0 18px;">
-        Bu sayfayı görmek için giriş yapman gerekiyor.
-      </p>
-      <div class="center"><a href="/giris.html" class="gold-btn">Giriş Yap</a></div>
-      <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
-    </div>
+      <div class="state" id="needLoginState">
+        <p class="center" style="color:var(--muted);font-size:14px;line-height:1.6;margin:6px 0 18px;">
+          Bu sayfayı görmek için giriş yapman gerekiyor.
+        </p>
+        <div class="center"><a href="/giris.html" class="gold-btn">Giriş Yap</a></div>
+        <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
+      </div>
 
-    <!-- Profil formu -->
-    <div class="state" id="profileState">
-      <form id="profileForm" autocomplete="on" novalidate>
+      <div class="state" id="profileState">
+        <form id="profileForm" autocomplete="on" novalidate>
+          <div class="field-group">
+            <label>E-posta</label>
+            <div class="readonly-box" id="emailBox">—</div>
+          </div>
+          <div class="field-group">
+            <label for="name">Ad Soyad</label>
+            <input type="text" id="name" placeholder="Adın soyadın" autocomplete="name">
+          </div>
+          <div class="row">
+            <div class="field-group">
+              <label for="birthDate">Doğum Tarihi</label>
+              <input type="date" id="birthDate">
+            </div>
+            <div class="field-group">
+              <label for="birthTime">Doğum Saati</label>
+              <input type="time" id="birthTime">
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="birthPlace">Doğum Yeri</label>
+            <input type="text" id="birthPlace" placeholder="Örn. Adana, Türkiye">
+          </div>
+          <div class="birth-note">
+            Bu bilgiler senin kendine özel günlük ve haftalık yorumların için kullanılacak.
+          </div>
+          <button type="submit" class="submit" id="saveBtn">Kaydet</button>
+        </form>
+        <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        <button type="button" class="ghost-btn" id="logoutBtn">Çıkış Yap</button>
+        <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
+      </div>
+    </main>
 
+    <!-- ===== KART 2: Kayıtlı Kişilerim ===== -->
+    <section class="card" id="peopleCard" style="display:none;">
+      <h2 class="sec">Kayıtlı Kişilerim</h2>
+      <p class="sec-sub">Partner, aile ya da rapor almak istediğin kişileri kaydet. Rapor alırken tek tıkla seçebilirsin.</p>
+
+      <div class="people-list" id="peopleList"></div>
+      <div class="empty" id="peopleEmpty" style="display:none;">Henüz kayıtlı kişin yok. Aşağıdan ekleyebilirsin.</div>
+
+      <div class="add-title" id="formTitle">Yeni kişi ekle</div>
+      <form id="personForm" autocomplete="off" novalidate>
         <div class="field-group">
-          <label>E-posta</label>
-          <div class="readonly-box" id="emailBox">—</div>
+          <label for="pName">Ad Soyad</label>
+          <input type="text" id="pName" placeholder="Örn. Ayşe Yılmaz">
         </div>
-
-        <div class="field-group">
-          <label for="name">Ad Soyad</label>
-          <input type="text" id="name" placeholder="Adın soyadın" autocomplete="name">
-        </div>
-
         <div class="row">
           <div class="field-group">
-            <label for="birthDate">Doğum Tarihi</label>
-            <input type="date" id="birthDate">
+            <label for="pDate">Doğum Tarihi</label>
+            <input type="date" id="pDate">
           </div>
           <div class="field-group">
-            <label for="birthTime">Doğum Saati</label>
-            <input type="time" id="birthTime">
+            <label for="pTime">Doğum Saati</label>
+            <input type="time" id="pTime">
           </div>
         </div>
-
-        <div class="field-group">
-          <label for="birthPlace">Doğum Yeri</label>
-          <input type="text" id="birthPlace" placeholder="Örn. Adana, Türkiye">
+        <div class="row">
+          <div class="field-group">
+            <label for="pPlace">Doğum Yeri</label>
+            <input type="text" id="pPlace" placeholder="Örn. İzmir, Türkiye">
+          </div>
+          <div class="field-group">
+            <label for="pGender">Cinsiyet</label>
+            <select id="pGender">
+              <option value="">Belirtilmemiş</option>
+              <option value="Kadın">Kadın</option>
+              <option value="Erkek">Erkek</option>
+            </select>
+          </div>
         </div>
-
-        <div class="birth-note">
-          Doğum bilgin isteğe bağlı. Eklersen, ileride sana özel günlük ve haftalık yorumlar sunabiliriz.
-        </div>
-
-        <button type="submit" class="submit" id="saveBtn">Kaydet</button>
+        <button type="submit" class="submit" id="personSubmit">Ekle</button>
       </form>
+      <div class="center"><button type="button" class="link-btn" id="personCancel" style="display:none;">Düzenlemeyi iptal et</button></div>
+      <div class="msg" id="personMsg" role="status" aria-live="polite"></div>
+    </section>
 
-      <div class="msg" id="msg" role="status" aria-live="polite"></div>
-
-      <button type="button" class="ghost-btn" id="logoutBtn">Çıkış Yap</button>
-      <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
-    </div>
-
-  </main>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -198,7 +227,9 @@
   var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co";
   var SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var currentUserId = null;
 
+  // Profil kartı öğeleri
   var loadingState = document.getElementById("loadingState");
   var needLoginState = document.getElementById("needLoginState");
   var profileState = document.getElementById("profileState");
@@ -207,10 +238,26 @@
   var birthDateEl = document.getElementById("birthDate");
   var birthTimeEl = document.getElementById("birthTime");
   var birthPlaceEl = document.getElementById("birthPlace");
-  var form = document.getElementById("profileForm");
+  var profileForm = document.getElementById("profileForm");
   var saveBtn = document.getElementById("saveBtn");
   var msg = document.getElementById("msg");
   var logoutBtn = document.getElementById("logoutBtn");
+
+  // Kişiler kartı öğeleri
+  var peopleCard = document.getElementById("peopleCard");
+  var peopleList = document.getElementById("peopleList");
+  var peopleEmpty = document.getElementById("peopleEmpty");
+  var formTitle = document.getElementById("formTitle");
+  var personForm = document.getElementById("personForm");
+  var pName = document.getElementById("pName");
+  var pDate = document.getElementById("pDate");
+  var pTime = document.getElementById("pTime");
+  var pPlace = document.getElementById("pPlace");
+  var pGender = document.getElementById("pGender");
+  var personSubmit = document.getElementById("personSubmit");
+  var personCancel = document.getElementById("personCancel");
+  var personMsg = document.getElementById("personMsg");
+  var editingId = null;
 
   function show(state){
     loadingState.classList.remove("show");
@@ -218,12 +265,13 @@
     profileState.classList.remove("show");
     state.classList.add("show");
   }
-  function showMsg(text, type){
-    msg.textContent = text;
-    msg.className = "msg show " + (type === "ok" ? "ok" : "error");
-  }
-  function clearMsg(){ msg.className = "msg"; msg.textContent = ""; }
+  function setMsg(el, text, type){ el.textContent = text; el.className = "msg show " + (type === "ok" ? "ok" : "error"); }
+  function clr(el){ el.className = "msg"; el.textContent = ""; }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 
+  function fmtTarih(d){ if(!d) return ""; var p = d.split("-"); return (p.length===3)? (p[2]+"."+p[1]+"."+p[0]) : d; }
+
+  // ---------- Profil (kendi bilgin) ----------
   function doldur(user){
     var m = (user && user.user_metadata) ? user.user_metadata : {};
     emailBox.textContent = user.email || "—";
@@ -233,28 +281,21 @@
     birthPlaceEl.value = m.birth_place || "";
   }
 
-  form.addEventListener("submit", async function(e){
+  profileForm.addEventListener("submit", async function(e){
     e.preventDefault();
-    clearMsg();
-    saveBtn.disabled = true;
-    saveBtn.textContent = "Kaydediliyor…";
+    clr(msg);
+    saveBtn.disabled = true; saveBtn.textContent = "Kaydediliyor…";
     try{
-      var res = await sb.auth.updateUser({
-        data: {
-          full_name: nameEl.value.trim(),
-          birth_date: birthDateEl.value || "",
-          birth_time: birthTimeEl.value || "",
-          birth_place: birthPlaceEl.value.trim()
-        }
-      });
-      if(res.error){ showMsg("Kaydedilemedi. Lütfen tekrar dene.", "error"); }
-      else{ showMsg("Bilgilerin kaydedildi ✓", "ok"); }
-    }catch(err){
-      showMsg("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dene.", "error");
-    }finally{
-      saveBtn.disabled = false;
-      saveBtn.textContent = "Kaydet";
-    }
+      var res = await sb.auth.updateUser({ data: {
+        full_name: nameEl.value.trim(),
+        birth_date: birthDateEl.value || "",
+        birth_time: birthTimeEl.value || "",
+        birth_place: birthPlaceEl.value.trim()
+      }});
+      if(res.error){ setMsg(msg, "Kaydedilemedi. Lütfen tekrar dene.", "error"); }
+      else{ setMsg(msg, "Bilgilerin kaydedildi ✓", "ok"); }
+    }catch(err){ setMsg(msg, "Bağlantı kurulamadı. Tekrar dene.", "error"); }
+    finally{ saveBtn.disabled = false; saveBtn.textContent = "Kaydet"; }
   });
 
   logoutBtn.addEventListener("click", async function(){
@@ -263,18 +304,129 @@
     window.location.href = "/giris.html";
   });
 
+  // ---------- Kayıtlı kişiler (charts tablosu) ----------
+  async function loadPeople(){
+    try{
+      var res = await sb.from("charts").select("*").order("created_at", { ascending: true });
+      if(res.error){ peopleList.innerHTML = ""; peopleEmpty.style.display = "block"; peopleEmpty.textContent = "Kişiler yüklenemedi."; return; }
+      renderPeople(res.data || []);
+    }catch(e){ peopleList.innerHTML = ""; peopleEmpty.style.display = "block"; peopleEmpty.textContent = "Kişiler yüklenemedi."; }
+  }
+
+  function renderPeople(rows){
+    if(!rows.length){ peopleList.innerHTML = ""; peopleEmpty.style.display = "block"; peopleEmpty.textContent = "Henüz kayıtlı kişin yok. Aşağıdan ekleyebilirsin."; return; }
+    peopleEmpty.style.display = "none";
+    peopleList.innerHTML = rows.map(function(r){
+      var meta = [];
+      if(r.birth_date) meta.push(fmtTarih(r.birth_date));
+      if(r.birth_time) meta.push(r.birth_time);
+      if(r.birth_place) meta.push(r.birth_place);
+      if(r.gender) meta.push(r.gender);
+      return '<div class="person">'
+           +   '<div class="person-info"><div class="person-name">'+esc(r.name || "İsimsiz")+'</div>'
+           +     (meta.length? '<div class="person-meta">'+esc(meta.join(" · "))+'</div>' : '')
+           +   '</div>'
+           +   '<div class="person-actions">'
+           +     '<button type="button" class="icon-btn" data-edit="'+r.id+'">Düzenle</button>'
+           +     '<button type="button" class="icon-btn danger" data-del="'+r.id+'">Sil</button>'
+           +   '</div>'
+           + '</div>';
+    }).join("");
+  }
+
+  function resetForm(){
+    editingId = null;
+    personForm.reset();
+    formTitle.textContent = "Yeni kişi ekle";
+    personSubmit.textContent = "Ekle";
+    personCancel.style.display = "none";
+    clr(personMsg);
+  }
+
+  personForm.addEventListener("submit", async function(e){
+    e.preventDefault();
+    clr(personMsg);
+    var ad = pName.value.trim();
+    if(!ad){ setMsg(personMsg, "Kişinin adını gir.", "error"); return; }
+    personSubmit.disabled = true; personSubmit.textContent = editingId ? "Güncelleniyor…" : "Ekleniyor…";
+    var kayit = {
+      name: ad,
+      birth_date: pDate.value || null,
+      birth_time: pTime.value || null,
+      birth_place: pPlace.value.trim(),
+      gender: pGender.value
+    };
+    try{
+      var res;
+      if(editingId){
+        res = await sb.from("charts").update(kayit).eq("id", editingId);
+      }else{
+        kayit.user_id = currentUserId;
+        res = await sb.from("charts").insert(kayit);
+      }
+      if(res.error){ setMsg(personMsg, "Kaydedilemedi. Lütfen tekrar dene.", "error"); }
+      else{
+        var edilenId = editingId;
+        resetForm();
+        setMsg(personMsg, edilenId ? "Kişi güncellendi ✓" : "Kişi eklendi ✓", "ok");
+        await loadPeople();
+      }
+    }catch(err){ setMsg(personMsg, "Bağlantı kurulamadı. Tekrar dene.", "error"); }
+    finally{ personSubmit.disabled = false; personSubmit.textContent = editingId ? "Güncelle" : "Ekle"; }
+  });
+
+  personCancel.addEventListener("click", function(){ resetForm(); });
+
+  // Liste içindeki Düzenle / Sil (olay delegasyonu)
+  peopleList.addEventListener("click", async function(e){
+    var t = e.target;
+    var delId = t.getAttribute("data-del");
+    var editId = t.getAttribute("data-edit");
+    if(delId){
+      if(!window.confirm("Bu kişiyi silmek istediğine emin misin?")) return;
+      t.disabled = true;
+      try{
+        var res = await sb.from("charts").delete().eq("id", delId);
+        if(res.error){ setMsg(personMsg, "Silinemedi. Tekrar dene.", "error"); t.disabled = false; return; }
+        if(editingId === delId) resetForm();
+        await loadPeople();
+      }catch(err){ setMsg(personMsg, "Bağlantı kurulamadı. Tekrar dene.", "error"); t.disabled = false; }
+      return;
+    }
+    if(editId){
+      try{
+        var r = await sb.from("charts").select("*").eq("id", editId).single();
+        if(r.error || !r.data){ setMsg(personMsg, "Kişi bilgisi alınamadı.", "error"); return; }
+        var d = r.data;
+        editingId = editId;
+        pName.value = d.name || "";
+        pDate.value = d.birth_date || "";
+        pTime.value = d.birth_time || "";
+        pPlace.value = d.birth_place || "";
+        pGender.value = d.gender || "";
+        formTitle.textContent = "Kişiyi düzenle";
+        personSubmit.textContent = "Güncelle";
+        personCancel.style.display = "inline-block";
+        clr(personMsg);
+        peopleCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      }catch(err){ setMsg(personMsg, "Bağlantı kurulamadı. Tekrar dene.", "error"); }
+    }
+  });
+
+  // ---------- Başlangıç ----------
   (async function init(){
     try{
       var sess = await sb.auth.getSession();
       if(sess && sess.data && sess.data.session){
+        currentUserId = sess.data.session.user.id;
         doldur(sess.data.session.user);
         show(profileState);
+        peopleCard.style.display = "block";
+        loadPeople();
       }else{
         show(needLoginState);
       }
-    }catch(e){
-      show(needLoginState);
-    }
+    }catch(e){ show(needLoginState); }
   })();
 
 })();
