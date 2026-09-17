@@ -209,9 +209,9 @@
 
     var linklerHTML = LINKLER.map(function(l){ return '<a href="'+l.href+'">'+esc(l.ad)+'</a>'; }).join("");
 
-    // Giriş yapılmışsa "Profilim", yapılmamışsa "Giriş"
+    // Giriş yapılmışsa "Günlük Yorumum" + "Profilim", yapılmamışsa "Giriş"
     var hesapHTML = oturumAcikMi()
-      ? '<a href="/profil.html">Profilim</a>'
+      ? '<a href="/gunluk-yorumum.html">Günlük Yorumum</a><a href="/profil.html">Profilim</a>'
       : '<a href="/giris.html">Giriş</a>';
 
     var html = ''

@@ -42,7 +42,7 @@
   }
   .wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:34px 16px 70px;}
   .card{
-    width:100%;max-width:560px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:36px 34px 32px;
+    width:100%;max-width:600px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:36px 34px 32px;
     box-shadow:0 30px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(217,185,106,.32);
     animation:rise .55s ease both;
   }
@@ -56,13 +56,25 @@
 
   .state{display:none;} .state.show{display:block;} .center{text-align:center;}
 
-  /* içerik metni */
   .yorum{margin-top:18px;}
-  .yorum p{font-size:15.5px;line-height:1.75;color:var(--cream);margin:0 0 15px;}
+  .yorum p{font-size:15.5px;line-height:1.78;color:var(--cream);margin:0 0 15px;}
   .yorum p:last-child{margin-bottom:0;}
-  .note{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.55;text-align:center;}
 
-  /* üretiliyor animasyonu */
+  /* astrolojik temel — tablolar */
+  .temel{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);}
+  .temel-baslik{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.85;text-align:center;margin-bottom:4px;}
+  .temel-alt{font-size:12px;color:var(--muted);text-align:center;margin:0 0 16px;line-height:1.5;}
+  .tbl-title{font-size:13px;color:var(--gold-soft);font-weight:600;margin:16px 0 8px;}
+  .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table.veri{width:100%;border-collapse:collapse;font-size:13px;}
+  table.veri th,table.veri td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(217,185,106,.12);white-space:nowrap;}
+  table.veri th{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;}
+  table.veri td{color:var(--cream);}
+  table.veri tr:last-child td{border-bottom:0;}
+  .retro{color:var(--gold);font-size:11px;}
+
+  .note{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.55;text-align:center;}
+
   .gen{text-align:center;padding:26px 0 10px;}
   .orbit{width:62px;height:62px;margin:0 auto 18px;position:relative;}
   .orbit::before{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--line);}
@@ -72,7 +84,6 @@
   .gen p{color:var(--muted);font-size:14px;line-height:1.6;margin:0;}
 
   .msg{margin-top:14px;font-size:14px;line-height:1.55;padding:12px 14px;border-radius:10px;background:rgba(231,161,122,.10);border:1px solid rgba(231,161,122,.4);color:var(--error);}
-
   .gold-btn{display:inline-block;margin-top:8px;border:0;border-radius:11px;padding:13px 26px;font-family:inherit;font-size:15px;font-weight:600;color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));cursor:pointer;text-decoration:none;}
   .foot{margin-top:20px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;}
   .foot a{color:var(--gold-soft);text-decoration:none;} .foot a:hover{text-decoration:underline;}
@@ -89,10 +100,8 @@
     <h1>Günlük Yorumum</h1>
     <p class="date" id="dateLine"></p>
 
-    <!-- Yükleniyor -->
     <div class="state show" id="loadingState"><div class="loading">Yükleniyor…</div></div>
 
-    <!-- Giriş gerekli -->
     <div class="state" id="needLoginState">
       <p class="center" style="color:var(--muted);font-size:14px;line-height:1.6;margin:14px 0 18px;">
         Sana özel günlük yorumun için giriş yapman gerekiyor.
@@ -101,7 +110,6 @@
       <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
     </div>
 
-    <!-- Doğum bilgisi eksik -->
     <div class="state" id="needBirthState">
       <p class="center" style="color:var(--muted);font-size:14px;line-height:1.65;margin:14px 0 18px;">
         Kişisel yorumun için doğum bilgilerin gerekli (tarih, saat ve yer).
@@ -111,7 +119,6 @@
       <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
     </div>
 
-    <!-- Üretiliyor -->
     <div class="state" id="genState">
       <div class="gen">
         <div class="orbit" aria-hidden="true"></div>
@@ -119,14 +126,13 @@
       </div>
     </div>
 
-    <!-- Sonuç -->
     <div class="state" id="resultState">
       <div class="yorum" id="yorumBox"></div>
+      <div class="temel" id="temelBox"></div>
       <div class="note">Bu yorum, senin doğum haritana ve bugünün gökyüzüne göre hazırlandı. Yarın yenilenir. ✦<br>Yıldızlar yol göstericidir; karar her zaman senindir.</div>
       <div class="foot"><a href="/">← Ana sayfaya dön</a> · <a href="/profil.html">Profilim</a></div>
     </div>
 
-    <!-- Hata -->
     <div class="state" id="errorState">
       <div class="msg" id="errorMsg">Bir şeyler ters gitti.</div>
       <div class="center" style="margin-top:16px;"><button type="button" class="gold-btn" id="retryBtn">Tekrar Dene</button></div>
@@ -155,16 +161,15 @@
   var errorState = document.getElementById("errorState");
   var dateLine = document.getElementById("dateLine");
   var yorumBox = document.getElementById("yorumBox");
+  var temelBox = document.getElementById("temelBox");
   var genText = document.getElementById("genText");
   var errorMsg = document.getElementById("errorMsg");
   var retryBtn = document.getElementById("retryBtn");
 
   var states = [loadingState, needLoginState, needBirthState, genState, resultState, errorState];
   function show(s){ states.forEach(function(x){ x.classList.remove("show"); }); s.classList.add("show"); }
-
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 
-  // İstanbul günü (YYYY-MM-DD) — önbellek anahtarı
   function istanbulKey(){
     try{ return new Intl.DateTimeFormat("en-CA",{ timeZone:"Europe/Istanbul", year:"numeric", month:"2-digit", day:"2-digit" }).format(new Date()); }
     catch(e){ return new Date().toISOString().slice(0,10); }
@@ -174,22 +179,51 @@
     catch(e){ return ""; }
   }
 
-  function render(content){
+  function derraceStr(d){ var n = Number(d); return isFinite(n) ? (Math.floor(n) + "°") : ""; }
+
+  function tabloHTML(veri){
+    if(!veri || (!veri.transitler && !veri.gezegenler)) return "";
+    var html = '<div class="temel-baslik">Bu yorumun astrolojik temeli</div>'
+             + '<p class="temel-alt">Yorumun dayandığı gerçek gökyüzü verileri. Merak edersen incele; etmezsen yukarısı yeterli. ✦</p>';
+
+    var tr = (veri.transitler || []);
+    if(tr.length){
+      html += '<div class="tbl-title">Bugünün öne çıkan açıları</div><div class="tbl-scroll"><table class="veri">'
+            + '<thead><tr><th>Transit gezegen</th><th>Açı</th><th>Haritanda</th><th>Yakınlık</th></tr></thead><tbody>'
+            + tr.map(function(t){
+                return '<tr><td>'+esc(t.transit)+'</td><td>'+esc(t.aci)+'</td><td>'+esc(t.natal)+'</td><td>'+esc(derraceStr(t.orb))+'</td></tr>';
+              }).join("")
+            + '</tbody></table></div>';
+    }
+
+    var gz = (veri.gezegenler || []);
+    if(gz.length){
+      html += '<div class="tbl-title">Doğum haritan — gezegenler ve evler</div><div class="tbl-scroll"><table class="veri">'
+            + '<thead><tr><th>Gezegen</th><th>Burç</th><th>Derece</th><th>Ev</th></tr></thead><tbody>'
+            + gz.map(function(p){
+                var r = p.retro ? ' <span class="retro">℞</span>' : '';
+                return '<tr><td>'+esc(p.ad)+r+'</td><td>'+esc(p.burc)+'</td><td>'+esc(derraceStr(p.derece))+'</td><td>'+esc(p.ev != null ? p.ev : "")+'</td></tr>';
+              }).join("")
+            + '</tbody></table></div>';
+    }
+    return html;
+  }
+
+  function render(content, veri){
     var paras = String(content||"").split(/\n\s*\n/).map(function(t){ return t.trim(); }).filter(Boolean);
     if(!paras.length) paras = [String(content||"").trim()];
     yorumBox.innerHTML = paras.map(function(p){ return "<p>"+esc(p).replace(/\n/g,"<br>")+"</p>"; }).join("");
+    temelBox.innerHTML = tabloHTML(veri);
     show(resultState);
   }
   function hata(mesaj){ errorMsg.textContent = mesaj || "Bir şeyler ters gitti. Birazdan tekrar dene."; show(errorState); }
 
-  var profil = null; // { name, birthDate, birthTime, birthPlace }
-  var uid = null;
+  var profil = null, uid = null;
 
   async function uret(){
     show(genState);
     var key = istanbulKey();
     genText.textContent = "Yıldızlar haritanı okuyor…";
-    // Backend bazen ilk isteğinde uykudan uyanır (birkaç sn); nazikçe beklet
     var yavasTimer = setTimeout(function(){ genText.textContent = "Gökyüzü hesaplanıyor, birkaç saniye sürebilir…"; }, 6000);
     try{
       var r = await fetch(BACKEND + "/api/kisisel-yorum", {
@@ -200,14 +234,13 @@
       clearTimeout(yavasTimer);
       var data = await r.json().catch(function(){ return {}; });
       if(!r.ok || !data.ok){ hata(data && data.mesaj); return; }
-      // Önbelleğe kaydet (kendi oturumun; RLS korumalı). Çift sekme yarışına karşı upsert.
       try{
         await sb.from("personal_horoscopes").upsert(
-          { user_id: uid, type:"daily", period_key:key, content:data.content },
+          { user_id: uid, type:"daily", period_key:key, content:data.content, data:(data.veri || null) },
           { onConflict:"user_id,type,period_key" }
         );
-      }catch(e){ /* kayıt başarısız olsa da yorumu göster */ }
-      render(data.content);
+      }catch(e){ /* kayıt başarısız olsa da göster */ }
+      render(data.content, data.veri);
     }catch(err){
       clearTimeout(yavasTimer);
       hata("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dene.");
@@ -216,11 +249,10 @@
 
   async function basla(){
     var key = istanbulKey();
-    // Önce önbelleğe bak (bugün üretilmiş mi?)
     try{
-      var c = await sb.from("personal_horoscopes").select("content").eq("type","daily").eq("period_key",key).maybeSingle();
-      if(c && c.data && c.data.content){ render(c.data.content); return; }
-    }catch(e){ /* önbellek okunamadıysa üretime geç */ }
+      var c = await sb.from("personal_horoscopes").select("content, data").eq("type","daily").eq("period_key",key).maybeSingle();
+      if(c && c.data && c.data.content){ render(c.data.content, c.data.data); return; }
+    }catch(e){ /* önbellek okunamadıysa üret */ }
     await uret();
   }
 
@@ -234,12 +266,7 @@
       var user = sess.data.session.user;
       uid = user.id;
       var m = user.user_metadata || {};
-      profil = {
-        name: m.full_name || "",
-        birthDate: m.birth_date || "",
-        birthTime: m.birth_time || "",
-        birthPlace: m.birth_place || ""
-      };
+      profil = { name: m.full_name || "", birthDate: m.birth_date || "", birthTime: m.birth_time || "", birthPlace: m.birth_place || "" };
       if(!profil.birthDate || !profil.birthPlace){ show(needBirthState); return; }
       await basla();
     }catch(e){ show(needLoginState); }
