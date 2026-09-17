@@ -131,6 +131,40 @@
   <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, kişiye özel astroloji ve kader matrisi raporların. Hazır olduğunda gün içinde e-postana gönderilir.</p>
 </section>
 
+<section class="section-block" id="daily-promo">
+  <a class="tool-feature" id="dailyPromoCard" href="/giris.html">
+    <span class="fic">✦</span>
+    <span class="ftx">
+      <span class="fbadge" id="dpBadge">★ Üyelere özel</span>
+      <span class="ftt" id="dpTitle">Sana Özel Günlük Yorum</span>
+      <span class="ftd" id="dpDesc">Kendi doğum haritana göre, bugünün gökyüzünden hazırlanan kişisel günlük yorumun. Üye ol, hemen başla — ilk yorumun seni bekliyor.</span>
+    </span>
+    <span class="farrow">→</span>
+  </a>
+  <script>
+  (function(){
+    try{
+      var acik=false,o,tok,exp,k;
+      for(var i=0;i<localStorage.length;i++){
+        k=localStorage.key(i);
+        if(k && /^sb-.*-auth-token$/.test(k)){
+          o=JSON.parse(localStorage.getItem(k)||"{}");
+          tok=o.access_token||(o.currentSession&&o.currentSession.access_token);
+          exp=o.expires_at||(o.currentSession&&o.currentSession.expires_at);
+          if(tok && (!exp || exp*1000>Date.now())){ acik=true; break; }
+        }
+      }
+      if(acik){
+        document.getElementById("dailyPromoCard").setAttribute("href","/gunluk-yorumum.html");
+        document.getElementById("dpBadge").textContent="★ Bugüne özel";
+        document.getElementById("dpTitle").textContent="Günlük Yorumun Hazır";
+        document.getElementById("dpDesc").textContent="Doğum haritana ve bugünün gökyüzüne göre sana özel yorumun seni bekliyor. Bugün gökyüzü senin için ne söylüyor?";
+      }
+    }catch(e){}
+  })();
+  </script>
+</section>
+
 <section id="cards"></section>
 
 <section class="section-block" id="araclar">
