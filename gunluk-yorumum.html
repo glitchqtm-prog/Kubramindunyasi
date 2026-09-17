@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Günlük Yorumum · Astro Yuvam</title>
+<meta name="description" content="Kendi doğum haritana ve bugünün gökyüzüne göre sana özel günlük yorum.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/logo-512.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#14101f; --panel:#1d1730; --field:#241d38;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2;
+    --muted:rgba(240,230,210,.58); --line:rgba(217,185,106,.22);
+    --error:#e7a17a; color-scheme:dark;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;min-height:100vh;
+    background:
+      radial-gradient(1100px 620px at 50% -160px, rgba(217,185,106,.14), transparent 70%),
+      radial-gradient(900px 500px at 85% 110%, rgba(120,90,180,.10), transparent 70%),
+      var(--bg);
+    color:var(--cream);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      radial-gradient(1.4px 1.4px at 20% 30%, rgba(240,230,210,.35), transparent),
+      radial-gradient(1.2px 1.2px at 70% 20%, rgba(240,230,210,.28), transparent),
+      radial-gradient(1.3px 1.3px at 40% 75%, rgba(240,230,210,.22), transparent),
+      radial-gradient(1.1px 1.1px at 88% 62%, rgba(240,230,210,.30), transparent),
+      radial-gradient(1.2px 1.2px at 12% 82%, rgba(240,230,210,.20), transparent);
+  }
+  .wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:34px 16px 70px;}
+  .card{
+    width:100%;max-width:560px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:36px 34px 32px;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(217,185,106,.32);
+    animation:rise .55s ease both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){.card{animation:none;}}
+
+  .brand{text-align:center;margin-bottom:8px;}
+  .brand img{width:58px;height:58px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 26px -6px rgba(217,185,106,.5);}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:30px;letter-spacing:.3px;margin:14px 0 6px;color:var(--gold-soft);text-align:center;}
+  .date{margin:0 0 6px;color:var(--muted);font-size:13.5px;text-align:center;}
+
+  .state{display:none;} .state.show{display:block;} .center{text-align:center;}
+
+  /* içerik metni */
+  .yorum{margin-top:18px;}
+  .yorum p{font-size:15.5px;line-height:1.75;color:var(--cream);margin:0 0 15px;}
+  .yorum p:last-child{margin-bottom:0;}
+  .note{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.55;text-align:center;}
+
+  /* üretiliyor animasyonu */
+  .gen{text-align:center;padding:26px 0 10px;}
+  .orbit{width:62px;height:62px;margin:0 auto 18px;position:relative;}
+  .orbit::before{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--line);}
+  .orbit::after{content:"";position:absolute;top:-3px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px 2px rgba(217,185,106,.6);transform-origin:4px 34px;animation:spin 1.6s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion:reduce){.orbit::after{animation:none;}}
+  .gen p{color:var(--muted);font-size:14px;line-height:1.6;margin:0;}
+
+  .msg{margin-top:14px;font-size:14px;line-height:1.55;padding:12px 14px;border-radius:10px;background:rgba(231,161,122,.10);border:1px solid rgba(231,161,122,.4);color:var(--error);}
+
+  .gold-btn{display:inline-block;margin-top:8px;border:0;border-radius:11px;padding:13px 26px;font-family:inherit;font-size:15px;font-weight:600;color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));cursor:pointer;text-decoration:none;}
+  .foot{margin-top:20px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;}
+  .foot a{color:var(--gold-soft);text-decoration:none;} .foot a:hover{text-decoration:underline;}
+  .loading{color:var(--muted);font-size:14px;text-align:center;padding:18px 0;}
+</style>
+</head>
+<body>
+
+<div id="astro-menu"></div>
+
+<div class="wrap">
+  <main class="card">
+    <div class="brand"><img src="/logo-512.png" alt="Astro Yuvam"></div>
+    <h1>Günlük Yorumum</h1>
+    <p class="date" id="dateLine"></p>
+
+    <!-- Yükleniyor -->
+    <div class="state show" id="loadingState"><div class="loading">Yükleniyor…</div></div>
+
+    <!-- Giriş gerekli -->
+    <div class="state" id="needLoginState">
+      <p class="center" style="color:var(--muted);font-size:14px;line-height:1.6;margin:14px 0 18px;">
+        Sana özel günlük yorumun için giriş yapman gerekiyor.
+      </p>
+      <div class="center"><a href="/giris.html" class="gold-btn">Giriş Yap</a></div>
+      <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
+    </div>
+
+    <!-- Doğum bilgisi eksik -->
+    <div class="state" id="needBirthState">
+      <p class="center" style="color:var(--muted);font-size:14px;line-height:1.65;margin:14px 0 18px;">
+        Kişisel yorumun için doğum bilgilerin gerekli (tarih, saat ve yer).
+        Profilinden ekledikten sonra buraya dönebilirsin.
+      </p>
+      <div class="center"><a href="/profil.html" class="gold-btn">Profilime Git</a></div>
+      <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
+    </div>
+
+    <!-- Üretiliyor -->
+    <div class="state" id="genState">
+      <div class="gen">
+        <div class="orbit" aria-hidden="true"></div>
+        <p id="genText">Yıldızlar haritanı okuyor…</p>
+      </div>
+    </div>
+
+    <!-- Sonuç -->
+    <div class="state" id="resultState">
+      <div class="yorum" id="yorumBox"></div>
+      <div class="note">Bu yorum, senin doğum haritana ve bugünün gökyüzüne göre hazırlandı. Yarın yenilenir. ✦<br>Yıldızlar yol göstericidir; karar her zaman senindir.</div>
+      <div class="foot"><a href="/">← Ana sayfaya dön</a> · <a href="/profil.html">Profilim</a></div>
+    </div>
+
+    <!-- Hata -->
+    <div class="state" id="errorState">
+      <div class="msg" id="errorMsg">Bir şeyler ters gitti.</div>
+      <div class="center" style="margin-top:16px;"><button type="button" class="gold-btn" id="retryBtn">Tekrar Dene</button></div>
+      <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/menu.js" defer></script>
+
+<script>
+(function(){
+  "use strict";
+
+  var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
+  var BACKEND = "https://astro-rapor.onrender.com";
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  var loadingState = document.getElementById("loadingState");
+  var needLoginState = document.getElementById("needLoginState");
+  var needBirthState = document.getElementById("needBirthState");
+  var genState = document.getElementById("genState");
+  var resultState = document.getElementById("resultState");
+  var errorState = document.getElementById("errorState");
+  var dateLine = document.getElementById("dateLine");
+  var yorumBox = document.getElementById("yorumBox");
+  var genText = document.getElementById("genText");
+  var errorMsg = document.getElementById("errorMsg");
+  var retryBtn = document.getElementById("retryBtn");
+
+  var states = [loadingState, needLoginState, needBirthState, genState, resultState, errorState];
+  function show(s){ states.forEach(function(x){ x.classList.remove("show"); }); s.classList.add("show"); }
+
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+  // İstanbul günü (YYYY-MM-DD) — önbellek anahtarı
+  function istanbulKey(){
+    try{ return new Intl.DateTimeFormat("en-CA",{ timeZone:"Europe/Istanbul", year:"numeric", month:"2-digit", day:"2-digit" }).format(new Date()); }
+    catch(e){ return new Date().toISOString().slice(0,10); }
+  }
+  function trTarih(){
+    try{ return new Intl.DateTimeFormat("tr-TR",{ timeZone:"Europe/Istanbul", weekday:"long", day:"numeric", month:"long", year:"numeric" }).format(new Date()); }
+    catch(e){ return ""; }
+  }
+
+  function render(content){
+    var paras = String(content||"").split(/\n\s*\n/).map(function(t){ return t.trim(); }).filter(Boolean);
+    if(!paras.length) paras = [String(content||"").trim()];
+    yorumBox.innerHTML = paras.map(function(p){ return "<p>"+esc(p).replace(/\n/g,"<br>")+"</p>"; }).join("");
+    show(resultState);
+  }
+  function hata(mesaj){ errorMsg.textContent = mesaj || "Bir şeyler ters gitti. Birazdan tekrar dene."; show(errorState); }
+
+  var profil = null; // { name, birthDate, birthTime, birthPlace }
+  var uid = null;
+
+  async function uret(){
+    show(genState);
+    var key = istanbulKey();
+    genText.textContent = "Yıldızlar haritanı okuyor…";
+    // Backend bazen ilk isteğinde uykudan uyanır (birkaç sn); nazikçe beklet
+    var yavasTimer = setTimeout(function(){ genText.textContent = "Gökyüzü hesaplanıyor, birkaç saniye sürebilir…"; }, 6000);
+    try{
+      var r = await fetch(BACKEND + "/api/kisisel-yorum", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ type:"daily", name:profil.name, birthDate:profil.birthDate, birthTime:profil.birthTime, birthPlace:profil.birthPlace })
+      });
+      clearTimeout(yavasTimer);
+      var data = await r.json().catch(function(){ return {}; });
+      if(!r.ok || !data.ok){ hata(data && data.mesaj); return; }
+      // Önbelleğe kaydet (kendi oturumun; RLS korumalı). Çift sekme yarışına karşı upsert.
+      try{
+        await sb.from("personal_horoscopes").upsert(
+          { user_id: uid, type:"daily", period_key:key, content:data.content },
+          { onConflict:"user_id,type,period_key" }
+        );
+      }catch(e){ /* kayıt başarısız olsa da yorumu göster */ }
+      render(data.content);
+    }catch(err){
+      clearTimeout(yavasTimer);
+      hata("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dene.");
+    }
+  }
+
+  async function basla(){
+    var key = istanbulKey();
+    // Önce önbelleğe bak (bugün üretilmiş mi?)
+    try{
+      var c = await sb.from("personal_horoscopes").select("content").eq("type","daily").eq("period_key",key).maybeSingle();
+      if(c && c.data && c.data.content){ render(c.data.content); return; }
+    }catch(e){ /* önbellek okunamadıysa üretime geç */ }
+    await uret();
+  }
+
+  retryBtn.addEventListener("click", basla);
+
+  (async function init(){
+    dateLine.textContent = trTarih();
+    try{
+      var sess = await sb.auth.getSession();
+      if(!sess || !sess.data || !sess.data.session){ show(needLoginState); return; }
+      var user = sess.data.session.user;
+      uid = user.id;
+      var m = user.user_metadata || {};
+      profil = {
+        name: m.full_name || "",
+        birthDate: m.birth_date || "",
+        birthTime: m.birth_time || "",
+        birthPlace: m.birth_place || ""
+      };
+      if(!profil.birthDate || !profil.birthPlace){ show(needBirthState); return; }
+      await basla();
+    }catch(e){ show(needLoginState); }
+  })();
+
+})();
+</script>
+
+</body>
+</html>
