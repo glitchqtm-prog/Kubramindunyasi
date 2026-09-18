@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Astro Yuvam — Doğum Haritanı Keşfet</title>
+<title>Astro Yuvam — Günlük Burç Yorumları, Doğum Haritası & Kişisel Astroloji</title>
+<meta name="description" content="Gerçek gökyüzüne dayalı günlük ve haftalık burç yorumları, ücretsiz doğum haritası hesaplama ve yapay zekâ destekli kişiye özel astroloji ile kader matrisi raporları — Astro Yuvam.">
+<link rel="canonical" href="https://astroyuvam.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Astro Yuvam","alternateName":"AstroYuvam","url":"https://astroyuvam.com/","inLanguage":"tr-TR","publisher":{"@type":"Organization","name":"Astro Yuvam","logo":"https://astroyuvam.com/logo-512.png"}}</script>
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
@@ -80,6 +83,16 @@
   .tool-card .tx{display:flex;flex-direction:column}
   .tool-card .tt{color:var(--ay-ink);font-size:15px;font-weight:bold;line-height:1.3}
   .tool-card .td{color:var(--ay-muted);font-size:12.5px;line-height:1.5;margin-top:3px}
+  .burc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:920px;margin:0 auto}
+  @media(max-width:760px){.burc-grid{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:460px){.burc-grid{grid-template-columns:repeat(3,1fr)}}
+  .burc-grid a{display:flex;flex-direction:column;align-items:center;gap:7px;background:var(--ay-panel);border:1px solid var(--ay-line);border-radius:14px;padding:16px 8px;text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+  .burc-grid a:hover{background:rgba(217,185,106,.07);border-color:var(--ay-gold);transform:translateY(-2px)}
+  .burc-grid .bs{font-size:25px;color:var(--ay-gold);line-height:1}
+  .burc-grid .bn{font-size:13px;color:var(--ay-ink);font-weight:600}
+  .burc-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .burc-cta a{color:var(--ay-gold);border:1px solid var(--ay-line);padding:9px 18px;border-radius:20px;text-decoration:none;font-size:14px;transition:background .2s,border-color .2s}
+  .burc-cta a:hover{background:rgba(217,185,106,.1);border-color:var(--ay-gold)}
   .tools-more{text-align:center;margin-top:22px;font-size:14px}
   .tools-more a{color:var(--ay-gold)}
   /* Öne çıkan: Günlük Burç Yorumları */
@@ -129,6 +142,29 @@
   </div>
   <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
   <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, kişiye özel astroloji ve kader matrisi raporların. Hazır olduğunda gün içinde e-postana gönderilir.</p>
+</section>
+
+<section class="section-block" id="burc-yorumlari">
+  <h2>Günlük &amp; Haftalık Burç Yorumları</h2>
+  <p class="sub">Burcuna tıkla; bugünün ve bu haftanın yorumunu, gerçek gökyüzüne dayalı oku.</p>
+  <div class="burc-grid">
+    <a href="/gunluk-burc-yorumlari/koc.html"><span class="bs">♈</span><span class="bn">Koç</span></a>
+    <a href="/gunluk-burc-yorumlari/boga.html"><span class="bs">♉</span><span class="bn">Boğa</span></a>
+    <a href="/gunluk-burc-yorumlari/ikizler.html"><span class="bs">♊</span><span class="bn">İkizler</span></a>
+    <a href="/gunluk-burc-yorumlari/yengec.html"><span class="bs">♋</span><span class="bn">Yengeç</span></a>
+    <a href="/gunluk-burc-yorumlari/aslan.html"><span class="bs">♌</span><span class="bn">Aslan</span></a>
+    <a href="/gunluk-burc-yorumlari/basak.html"><span class="bs">♍</span><span class="bn">Başak</span></a>
+    <a href="/gunluk-burc-yorumlari/terazi.html"><span class="bs">♎</span><span class="bn">Terazi</span></a>
+    <a href="/gunluk-burc-yorumlari/akrep.html"><span class="bs">♏</span><span class="bn">Akrep</span></a>
+    <a href="/gunluk-burc-yorumlari/yay.html"><span class="bs">♐</span><span class="bn">Yay</span></a>
+    <a href="/gunluk-burc-yorumlari/oglak.html"><span class="bs">♑</span><span class="bn">Oğlak</span></a>
+    <a href="/gunluk-burc-yorumlari/kova.html"><span class="bs">♒</span><span class="bn">Kova</span></a>
+    <a href="/gunluk-burc-yorumlari/balik.html"><span class="bs">♓</span><span class="bn">Balık</span></a>
+  </div>
+  <div class="burc-cta">
+    <a href="/gunluk-burc-yorumlari.html">Tüm Günlük Yorumlar →</a>
+    <a href="/haftalik-burc-yorumlari.html">Haftalık Yorumlar →</a>
+  </div>
 </section>
 
 <section class="section-block" id="daily-promo">
