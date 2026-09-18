@@ -179,7 +179,8 @@
     catch(e){ return ""; }
   }
 
-  function derraceStr(d){ var n = Number(d); return isFinite(n) ? (Math.floor(n) + "°") : ""; }
+  function dereceStr(d){ var n = Number(d); return isFinite(n) ? (Math.floor(n) + "°") : ""; }
+  function orbStr(d){ var n = Number(d); return isFinite(n) ? (n.toFixed(1) + "°") : ""; }
 
   function tabloHTML(veri){
     if(!veri || (!veri.transitler && !veri.gezegenler)) return "";
@@ -191,7 +192,7 @@
       html += '<div class="tbl-title">Bugünün öne çıkan açıları</div><div class="tbl-scroll"><table class="veri">'
             + '<thead><tr><th>Transit gezegen</th><th>Açı</th><th>Haritanda</th><th>Yakınlık</th></tr></thead><tbody>'
             + tr.map(function(t){
-                return '<tr><td>'+esc(t.transit)+'</td><td>'+esc(t.aci)+'</td><td>'+esc(t.natal)+'</td><td>'+esc(derraceStr(t.orb))+'</td></tr>';
+                return '<tr><td>'+esc(t.transit)+'</td><td>'+esc(t.aci)+'</td><td>'+esc(t.natal)+'</td><td>'+esc(orbStr(t.orb))+'</td></tr>';
               }).join("")
             + '</tbody></table></div>';
     }
@@ -202,7 +203,7 @@
             + '<thead><tr><th>Gezegen</th><th>Burç</th><th>Derece</th><th>Ev</th></tr></thead><tbody>'
             + gz.map(function(p){
                 var r = p.retro ? ' <span class="retro">℞</span>' : '';
-                return '<tr><td>'+esc(p.ad)+r+'</td><td>'+esc(p.burc)+'</td><td>'+esc(derraceStr(p.derece))+'</td><td>'+esc(p.ev != null ? p.ev : "")+'</td></tr>';
+                return '<tr><td>'+esc(p.ad)+r+'</td><td>'+esc(p.burc)+'</td><td>'+esc(dereceStr(p.derece))+'</td><td>'+esc(p.ev != null ? p.ev : "")+'</td></tr>';
               }).join("")
             + '</tbody></table></div>';
     }
