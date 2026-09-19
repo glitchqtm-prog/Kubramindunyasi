@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Asterna — Astro Yuvam'ın Astroloji &amp; Numeroloji Yapay Zekâ Rehberi</title>
+<meta name="description" content="Asterna, yalnızca astroloji ve numeroloji için tasarlanmış uzman yapay zekâ rehberi. Doğum haritasından Kader Matrisi'ne her dalda bilgili; Astro Yuvam'ın profesyonel rapor yöntemiyle beslenir, gerçek hesaplanmış veriyi okur. Üyeysen kendi raporunu birlikte derinlemesine inceler." />
+<link rel="canonical" href="https://astroyuvam.com/asterna.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Asterna — Astro Yuvam'ın Astroloji &amp; Numeroloji Yapay Zekâ Rehberi" />
+<meta property="og:description" content="Yalnızca astroloji ve numerolojiye odaklı uzman yapay zekâ rehberi. Her dalda bilgili, gerçek veriyle çalışır, üyelere özel rapor analizi yapar." />
+<meta property="og:url" content="https://astroyuvam.com/asterna.html" />
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* === Asterna tanıtım sayfası — sayfaya özel stiller (.as- öneki; global style.css'i bozmaz) === */
+  :root{
+    --as-gold:#d9b96a; --as-gold-soft:#e8d3a3; --as-panel:#161022; --as-panel-2:#12101d;
+    --as-line:#2a2140; --as-ink:#efe9dc; --as-muted:#b9aecb; --as-violet:#7c6cf0;
+  }
+  html{scroll-behavior:smooth}
+
+  /* Hero */
+  .as-hero{max-width:960px;margin:0 auto;padding:52px 22px 8px;text-align:center}
+  .as-eyebrow{display:inline-block;color:var(--as-gold);font-size:12px;letter-spacing:.22em;
+    font-weight:700;text-transform:uppercase;border:1px solid var(--as-line);border-radius:20px;padding:6px 16px;margin-bottom:22px}
+  .as-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5.6vw,52px);line-height:1.1;margin:0 0 16px}
+  .as-hero h1 em{font-style:italic;color:var(--as-gold-soft)}
+  .as-lead{color:var(--as-muted);max-width:640px;margin:0 auto;font-size:16.5px;line-height:1.75}
+  .as-orbit{position:relative;width:120px;height:120px;margin:0 auto 24px}
+  .as-orbit .r{position:absolute;border-radius:50%;border:1px solid}
+  .as-orbit .r1{inset:0;border-color:rgba(124,108,240,.5)}
+  .as-orbit .r2{inset:20px;border-color:rgba(217,185,106,.5)}
+  .as-orbit .r3{inset:40px;border-color:rgba(255,255,255,.12)}
+  .as-orbit .core{position:absolute;inset:0;margin:auto;width:44px;height:44px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#ffe9b8,var(--as-gold) 70%);box-shadow:0 0 34px rgba(217,185,106,.55);
+    display:flex;align-items:center;justify-content:center;color:#241a06;font-size:22px}
+  .as-facts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:680px;margin:26px auto 0}
+  .as-facts span{background:var(--as-panel);border:1px solid var(--as-line);border-radius:10px;padding:9px 15px;font-size:13.5px;color:var(--as-ink)}
+  .as-facts span b{color:var(--as-gold-soft);font-weight:700}
+  .as-cta-wrap{margin:30px auto 6px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .as-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;border-radius:12px;
+    padding:15px 30px;font-family:var(--sans);font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;color:#fff;
+    background:linear-gradient(120deg,var(--as-violet),#5546d6);box-shadow:0 10px 30px rgba(124,108,240,.28);transition:filter .2s,transform .15s}
+  .as-btn:hover{filter:brightness(1.09)}
+  .as-btn:active{transform:scale(.985)}
+  .as-micro{color:var(--as-muted);font-size:12.5px}
+
+  /* Bölüm sarmalı */
+  .as-sec{max-width:960px;margin:72px auto 0;padding:0 22px}
+  .as-sec h2{font-family:var(--serif);font-weight:500;color:var(--as-gold-soft);font-size:clamp(24px,3.6vw,32px);text-align:center;margin:0 0 10px;line-height:1.2}
+  .as-sec .sub{color:var(--as-muted);text-align:center;font-size:15px;line-height:1.65;max-width:660px;margin:0 auto 34px}
+
+  /* "nedir" kartı */
+  .as-what{max-width:780px;margin:0 auto;background:linear-gradient(180deg,var(--as-panel),var(--as-panel-2));
+    border:1px solid var(--as-line);border-radius:18px;padding:30px 30px}
+  .as-what p{color:var(--as-ink);font-size:15.5px;line-height:1.85;margin:0 0 14px}
+  .as-what p:last-child{margin-bottom:0}
+  .as-what strong{color:var(--as-gold-soft)}
+
+  /* Uzmanlık grid */
+  .as-exp{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.as-exp{grid-template-columns:1fr}}
+  .as-card{background:linear-gradient(180deg,var(--as-panel),var(--as-panel-2));border:1px solid var(--as-line);border-radius:16px;padding:24px 22px}
+  .as-card .ic{font-size:22px;margin-bottom:10px}
+  .as-card h3{font-family:var(--serif);font-weight:600;color:var(--as-ink);font-size:19px;margin:0 0 6px}
+  .as-card .lead2{color:var(--as-muted);font-size:13.5px;line-height:1.6;margin:0 0 16px}
+  .as-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .as-card li{position:relative;padding-left:22px;color:var(--as-ink);font-size:13.8px;line-height:1.5}
+  .as-card li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--as-gold);font-size:11px}
+  .as-card li b{color:var(--as-gold-soft);font-weight:600}
+  .as-more{max-width:900px;margin:20px auto 0;background:var(--as-panel);border:1px solid var(--as-line);border-radius:14px;padding:22px 24px}
+  .as-more h3{color:var(--as-gold-soft);font-size:16px;margin:0 0 10px;font-weight:600}
+  .as-more p{color:var(--as-muted);font-size:13.7px;line-height:1.7;margin:0}
+  .as-more p b{color:var(--as-ink)}
+  .as-more p.mini{color:var(--as-ink);font-size:12.8px;margin-top:12px;border-top:1px solid var(--as-line);padding-top:12px}
+
+  /* Neden uzman — grounding */
+  .as-why{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;margin:0 auto}
+  @media(max-width:680px){.as-why{grid-template-columns:1fr}}
+  .as-why .w{background:var(--as-panel);border:1px solid var(--as-line);border-radius:14px;padding:22px 20px}
+  .as-why .w .wic{color:var(--as-gold);font-size:22px;margin-bottom:10px}
+  .as-why .w h3{color:var(--as-ink);font-size:16px;margin:0 0 7px;font-weight:600}
+  .as-why .w p{color:var(--as-muted);font-size:13.7px;line-height:1.65;margin:0}
+  .as-why .w p b{color:var(--as-ink)}
+
+  /* Ne yapabilir — iki sütun */
+  .as-do{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px;margin:0 auto}
+  @media(max-width:680px){.as-do{grid-template-columns:1fr}}
+  .as-do .col{background:linear-gradient(180deg,var(--as-panel),var(--as-panel-2));border:1px solid var(--as-line);border-radius:16px;padding:26px 24px}
+  .as-do .col.gold{border-color:rgba(217,185,106,.4)}
+  .as-do .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:5px 12px;border-radius:20px;margin-bottom:14px}
+  .as-do .tag.free{background:rgba(124,108,240,.15);color:#b9aefc;border:1px solid rgba(124,108,240,.4)}
+  .as-do .tag.mem{background:linear-gradient(180deg,#e7cf95,var(--as-gold));color:#241a06}
+  .as-do h3{color:var(--as-ink);font-size:18px;margin:0 0 12px;font-family:var(--serif)}
+  .as-do ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .as-do li{position:relative;padding-left:24px;color:var(--as-ink);font-size:14px;line-height:1.55}
+  .as-do li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--as-gold);font-size:12px}
+  .as-do .note{color:var(--as-muted);font-size:12.5px;line-height:1.6;margin:16px 0 0}
+
+  /* Etik */
+  .as-ethic{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:860px;margin:0 auto}
+  @media(max-width:680px){.as-ethic{grid-template-columns:1fr}}
+  .as-ethic .e{background:var(--as-panel);border:1px solid var(--as-line);border-radius:14px;padding:20px 20px}
+  .as-ethic .e h3{color:var(--as-gold-soft);font-size:15px;margin:0 0 6px;font-weight:600}
+  .as-ethic .e p{color:var(--as-muted);font-size:13.5px;line-height:1.6;margin:0}
+
+  /* Kapanış */
+  .as-close{max-width:760px;margin:72px auto 0;padding:0 22px;text-align:center}
+  .as-close .box{background:linear-gradient(180deg,var(--as-panel),var(--as-panel-2));border:1px solid rgba(217,185,106,.35);border-radius:20px;padding:44px 30px}
+  .as-close h2{font-family:var(--serif);font-weight:500;color:var(--as-ink);font-size:clamp(24px,4vw,32px);margin:0 0 10px}
+  .as-close p{color:var(--as-muted);font-size:15px;line-height:1.6;margin:0 auto 24px;max-width:480px}
+  .as-note{max-width:760px;margin:40px auto 0;padding:16px 22px;border:1px dashed var(--as-line);border-radius:12px;color:var(--as-muted);font-size:12.5px;line-height:1.7;text-align:center}
+  footer{text-align:center;color:var(--as-muted);font-size:12px;padding:40px 26px 30px}
+  footer a{color:var(--as-muted)}
+</style>
+<script src="/menu.js" defer></script>
+</head>
+<body>
+<div id="astro-menu"></div>
+
+<!-- ===================== HERO ===================== -->
+<section class="as-hero">
+  <div class="as-orbit">
+    <div class="r r1"></div><div class="r r2"></div><div class="r r3"></div>
+    <div class="core">✦</div>
+  </div>
+  <div class="as-eyebrow">Asterna · Astro Yuvam'ın Yapay Zekâ Rehberi</div>
+  <h1>Merhaba, ben <em>Asterna</em>.</h1>
+  <p class="as-lead">Ben genel bir sohbet botu değilim. Tek bir dünya için varım: <b style="color:var(--as-ink)">astroloji ve numeroloji</b>. Doğum haritanın en ince açısından Kader Matrisi'nin gizli hatlarına kadar; sana doğru raporu bulur, ücretsiz araçları gösterir, merak ettiğin her şeyi sade bir dille anlatırım. Üyeysen, senin <b style="color:var(--as-ink)">gerçek raporunu</b> birlikte satır satır okuruz.</p>
+
+  <div class="as-facts">
+    <span><b>2</b> alan · Astroloji + Numeroloji</span>
+    <span>Her <b>dalda</b> bilgili</span>
+    <span>Gerçek <b>hesaplanmış</b> veriyle</span>
+    <span>Üyelere <b>rapor analizi</b></span>
+    <span><b>7/24</b> yanında</span>
+  </div>
+
+  <div class="as-cta-wrap">
+    <button class="as-btn" type="button" onclick="(document.getElementById('asterna-fab')||{click:function(){}}).click()">✦ Asterna'ya bir şey sor</button>
+    <div class="as-micro">Sağ alt köşedeki ✦ balonundan her sayfada açılır · ücretsiz</div>
+  </div>
+</section>
+
+<!-- ===================== ASTERNA NEDİR ===================== -->
+<section class="as-sec">
+  <h2>Asterna tam olarak nedir?</h2>
+  <p class="sub">Yapay zekâların her birinin bir uzmanlık dünyası var. Asterna'nınki astroloji ve numeroloji.</p>
+  <div class="as-what">
+    <p>Asterna, Astro Yuvam'ın <strong>yıldızlardan doğmuş rehber karakteri</strong> ve aynı zamanda astroloji-numeroloji için özel olarak hazırlanmış bir <strong>yapay zekâ danışmanıdır</strong>. Her konuda konuşan genel bir asistan değil; bilerek ve isteyerek tek bir alana odaklandı.</p>
+    <p>Bu odak, onu güçlü kılan şey. Çünkü Asterna, raporlarımızı üreten <strong>aynı profesyonel yöntem ve bilgiyle beslenir</strong>: gerçek gök verisi (Swiss Ephemeris + Placidus), 22 Büyük Arkana'nın matris sistemi ve Astro Yuvam'ın tüm içerikleri. Uydurmaz — okur.</p>
+    <p>Ve en özel yanı: üyeysen ve bizden rapor aldıysan, Asterna <strong>senin o gerçek raporunu</strong> açıp sana özel, derinlemesine konuşabilir. Genel bir yorum değil; tam da senin haritan.</p>
+  </div>
+</section>
+
+<!-- ===================== NELERDE UZMAN ===================== -->
+<section class="as-sec">
+  <h2>Nelerde uzman?</h2>
+  <p class="sub">Astrolojinin ve numerolojinin dallarını tek tek bilir; terimi doğru kullanır, gerekince tek cümleyle sadeleştirir.</p>
+  <div class="as-exp">
+    <div class="as-card">
+      <div class="ic">🌌</div>
+      <h3>Astroloji</h3>
+      <p class="lead2">Doğum anının gökyüzünü bütün katmanlarıyla okur.</p>
+      <ul>
+        <li><b>Doğum haritası (natal):</b> Güneş, Ay, Yükselen ve gerçek kimlik</li>
+        <li><b>Gezegenler &amp; 12 ev:</b> her yaşam alanının haritadaki karşılığı</li>
+        <li><b>Açılar:</b> kavuşum, karşıt, üçgen, kare, altmışlık — orb hassasiyetiyle</li>
+        <li><b>Ay düğümleri &amp; Chiron:</b> yaşam amacı ve şifa temaları</li>
+        <li><b>Yönetici gezegenler &amp; asaletler:</b> haritanın omurgası</li>
+        <li><b>Transitler:</b> güncel dönemin sana getirdikleri</li>
+        <li><b>Solar &amp; Lunar Return:</b> yıllık ve aylık öngörü</li>
+        <li><b>Sinastri:</b> iki haritanın ilişki uyumu</li>
+      </ul>
+    </div>
+    <div class="as-card">
+      <div class="ic">🔢</div>
+      <h3>Numeroloji</h3>
+      <p class="lead2">Doğum tarihinden doğan enerji desenini çözer.</p>
+      <ul>
+        <li><b>Kader Matrisi:</b> 22 Büyük Arkana ile kişilik ve kader</li>
+        <li><b>Oktagram:</b> merkez, köşeler ve enerji hatları</li>
+        <li><b>Karmik kuyruk:</b> geçmişten getirilen desenler</li>
+        <li><b>Enerji hatları:</b> aşk, para-bolluk, yaşam amacı, gizli yetenek</li>
+        <li><b>Çakra haritası:</b> enerjisel farkındalık (tıbbi değil)</li>
+        <li><b>Yaş dönemleri:</b> hayatının dönem dönem enerjisi</li>
+        <li><b>Yaşam Yolu sayısı:</b> ana yön ve tema</li>
+        <li><b>İsim titreşimi:</b> ismin taşıdığı enerji</li>
+      </ul>
+    </div>
+  </div>
+  <div class="as-more">
+    <h3>Ve dahası — ileri teknikler, gelenek ve bir tutam psikoloji</h3>
+    <p>Ev sistemleri (Placidus, Koch, Whole Sign…), geleneksel/Helenistik teknikler (<b>dignity, terimler/bounds, dekanlar, sect, zodyaksal serbestleşme, profeksiyon, primary directions</b>), öngörü teknikleri (ikincil progresyon, solar ark, harmonik &amp; draconik), kompozit &amp; Davison, <b>astrokartografi &amp; relokasyon</b>, harita düzeltme (<b>rektifikasyon</b>), orta noktalar, sabit yıldızlar ve Arap noktaları; numerolojide Pisagor ve Kildani sistemleri. Astroloji-numerolojiyle kesiştiği ölçüde bir tutam psikoloji de (Jung arketipleri, aile dizimi) — yalnızca anlatım dili ve yaklaşım için.</p>
+    <p class="mini">Asterna bunların hepsini bilir ve sana anlatabilir. Astro Yuvam bu tekniklerin bir kısmını (ör. astrokartografi, rektifikasyon) zamanla rapor olarak da ekleyecek.</p>
+  </div>
+</section>
+
+<!-- ===================== NEDEN UZMAN / NEYLE BESLENDİ ===================== -->
+<section class="as-sec">
+  <h2>Neden uzman? Neyle beslenir?</h2>
+  <p class="sub">Uzmanlığı bir iddia değil, bir tasarım tercihi: derinlik için odak.</p>
+  <div class="as-why">
+    <div class="w">
+      <div class="wic">🎯</div>
+      <h3>Tek alana odaklandı</h3>
+      <p>Her şeyi bilmeye çalışan bir asistan değil. Yalnızca astroloji ve numeroloji için hazırlandı — <b>derinlik, dağınıklıktan değil odaktan gelir.</b></p>
+    </div>
+    <div class="w">
+      <div class="wic">📚</div>
+      <h3>Astro Yuvam'ın yöntemiyle beslendi</h3>
+      <p>Raporlarımızı üreten <b>aynı profesyonel bilgi ve titizlik</b> Asterna'nın da temeli. Site içerikleri, rapor yöntemleri ve araçlar onun kaynağı.</p>
+    </div>
+    <div class="w">
+      <div class="wic">🛰️</div>
+      <h3>Gerçek veriyle çalışır</h3>
+      <p>Gökyüzünü ya da matrisi uydurmaz. <b>Swiss Ephemeris + Placidus</b> ile hesaplanan gerçek konumları ve tarihten türeyen gerçek sayıları okur.</p>
+    </div>
+    <div class="w">
+      <div class="wic">📄</div>
+      <h3>Senin raporunu okur</h3>
+      <p>Üyeysen ve rapor aldıysan, Asterna <b>senin gerçek raporunun</b> içinden konuşur — genel bir yorum değil, tam da senin haritana özel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NE YAPABİLİR ===================== -->
+<section class="as-sec">
+  <h2>Asterna ile neler yapabilirsin?</h2>
+  <p class="sub">Bir kısmı herkese açık ve ücretsiz; en derini ise rapor sahibi üyelere özel.</p>
+  <div class="as-do">
+    <div class="col">
+      <span class="tag free">Herkese · Ücretsiz</span>
+      <h3>Rehberlik &amp; sorular</h3>
+      <ul>
+        <li>Durumunu anlat, <b>sana en uygun raporu</b> önersin — hangisi, neden, içinde ne var</li>
+        <li>Ücretsiz araçları (doğum haritası, uyum, günlük burç…) tanıtsın ve yönlendirsin</li>
+        <li>Merak ettiğin astroloji-numeroloji terimlerini sade bir dille açıklasın</li>
+        <li>Site ve sipariş konusunda yolunu bulmana yardım etsin</li>
+      </ul>
+    </div>
+    <div class="col gold">
+      <span class="tag mem">Üyelere Özel</span>
+      <h3>Kendi raporunun analizi</h3>
+      <ul>
+        <li>Giriş yap → <b>senin satın aldığın raporu</b> Asterna'yla birlikte aç</li>
+        <li>Merak ettiğin bölümü sor, "genel bir değerlendirme yap" de</li>
+        <li>Rapordaki terimleri, açıları, temaları sana özel derinleştirsin</li>
+        <li>Kafana takılanı, kendi haritan üzerinden konuşarak netleştir</li>
+      </ul>
+      <p class="note">Güvenlik: Asterna yalnızca bizden rapor almış ve giriş yapmış üyenin <b>kendi</b> raporunu analiz eder. Başka yerden gelen bir metni "senin raporun" gibi yükleyip kandıramazsın — sistem buna kapalıdır.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ETİK ÇEKİRDEK ===================== -->
+<section class="as-sec">
+  <h2>Asterna neye asla taviz vermez?</h2>
+  <p class="sub">Bir rehberin değeri, ne söylediği kadar neyi söylemeyi reddettiğiyle de ölçülür.</p>
+  <div class="as-ethic">
+    <div class="e"><h3>Kâhin değil, ayna</h3><p>Gökyüzünü gerçek okur, kesin kader hükmü kurmaz. "Olabilir, eğilim var" der; "kesinlikle olacak" demez.</p></div>
+    <div class="e"><h3>Karar hep senin</h3><p>"Şunu yap" demez; "şunu fark et, sen nasıl hissediyorsun?" der. Seçim daima sana bırakılır.</p></div>
+    <div class="e"><h3>Dürüst</h3><p>Emin değilse söyler, uydurmaz. Korku, çaresizlik ya da kırılganlık üzerinden kimseyi oyalamaz.</p></div>
+    <div class="e"><h3>Seni kendine bağlamaz</h3><p>Ciddi bir sıkıntıda (sağlık, hukuk, ağır ruhsal zorluk) nazikçe gerçek desteğe yönlendirir. Falcılıkla avutmaz.</p></div>
+  </div>
+</section>
+
+<!-- ===================== KAPANIŞ ===================== -->
+<section class="as-close">
+  <div class="box">
+    <h2>Bir soruyla başla</h2>
+    <p>"Hangi rapor bana uygun?", "Yükselen burç ne demek?" ya da aklındaki herhangi bir şey. Asterna sağ alt köşede, seni bekliyor.</p>
+    <div class="as-cta-wrap">
+      <button class="as-btn" type="button" onclick="(document.getElementById('asterna-fab')||{click:function(){}}).click()">✦ Asterna'yı aç</button>
+      <div class="as-micro">Ücretsiz · her sayfada yanında</div>
+    </div>
+  </div>
+
+  <div class="as-note">
+    Asterna sembolik rehberlik ve öz-farkındalık amaçlıdır; kesin kehanet niteliği taşımaz, tıbbi, psikolojik, hukuki veya finansal tavsiye yerine geçmez. Astroloji ve numeroloji bir öz-tanıma dilidir. Kararlar her zaman size aittir.
+  </div>
+</section>
+
+<footer>
+  © 2026 Astro Yuvam — Tüm hakları saklıdır.<br>
+  <a href="gizlilik-kvkk.html">Gizlilik &amp; KVKK Aydınlatma Metni</a> ·
+  <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a>
+</footer>
+
+</body>
+</html>
