@@ -46,6 +46,8 @@
     + 'radial-gradient(ellipse at 50% -10%,#1d1533 0%,#14101f 60%)}'
     + '.ast-msg{max-width:85%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}'
     + '.ast-msg.bot{align-self:flex-start;background:#1c1733;border:1px solid #332a4d;color:#efe7f6;border-bottom-left-radius:4px}'
+    + '.ast-msg.bot a{color:#e7cf95;text-decoration:underline;word-break:break-word}'
+    + '.ast-msg.bot a:hover{color:#f0e6d2}'
     + '.ast-msg.ben{align-self:flex-end;background:linear-gradient(180deg,#7c6cf0,#6c5ce7);color:#fff;border-bottom-right-radius:4px}'
     + '.ast-yaz{align-self:flex-start;color:#9a8fb8;font-size:13px;font-style:italic;padding:4px 2px}'
     + '.ast-rapor-serit{padding:7px 12px;font-size:12px;background:#122016;border-top:1px solid #2e5b3a;color:#a9e0b5;display:none;align-items:center;gap:8px}'
@@ -123,10 +125,17 @@
   var CIPLER = ["Hangi rapor bana uygun?", "📄 Raporumu ekle", "Ücretsiz araçlar neler?", "Astroloji gerçek mi?"];
 
   // ---------- Yardımcılar ----------
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+  }
+  // Bot mesajlarındaki https adreslerini tıklanır linke çevirir (metin önce güvenli biçimde kaçışlanır).
+  function linkify(s) {
+    return escapeHtml(s).replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  }
   function ekle(rol, txt) {
     var d = document.createElement("div");
     d.className = "ast-msg " + (rol === "user" ? "ben" : "bot");
-    d.textContent = txt;
+    if (rol === "user") { d.textContent = txt; } else { d.innerHTML = linkify(txt); }
     akis.appendChild(d);
     akis.scrollTop = akis.scrollHeight;
     return d;
