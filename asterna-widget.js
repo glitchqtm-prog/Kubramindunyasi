@@ -173,7 +173,7 @@
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mesajlar: mesajlar.slice(-8), rapor: rapor, token: raporToken })
+      body: JSON.stringify({ mesajlar: mesajlar.slice(-8) })
     })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
       .then(function (data) {
@@ -198,78 +198,27 @@
     metin.style.height = Math.min(metin.scrollHeight, 96) + "px";
   });
 
-  // ---------- Rapor (üyeye özel) modu ----------
-  var supabaseHazirlaniyor = null;
-  function supabaseYukle() {
-    if (window.supabase && window.supabase.createClient) return Promise.resolve(window.supabase);
-    if (supabaseHazirlaniyor) return supabaseHazirlaniyor;
-    supabaseHazirlaniyor = new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-      s.onload = function () { resolve(window.supabase); };
-      s.onerror = function () { reject(new Error("supabase yüklenemedi")); };
-      document.head.appendChild(s);
-    });
-    return supabaseHazirlaniyor;
-  }
-  function girisKontrol() {
-    return supabaseYukle().then(function (sup) {
-      var sb = window.__asternaSb || sup.createClient(SUPABASE_URL, SUPABASE_KEY);
-      window.__asternaSb = sb;
-      return sb.auth.getSession().then(function (res) {
-        var sess = res && res.data && res.data.session;
-        raporToken = sess ? (sess.access_token || "") : "";
-        return sess ? sess.user : null;
-      });
-    }).catch(function () { return null; });
-  }
-
+  // ---------- Rapor (üyeye özel) modu — GÜVENLİ SÜRÜM ÇOK YAKINDA ----------
+  // GÜVENLİK: Kopyala-yapıştır metinle analiz KAPALI. Dışarıdan/uydurma bir metin "bizden alınmış"
+  // gibi analiz ettirilemez. Güvenli sürüm, üyenin BİZDEN satın aldığı ve hesabına tanımlı raporu
+  // (sunucuda saklı) okuyacak — "Raporlarım" altyapısı kurulunca. O zamana dek bu pencere bilgi verir.
   function raporModalAc() {
-    modal.innerHTML = '<p style="color:#9a8fb8;font-size:13px">Kontrol ediliyor…</p>';
+    modal.innerHTML = ''
+      + '<h4>Raporunu birlikte analiz — çok yakında ✦</h4>'
+      + '<p>Bu özellik üzerinde çalışıyoruz. Güvenlik için yalnızca <b>bizden satın aldığın ve hesabına '
+      + 'tanımlı</b> raporu birlikte inceleyeceğiz; dışarıdan metin yapıştırma olmayacak. Böylece kimse '
+      + 'başka bir yerden aldığı analizi buraya sokamaz, senin raporun da karışmaz.</p>'
+      + '<p>O zamana dek sana hangi raporun uygun olduğunu bulmakta ya da merak ettiğin her şeyde yardımcı olabilirim.</p>'
+      + '<div class="btnsatir"><button class="kaydet" id="ast-modal-kapat">Anladım</button></div>';
     modal.classList.add("acik");
-    girisKontrol().then(function (user) {
-      if (!user) {
-        modal.innerHTML = ''
-          + '<h4>Rapor analizi üyelere özel</h4>'
-          + '<div class="giris-uyari">Raporunu birlikte incelememiz için önce giriş yapman gerekiyor. '
-          + 'Astro Yuvam\'dan aldığın raporu, giriş yaptıktan sonra buraya yapıştırıp benimle satır satır analiz edebilirsin.</div>'
-          + '<div class="btnsatir">'
-          +   '<button class="kaydet" onclick="location.href=\'/giris.html\'">Giriş yap / Üye ol</button>'
-          +   '<button class="vazgec" id="ast-modal-kapat">Vazgeç</button>'
-          + '</div>';
-        modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
-        return;
-      }
-      modal.innerHTML = ''
-        + '<h4>Raporunu ekle</h4>'
-        + '<p>Astro Yuvam\'dan e-postana gelen raporun metnini buraya yapıştır. Yalnızca bu rapora dayanarak birlikte analiz ederiz; bilgilerin sohbet dışında saklanmaz.</p>'
-        + '<textarea id="ast-rapor-metin" placeholder="Rapor metnini buraya yapıştır…"></textarea>'
-        + '<div class="btnsatir">'
-        +   '<button class="kaydet" id="ast-rapor-kaydet">Ekle ve analize başla</button>'
-        +   '<button class="vazgec" id="ast-modal-kapat">Vazgeç</button>'
-        + '</div>';
-      modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
-      modal.querySelector("#ast-rapor-kaydet").onclick = function () {
-        var v = (modal.querySelector("#ast-rapor-metin").value || "").trim();
-        if (v.length < 200) { alert("Rapor metni çok kısa görünüyor. Lütfen raporun tamamını yapıştır."); return; }
-        rapor = v.slice(0, 24000);
-        raporSerit.classList.add("acik");
-        raporModalKapat();
-        ekle("asistan", "Raporunu aldım, teşekkürler. Şimdi birlikte inceleyebiliriz — merak ettiğin bölümü sor ya da 'genel bir değerlendirme yapar mısın?' diyebilirsin. ✦");
-        mesajlar.push({ rol: "asistan", metin: "Raporunu aldım; birlikte inceleyebiliriz." });
-      };
-    });
+    modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
   }
   function raporModalKapat() { modal.classList.remove("acik"); modal.innerHTML = ""; }
-  panel.querySelector("#ast-rapor-kaldir").onclick = function () {
-    rapor = ""; raporSerit.classList.remove("acik");
-    ekle("asistan", "Rapor analiz modundan çıktık. Dilersen genel sorularını sorabilir ya da tekrar rapor ekleyebilirsin. ✦");
-  };
 
   // ---------- Aç/Kapat ----------
   function ilkKarsilama() {
     if (mesajlar.length) return;
-    ekle("asistan", "Merhaba, ben Asterna ✦ Astro Yuvam'ın rehberiyim. Hangi raporun sana uygun olduğunu bulabilir, ücretsiz araçları gösterebilir ya da üyeysen raporunu birlikte inceleyebiliriz. Aklında ne var?");
+    ekle("asistan", "Merhaba, ben Asterna ✦ Astro Yuvam'ın rehberiyim. Hangi raporun sana uygun olduğunu bulabilir, ücretsiz araçları gösterebilir ya da astroloji-numeroloji sorularını yanıtlayabilirim. Aklında ne var?");
   }
   function ac() {
     panel.classList.add("acik"); acildiMi = true;
