@@ -15,6 +15,7 @@
 
   var mesajlar = [];      // {rol:"user"|"asistan", metin}
   var rapor = "";         // üye raporu (analiz modunda dolu)
+  var raporToken = "";    // üyenin Supabase erişim jetonu (sunucu doğrulaması için)
   var bekliyor = false;   // yanıt beklenirken çift gönderimi engelle
   var acildiMi = false;
 
@@ -172,7 +173,7 @@
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mesajlar: mesajlar.slice(-8), rapor: rapor })
+      body: JSON.stringify({ mesajlar: mesajlar.slice(-8), rapor: rapor, token: raporToken })
     })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
       .then(function (data) {
@@ -216,7 +217,9 @@
       var sb = window.__asternaSb || sup.createClient(SUPABASE_URL, SUPABASE_KEY);
       window.__asternaSb = sb;
       return sb.auth.getSession().then(function (res) {
-        return res && res.data && res.data.session ? res.data.session.user : null;
+        var sess = res && res.data && res.data.session;
+        raporToken = sess ? (sess.access_token || "") : "";
+        return sess ? sess.user : null;
       });
     }).catch(function () { return null; });
   }

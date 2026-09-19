@@ -89,7 +89,6 @@
       { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" }
     ]},
     { baslik:"Sor & Yorumla", items:[
-      { href:"/yildizlara-sor.html", ad:"✦ Yıldızlara Sor", alt:"Kavramları sor, öğren" },
       { href:"/ruya-sembolu.html",   ad:"✦ Rüya Sembolü",   alt:"Rüyandaki motif ne anlatıyor?" },
       { href:"/gunun-kartin.html",   ad:"✦ Günün Kartın",   alt:"Bugüne özel arkana kartın" },
        { href:"/kozmik-nabiz.html",   ad:"✦ Kozmik Nabzın",      alt:"Bugüne özel kelimen, rengin ve yansıman" }
@@ -187,6 +186,13 @@
 
     // Çerez onayı bandı + onaya bağlı GA
     cerezBaslat();
+
+    // Asterna sağ-alt yardımcı balonu — tüm sayfalara buradan tek satırla yüklenir.
+    if(!document.getElementById("asterna-widget-js")){
+      var aw = document.createElement("script");
+      aw.id = "asterna-widget-js"; aw.src = "/asterna-widget.js"; aw.defer = true;
+      document.body.appendChild(aw);
+    }
 
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
