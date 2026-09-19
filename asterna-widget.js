@@ -48,6 +48,7 @@
     + 'radial-gradient(ellipse at 50% -10%,#1d1533 0%,#14101f 60%)}'
     + '.ast-msg{max-width:85%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}'
     + '.ast-msg.bot{align-self:flex-start;background:#1c1733;border:1px solid #332a4d;color:#efe7f6;border-bottom-left-radius:4px}'
+    + '.ast-msg.bot strong{color:#f0e6d2;font-weight:700}'
     + '.ast-msg.bot a{color:#e7cf95;text-decoration:underline;word-break:break-word}'
     + '.ast-msg.bot a:hover{color:#f0e6d2}'
     + '.ast-msg.ben{align-self:flex-end;background:linear-gradient(180deg,#7c6cf0,#6c5ce7);color:#fff;border-bottom-right-radius:4px}'
@@ -135,9 +136,12 @@
   function escapeHtml(s) {
     return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
   }
-  // Bot mesajlarındaki https adreslerini tıklanır linke çevirir (metin önce güvenli biçimde kaçışlanır).
+  // Bot mesajını güvenli göster: önce kaçışla, sonra **kalın** ve https linklerini biçimle.
   function linkify(s) {
-    return escapeHtml(s).replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    var e = escapeHtml(s);
+    e = e.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");   // **kalın** → kalın
+    e = e.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    return e;
   }
   function ekle(rol, txt) {
     var d = document.createElement("div");
