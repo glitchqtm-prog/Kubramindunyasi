@@ -1,7 +1,7 @@
 /* asterna-widget.js — Astro Yuvam sağ-alt köşe yardımcı balonu "Asterna"
  * Herkese açık: site rehberi + astroloji/numeroloji sohbeti (hazır cevaplar + AI).
- * Üyeye özel: giriş yapan üye "Raporumu ekle" ile raporunu paylaşıp birlikte analiz eder.
- * Backend: POST https://astro-rapor.onrender.com/api/asterna  { mesajlar, rapor }
+ * Üyeye özel: giriş yapan üye "Raporlarım"dan kendi saklı raporunu seçip birlikte analiz eder (yapıştırma YOK).
+ * Backend: POST https://astro-rapor.onrender.com/api/asterna  { mesajlar, raporId, token }  +  GET /api/raporlarim
  * Tek dosya, kendine yeter; menu.js üzerinden tüm sayfalara tek satırla yüklenir.
  * Görselsiz v1 — Asterna'nın yüzü/animasyonu sonraki aşamada eklenecek.
  */
@@ -10,11 +10,13 @@
   window.__asternaYuklendi = true;
 
   var API = "https://astro-rapor.onrender.com/api/asterna";
+  var API_LISTE = "https://astro-rapor.onrender.com/api/raporlarim";
   var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co";
   var SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
 
   var mesajlar = [];      // {rol:"user"|"asistan", metin}
-  var rapor = "";         // üye raporu (analiz modunda dolu)
+  var raporId = "";       // seçili saklı raporun id'si (analiz modunda dolu)
+  var raporBaslik = "";   // seçili raporun başlığı (şeritte gösterilir)
   var raporToken = "";    // üyenin Supabase erişim jetonu (sunucu doğrulaması için)
   var bekliyor = false;   // yanıt beklenirken çift gönderimi engelle
   var acildiMi = false;
@@ -50,6 +52,11 @@
     + '.ast-msg.bot a:hover{color:#f0e6d2}'
     + '.ast-msg.ben{align-self:flex-end;background:linear-gradient(180deg,#7c6cf0,#6c5ce7);color:#fff;border-bottom-right-radius:4px}'
     + '.ast-yaz{align-self:flex-start;color:#9a8fb8;font-size:13px;font-style:italic;padding:4px 2px}'
+    + '.ast-rapor-liste{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin:4px 0 8px}'
+    + '.ast-rapor-oge{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#1c1733;border:1px solid #332a4d;border-radius:10px;padding:11px 13px;cursor:pointer;color:#f0e6d2;font-family:inherit;text-align:left}'
+    + '.ast-rapor-oge:hover{border-color:#d9b96a;background:rgba(217,185,106,.08)}'
+    + '.ro-ad{font-size:14px}'
+    + '.ro-tar{font-size:11.5px;color:#9a8fb8;flex:none}'
     + '.ast-rapor-serit{padding:7px 12px;font-size:12px;background:#122016;border-top:1px solid #2e5b3a;color:#a9e0b5;display:none;align-items:center;gap:8px}'
     + '.ast-rapor-serit.acik{display:flex}'
     + '.ast-rapor-serit button{margin-left:auto;background:none;border:none;color:#9a8fb8;cursor:pointer;font-size:12px;text-decoration:underline}'
@@ -122,7 +129,7 @@
   var raporSerit = panel.querySelector("#ast-rapor-serit");
   var modal = panel.querySelector("#ast-modal");
 
-  var CIPLER = ["Hangi rapor bana uygun?", "📄 Raporumu ekle", "Ücretsiz araçlar neler?", "Astroloji gerçek mi?"];
+  var CIPLER = ["Hangi rapor bana uygun?", "📄 Raporlarım", "Ücretsiz araçlar neler?", "Astroloji gerçek mi?"];
 
   // ---------- Yardımcılar ----------
   function escapeHtml(s) {
@@ -162,7 +169,7 @@
       b.className = "ast-cip";
       b.textContent = c;
       b.onclick = function () {
-        if (c === "📄 Raporumu ekle") { raporModalAc(); return; }
+        if (c === "📄 Raporlarım") { raporModalAc(); return; }
         metin.value = c; gonder();
       };
       cipsKutu.appendChild(b);
@@ -182,7 +189,7 @@
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mesajlar: mesajlar.slice(-8) })
+      body: JSON.stringify(raporId ? { mesajlar: mesajlar.slice(-8), raporId: raporId, token: raporToken } : { mesajlar: mesajlar.slice(-8) })
     })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
       .then(function (data) {
@@ -207,22 +214,102 @@
     metin.style.height = Math.min(metin.scrollHeight, 96) + "px";
   });
 
-  // ---------- Rapor (üyeye özel) modu — GÜVENLİ SÜRÜM ÇOK YAKINDA ----------
-  // GÜVENLİK: Kopyala-yapıştır metinle analiz KAPALI. Dışarıdan/uydurma bir metin "bizden alınmış"
-  // gibi analiz ettirilemez. Güvenli sürüm, üyenin BİZDEN satın aldığı ve hesabına tanımlı raporu
-  // (sunucuda saklı) okuyacak — "Raporlarım" altyapısı kurulunca. O zamana dek bu pencere bilgi verir.
-  function raporModalAc() {
-    modal.innerHTML = ''
-      + '<h4>Raporunu birlikte analiz — çok yakında ✦</h4>'
-      + '<p>Bu özellik üzerinde çalışıyoruz. Güvenlik için yalnızca <b>bizden satın aldığın ve hesabına '
-      + 'tanımlı</b> raporu birlikte inceleyeceğiz; dışarıdan metin yapıştırma olmayacak. Böylece kimse '
-      + 'başka bir yerden aldığı analizi buraya sokamaz, senin raporun da karışmaz.</p>'
-      + '<p>O zamana dek sana hangi raporun uygun olduğunu bulmakta ya da merak ettiğin her şeyde yardımcı olabilirim.</p>'
-      + '<div class="btnsatir"><button class="kaydet" id="ast-modal-kapat">Anladım</button></div>';
-    modal.classList.add("acik");
-    modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
+  // ---------- Raporlarım (üyeye özel, GÜVENLİ) — kendi saklı raporunu seç, birlikte analiz et ----------
+  // GÜVENLİK: Yapıştırma YOK. Üye giriş yapar → sunucu jetonu doğrular → yalnızca KENDİ raporları listelenir
+  // ve seçilen rapor sunucuda sahiplik kontrolünden geçirilip analiz edilir. Başkasının/dışarıdan metin giremez.
+  var supabaseHazir = null;
+  function supabaseYukle() {
+    if (window.supabase && window.supabase.createClient) return Promise.resolve(window.supabase);
+    if (supabaseHazir) return supabaseHazir;
+    supabaseHazir = new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+      s.onload = function () { resolve(window.supabase); };
+      s.onerror = function () { reject(new Error("supabase yüklenemedi")); };
+      document.head.appendChild(s);
+    });
+    return supabaseHazir;
+  }
+  function oturumAl() {
+    return supabaseYukle().then(function (sup) {
+      var sb = window.__asternaSb || sup.createClient(SUPABASE_URL, SUPABASE_KEY);
+      window.__asternaSb = sb;
+      return sb.auth.getSession().then(function (res) {
+        var sess = res && res.data && res.data.session;
+        return sess ? { user: sess.user, token: sess.access_token || "" } : null;
+      });
+    }).catch(function () { return null; });
   }
   function raporModalKapat() { modal.classList.remove("acik"); modal.innerHTML = ""; }
+  function raporKaldir() {
+    raporId = ""; raporBaslik = ""; raporSerit.classList.remove("acik"); raporSerit.innerHTML = "";
+    ekle("asistan", "Rapor analiz modundan çıktık. Dilersen başka bir rapor seçebilir ya da genel sorularını sorabilirsin. ✦");
+  }
+  function raporSec(id, ad) {
+    raporId = id; raporBaslik = ad;
+    raporSerit.innerHTML = '📄 ' + escapeHtml(ad) + ' — analiz modu <button id="ast-rapor-kaldir">kaldır</button>';
+    raporSerit.classList.add("acik");
+    raporSerit.querySelector("#ast-rapor-kaldir").onclick = raporKaldir;
+    raporModalKapat();
+    ekle("asistan", ad + " raporunu birlikte inceleyebiliriz ✦ Merak ettiğin bölümü sorabilir ya da 'genel bir değerlendirme yapar mısın?' diyebilirsin.");
+    mesajlar.push({ rol: "asistan", metin: ad + " raporu analiz moduna alındı." });
+  }
+  function raporModalAc() {
+    modal.innerHTML = '<p style="color:#9a8fb8;font-size:13px">Kontrol ediliyor…</p>';
+    modal.classList.add("acik");
+    oturumAl().then(function (o) {
+      if (!o) {
+        modal.innerHTML = ''
+          + '<h4>Raporlarım — üyelere özel</h4>'
+          + '<div class="giris-uyari">Raporlarını görmek ve birlikte analiz etmek için giriş yapman gerekiyor. '
+          + 'Güvenlik için yalnızca bizden aldığın, hesabına tanımlı raporları inceleyebilirsin.</div>'
+          + '<div class="btnsatir">'
+          +   '<button class="kaydet" onclick="location.href=\'/giris.html\'">Giriş yap / Üye ol</button>'
+          +   '<button class="vazgec" id="ast-modal-kapat">Vazgeç</button>'
+          + '</div>';
+        modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
+        return;
+      }
+      raporToken = o.token;
+      modal.innerHTML = '<p style="color:#9a8fb8;font-size:13px">Raporların getiriliyor…</p>';
+      fetch(API_LISTE, { headers: { Authorization: "Bearer " + o.token } })
+        .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+        .then(function (data) {
+          var liste = (data && data.raporlar) || [];
+          if (!liste.length) {
+            modal.innerHTML = ''
+              + '<h4>Henüz raporun yok</h4>'
+              + '<p>Bu hesaba tanımlı bir rapor bulamadım. Bizden rapor aldıysan, siparişte kullandığın e-posta ile giriş yaptığından emin ol. Yeni bir rapor için sana en uygununu bulmakta yardımcı olabilirim.</p>'
+              + '<div class="btnsatir">'
+              +   '<button class="kaydet" onclick="location.href=\'/#cards\'">Raporlara göz at</button>'
+              +   '<button class="vazgec" id="ast-modal-kapat">Kapat</button>'
+              + '</div>';
+            modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
+            return;
+          }
+          var satirlar = liste.map(function (rp) {
+            var tarih = ""; try { tarih = new Date(rp.created_at).toLocaleDateString("tr-TR"); } catch (e) {}
+            var ad = rp.baslik || rp.tip || "Rapor";
+            return '<button class="ast-rapor-oge" data-id="' + escapeHtml(rp.id) + '" data-ad="' + escapeHtml(ad) + '">'
+                 + '<span class="ro-ad">' + escapeHtml(ad) + '</span><span class="ro-tar">' + escapeHtml(tarih) + '</span></button>';
+          }).join("");
+          modal.innerHTML = ''
+            + '<h4>Raporlarım</h4>'
+            + '<p>Birlikte incelemek istediğin raporu seç:</p>'
+            + '<div class="ast-rapor-liste">' + satirlar + '</div>'
+            + '<div class="btnsatir"><button class="vazgec" id="ast-modal-kapat">Vazgeç</button></div>';
+          modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
+          Array.prototype.forEach.call(modal.querySelectorAll(".ast-rapor-oge"), function (b) {
+            b.onclick = function () { raporSec(b.getAttribute("data-id"), b.getAttribute("data-ad")); };
+          });
+        })
+        .catch(function () {
+          modal.innerHTML = '<h4>Bir sorun oldu</h4><p>Raporların şu an getirilemedi, birazdan tekrar dene.</p>'
+            + '<div class="btnsatir"><button class="vazgec" id="ast-modal-kapat">Kapat</button></div>';
+          modal.querySelector("#ast-modal-kapat").onclick = raporModalKapat;
+        });
+    });
+  }
 
   // ---------- Aç/Kapat ----------
   function ilkKarsilama() {
