@@ -89,6 +89,7 @@
       { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" }
     ]},
     { baslik:"Sor & Yorumla", items:[
+      { href:"/asterna.html",        ad:"✦ Asterna",        alt:"Yapay zekâ rehberin — her şeyi sor" },
       { href:"/ruya-sembolu.html",   ad:"✦ Rüya Sembolü",   alt:"Rüyandaki motif ne anlatıyor?" },
       { href:"/gunun-kartin.html",   ad:"✦ Günün Kartın",   alt:"Bugüne özel arkana kartın" },
        { href:"/kozmik-nabiz.html",   ad:"✦ Kozmik Nabzın",      alt:"Bugüne özel kelimen, rengin ve yansıman" }
@@ -117,8 +118,7 @@
   ];
 
   var LINKLER = [
-    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
-    { href:"/asterna.html", ad:"Asterna" }
+    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" }
   ];
 
   var CSS = ''

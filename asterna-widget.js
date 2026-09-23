@@ -107,7 +107,7 @@
   panel.innerHTML = ''
     + '<div class="ast-head">'
     +   '<div class="ay">✦</div>'
-    +   '<div><div class="ad">Asterna</div><div class="alt">Astro Yuvam rehberin</div></div>'
+    +   '<div><div class="ad">Asterna</div><div class="alt">Astroloji &amp; numeroloji uzmanın</div></div>'
     +   '<button class="kapat" aria-label="Kapat">×</button>'
     + '</div>'
     + '<div class="ast-akis" id="ast-akis"></div>'
@@ -318,7 +318,7 @@
   // ---------- Aç/Kapat ----------
   function ilkKarsilama() {
     if (mesajlar.length) return;
-    ekle("asistan", "Merhaba, ben Asterna ✦ Astro Yuvam'ın rehberiyim. Hangi raporun sana uygun olduğunu bulabilir, ücretsiz araçları gösterebilir ya da astroloji-numeroloji sorularını yanıtlayabilirim. Aklında ne var?");
+    ekle("asistan", "Merhaba, ben Asterna ✦ Astroloji ve numerolojinin her dalında uzmanınım — Astro Yuvam'ın raporları ve araçlarıyla beslendim. Merak ettiğin bir kavramı açıklayabilir, sana en uygun okumayı birlikte bulabilir ya da ücretsiz araçlarda yol gösterebilirim. Üyeysen kendi raporunu satır satır inceleyebiliriz. Aklında ne var?\n\n✦ Beni neden kullanmalısın, neler yapabilirim? İstersen önce kısaca tanışalım: https://astroyuvam.com/asterna.html");
   }
   function ac() {
     panel.classList.add("acik"); acildiMi = true;
