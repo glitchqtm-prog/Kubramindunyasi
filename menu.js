@@ -117,7 +117,8 @@
   ];
 
   var LINKLER = [
-    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" }
+    { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" },
+    { href:"/asterna.html", ad:"Asterna" }
   ];
 
   var CSS = ''
