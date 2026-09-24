@@ -140,9 +140,27 @@
   // Bot mesajını güvenli göster: önce kaçışla, sonra **kalın** ve https linklerini biçimle.
   function linkify(s) {
     var e = escapeHtml(s);
-    e = e.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");   // **kalın** → kalın
-    e = e.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
-    return e;
+    // 1) Markdown bağlantı [metin](adres) — metin **kalın** içerebilir; kalın adın kendisi tıklanabilir olur.
+    e = e.replace(/\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.|astroyuvam\.com)[^\s)]+)\s*\)/gi, function (m, txt, url) {
+      var href = /^https?:\/\//i.test(url) ? url : "https://" + url;
+      var inner = txt.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      return '<a href="' + href + '" target="_blank" rel="noopener">' + inner + "</a>";
+    });
+    // 2) Kalan **kalın** → <strong>
+    e = e.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    // 3) Çıplak adresler — https://, www. ve ŞEMASIZ astroyuvam.com/... dahil. Mevcut <a> bloklarına dokunma.
+    var parts = e.split(/(<a\b[^>]*>[\s\S]*?<\/a>)/gi);
+    var re = /((?:https?:\/\/|www\.)[^\s<]+|astroyuvam\.com(?:\/[^\s<]*)?)/gi;
+    for (var i = 0; i < parts.length; i++) {
+      if (i % 2 === 1) continue; // <a>...</a> bloğu → atla
+      parts[i] = parts[i].replace(re, function (u) {
+        var tail = "", m2 = u.match(/[.,;:!?)\]]+$/);
+        if (m2) { tail = m2[0]; u = u.slice(0, -tail.length); }
+        var href = /^https?:\/\//i.test(u) ? u : "https://" + u;
+        return '<a href="' + href + '" target="_blank" rel="noopener">' + u + "</a>" + tail;
+      });
+    }
+    return parts.join("");
   }
   function ekle(rol, txt) {
     var d = document.createElement("div");
