@@ -25,7 +25,7 @@
     air:   { ad: "Hava",   renk: "#b9aefc", not: "Fikir, iletişim, ilişki" },
     water: { ad: "Su",     renk: "#6fb3d9", not: "Duygu, sezgi, derinlik" }
   };
-  var KUTUP = { "+": "Pozitif / erkil (aktif, dışa dönük)", "−": "Negatif / dişil (alıcı, içe dönük)" };
+  var KUTUP = { "+": "Pozitif / eril (aktif, dışa dönük)", "−": "Negatif / dişil (alıcı, içe dönük)" };
 
   var CSS = ''
     + '#burc-imza{--bi-gold:#d9b96a;--bi-gold-soft:#e7cf95;--bi-panel:#1c1733;--bi-panel2:#241c3d;'
@@ -122,7 +122,7 @@
       + '<div class="bi-sat"><span class="bi-et">Element</span><span class="bi-vl" id="bi-el"><span class="bi-nokta" style="background:' + e.renk + '"></span>' + e.ad + '</span></div>'
       + '<div class="bi-sat"><span class="bi-et">Nitelik</span><span class="bi-vl" id="bi-nit">' + esc(b.nitelik) + '</span></div>'
       + '<div class="bi-sat"><span class="bi-et">Yönetici</span><span class="bi-vl" id="bi-yon">' + esc(b.yon) + '</span></div>'
-      + '<div class="bi-sat"><span class="bi-et">Kutup</span><span class="bi-vl" id="bi-kut">' + esc(b.kutup === "+" ? "Pozitif · erkil" : "Negatif · dişil") + '</span></div>'
+      + '<div class="bi-sat"><span class="bi-et">Kutup</span><span class="bi-vl" id="bi-kut">' + esc(b.kutup === "+" ? "Pozitif · eril" : "Negatif · dişil") + '</span></div>'
       + '<div class="bi-kardes"><div class="bi-lbl">Element kardeşleri (' + e.ad + ' üçgeni)</div><div id="bi-kardes-liste">' + kardesHTML + '</div></div>'
       + '<a class="bi-git" id="bi-git" href="/' + b.slug + '-burcu.html">' + esc(b.ad) + ' burcu sayfası →</a>';
 
