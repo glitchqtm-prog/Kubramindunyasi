@@ -20,6 +20,7 @@
   var raporToken = "";    // üyenin Supabase erişim jetonu (sunucu doğrulaması için)
   var bekliyor = false;   // yanıt beklenirken çift gönderimi engelle
   var acildiMi = false;
+  var ilkYanitYapildi = false; // "sunucu uyanıyor" notu YALNIZCA oturumun ilk yanıtında gösterilsin
 
   // ---------- Stil ----------
   var css = ''
@@ -151,20 +152,41 @@
     akis.scrollTop = akis.scrollHeight;
     return d;
   }
+  // Aşamalı, çeşitli "düşünme" yazıları — her ~2.4 sn'de biri değişir; tek tip/statik değil.
+  var DUSUNME_SOZLERI = [
+    "Asterna düşünüyor…",
+    "Analiz ediyor…",
+    "Cevabını hazırlıyor…",
+    "Düşüncelerini topluyor…",
+    "Yıldız haritasını tarıyor…"
+  ];
   function yaziyorGoster() {
     var d = document.createElement("div");
     d.className = "ast-yaz";
     d.id = "ast-yaziyor";
-    d.textContent = "Asterna düşünüyor…";
+    d.textContent = DUSUNME_SOZLERI[0];
     akis.appendChild(d);
     akis.scrollTop = akis.scrollHeight;
-    // Render uykudaysa ilk yanıt gecikebilir → kullanıcıyı rahatlat
-    d.__t = setTimeout(function () { if (d.isConnected) d.textContent = "Asterna düşünüyor… (ilk yanıt biraz sürebilir)"; }, 6000);
+    // Yazıları aşamalı döndür (2-3 sn'de bir yeni ibare) — daha canlı, daha gerçekçi.
+    var i = 0;
+    d.__rot = setInterval(function () {
+      if (!d.isConnected) return;
+      i = (i + 1) % DUSUNME_SOZLERI.length;
+      d.textContent = DUSUNME_SOZLERI[i];
+    }, 2400);
+    // "İlk yanıt biraz sürebilir" notu YALNIZCA oturumun ilk yanıtında ve gecikirse (Render uyanıyor olabilir).
+    if (!ilkYanitYapildi) {
+      d.__t = setTimeout(function () {
+        if (!d.isConnected) return;
+        if (d.__rot) { clearInterval(d.__rot); d.__rot = null; }
+        d.textContent = "Asterna uyanıyor… ilk yanıt biraz sürebilir ✦";
+      }, 7000);
+    }
     return d;
   }
   function yaziyorGizle() {
     var d = panel.querySelector("#ast-yaziyor");
-    if (d) { if (d.__t) clearTimeout(d.__t); d.remove(); }
+    if (d) { if (d.__t) clearTimeout(d.__t); if (d.__rot) clearInterval(d.__rot); d.remove(); }
   }
   function ciplerCiz() {
     cipsKutu.innerHTML = "";
@@ -206,7 +228,7 @@
         yaziyorGizle();
         ekle("asistan", "Bağlantıda bir sorun oldu, birazdan tekrar dener misin? ✦");
       })
-      .finally(function () { bekliyor = false; gonderBtn.disabled = false; metin.focus(); });
+      .finally(function () { ilkYanitYapildi = true; bekliyor = false; gonderBtn.disabled = false; metin.focus(); });
   }
 
   gonderBtn.onclick = gonder;
