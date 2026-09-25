@@ -672,6 +672,23 @@ ${kartlar}
 /* ---------- Yazma ---------- */
 function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
 
+/* ---------- sitemap.xml lastmod tazeleme ----------
+   Üretilen günlük/haftalık sayfaların <lastmod> tarihini bugüne çeker; böylece
+   Google bu sayfaların gerçekten güncellendiğini görür. Sitemap yoksa sessizce atlar. */
+function sitemapLastmodGuncelle(urlYollari, iso){
+  const yol = "sitemap.xml";
+  if(!existsSync(yol)){ console.log("sitemap.xml bulunamadı, lastmod güncellemesi atlandı."); return; }
+  let xml = readFileSync(yol, "utf-8"), sayac = 0;
+  for(const u of urlYollari){
+    const loc = `https://astroyuvam.com/${u}`;
+    const kacis = loc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(`(<loc>${kacis}</loc>\\s*<lastmod>)[^<]*(</lastmod>)`);
+    if(re.test(xml)){ xml = xml.replace(re, `$1${iso}$2`); sayac++; }
+  }
+  if(sayac){ writeFileSync(yol, xml, "utf-8"); }
+  console.log(`sitemap.xml: ${sayac} sayfanın lastmod tarihi ${iso} olarak güncellendi.`);
+}
+
 /* ---------- Ana akış ---------- */
 (async ()=>{
   const now = istanbulNow();
@@ -726,4 +743,11 @@ function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
   // --- Hepsi hazır: şimdi yaz (kısmi hata riski geçti) ---
   for(const [yol,icerik] of [...gunlukDosyalar, ...haftalikDosyalar]) yaz(yol, icerik);
   console.log(`Tamam. ${gunlukDosyalar.length} günlük + ${haftalikDosyalar.length} haftalık dosya yazıldı.`);
+
+  // --- sitemap.xml lastmod tarihlerini üretilen sayfalar için bugüne çek ---
+  try {
+    const smYollari = ["gunluk-burc-yorumlari.html", ...BURCLAR.map(b=>`gunluk-burc-yorumlari/${b.slug}.html`)];
+    if(haftalikDosyalar.length){ smYollari.push("haftalik-burc-yorumlari.html", ...BURCLAR.map(b=>`haftalik-burc-yorumlari/${b.slug}.html`)); }
+    sitemapLastmodGuncelle(smYollari, iso);
+  } catch(e){ console.error("sitemap güncellemesi atlandı:", e.message); }
 })().catch(e=>{ console.error("ÜRETİM HATASI:", e.message); process.exit(1); });
