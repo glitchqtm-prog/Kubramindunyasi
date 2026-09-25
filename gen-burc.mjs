@@ -149,6 +149,44 @@ function haftaDalga(vals,labels){
   vals.forEach((v,i)=>{const px=x(i).toFixed(1),py=y(v).toFixed(1),hl=(i===peak||i===low);dots+=`<circle cx="${px}" cy="${py}" r="${hl?4.5:3}" fill="${i===peak?'#e7cf95':i===low?'#b98a8a':'#d9b96a'}"/>`;labs+=`<text x="${px}" y="${H-6}" text-anchor="middle" font-size="11" fill="#9a8fb8" font-family="Segoe UI,sans-serif">${labels[i]}</text>`;});
   return `<svg viewBox="0 0 ${W} ${H}" class="dalga-svg" role="img" aria-label="Haftalık enerji dalgası"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(217,185,106,.28)"/><stop offset="1" stop-color="rgba(217,185,106,0)"/></linearGradient></defs><path d="${area}" fill="url(#dg)"/><path d="${path}" fill="none" stroke="#d9b96a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>${dots}${labs}</svg>`;
 }
+// "|" ile ayrılmış alanı temiz parçalara böl
+function parcala(s){ return String(s||"").split("|").map(x=>x.trim()).filter(Boolean); }
+// Burca özel haftalık 7 günlük enerji değerleri (tarihe+burca göre kararlı)
+function haftaValsSign(iso,i){ const o=[]; for(let d=0;d<7;d++){ const h=hash(iso+"|s"+i+"|g"+d); o.push(Math.max(48,Math.min(94, 55+(h%30)+Math.round(6*Math.sin((d+i)/6*Math.PI))))); } return o; }
+// Beden-Zihin-Ruh ikonları (ince altın çizgi)
+const ICON_BZR = [
+  `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e7cf95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5C6.5 16.5 4 13.4 4 10.2 4 7.9 5.9 6 8.2 6c1.6 0 3 .9 3.8 2.2C12.8 6.9 14.2 6 15.8 6 18.1 6 20 7.9 20 10.2c0 3.2-2.5 6.3-8 10.3z"/></svg>`,   // Beden: kalp
+  `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e7cf95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 18h5M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.5.4.8 1 .8 1.6v.3h6v-.3c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg>`, // Zihin: ampul
+  `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e7cf95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 4.5 5.5 7.6 5.5 10.5a5.5 5.5 0 0 1-11 0C6.5 10.6 8.5 7.5 12 3z"/></svg>`, // Ruh: damla
+];
+// Haftanın günlük ritmi: 7 günlük mini bar şeridi + gün gün liste (haftalık sayfaya özel)
+function haftaSeridi(vals, notlar){
+  const kisa=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"], tam=["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
+  const n=7, W=560, H=120, pad=18, bw=46, gap=(W-2*pad-bw*n)/(n-1);
+  const peak=vals.indexOf(Math.max(...vals)), low=vals.indexOf(Math.min(...vals));
+  let bars="";
+  for(let i=0;i<n;i++){
+    const x=pad+i*(bw+gap), hh=Math.max(12,Math.round(((vals[i]-42)/(96-42))*(H-52))), yy=H-26-hh;
+    const cl = i===peak ? "#e7cf95" : i===low ? "#7c6f9c" : "#d9b96a";
+    bars+=`<rect x="${x.toFixed(1)}" y="${yy}" width="${bw}" height="${hh}" rx="8" fill="${cl}" opacity="${i===peak?1:.82}"/>`;
+    bars+=`<text x="${(x+bw/2).toFixed(1)}" y="${(yy-6)}" text-anchor="middle" font-size="11" fill="#e7cf95" font-family="Segoe UI,sans-serif">${vals[i]}</text>`;
+    bars+=`<text x="${(x+bw/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="12" fill="#9a8fb8" font-family="Segoe UI,sans-serif">${kisa[i]}</text>`;
+  }
+  const svg=`<svg viewBox="0 0 ${W} ${H}" class="serit-svg" role="img" aria-label="Haftanın günlük ritmi">${bars}</svg>`;
+  let liste="";
+  for(let i=0;i<n && i<notlar.length;i++){
+    liste+=`<div class="serit-satir${i===peak?' vurgu':''}"><span class="serit-gun">${tam[i]}</span><span class="serit-not">${esc(notlar[i])}</span></div>`;
+  }
+  return `<div class="serit">${svg}<div class="serit-liste">${liste}</div></div>`;
+}
+// Beden–Zihin–Ruh üçlü blok (günlük: bugün için · haftalık: bu hafta)
+function denemelerBlok(tur, arr){
+  const et=["Beden","Zihin","Ruh"];
+  let k="";
+  for(let i=0;i<3;i++){ k+=`<div class="trio-kart"><div class="trio-ikon">${ICON_BZR[i]}</div><div class="trio-et">${et[i]}</div><div class="trio-mtn">${esc(arr[i]||"")}</div></div>`; }
+  const bas = tur==="gunluk" ? "Bugün İçin: Beden · Zihin · Ruh" : "Bu Hafta Deneyebileceğin 3 Şey";
+  return `<section class="trio"><div class="trio-b">✦ ${bas}</div><div class="trio-grid">${k}</div></section>`;
+}
 // Kişiye özel bölüm (statik kabuk; mantık /kisisel-gunluk.js içinde)
 function kisiselBolum(tur){
   const turAd = tur==="gunluk" ? "günlük" : "haftalık";
@@ -220,6 +258,14 @@ function haftaAraligi(d){
   const paz=new Date(pzt); paz.setDate(pzt.getDate()+6);
   return `${tarihKisa(pzt)} – ${tarihKisa(paz)}`;
 }
+// Mevsim + o mevsime uygun beden-zihin-ruh atmosferi (kuzey yarımküre / Türkiye)
+function mevsimBilgisi(d){
+  const y=(d.getMonth()+1)*100+d.getDate();
+  if(y>=321 && y<=620) return { ad:"ilkbahar", not:"Havalar ısınıyor, doğa canlanıyor; tazelenme, dışarı çıkma, yeni başlangıçlar ve hafif hareket zamanı." };
+  if(y>=621 && y<=922) return { ad:"yaz", not:"Uzun ve sıcak günler; sosyallik, tatil, su kenarı, açık hava ve bol ışık; serinlemeye ve dinlenmeye dikkat." };
+  if(y>=923 && y<=1220) return { ad:"sonbahar", not:"Havalar serinliyor, günler kısalıyor; yaz sonrası rutine ve düzene dönüş, içe dönme, toparlanma, sıcak içecek ve serin havada yürüyüş zamanı." };
+  return { ad:"kış", not:"Soğuk ve kısa günler; içeride dinlenme, sıcak tutunma, bağışıklığı koruma, uyku düzeni, sakinlik ve içsel yenilenme zamanı." };
+}
 
 /* ---------- HTML kaçış ---------- */
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
@@ -277,9 +323,14 @@ GERÇEK GÖKYÜZÜ: ${sky.gokKisa} Bu enerjiyi yorumlara doğal biçimde yansıt
 
 NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel sayısı"} ${sayi} — teması: ${SAYI_TEMA[sayi]}. Bu sayısal ton HERKES için aynıdır (kişiye ya da burca özel değildir), o yüzden onu bütün burçların yorumuna genel bir atmosfer olarak HAFİFÇE yansıt. Metinde "numeroloji" ya da rakamı teknik biçimde anmana gerek yok; sadece o enerjiyi (örneğin ${sayi} sayısında ${SAYI_TEMA[sayi].split(",")[0]}) sezdir.
 
+GÜNCEL TARİH VE MEVSİM: Bugün ${sky.tarihUzun}; mevsim ${sky.mevsim.ad}. ${sky.mevsim.not} Yorumlardaki somut sahneleri ve önerileri bu mevsime ve içinde bulunduğumuz döneme uydur — mevsimle çelişen bir örnek verme (örneğin yaz ortasında kışlık, kışın yazlık öneri kurma). Mevsimin havasını doğal biçimde sezdir.
+
+BEDEN–ZİHİN–RUH (önemli): Yorumların içine, mevsime ve güne uygun, günlük hayattan somut dokunuşları doğal biçimde yedir — BEDEN (hareket, yürüyüş, esneme, nefes, uyku düzeni, öz bakım), ZİHİN (okuma, planlama, öğrenme, ertelenen bir işe bölerek başlama, bir şeyi netleştirme) ve RUH/PSİKOLOJİ (günlük tutma, sınır koyma, minnet, içe dönme, kendine şefkat). Bunları özellikle 'genel' ve 'saglik' bölümlerinde sahne halinde hissettir; ayrıca aşağıda ayrı bir 'denemeler' alanında bu üçünü net, kısa ve uygulanabilir biçimde ver.
+
 ÇIKTI BİÇİMİ (çok önemli): Yanıtın SADECE geçerli bir JSON dizisi olacak; başında ya da sonunda hiçbir açıklama, başlık ya da markdown olmayacak. Metin değerlerinin İÇİNDE çift tırnak (") KULLANMA — vurgu gerekiyorsa tek tırnak (') kullan. JSON'u bozacak hiçbir karakter kullanma. Değerlerde satır başı (yeni satır) koyma; her alan tek paragraf olsun.`;
 
   const ortak = `- teaser: en fazla 12 kelime; olumlu ve merak uyandıran.
+- denemeler: TAM 3 bölüm, aralarında yalnızca | (dikey çizgi) ile ayrılmış. Sırayla: 1) BEDEN için, 2) ZİHİN için, 3) RUH/psikoloji için birer öneri. Her biri mevsime ve ${gunluk?"bugüne":"bu haftaya"} uygun, somut, tek kısa ve uygulanabilir cümle (en fazla 14 kelime). Başına 'Beden:', 'Zihin:', 'Ruh:' gibi etiket YAZMA; sadece öneri cümlesini yaz. Metnin başka hiçbir yerinde | işareti kullanma.
 - tavsiye: tek, net, uygulanabilir ve olumlu bir cümle.`;
   const uzunluk = gunluk
     ? `- genel: 7-8 cümle; dolgun, akıcı ve sıcak; günlük hayattan resmedilebilir 2 somut sahne içersin; öne çıkan yaşam alanını doğal biçimde işle ve okuyanı 'bu tam da bugünüm' hissine getir.
@@ -287,18 +338,19 @@ NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel say�
 - is: 6-7 cümle; hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; para/bütçe tarafına da bir dokunuş kat; somut bir örnek içersin.
 - saglik: 4-5 cümle; bedensel ve duygusal enerji, uyku, hareket, öz bakım ve dengeye dair somut, uygulanabilir bir-iki öneri.
 ${ortak}`
-    : `- genel: 8-9 cümle; sadece bugünü değil HAFTANIN GENELİNİ ve gidişatını akıcı bir hikâye gibi anlat, resmedilebilir somut sahneler içersin; öne çıkan yaşam alanını merkeze al.
+    : `- genel: 9-10 cümle; günlük yorumdan belirgin biçimde farklı olsun. Bir GÜNÜ değil, tüm HAFTAYI bir hikâye yayı gibi anlat: hafta başı nasıl açılıyor, ortasına doğru ne öne çıkıyor, sonuna doğru nereye evriliyor — bu akışı hissettir. Resmedilebilir somut sahneler içersin; öne çıkan yaşam alanını merkeze al ve mevsimin havasını sezdir.
 - ask: 8-9 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, haftalık perspektifle ve doğal akışta seslen; her birine somut bir sahne ver.
 - is: 7-8 cümle; hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; para/bütçe tarafına da değin; somut örnekler içersin.
-- saglik: 5-6 cümle; hafta boyunca enerji, uyku, hareket, öz bakım ve denge; uygulanabilir öneriler.
+- saglik: 5-6 cümle; hafta boyunca beden (hareket, uyku, öz bakım), zihin ve ruh dengesi; mevsime uygun, uygulanabilir öneriler.
 - oneCikan: 4-5 cümle; haftanın hangi bölümlerinin (örneğin hafta başı, hafta ortası, hafta sonu) hangi konular için daha uygun olabileceğini nazikçe belirt. Kesin tarih verme; "hafta ortasına doğru", "hafta sonu" gibi genel ifadeler kullan.
+- ritim: TAM 7 bölüm, aralarında yalnızca | (dikey çizgi) ile ayrılmış; sırayla Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar günlerine karşılık gelir. Her bölüm o güne özel, kısa (en fazla 12-14 kelime), tek bir odak ya da öneri cümlesidir. Gün adını YAZMA; sadece o günün önerisini yaz. Yedi gün birbirinden farklı olsun ve hafta bir akış gibi ilerlesin (beden-zihin-ruh dokunuşlarını günlere dağıt). Bölümler dışında | işareti kullanma.
 ${ortak}`;
 
   const alanlar = gunluk
-    ? `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","tavsiye":"..."}`
-    : `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","oneCikan":"...","tavsiye":"..."}`;
+    ? `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","denemeler":"beden | zihin | ruh","tavsiye":"..."}`
+    : `{"teaser":"...","genel":"...","ask":"...","is":"...","saglik":"...","oneCikan":"...","ritim":"pzt | sal | çar | per | cum | cmt | paz","denemeler":"beden | zihin | ruh","tavsiye":"..."}`;
 
-  const alanListe = gunluk ? ["teaser","genel","ask","is","saglik","tavsiye"] : ["teaser","genel","ask","is","saglik","oneCikan","tavsiye"];
+  const alanListe = gunluk ? ["teaser","genel","ask","is","saglik","denemeler","tavsiye"] : ["teaser","genel","ask","is","saglik","oneCikan","ritim","denemeler","tavsiye"];
   const sonuc = new Array(BURCLAR.length);
   for(let start=0; start<BURCLAR.length; start+=BATCH){
     const dilim = BURCLAR.slice(start, start+BATCH);
@@ -320,6 +372,8 @@ Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dili
     for(let j=0;j<dilim.length;j++){
       const it = arr[j];
       for(const k of alanListe){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); }
+      if(it.denemeler.split("|").map(x=>x.trim()).filter(Boolean).length<3) throw new Error("denemeler 3 bölüm olmalı");
+      if(!gunluk && it.ritim.split("|").map(x=>x.trim()).filter(Boolean).length<6) throw new Error("ritim en az 6 bölüm olmalı");
       sonuc[start+j] = it;
     }
   }
@@ -435,7 +489,25 @@ const CSS = `
   .gunkart .ikon{flex:none;width:52px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#2a2145,#171227);border:1px solid var(--gold);border-radius:8px;color:var(--gold-soft);text-decoration:none}
   .gunkart .ikon b{font-family:Georgia,serif;font-size:18px}.gunkart .ikon small{font-size:9px;color:var(--muted)}
   .gunkart .mtn{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:#efe7f6;line-height:1.55}
-  .gunkart .mtn b{color:var(--gold-soft)}`;
+  .gunkart .mtn b{color:var(--gold-soft)}
+  /* Beden–Zihin–Ruh üçlüsü */
+  .trio{margin:22px auto 0;max-width:640px;background:rgba(217,185,106,.05);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .trio-b{font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:14px}
+  .trio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:560px){.trio-grid{grid-template-columns:1fr}}
+  .trio-kart{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px}
+  .trio-ikon{width:42px;height:42px;border-radius:50%;background:rgba(217,185,106,.08);display:flex;align-items:center;justify-content:center}
+  .trio-et{font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-soft)}
+  .trio-mtn{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:#efe7f6;line-height:1.55}
+  /* Haftanın ritmi şeridi (haftalık sayfaya özel) */
+  .serit{margin:8px 0 0}
+  .serit-svg{width:100%;height:auto;display:block}
+  .serit-liste{display:flex;flex-direction:column;gap:7px;margin-top:14px}
+  .serit-satir{display:flex;gap:12px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:9px 14px}
+  .serit-satir.vurgu{border-color:var(--gold);background:rgba(217,185,106,.08)}
+  .serit-gun{flex:none;width:88px;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--gold-soft)}
+  .serit-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;color:#efe7f6;line-height:1.5}
+  @media(max-width:480px){.serit-satir{flex-direction:column;gap:2px}.serit-gun{width:auto}}`;
 
 function head(title, desc, canonical, jsonld){
   return `<!DOCTYPE html>
@@ -484,6 +556,8 @@ function renderSign(tur, b, y, ctx){
   const tavsiyeEt = gunluk ? "Günün tavsiyesi" : "Haftanın tavsiyesi";
   const odak = evTema(BURCLAR.indexOf(b), gunluk ? ctx.ayIdx : ctx.gunIdx);
   const sayi = gunluk ? ctx.gunSayi : ctx.aySayi;
+  const trioHTML = denemelerBlok(tur, parcala(y.denemeler));
+  const seritHTML = gunluk ? "" : haftaSeridi(haftaValsSign(ctx.iso, BURCLAR.indexOf(b)), parcala(y.ritim));
 
   return `${head(title, desc, canonical, jsonld)}
 <article class="wrap">
@@ -511,7 +585,9 @@ function renderSign(tur, b, y, ctx){
   </div>
   <hr class="ayrac">
   <h2>Genel</h2>
-  <p>${esc(y.genel)}</p>
+  <p>${esc(y.genel)}</p>${gunluk?"":`
+  <h2>Haftanın Ritmi — Gün Gün</h2>
+  ${seritHTML}`}
   <h2>Aşk & İlişkiler</h2>
   <p>${esc(y.ask)}</p>
   <h2>İş & Para</h2>
@@ -520,6 +596,7 @@ function renderSign(tur, b, y, ctx){
   <p>${esc(y.saglik)}</p>${gunluk?"":`
   <h2>Öne Çıkan Günler</h2>
   <p>${esc(y.oneCikan)}</p>`}
+  ${trioHTML}
   <div class="tavsiye"><b>${tavsiyeEt}:</b> ${esc(y.tavsiye)}</div>
   <div class="komsu">
     <a href="/${yol}/${onceki.slug}.html">← ${onceki.ad}</a>
@@ -616,7 +693,8 @@ function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
   ctx.kart = gununKarti(now);
   ctx.renk = gununRengi(ctx.gunSayi);
   ctx.haftaVals = haftaVals(iso);
-  const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi };
+  ctx.mevsim = mevsimBilgisi(now);
+  const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi, mevsim: ctx.mevsim, tarihUzun: ctx.tarihTR };
 
   mkdirSync("gunluk-burc-yorumlari", {recursive:true});
   mkdirSync("haftalik-burc-yorumlari", {recursive:true});
