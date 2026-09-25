@@ -103,6 +103,11 @@
   .hw-pdot{fill:var(--ay-gold)}
   .hw-asp{stroke:rgba(124,108,240,.5);stroke-width:1}
   .hw-accent{fill:none;stroke:rgba(217,185,106,.32);stroke-width:1;stroke-dasharray:2 8}
+  /* Çark: dış burç halkası ile iç alan zıt yönlerde döner (astrolab) */
+  .hw-spin-o{transform-box:view-box;transform-origin:200px 200px;animation:hwspin 120s linear infinite}
+  .hw-spin-i{transform-box:view-box;transform-origin:200px 200px;animation:hwspin 88s linear infinite reverse}
+  @keyframes hwspin{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.hw-spin-o,.hw-spin-i{animation:none}}
   .tools-more{text-align:center;margin-top:22px;font-size:14px}
   .tools-more a{color:var(--ay-gold)}
   /* Öne çıkan: Günlük Burç Yorumları */
@@ -154,22 +159,29 @@
     <circle cx="200" cy="200" r="196" class="hw-accent">
       <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200 200" to="360 200 200" dur="80s" repeatCount="indefinite"/>
     </circle>
-    <g id="heroWheelG" filter="url(#hwGlow)"></g>
+    <g class="hw-spin-o" id="heroOuter" filter="url(#hwGlow)"></g>
+    <g class="hw-spin-i" id="heroInner" filter="url(#hwGlow)"></g>
   </svg>
   <script>
   (function(){
-    var NS="http://www.w3.org/2000/svg", g=document.getElementById("heroWheelG"), cx=200, cy=200;
-    if(!g) return;
+    var NS="http://www.w3.org/2000/svg", O=document.getElementById("heroOuter"), I=document.getElementById("heroInner"), cx=200, cy=200;
+    if(!O||!I) return;
+    var VS="\uFE0E"; // monokrom (alt\u0131n) glif \u2014 emoji g\u00F6r\u00FCn\u00FCm\u00FCn\u00FC engeller
     function el(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
     function pt(r,deg){var a=(deg-90)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
-    [[186,"hw-ring hw-ring-outer"],[152,"hw-ring"],[64,"hw-ring"]].forEach(function(c){g.appendChild(el("circle",{cx:cx,cy:cy,r:c[0],"class":c[1]}));});
-    for(var i=0;i<12;i++){var a=i*30,p1=pt(64,a),p2=pt(186,a);g.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
+    // DI\u015E grup (bur\u00E7 halkas\u0131): saat y\u00F6n\u00FCnde d\u00F6ner
+    O.appendChild(el("circle",{cx:cx,cy:cy,r:186,"class":"hw-ring hw-ring-outer"}));
+    O.appendChild(el("circle",{cx:cx,cy:cy,r:152,"class":"hw-ring"}));
+    for(var i=0;i<12;i++){var a=i*30,p1=pt(152,a),p2=pt(186,a);O.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
     var z=["\u2648","\u2649","\u264A","\u264B","\u264C","\u264D","\u264E","\u264F","\u2650","\u2651","\u2652","\u2653"];
-    for(var i=0;i<12;i++){var p=pt(169,15+i*30);g.appendChild(el("text",{x:p[0],y:p[1],"class":"hw-zg"},z[i]));}
+    for(var i=0;i<12;i++){var p=pt(169,15+i*30);O.appendChild(el("text",{x:p[0],y:p[1],"class":"hw-zg"},z[i]+VS));}
+    // \u0130\u00C7 grup (\u0131\u015F\u0131nlar + aspektler + gezegenler): ters y\u00F6nde d\u00F6ner
+    I.appendChild(el("circle",{cx:cx,cy:cy,r:64,"class":"hw-ring"}));
+    for(var i=0;i<12;i++){var a=i*30,p1=pt(64,a),p2=pt(152,a);I.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
     var planets=[["\u2609",28],["\u263D",92],["\u263F",132],["\u2640",188],["\u2642",244],["\u2643",300],["\u2644",348]],pts=[];
     planets.forEach(function(pl){pts.push(pt(108,pl[1]));});
-    [[0,3],[1,4],[2,5],[3,6],[0,4],[1,5]].forEach(function(pr){g.appendChild(el("line",{x1:pts[pr[0]][0],y1:pts[pr[0]][1],x2:pts[pr[1]][0],y2:pts[pr[1]][1],"class":"hw-asp"}));});
-    planets.forEach(function(pl,i){var p=pts[i];g.appendChild(el("circle",{cx:p[0],cy:p[1],r:3.2,"class":"hw-pdot"}));var lp=pt(126,pl[1]);g.appendChild(el("text",{x:lp[0],y:lp[1],"class":"hw-pg"},pl[0]));});
+    [[0,3],[1,4],[2,5],[3,6],[0,4],[1,5]].forEach(function(pr){I.appendChild(el("line",{x1:pts[pr[0]][0],y1:pts[pr[0]][1],x2:pts[pr[1]][0],y2:pts[pr[1]][1],"class":"hw-asp"}));});
+    planets.forEach(function(pl,i){var p=pts[i];I.appendChild(el("circle",{cx:p[0],cy:p[1],r:3.2,"class":"hw-pdot"}));var lp=pt(126,pl[1]);I.appendChild(el("text",{x:lp[0],y:lp[1],"class":"hw-pg"},pl[0]+VS));});
   })();
   </script>
   <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
@@ -180,18 +192,18 @@
   <h2>Günlük &amp; Haftalık Burç Yorumları</h2>
   <p class="sub">Burcuna tıkla; bugünün ve bu haftanın yorumunu, gerçek gökyüzüne dayalı oku.</p>
   <div class="burc-grid">
-    <a href="/gunluk-burc-yorumlari/koc.html"><span class="bs">♈</span><span class="bn">Koç</span></a>
-    <a href="/gunluk-burc-yorumlari/boga.html"><span class="bs">♉</span><span class="bn">Boğa</span></a>
-    <a href="/gunluk-burc-yorumlari/ikizler.html"><span class="bs">♊</span><span class="bn">İkizler</span></a>
-    <a href="/gunluk-burc-yorumlari/yengec.html"><span class="bs">♋</span><span class="bn">Yengeç</span></a>
-    <a href="/gunluk-burc-yorumlari/aslan.html"><span class="bs">♌</span><span class="bn">Aslan</span></a>
-    <a href="/gunluk-burc-yorumlari/basak.html"><span class="bs">♍</span><span class="bn">Başak</span></a>
-    <a href="/gunluk-burc-yorumlari/terazi.html"><span class="bs">♎</span><span class="bn">Terazi</span></a>
-    <a href="/gunluk-burc-yorumlari/akrep.html"><span class="bs">♏</span><span class="bn">Akrep</span></a>
-    <a href="/gunluk-burc-yorumlari/yay.html"><span class="bs">♐</span><span class="bn">Yay</span></a>
-    <a href="/gunluk-burc-yorumlari/oglak.html"><span class="bs">♑</span><span class="bn">Oğlak</span></a>
-    <a href="/gunluk-burc-yorumlari/kova.html"><span class="bs">♒</span><span class="bn">Kova</span></a>
-    <a href="/gunluk-burc-yorumlari/balik.html"><span class="bs">♓</span><span class="bn">Balık</span></a>
+    <a href="/gunluk-burc-yorumlari/koc.html"><span class="bs">♈&#xFE0E;</span><span class="bn">Koç</span></a>
+    <a href="/gunluk-burc-yorumlari/boga.html"><span class="bs">♉&#xFE0E;</span><span class="bn">Boğa</span></a>
+    <a href="/gunluk-burc-yorumlari/ikizler.html"><span class="bs">♊&#xFE0E;</span><span class="bn">İkizler</span></a>
+    <a href="/gunluk-burc-yorumlari/yengec.html"><span class="bs">♋&#xFE0E;</span><span class="bn">Yengeç</span></a>
+    <a href="/gunluk-burc-yorumlari/aslan.html"><span class="bs">♌&#xFE0E;</span><span class="bn">Aslan</span></a>
+    <a href="/gunluk-burc-yorumlari/basak.html"><span class="bs">♍&#xFE0E;</span><span class="bn">Başak</span></a>
+    <a href="/gunluk-burc-yorumlari/terazi.html"><span class="bs">♎&#xFE0E;</span><span class="bn">Terazi</span></a>
+    <a href="/gunluk-burc-yorumlari/akrep.html"><span class="bs">♏&#xFE0E;</span><span class="bn">Akrep</span></a>
+    <a href="/gunluk-burc-yorumlari/yay.html"><span class="bs">♐&#xFE0E;</span><span class="bn">Yay</span></a>
+    <a href="/gunluk-burc-yorumlari/oglak.html"><span class="bs">♑&#xFE0E;</span><span class="bn">Oğlak</span></a>
+    <a href="/gunluk-burc-yorumlari/kova.html"><span class="bs">♒&#xFE0E;</span><span class="bn">Kova</span></a>
+    <a href="/gunluk-burc-yorumlari/balik.html"><span class="bs">♓&#xFE0E;</span><span class="bn">Balık</span></a>
   </div>
   <div class="burc-cta">
     <a href="/gunluk-burc-yorumlari.html">Tüm Günlük Yorumlar →</a>
