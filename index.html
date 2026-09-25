@@ -152,7 +152,7 @@
         <stop offset="0%" stop-color="#1e1733"/><stop offset="100%" stop-color="rgba(20,16,31,0)"/>
       </radialGradient>
       <filter id="hwGlow" x="-30%" y="-30%" width="160%" height="160%">
-        <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
     </defs>
     <circle cx="200" cy="200" r="150" class="hw-core"/>
@@ -170,18 +170,21 @@
     function el(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
     function pt(r,deg){var a=(deg-90)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
     // DI\u015E grup (bur\u00E7 halkas\u0131): saat y\u00F6n\u00FCnde d\u00F6ner
-    O.appendChild(el("circle",{cx:cx,cy:cy,r:186,"class":"hw-ring hw-ring-outer"}));
-    O.appendChild(el("circle",{cx:cx,cy:cy,r:152,"class":"hw-ring"}));
-    for(var i=0;i<12;i++){var a=i*30,p1=pt(152,a),p2=pt(186,a);O.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
+    function grp(parent,glow){var g=document.createElementNS(NS,"g");if(glow)g.setAttribute("filter","url(#hwGlow)");parent.appendChild(g);return g;}
+    var Og=grp(O,true), Ot=grp(O,false); // Og: yumusak parilti + yapi \u00B7 Ot: net glifler (filtre disi)
+    Og.appendChild(el("circle",{cx:cx,cy:cy,r:186,"class":"hw-ring hw-ring-outer"}));
+    Og.appendChild(el("circle",{cx:cx,cy:cy,r:152,"class":"hw-ring"}));
+    for(var i=0;i<12;i++){var a=i*30,p1=pt(152,a),p2=pt(186,a);Og.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
     var z=["\u2648","\u2649","\u264A","\u264B","\u264C","\u264D","\u264E","\u264F","\u2650","\u2651","\u2652","\u2653"];
-    for(var i=0;i<12;i++){var p=pt(169,15+i*30);O.appendChild(el("text",{x:p[0],y:p[1],"class":"hw-zg"},z[i]+VS));}
+    for(var i=0;i<12;i++){var p=pt(169,15+i*30);Ot.appendChild(el("text",{x:p[0],y:p[1],"class":"hw-zg"},z[i]+VS));}
     // \u0130\u00C7 grup (\u0131\u015F\u0131nlar + aspektler + gezegenler): ters y\u00F6nde d\u00F6ner
-    I.appendChild(el("circle",{cx:cx,cy:cy,r:64,"class":"hw-ring"}));
-    for(var i=0;i<12;i++){var a=i*30,p1=pt(64,a),p2=pt(152,a);I.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
+    var Ig=grp(I,true), It=grp(I,false);
+    Ig.appendChild(el("circle",{cx:cx,cy:cy,r:64,"class":"hw-ring"}));
+    for(var i=0;i<12;i++){var a=i*30,p1=pt(64,a),p2=pt(152,a);Ig.appendChild(el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],"class":"hw-div"}));}
     var planets=[["\u2609",28],["\u263D",92],["\u263F",132],["\u2640",188],["\u2642",244],["\u2643",300],["\u2644",348]],pts=[];
     planets.forEach(function(pl){pts.push(pt(108,pl[1]));});
-    [[0,3],[1,4],[2,5],[3,6],[0,4],[1,5]].forEach(function(pr){I.appendChild(el("line",{x1:pts[pr[0]][0],y1:pts[pr[0]][1],x2:pts[pr[1]][0],y2:pts[pr[1]][1],"class":"hw-asp"}));});
-    planets.forEach(function(pl,i){var p=pts[i];I.appendChild(el("circle",{cx:p[0],cy:p[1],r:3.2,"class":"hw-pdot"}));var lp=pt(126,pl[1]);I.appendChild(el("text",{x:lp[0],y:lp[1],"class":"hw-pg"},pl[0]+VS));});
+    [[0,3],[1,4],[2,5],[3,6],[0,4],[1,5]].forEach(function(pr){Ig.appendChild(el("line",{x1:pts[pr[0]][0],y1:pts[pr[0]][1],x2:pts[pr[1]][0],y2:pts[pr[1]][1],"class":"hw-asp"}));});
+    planets.forEach(function(pl,i){var p=pts[i];Ig.appendChild(el("circle",{cx:p[0],cy:p[1],r:3.2,"class":"hw-pdot"}));var lp=pt(126,pl[1]);It.appendChild(el("text",{x:lp[0],y:lp[1],"class":"hw-pg"},pl[0]+VS));});
   })();
   </script>
   <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
