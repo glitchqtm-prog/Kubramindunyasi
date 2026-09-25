@@ -85,6 +85,103 @@ function evrenselGunSayisi(d){ return sayiIndir(rakamTopla(`${d.getFullYear()}${
 function evrenselAySayisi(d){ return sayiIndir(rakamTopla(`${d.getFullYear()}${d.getMonth()+1}`)); }
 
 /* ---------- Tarih / gökyüzü yardımcıları ---------- */
+/* ---------- Etkileşimli görsel bileşenler (sunucu tarafı SVG/HTML) ---------- */
+const GLIF = BURCLAR.map(b=>b.glif);
+function hash(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+
+// Günün kartı (22 Majör Arkana — site sıralaması)
+const ARKANA = [
+  {n:1,ad:"Büyücü",slug:"buyucu",tema:"irade ve yaratma gücü"},{n:2,ad:"Baş Rahibe",slug:"bas-rahibe",tema:"sezgi ve içsel bilgelik"},
+  {n:3,ad:"İmparatoriçe",slug:"imparatorice",tema:"bereket ve şefkat"},{n:4,ad:"İmparator",slug:"imparator",tema:"düzen ve istikrar"},
+  {n:5,ad:"Aziz",slug:"aziz",tema:"gelenek ve rehberlik"},{n:6,ad:"Aşıklar",slug:"asiklar",tema:"seçim ve uyum"},
+  {n:7,ad:"Savaş Arabası",slug:"savas-arabasi",tema:"kararlılık ve zafer"},{n:8,ad:"Adalet",slug:"adalet",tema:"denge ve dürüstlük"},
+  {n:9,ad:"Ermiş",slug:"ermis",tema:"içe dönüş ve arayış"},{n:10,ad:"Kader Çarkı",slug:"kader-carki",tema:"döngü ve şans"},
+  {n:11,ad:"Güç",slug:"guc",tema:"cesaret ve sabır"},{n:12,ad:"Asılan Adam",slug:"asilan-adam",tema:"farklı bakış ve teslimiyet"},
+  {n:13,ad:"Ölüm",slug:"olum",tema:"dönüşüm ve yeniden doğuş"},{n:14,ad:"Denge",slug:"denge",tema:"ölçü ve uyum"},
+  {n:15,ad:"Şeytan",slug:"seytan",tema:"bağlar ve özgürleşme"},{n:16,ad:"Kule",slug:"kule",tema:"ani değişim ve arınma"},
+  {n:17,ad:"Yıldız",slug:"yildiz",tema:"umut ve ilham"},{n:18,ad:"Ay",slug:"ay",tema:"sezgi ve bilinçdışı"},
+  {n:19,ad:"Güneş",slug:"gunes",tema:"neşe ve başarı"},{n:20,ad:"Mahkeme",slug:"mahkeme",tema:"uyanış ve yeni sayfa"},
+  {n:21,ad:"Dünya",slug:"dunya",tema:"tamamlanma ve bütünlük"},{n:22,ad:"Aptal",slug:"aptal",tema:"yeni başlangıç ve özgürlük"},
+];
+function gununKarti(now){ const y0=new Date(now.getFullYear(),0,0); const gun=Math.floor((now-y0)/86400000); return ARKANA[gun%22]; }
+
+// Günün rengi (evrensel gün sayısına göre)
+const RENK = {1:{ad:"Kızıl",hex:"#e0794f",his:"cesaret"},2:{ad:"Turkuaz",hex:"#5fb3a3",his:"uyum"},3:{ad:"Altın Sarısı",hex:"#e7cf95",his:"neşe"},
+  4:{ad:"Yeşil",hex:"#8fb98a",his:"istikrar"},5:{ad:"Gök Mavisi",hex:"#6aa9d6",his:"özgürlük"},6:{ad:"Gül Pembesi",hex:"#e0a0b4",his:"sevgi"},
+  7:{ad:"Mor",hex:"#8f7fe0",his:"sezgi"},8:{ad:"Altın",hex:"#d9b96a",his:"güç"},9:{ad:"İnci Beyazı",hex:"#f0e6d2",his:"tamamlanma"},
+  11:{ad:"Gümüş",hex:"#cdd6ff",his:"ilham"},22:{ad:"Lacivert",hex:"#7c6cf0",his:"usta kuruculuk"},33:{ad:"Zümrüt",hex:"#3fae86",his:"şefkatli rehberlik"}};
+function gununRengi(sayi){ return RENK[sayi] || RENK[9]; }
+
+// Sembolik günlük enerji (tarihe+burca göre kararlı; gökyüzüyle hafif nüanslı)
+function enerjiHesap(i, ayIdx, seed){
+  const d=((ayIdx-i)%12+12)%12, g=Math.min(d,12-d);
+  const bonus={0:5,1:2,2:7,3:-5,4:10,5:0,6:3}[g] ?? 0;
+  const v=(key)=>{ const h=hash(seed+"|"+i+"|"+key); return Math.max(45,Math.min(96, 50+bonus+(h%26))); };
+  return { ask:v("ask"), is:v("is"), ruh:v("ruh") };
+}
+function haftaVals(iso){ const o=[]; for(let i=0;i<7;i++){ const h=hash(iso+"|g"+i); o.push(Math.max(45,Math.min(92, 52+(h%34)+Math.round(7*Math.sin(i/6*Math.PI))))); } return o; }
+
+function moonSVG(angleDeg){
+  const R=44,c=50,a=((angleDeg%360)+360)%360,rad=a*Math.PI/180,semi=Math.cos(rad)*R,rx=Math.abs(semi).toFixed(2),rightLit=a<180;
+  let d; if(rightLit){const s=semi>0?0:1; d=`M${c},${c-R} A${R},${R} 0 0 1 ${c},${c+R} A${rx},${R} 0 0 ${s} ${c},${c-R} Z`;}
+  else{const s=semi>0?1:0; d=`M${c},${c-R} A${R},${R} 0 0 0 ${c},${c+R} A${rx},${R} 0 0 ${s} ${c},${c-R} Z`;}
+  return `<svg viewBox="0 0 100 100" class="ay-svg" role="img" aria-label="Ay evresi"><defs><radialGradient id="ayp" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fbf3d8"/><stop offset="1" stop-color="#e7cf95"/></radialGradient></defs><circle cx="${c}" cy="${c}" r="${R}" fill="#171327" stroke="#2c2545"/><path d="${d}" fill="url(#ayp)"/><circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#3a3358"/></svg>`;
+}
+function skyWheelSVG(ayIdx,gunIdx){
+  const c=110,R=88,rg=64,pos=(i,r)=>{const a=(-90+i*30)*Math.PI/180;return[c+r*Math.cos(a),c+r*Math.sin(a)];};
+  let s=`<svg viewBox="0 0 220 220" class="sky-svg" role="img" aria-label="Bugünün gökyüzü çarkı"><circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#2c2545"/><circle cx="${c}" cy="${c}" r="${rg}" fill="none" stroke="#241d38"/>`;
+  for(let i=0;i<12;i++){const p=pos(i,R-14),on=(i===ayIdx||i===gunIdx);s+=`<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="15" fill="${on?'#e7cf95':'#6f6690'}" font-family="Segoe UI Symbol,serif">${GLIF[i]}&#xFE0E;</text>`;}
+  const pa=pos(ayIdx,rg-14),pg=pos(gunIdx,rg-14);
+  s+=`<text x="${pg[0].toFixed(1)}" y="${(pg[1]+6).toFixed(1)}" text-anchor="middle" font-size="18" fill="#e0a84e">☉&#xFE0E;</text>`;
+  s+=`<text x="${pa[0].toFixed(1)}" y="${(pa[1]+6).toFixed(1)}" text-anchor="middle" font-size="18" fill="#cdd6ff">☽&#xFE0E;</text>`;
+  s+=`<text x="${c}" y="${c-3}" text-anchor="middle" font-size="10" fill="#9a8fb8" font-family="Segoe UI,sans-serif">bugünün</text><text x="${c}" y="${c+10}" text-anchor="middle" font-size="10" fill="#9a8fb8" font-family="Segoe UI,sans-serif">gökyüzü</text></svg>`;
+  return s;
+}
+function enerjiBarlar(e){
+  const bar=(lbl,v,cl)=>`<div class="eb-satir"><span class="eb-l">${lbl}</span><span class="eb-track"><i style="width:${v}%;background:${cl}"></i></span><span class="eb-v">${v}</span></div>`;
+  return `<div class="eb">${bar("Aşk",e.ask,"linear-gradient(90deg,#e0794f,#e7cf95)")}${bar("İş",e.is,"linear-gradient(90deg,#6aa9d6,#e7cf95)")}${bar("Ruh",e.ruh,"linear-gradient(90deg,#8f7fe0,#e7cf95)")}</div>`;
+}
+function haftaDalga(vals,labels){
+  const W=560,H=130,pad=24,n=vals.length,mx=95,mn=40,x=i=>pad+i*((W-2*pad)/(n-1)),y=v=>H-24-((v-mn)/(mx-mn))*(H-48);
+  let path=""; vals.forEach((v,i)=>{path+=(i?"L":"M")+x(i).toFixed(1)+","+y(v).toFixed(1);});
+  const area=`M${x(0).toFixed(1)},${(H-24).toFixed(1)} `+vals.map((v,i)=>`L${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")+` L${x(n-1).toFixed(1)},${(H-24).toFixed(1)} Z`;
+  const peak=vals.indexOf(Math.max(...vals)),low=vals.indexOf(Math.min(...vals));let dots="",labs="";
+  vals.forEach((v,i)=>{const px=x(i).toFixed(1),py=y(v).toFixed(1),hl=(i===peak||i===low);dots+=`<circle cx="${px}" cy="${py}" r="${hl?4.5:3}" fill="${i===peak?'#e7cf95':i===low?'#b98a8a':'#d9b96a'}"/>`;labs+=`<text x="${px}" y="${H-6}" text-anchor="middle" font-size="11" fill="#9a8fb8" font-family="Segoe UI,sans-serif">${labels[i]}</text>`;});
+  return `<svg viewBox="0 0 ${W} ${H}" class="dalga-svg" role="img" aria-label="Haftalık enerji dalgası"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(217,185,106,.28)"/><stop offset="1" stop-color="rgba(217,185,106,0)"/></linearGradient></defs><path d="${area}" fill="url(#dg)"/><path d="${path}" fill="none" stroke="#d9b96a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>${dots}${labs}</svg>`;
+}
+// Kişiye özel bölüm (statik kabuk; mantık /kisisel-gunluk.js içinde)
+function kisiselBolum(tur){
+  const turAd = tur==="gunluk" ? "günlük" : "haftalık";
+  return `<section class="kisisel" id="kisisel-yorum" data-tur="${tur}">
+    <div class="kisisel-bant">
+      <div class="kisisel-bas">✦ Sana Özel ${tur==="gunluk"?"Günlük":"Haftalık"} Yorum</div>
+      <p class="kisisel-alt">Doğum tarihini gir, ${turAd} enerjiyi <b>genel burç yorumuna değil, senin haritana</b> göre oku. Üyelere özel — giriş yaptığında bilgilerin hazır gelir.</p>
+      <form class="kisisel-form" id="ky-form">
+        <label class="ky-alan">Doğum tarihi<input type="date" id="ky-date" required></label>
+        <label class="ky-alan">Doğum saati <span>(isteğe bağlı)</span><input type="time" id="ky-time"></label>
+        <button type="submit" class="ky-btn" id="ky-btn">Giriş yap ✦</button>
+      </form>
+      <div class="kisisel-not" id="ky-not"></div>
+      <div class="kisisel-sonuc" id="ky-sonuc" hidden></div>
+    </div>
+  </section>
+  <script src="/kisisel-gunluk.js" defer></script>`;
+}
+// Bugünün Kozmik Panosu (ay evresi + gökyüzü çarkı + günün kartı + renk)
+function kozmikPano(ctx){
+  const k=ctx.kart, r=ctx.renk;
+  return `<section class="pano">
+    <div class="pano-b">✦ Bugünün Kozmik Panosu</div>
+    <div class="pano-grid">
+      <div class="pano-kut"><div class="pano-gorsel">${moonSVG(ctx.ayAci)}</div><div class="pano-ad">Ay Evresi</div><div class="pano-deger">${esc(ctx.evre)}</div></div>
+      <div class="pano-kut"><div class="pano-gorsel">${skyWheelSVG(ctx.ayIdx,ctx.gunIdx)}</div><div class="pano-ad">Gökyüzü</div><div class="pano-deger">Ay ${esc(BURC_ADLARI[ctx.ayIdx])} · Güneş ${esc(BURC_ADLARI[ctx.gunIdx])}</div></div>
+      <div class="pano-kut"><a class="pano-kart" href="/arkana-${k.n}-${k.slug}.html"><div class="pano-kart-n">${k.n}</div><div class="pano-kart-ad">${esc(k.ad)}</div></a><div class="pano-ad">Günün Kartı</div><div class="pano-deger">${esc(k.tema)}</div></div>
+      <div class="pano-kut"><div class="pano-renk" style="background:${r.hex}"></div><div class="pano-ad">Günün Rengi</div><div class="pano-deger">${esc(r.ad)} — ${esc(r.his)}</div></div>
+    </div>
+    <p class="pano-not">Bu pano herkes için ortaktır; günün genel atmosferini yansıtır. Her sabah tazelenir — yarın yeniden bak. ✦</p>
+  </section>`;
+}
+
 const AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
 const GUNLER = ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
 
@@ -174,7 +271,7 @@ DİL KURALLARI (kusursuz olmalı):
 
 TON: Umut veren, yapıcı, cesaret verici. Bir zorluğu ya da riski anarken bile mutlaka bir çıkış yolu, somut bir öneri ve olumlu bir bakış sun. ASLA kesin kehanet ya da kader hükmü verme ("olacak" değil; "eğilim, enerji, fırsat" dili). Klişeden uzak, samimi ve okuyucuyu iyi hissettiren ol.
 
-SOMUTLUK: Yorumlar havada kalmasın. genel, ask ve is bölümlerinde günlük hayattan SOMUT, ilişki kurulabilir örnekler ver (örneğin yanıtlamayı ertelediğin bir mesaj, bir arkadaşınla eski bir konuyu konuşmak, bütçeni gözden geçirmek). Bunu "belki", "olabilir", "bugünlerde" gibi nazik bir dille sun; kesin bir iddia gibi durmasın. Örnekler herkeste birebir tutmayabilir, bunu esnek bir dille ifade et.
+SOMUTLUK (ÇOK ÖNEMLİ — yorumun ruhu budur): Yorumlar asla havada ve genel geçer kalmasın; okuyan 'bu tam da benim hayatım' desin. Her bölümde günlük hayattan SOMUT, tanıdık, sahneler halinde örnekler ver — çoğu insanın gerçekten başına gelen, gelmesini umduğu ya da 'acaba olacak mı' diye merak ettiği durumlar. Örnek alanlar: yanıtlamayı ertelediğin bir mesaj ya da beklediğin bir cevap; bir arkadaşınla tazelenen ya da gerginleşen bir konu; aileden gelen bir haber ya da ziyaret; iş yerinde fark edilmek, yeni bir görev, bir zam ya da mülakat beklentisi; bütçeni gözden geçirmek, beklenmedik bir masraf ya da küçük bir kısmet; eski bir tanıdıkla karşılaşmak; ertelediğin bir işe nihayet başlamak; uyku, spor, küçük bir sağlık dokunuşu. Bu örnekleri 'belki', 'olabilir', 'bugünlerde', 'içinden gelebilir' gibi nazik ve olasılıklı bir dille, akıcı cümleler içine doğal biçimde yedir; madde madde SAYMA. Kesin iddia gibi durmasın; 'herkeste birebir aynı olmayabilir ama bu enerjiyi şöyle hissedebilirsin' esnekliğini koru. Klişe ('bugün kendine güven') değil, resmedilebilir sahneler kur.
 
 GERÇEK GÖKYÜZÜ: ${sky.gokKisa} Bu enerjiyi yorumlara doğal biçimde yansıt. Her burç için ayrıca "öne çıkan yaşam alanı (solar ev)" bilgisini vereceğim; o alanı yorumun merkezine al ve somut örnekleri oradan türet. Her burcu kendi doğasına göre belirgin biçimde farklılaştır; hiçbiri bir diğerine benzemesin.
 
@@ -185,16 +282,16 @@ NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel say�
   const ortak = `- teaser: en fazla 12 kelime; olumlu ve merak uyandıran.
 - tavsiye: tek, net, uygulanabilir ve olumlu bir cümle.`;
   const uzunluk = gunluk
-    ? `- genel: 5-6 cümle; dolgun ve akıcı, günlük hayattan somut bir örnek içersin; öne çıkan yaşam alanını doğal biçimde işle.
-- ask: 6-7 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, doğal bir akış içinde seslen (örneğin "İlişkin varsa..."; "Henüz yalnızsan ya da yeni birine açıksan...") — zorlama, akıcı olsun.
-- is: 5-6 cümle; uygun olduğunda hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; somut bir örnek içersin.
-- saglik: 3-4 cümle; bedensel ve duygusal enerji, öz bakım ve dengeye dair somut, uygulanabilir bir öneri.
+    ? `- genel: 7-8 cümle; dolgun, akıcı ve sıcak; günlük hayattan resmedilebilir 2 somut sahne içersin; öne çıkan yaşam alanını doğal biçimde işle ve okuyanı 'bu tam da bugünüm' hissine getir.
+- ask: 7-8 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, doğal bir akış içinde seslen (örneğin "İlişkin varsa..."; "Henüz yalnızsan ya da yeni birine açıksan...") ve her birine somut bir sahne ver — zorlama, akıcı olsun.
+- is: 6-7 cümle; hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; para/bütçe tarafına da bir dokunuş kat; somut bir örnek içersin.
+- saglik: 4-5 cümle; bedensel ve duygusal enerji, uyku, hareket, öz bakım ve dengeye dair somut, uygulanabilir bir-iki öneri.
 ${ortak}`
-    : `- genel: 6-7 cümle; sadece bugünü değil HAFTANIN GENELİNİ ve gidişatını anlat, somut örnekler içersin; öne çıkan yaşam alanını merkeze al.
-- ask: 7-8 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, haftalık perspektifle ve doğal akışta seslen (örneğin "İlişkin varsa..."; "Henüz yalnızsan...").
-- is: 6-7 cümle; hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; somut örnekler içersin.
-- saglik: 4-5 cümle; hafta boyunca enerji, öz bakım ve denge.
-- oneCikan: 3-4 cümle; haftanın hangi bölümlerinin (örneğin hafta başı, hafta ortası, hafta sonu) hangi konular için daha uygun olabileceğini nazikçe belirt. Kesin tarih verme; "hafta ortasına doğru", "hafta sonu" gibi genel ifadeler kullan.
+    : `- genel: 8-9 cümle; sadece bugünü değil HAFTANIN GENELİNİ ve gidişatını akıcı bir hikâye gibi anlat, resmedilebilir somut sahneler içersin; öne çıkan yaşam alanını merkeze al.
+- ask: 8-9 cümle; HEM ilişkisi olan HEM de bekar/yalnız okuyucuya AYRI AYRI, haftalık perspektifle ve doğal akışta seslen; her birine somut bir sahne ver.
+- is: 7-8 cümle; hem çalışanlara hem de yeni iş ya da fırsat arayanlara ayrı ayrı değin; para/bütçe tarafına da değin; somut örnekler içersin.
+- saglik: 5-6 cümle; hafta boyunca enerji, uyku, hareket, öz bakım ve denge; uygulanabilir öneriler.
+- oneCikan: 4-5 cümle; haftanın hangi bölümlerinin (örneğin hafta başı, hafta ortası, hafta sonu) hangi konular için daha uygun olabileceğini nazikçe belirt. Kesin tarih verme; "hafta ortasına doğru", "hafta sonu" gibi genel ifadeler kullan.
 ${ortak}`;
 
   const alanlar = gunluk
@@ -286,7 +383,59 @@ const CSS = `
   .ilgili a{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 16px;color:var(--cream);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;transition:background .15s,border-color .15s}
   .ilgili a:hover{background:rgba(217,185,106,.10);border-color:var(--gold)}
   .disclaimer{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);max-width:600px;margin:26px auto 0;line-height:1.6;text-align:center}
-  .geri{display:block;text-align:center;margin-top:22px;font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}`;
+  .geri{display:block;text-align:center;margin-top:22px;font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
+  /* Kişiye özel bölüm */
+  .kisisel{margin:20px auto 0;max-width:620px}
+  .kisisel-bant{background:linear-gradient(160deg,#241c3d,#171227);border:1px solid var(--gold);border-radius:18px;padding:20px 22px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+  .kisisel-bas{font-family:Georgia,serif;font-size:20px;color:var(--gold-soft);font-weight:600;text-align:center}
+  .kisisel-alt{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:var(--muted);text-align:center;margin:6px 0 16px;line-height:1.6}
+  .kisisel-alt b{color:var(--cream)}
+  .kisisel-form{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;justify-content:center}
+  .ky-alan{display:flex;flex-direction:column;gap:5px;font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted);flex:1 1 150px}
+  .ky-alan span{color:#6f6690;font-size:11.5px}
+  .ky-alan input{background:#0f0b1a;border:1px solid var(--line);border-radius:10px;color:var(--cream);font-family:inherit;font-size:15px;padding:11px 12px}
+  .ky-alan input:focus{outline:none;border-color:var(--gold)}
+  .ky-btn{flex:1 1 100%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font-family:'Segoe UI',system-ui,sans-serif;font-weight:bold;font-size:15px;border:none;border-radius:12px;padding:13px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:4px}
+  .ky-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(217,185,106,.3)}
+  .ky-btn:disabled{opacity:.6;cursor:default}
+  .kisisel-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:#9a8fb8;text-align:center;margin-top:10px}
+  .kisisel-sonuc{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+  .kisisel-sonuc .ky-baslik{font-family:Georgia,serif;font-size:16px;color:var(--gold-soft);margin-bottom:8px;text-align:center}
+  .kisisel-sonuc .ky-metin p{font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.75;color:#efe7f6;margin:0 0 12px}
+  .kisisel-sonuc .ky-yukleniyor,.kisisel-sonuc .ky-hata{font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;color:var(--muted);text-align:center;padding:10px}
+  /* Kozmik pano */
+  .pano{margin:22px auto 0;max-width:720px;background:rgba(217,185,106,.05);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .pano-b{font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:14px}
+  .pano-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:640px){.pano-grid{grid-template-columns:repeat(2,1fr)}}
+  .pano-kut{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .pano-gorsel{width:74px;height:74px;display:flex;align-items:center;justify-content:center}
+  .ay-svg{width:70px;height:70px}.sky-svg{width:88px;height:88px;margin:-8px 0}
+  .pano-ad{font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+  .pano-deger{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--cream);line-height:1.4}
+  .pano-kart{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:74px;background:linear-gradient(160deg,#2a2145,#171227);border:1px solid var(--gold);border-radius:9px;color:var(--gold-soft);text-decoration:none}
+  .pano-kart-n{font-family:Georgia,serif;font-size:20px;font-weight:bold}.pano-kart-ad{font-size:10px;color:var(--muted);padding:0 2px;line-height:1.1}
+  .pano-renk{width:56px;height:56px;border-radius:50%;box-shadow:0 0 18px rgba(0,0,0,.4) inset,0 4px 14px rgba(0,0,0,.3)}
+  .pano-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:#9a8fb8;text-align:center;margin:14px 0 0;line-height:1.5}
+  /* Enerji barları */
+  .eb{display:flex;flex-direction:column;gap:7px;margin:12px 0 0}
+  .eb-satir{display:flex;align-items:center;gap:9px}
+  .eb-l{width:32px;font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted)}
+  .eb-track{flex:1;height:8px;background:#15111f;border-radius:6px;overflow:hidden}
+  .eb-track i{display:block;height:100%;border-radius:6px}
+  .eb-v{width:24px;text-align:right;font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:var(--gold-soft);font-weight:600}
+  .burc .eb{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
+  /* Haftalık dalga */
+  .dalga{margin:22px auto 0;max-width:620px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .dalga-b{font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:6px}
+  .dalga-svg{width:100%;height:auto}
+  .dalga-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:#9a8fb8;text-align:center;margin-top:8px}
+  /* Günün kartı satırı (tekil sayfa) */
+  .gunkart{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:18px 0}
+  .gunkart .ikon{flex:none;width:52px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#2a2145,#171227);border:1px solid var(--gold);border-radius:8px;color:var(--gold-soft);text-decoration:none}
+  .gunkart .ikon b{font-family:Georgia,serif;font-size:18px}.gunkart .ikon small{font-size:9px;color:var(--muted)}
+  .gunkart .mtn{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:#efe7f6;line-height:1.55}
+  .gunkart .mtn b{color:var(--gold-soft)}`;
 
 function head(title, desc, canonical, jsonld){
   return `<!DOCTYPE html>
@@ -352,6 +501,14 @@ function renderSign(tur, b, y, ctx){
     <div class="ozet-satir">🎯 <b>Öne çıkan alanın:</b> ${odak.no}. ev — ${esc(odak.tema)}</div>
     <div class="ozet-satir">🔢 <b>${gunluk?"Günün":"Ayın"} sayısı ${sayi}:</b> ${esc(SAYI_TEMA[sayi])}</div>
   </div>
+  <div style="max-width:440px;margin:18px auto 0">
+    <div class="dalga-b" style="text-align:center">✦ ${b.ad} İçin ${gunluk?"Bugünün":"Bu Haftanın"} Enerjisi</div>
+    ${enerjiBarlar(enerjiHesap(BURCLAR.indexOf(b), ctx.ayIdx, ctx.iso))}
+  </div>
+  <div class="gunkart">
+    <a class="ikon" href="/arkana-${ctx.kart.n}-${ctx.kart.slug}.html"><b>${ctx.kart.n}</b><small>kart</small></a>
+    <div class="mtn"><b>${gunluk?"Günün":"Haftanın"} kartı: ${esc(ctx.kart.ad)}</b> — ${esc(ctx.kart.tema)}. Günün rengi <b style="color:${ctx.renk.hex}">${esc(ctx.renk.ad)}</b> (${esc(ctx.renk.his)}). Bu ton herkes için ortaktır; ${b.ad} yorumuna hafif bir atmosfer katar.</div>
+  </div>
   <hr class="ayrac">
   <h2>Genel</h2>
   <p>${esc(y.genel)}</p>
@@ -400,8 +557,15 @@ function renderHub(tur, yorumlar, ctx){
   const canonical = `https://astroyuvam.com/${yol}.html`;
   const kartlar = BURCLAR.map((b,i)=>{
     const t = yorumlar[i].teaser;
-    return `    <a class="burc" href="/${yol}/${b.slug}.html"><div class="glif">${b.glif}&#xFE0E;</div><div class="ad">${b.ad}</div><div class="aralik">${b.aralik}</div><p class="teaser">${esc(t)}</p></a>`;
+    const eb = enerjiBarlar(enerjiHesap(i, ctx.ayIdx, ctx.iso));
+    return `    <a class="burc" href="/${yol}/${b.slug}.html"><div class="glif">${b.glif}&#xFE0E;</div><div class="ad">${b.ad}</div><div class="aralik">${b.aralik}</div><p class="teaser">${esc(t)}</p>${eb}</a>`;
   }).join("\n");
+  const dalgaBolum = gunluk ? "" : `
+  <section class="dalga">
+    <div class="dalga-b">✦ Bu Haftanın Enerji Dalgası</div>
+    ${haftaDalga(ctx.haftaVals, ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"])}
+    <p class="dalga-not">Haftanın genel enerji akışı — altın nokta en canlı, soluk nokta en sakin gün. Sembolik bir pusuladır.</p>
+  </section>`;
   return `${head(title, desc, canonical, null)}
 <div class="wrap genis">
   <header class="hero">
@@ -411,6 +575,9 @@ function renderHub(tur, yorumlar, ctx){
     <p class="sub">12 burç için ${gunluk?"bugünün":"bu haftanın"} enerjisi — aşk, iş ve genel ruh hâli. Gerçek gökyüzüne dayalı, dürüst yorumlar.</p>
     <div class="gokyuzu">🌙 ${esc(ctx.gokKisa)} &nbsp;·&nbsp; 🔢 ${gunluk?"Günün":"Ayın"} sayısı ${gunluk?ctx.gunSayi:ctx.aySayi}: ${esc(SAYI_TEMA[gunluk?ctx.gunSayi:ctx.aySayi])}</div>
   </header>
+  ${kisiselBolum(gunluk?"gunluk":"haftalik")}
+  ${kozmikPano(ctx)}${dalgaBolum}
+  <h2 style="text-align:center;margin-top:30px">12 Burç İçin ${gunluk?"Bugün":"Bu Hafta"}</h2>
   <div class="grid">
 ${kartlar}
   </div>
@@ -440,10 +607,15 @@ function yaz(yol, icerik){ writeFileSync(yol, icerik, "utf-8"); }
   };
   const ayB = ayBurcu(now), gunB = gunesBurcu(now), evre = ayEvresi(now);
   ctx.gokKisa = `Bugün Ay ${ayB} burcunda (${evre}); Güneş ${gunB} mevsiminde.`;
+  ctx.evre = evre;
+  ctx.ayAci = A.MoonPhase(now); // 0=Yeni,90=İlk Dördün,180=Dolunay,270=Son Dördün
   ctx.ayIdx = BURC_ADLARI.indexOf(ayB);
   ctx.gunIdx = BURC_ADLARI.indexOf(gunB);
   ctx.gunSayi = evrenselGunSayisi(now);
   ctx.aySayi = evrenselAySayisi(now);
+  ctx.kart = gununKarti(now);
+  ctx.renk = gununRengi(ctx.gunSayi);
+  ctx.haftaVals = haftaVals(iso);
   const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi };
 
   mkdirSync("gunluk-burc-yorumlari", {recursive:true});
