@@ -86,7 +86,8 @@
       { href:"/dogum-haritasi-hesaplama.html", ad:"✦ Doğum Haritası", alt:"Haritanı ücretsiz çıkar" },
       { href:"/gokyuzu.html",        ad:"✦ Gökyüzü",                alt:"Şu an gökyüzü & günün fısıltısı" },
       { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",             alt:"Bugünün ay evresi ve ritüeli" },
-      { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" }
+      { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" },
+      { href:"/dugun-tarihi-hesaplama.html", ad:"✦ Düğün Tarihi Hesaplama", alt:"Nikah, nişan ve düğün için en uygun gün" }
     ]},
     { baslik:"Sor & Yorumla", items:[
       { href:"/asterna.html",        ad:"✦ Asterna",        alt:"Yapay zekâ rehberin — her şeyi sor" },
