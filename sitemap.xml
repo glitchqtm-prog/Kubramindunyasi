@@ -98,7 +98,7 @@
   </url>
   <url>
     <loc>https://astroyuvam.com/yildiz-gunlugu.html</loc>
-    <lastmod>2026-08-09</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -706,6 +706,24 @@
   <url>
     <loc>https://astroyuvam.com/acilar-aspektler.html</loc>
     <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://astroyuvam.com/2027-burc-yorumlari.html</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://astroyuvam.com/2027-sansli-burclar.html</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://astroyuvam.com/2027-evlenecek-burclar.html</loc>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
