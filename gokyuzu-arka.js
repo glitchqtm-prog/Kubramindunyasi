@@ -92,23 +92,12 @@
     else if (!red) document.addEventListener("visibilitychange", function once(){ if (!document.hidden){ document.removeEventListener("visibilitychange", once); requestAnimationFrame(kare); } });
   }
 
-  function not(){ // küçük, silinip giden açıklama → canlı Gökyüzü sayfasına bağ
-    var a = document.createElement("a");
-    a.href = "/gokyuzu.html";
-    a.textContent = "✦ Arkandaki gökyüzü, şu an İstanbul üzerindeki gerçek gökyüzü";
-    a.style.cssText = "position:fixed;left:16px;bottom:14px;z-index:5;font:12px/1.4 'Inter','Segoe UI',sans-serif;color:rgba(231,207,149,.72);text-decoration:none;background:rgba(12,10,22,.55);border:1px solid rgba(217,185,106,.18);border-radius:20px;padding:6px 12px;opacity:0;transition:opacity 1.6s ease;max-width:calc(100vw - 110px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis";
-    document.body.appendChild(a);
-    setTimeout(function(){ a.style.opacity = "1"; }, 2600);
-    setTimeout(function(){ a.style.opacity = "0"; setTimeout(function(){ a.remove(); }, 1800); }, 14000);
-  }
-
   function basla(){
     document.body.insertBefore(cv, document.body.firstChild);
     boyut(); ciz(); requestAnimationFrame(kare);
     requestAnimationFrame(function(){ cv.style.opacity = "1"; });
-    setInterval(ciz, 60000);                            // gerçek dönüş: dakikada bir yeniden hesapla
+    setInterval(ciz, 60000);                            // dakikada bir yeniden hesapla
     var zt; addEventListener("resize", function(){ clearTimeout(zt); zt = setTimeout(function(){ boyut(); ciz(); }, 200); });
-    if (innerWidth >= 900) not();
   }
   function yukle(){
     if (window.AY_SKY) return basla();
