@@ -132,9 +132,15 @@
       + '<span class="bi-ipucu">Çarktaki bir sembole dokun → o burcun künyesini ve element üçgenini gör</span></div>'
       + '<div class="bi-grid"><div class="bi-wheel">' + svg + '</div><div class="bi-kunye">' + kunye + '</div></div>'
       + '</div>';
+    bagla(host);
+  }
 
+  // Animasyon + etkileşim (sayfa görseli hazır getirdiyse yalnızca bu çalışır — yeniden kurulmaz)
+  function bagla(host) {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches;
     // trigon çizim animasyonu
     var trig = host.querySelector("#bi-trig");
+    if (trig && reduce) { trig.style.strokeDasharray = ""; trig.style.strokeDashoffset = ""; }
     if (trig && !reduce) {
       try {
         var len = trig.getTotalLength();
@@ -166,7 +172,7 @@
     if (!st) { st = document.createElement("style"); st.id = "burc-imza-css"; st.textContent = CSS; document.head.appendChild(st); }
     var idx = parseInt(host.getAttribute("data-sign") || "0", 10);
     if (isNaN(idx) || idx < 0 || idx > 11) idx = 0;
-    render(host, idx);
+    if (host.querySelector(".bi-kart")) bagla(host); else render(host, idx);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
