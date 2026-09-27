@@ -1,0 +1,27 @@
+{
+  "id": "/",
+  "name": "Astro Yuvam",
+  "short_name": "Astro Yuvam",
+  "description": "Günlük burç yorumları, ücretsiz doğum haritası, Kozmik Panel ve kişiye özel astroloji ile numeroloji raporları.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "/?utm_source=uygulama&utm_medium=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0914",
+  "theme_color": "#14101f",
+  "categories": ["lifestyle", "entertainment"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Günlük Burç Yorumları", "short_name": "Günlük Yorum", "url": "/gunluk-burc-yorumlari.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Kozmik Panelim", "short_name": "Panelim", "url": "/panelim.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Doğum Haritası Hesaplama", "short_name": "Doğum Haritası", "url": "/dogum-haritasi-hesaplama.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Raporlar", "short_name": "Raporlar", "url": "/?utm_source=uygulama#cards", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

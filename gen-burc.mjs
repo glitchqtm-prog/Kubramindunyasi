@@ -536,6 +536,7 @@ function head(title, desc, canonical, jsonld){
 <style>${CSS}</style>
 <style id="am-kritik">${HIZ_MENU_CSS}</style>
 ${HIZ_CEREZ_CSS}
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
 ${HIZ_MENU_BAR}

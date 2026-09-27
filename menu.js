@@ -12,6 +12,9 @@
    BURÇ YORUMLARI MENÜSÜ = BASİT AÇILIR: tıklayınca doğrudan iki seçenek
    görünür — Günlük ve Haftalık. Kategori/akordiyon yoktur. */
 (function(){
+  // ——— Uygulama olarak ekleme (PWA): Android'in kurulum sinyalini erkenden yakala; davet pwa.js'te ———
+  window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); window.__ayKurulum = e; try{ document.dispatchEvent(new Event("ay-kurulum")); }catch(x){} });
+
   // ——— Google Analytics 4 — tüm ziyaretçilerde çalışır (bilgilendirme modu) ———
   function gaBaslat(){
     var GA_ID = "G-QQ0SREFL4L";
@@ -236,6 +239,14 @@
       aw.id = "asterna-widget-js"; aw.src = "/asterna-widget.js"; aw.async = true;
       document.body.appendChild(aw);
     }, 0, true);
+
+    // Uygulama (PWA) desteği: sayfa tamamen yüklendikten 3 sn sonra — ilk görüntüyü ve hız puanını etkilemez.
+    sonraYukle(function(){
+      if(document.getElementById("ay-pwa-js")) return;
+      var pw = document.createElement("script");
+      pw.id = "ay-pwa-js"; pw.src = "/pwa.js"; pw.async = true;
+      document.body.appendChild(pw);
+    }, 3000, false);
 
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
