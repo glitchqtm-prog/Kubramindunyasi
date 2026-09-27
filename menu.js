@@ -119,7 +119,8 @@
       { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",             alt:"Bugünün ay evresi ve ritüeli" },
       { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" },
       { href:"/dugun-tarihi-hesaplama.html", ad:"✦ Düğün Tarihi Hesaplama", alt:"Nikah, nişan ve düğün için en uygun gün" },
-      { href:"/haritada-evlilik-gostergeleri.html", ad:"✦ Evlilik Göstergelerim", alt:"7. ev, Juno ve Vertex hesaplama" }
+      { href:"/haritada-evlilik-gostergeleri.html", ad:"✦ Evlilik Göstergelerim", alt:"7. ev, Juno ve Vertex hesaplama" },
+      { href:"/lilith-burcu-hesaplama.html", ad:"✦ Lilith Burcu Hesaplama", alt:"Kara Ay Lilith hangi burçta, hangi evde?" }
     ]},
     { baslik:"Sor & Yorumla", items:[
       { href:"/asterna.html",        ad:"✦ Asterna",        alt:"Yapay zekâ rehberin — her şeyi sor" },
