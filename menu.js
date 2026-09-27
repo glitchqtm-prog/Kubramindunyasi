@@ -87,7 +87,8 @@
       { href:"/gokyuzu.html",        ad:"✦ Gökyüzü",                alt:"Şu an gökyüzü & günün fısıltısı" },
       { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",             alt:"Bugünün ay evresi ve ritüeli" },
       { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" },
-      { href:"/dugun-tarihi-hesaplama.html", ad:"✦ Düğün Tarihi Hesaplama", alt:"Nikah, nişan ve düğün için en uygun gün" }
+      { href:"/dugun-tarihi-hesaplama.html", ad:"✦ Düğün Tarihi Hesaplama", alt:"Nikah, nişan ve düğün için en uygun gün" },
+      { href:"/haritada-evlilik-gostergeleri.html", ad:"✦ Evlilik Göstergelerim", alt:"7. ev, Juno ve Vertex hesaplama" }
     ]},
     { baslik:"Sor & Yorumla", items:[
       { href:"/asterna.html",        ad:"✦ Asterna",        alt:"Yapay zekâ rehberin — her şeyi sor" },
@@ -220,7 +221,7 @@
 
     // Giriş yapılmışsa "Günlük Yorumum" + "Profilim", yapılmamışsa "Giriş"
     var hesapHTML = oturumAcikMi()
-      ? '<a href="/gunluk-yorumum.html">Günlük Yorumum</a><a href="/profil.html">Profilim</a>'
+      ? '<a href="/panelim.html">Kozmik Panelim</a><a href="/gunluk-yorumum.html">Günlük Yorumum</a><a href="/profil.html">Profilim</a>'
       : '<a href="/giris.html">Giriş</a>';
 
     var html = ''

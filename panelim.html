@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kozmik Panelim · Astro Yuvam</title>
+<meta name="description" content="Astro Yuvam üyelerine özel Kozmik Panel: bugün Ay hangi evinde, kişisel gün sayın, haritana dokunan açılar ve 30 günlük kişisel gökyüzü takvimin.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{--bg-1:#0c0914;--bg-2:#14101f;--panel:#1c1733;--panel-2:#241c3d;--gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:#9a8fb8;--line:#332a4d;--mor:#a99cf0;--yesil:#8fd8b0;--pembe:#e98ea2}
+  *{box-sizing:border-box}html,body{margin:0}
+  body{background:radial-gradient(ellipse at 50% -10%,#241c3d 0%,var(--bg-2) 55%,var(--bg-1) 100%) fixed;color:var(--cream);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.55}
+  a{color:var(--gold-soft);text-decoration:none}
+  .wrap{max-width:1040px;margin:0 auto;padding:10px 18px 70px}
+  .sym{font-family:'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif}
+  .serif{font-family:Georgia,'Times New Roman',serif}
+  .gizli{display:none!important}
+  /* üst karşılama */
+  .ust{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 0 18px}
+  .ust .k{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+  .ust h1{font-family:Georgia,serif;font-weight:600;font-size:32px;margin:4px 0 2px;line-height:1.15}
+  .ust .t{color:var(--muted);font-size:14px}
+  .seri{display:flex;align-items:center;gap:10px;background:rgba(217,185,106,.08);border:1px solid rgba(217,185,106,.3);border-radius:14px;padding:9px 14px}
+  .seri b{font-family:Georgia,serif;font-size:24px;color:var(--gold-soft);line-height:1}
+  .seri span{font-size:12px;color:var(--muted);line-height:1.3}
+  /* kartlar */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid3{grid-template-columns:1fr}}
+  .kart{background:linear-gradient(180deg,rgba(36,28,61,.72),rgba(28,23,51,.72));border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;position:relative;overflow:hidden}
+  .kart h2{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin:0 0 10px;font-weight:600}
+  .kart .buyuk{font-family:Georgia,serif;font-size:26px;line-height:1.2;margin:0}
+  .kart p{font-size:14.5px;color:#e9e1f2;margin:8px 0 0}
+  .kart .kucuk{font-size:12.5px;color:var(--muted)}
+  .ay-kart{display:grid;grid-template-columns:86px 1fr;gap:14px;align-items:center}
+  .ay-kart svg{width:86px;height:86px}
+  .ev-rozet{display:inline-block;font-size:12px;color:#2a1e08;background:linear-gradient(180deg,var(--gold-soft),var(--gold));border-radius:10px;padding:2px 9px;margin-top:6px;font-weight:600}
+  .sayi{display:flex;align-items:center;gap:14px}
+  .sayi .n{font-family:Georgia,serif;font-size:58px;line-height:1;color:var(--gold-soft);min-width:56px;text-align:center;text-shadow:0 0 30px rgba(217,185,106,.35)}
+  .sayi .alt{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .sayi .alt span{font-size:12px;color:var(--cream);border:1px solid var(--line);border-radius:10px;padding:2px 8px;background:rgba(20,16,31,.5)}
+  .btn{display:inline-block;border:none;cursor:pointer;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;font:600 14px 'Segoe UI',system-ui,sans-serif;padding:10px 16px;border-radius:22px;text-align:center}
+  .btn.ghost{background:transparent;color:var(--gold-soft);border:1px solid rgba(217,185,106,.45)}
+  .btn:hover{filter:brightness(1.06)}
+  .yorum-kart{display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(ellipse at 90% 0%,rgba(124,108,240,.22),transparent 60%),linear-gradient(180deg,rgba(36,28,61,.8),rgba(28,23,51,.8))}
+  .yorum-kart .btn{margin-top:14px;align-self:flex-start}
+  /* bölümler */
+  .bolum{margin-top:26px}
+  .bolum-b{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .bolum-b h2{font-family:Georgia,serif;font-weight:600;font-size:22px;color:var(--gold-soft);margin:0}
+  .bolum-b span{font-size:13px;color:var(--muted)}
+  .acilar{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:760px){.acilar{grid-template-columns:1fr}}
+  .aci{background:rgba(28,23,51,.7);border:1px solid var(--line);border-radius:16px;padding:14px 16px;border-left:3px solid var(--mor)}
+  .aci.uyum{border-left-color:var(--yesil)}.aci.zor{border-left-color:var(--pembe)}.aci.kav{border-left-color:var(--gold)}
+  .aci .ab{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px}
+  .aci .ab .sym{color:var(--gold-soft);font-size:17px}
+  .aci .ab em{font-style:normal;font-size:11.5px;color:var(--muted);font-weight:400;margin-left:auto;white-space:nowrap}
+  .aci p{margin:6px 0 0;font-size:14px;color:#e9e1f2}
+  .aci .ip{margin-top:6px;font-size:13px;color:var(--gold-soft)}
+  .bos{color:var(--muted);font-size:14px;background:rgba(28,23,51,.5);border:1px dashed var(--line);border-radius:14px;padding:16px}
+  /* çark */
+  .cark-kutu{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:18px;align-items:center}
+  @media(max-width:820px){.cark-kutu{grid-template-columns:1fr}}
+  .cark-kutu svg{width:100%;max-width:470px;height:auto;display:block;margin:0 auto}
+  .cark-kutu svg text{font-family:'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif;text-anchor:middle;dominant-baseline:central}
+  .ucbuyuk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .ucbuyuk div{background:rgba(20,16,31,.55);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+  .ucbuyuk b{display:block;font-family:Georgia,serif;font-size:17px}
+  .ucbuyuk span{font-size:11.5px;color:var(--muted)}
+  .tablo{width:100%;border-collapse:collapse;font-size:13px}
+  .tablo td,.tablo th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left}
+  .tablo th{color:var(--gold-soft);font-weight:600;font-size:12px}
+  .lejant{display:flex;gap:14px;justify-content:center;font-size:12px;color:var(--muted);margin-top:8px}
+  .lejant i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  /* takvim */
+  .zaman{list-style:none;margin:0;padding:0;position:relative}
+  .zaman::before{content:"";position:absolute;left:62px;top:6px;bottom:6px;width:1px;background:var(--line)}
+  .zaman li{display:grid;grid-template-columns:52px 20px 1fr;gap:10px;padding:8px 0;align-items:start}
+  .zaman time{text-align:right;font-size:12.5px;color:var(--gold-soft);line-height:1.2;padding-top:2px}
+  .zaman time small{display:block;color:var(--muted);font-size:11px}
+  .zaman .nk{width:11px;height:11px;border-radius:50%;background:var(--mor);margin:4px auto 0;box-shadow:0 0 0 3px rgba(20,16,31,1)}
+  .zaman .nk.ay{background:#cdd6ff}.zaman .nk.gecis{background:var(--gold)}.zaman .nk.retro{background:var(--pembe)}.zaman .nk.tut{background:#fff1c8;box-shadow:0 0 0 3px #14101f,0 0 10px #f3d27a}.zaman .nk.nk-aci{background:var(--yesil)}
+  .zaman b{display:block;font-size:14.5px}
+  .zaman span{font-size:13.5px;color:#e2d9ee}
+  .filtre{display:flex;gap:6px;flex-wrap:wrap}
+  .filtre button{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--cream);border-radius:16px;padding:5px 12px;font:12.5px 'Segoe UI',system-ui,sans-serif;cursor:pointer}
+  .filtre button.on{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;border-color:var(--gold)}
+  /* kısayollar */
+  .kisayol{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:760px){.kisayol{grid-template-columns:repeat(2,1fr)}}
+  .kisayol a{background:rgba(28,23,51,.7);border:1px solid var(--line);border-radius:14px;padding:13px 14px;color:var(--cream);font-size:14px;transition:border-color .15s,transform .15s}
+  .kisayol a:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .kisayol small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  /* durum ekranları */
+  .durum{max-width:620px;margin:40px auto;text-align:center;background:linear-gradient(180deg,rgba(36,28,61,.8),rgba(28,23,51,.8));border:1px solid var(--line);border-radius:22px;padding:30px 24px}
+  .durum h1{font-family:Georgia,serif;font-weight:600;font-size:30px;margin:6px 0 8px;color:var(--gold-soft)}
+  .durum p{color:#e2d9ee;font-size:15px}
+  .durum img{width:120px;height:auto;filter:drop-shadow(0 14px 30px rgba(0,0,0,.6))}
+  .ozellik{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;margin:18px 0}
+  @media(max-width:560px){.ozellik{grid-template-columns:1fr}}
+  .ozellik div{background:rgba(20,16,31,.5);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px}
+  .ozellik b{display:block;color:var(--gold-soft);font-size:14px}
+  .form{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;margin-top:14px}
+  .form .tam{grid-column:1/-1}
+  .form label{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+  .form input{background:#120e1e;color:var(--cream);border:1px solid rgba(217,185,106,.45);border-radius:10px;padding:11px 12px;font:15px 'Segoe UI',system-ui,sans-serif;color-scheme:dark}
+  .yukle{color:var(--muted);text-align:center;padding:60px 0}
+  .yukle i{display:inline-block;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--gold);animation:dn 1s linear infinite;margin-bottom:10px}
+  @keyframes dn{to{transform:rotate(360deg)}}
+  .not{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .uyari{background:rgba(229,155,176,.08);border:1px solid rgba(229,155,176,.35);border-radius:12px;padding:10px 14px;font-size:13.5px;color:#f3d0da;margin-bottom:14px}
+  @media (prefers-reduced-motion:reduce){.yukle i{animation:none}}
+  .cark-kutu > div{min-width:0}
+  .tablo-kap{overflow-x:auto}
+  @media(max-width:560px){.aci .ab{flex-wrap:wrap}.aci .ab em{margin-left:0;width:100%}.tablo{font-size:12px}.ust h1{font-size:27px}}
+</style>
+</head>
+<body>
+<div id="astro-menu"></div>
+<main class="wrap">
+  <div class="yukle" id="yukleniyor"><i></i><div>Gökyüzün hazırlanıyor…</div></div>
+
+  <!-- ÜYE DEĞİLSE -->
+  <section class="durum gizli" id="girisGerek">
+    <img src="/asterna-selam-web.webp" alt="Asterna" width="120" height="219" decoding="async">
+    <h1>Kozmik Panel üyelere özel</h1>
+    <p id="genelGok">Her sabah gökyüzünü senin haritana göre okuyan kişisel bir ekran. Ücretsiz üye ol, 30 saniyede hazır.</p>
+    <div class="ozellik">
+      <div><b>Ay bugün hangi evinde?</b>Duygusal havanı ve günün temasını gösterir.</div>
+      <div><b>Kişisel gün sayın</b>Numerolojiye göre bugünün enerjisi ve önerisi.</div>
+      <div><b>Haritana dokunan açılar</b>Bugün gökyüzünün seni en çok etkileyen noktaları.</div>
+      <div><b>30 günlük kişisel takvim</b>Sana özel tarihler, tek tıkla telefonuna.</div>
+    </div>
+    <a class="btn" href="/giris.html?mod=uye&amp;geri=%2Fpanelim.html">✦ Ücretsiz üye ol</a>
+    <div class="not">Zaten üye misin? <a href="/giris.html?mod=giris&amp;geri=%2Fpanelim.html">Giriş yap</a></div>
+  </section>
+
+  <!-- DOĞUM BİLGİSİ EKSİKSE -->
+  <section class="durum gizli" id="dogumGerek">
+    <h1>Haritanı hazırlayalım</h1>
+    <p>Panelinin sana özel olması için doğum bilgilerin gerekiyor. Bir kez gir, her gün kullan. Bilgilerin yalnızca sende görünür.</p>
+    <form class="form" id="dogumForm">
+      <label>Doğum tarihi<input type="date" id="dTarih" min="1900-01-01" max="2030-12-31" required></label>
+      <label>Doğum saati (biliyorsan)<input type="time" id="dSaat"></label>
+      <label class="tam">Doğum yeri<input type="text" id="dYer" placeholder="Örn. İstanbul" required></label>
+      <button class="btn tam" type="submit" id="dKaydet">Kaydet ve panelimi aç</button>
+    </form>
+    <div class="not" id="dMsg"></div>
+  </section>
+
+  <!-- PANEL -->
+  <div class="gizli" id="panel">
+    <div class="ust">
+      <div><div class="k">Kozmik Panelim</div><h1 id="selam">Merhaba</h1><div class="t" id="tarih"></div></div>
+      <div class="seri" id="seri" title="Paneline üst üste kaç gündür uğruyorsun"><b id="seriN">1</b><span id="seriT">gündür<br>buradasın</span></div>
+    </div>
+    <div class="uyari gizli" id="saatUyari">Doğum saatin kayıtlı olmadığı için evler Güneş burcuna göre yaklaşık hesaplandı. Kesin sonuç için <a href="/profil.html">profilinden saatini ekle</a>.</div>
+
+    <div class="grid3">
+      <section class="kart ay-kart" aria-label="Bugün Ay">
+        <div id="ayCiz"></div>
+        <div><h2>Bugün Ay</h2><p class="buyuk" id="ayBurc">…</p><div class="kucuk" id="ayFaz"></div><span class="ev-rozet" id="ayEv"></span></div>
+        <p style="grid-column:1/-1" id="ayYorum"></p>
+      </section>
+      <section class="kart" aria-label="Kişisel gün sayın">
+        <h2>Kişisel gün sayın</h2>
+        <div class="sayi"><div class="n" id="gunN">·</div><div><p class="buyuk" style="font-size:20px" id="gunBaslik"></p><div class="kucuk" id="gunYorum"></div></div></div>
+        <div class="sayi"><div class="alt"><span id="aySayi"></span><span id="yilSayi"></span></div></div>
+      </section>
+      <section class="kart yorum-kart" aria-label="Günlük yorum">
+        <div><h2>Sana özel günlük yorum</h2><p class="buyuk" style="font-size:21px">Bugün gökyüzü senin için ne söylüyor?</p><p class="kucuk">Doğum haritan ve bugünün transitleriyle, sadece senin için yazılır.</p></div>
+        <a class="btn" href="/gunluk-yorumum.html">Bugünkü yorumumu oku →</a>
+      </section>
+    </div>
+
+    <section class="bolum">
+      <div class="bolum-b"><h2>Bugün haritana dokunan gökyüzü</h2><span>Gezegenlerin bugünkü konumu ile doğum haritan arasındaki en güçlü açılar</span></div>
+      <div class="acilar" id="acilar"></div>
+    </section>
+
+    <section class="bolum">
+      <div class="bolum-b"><h2>Önümüzdeki 30 gün</h2>
+        <div class="filtre" id="filtre"><button class="on" data-f="hepsi">Tümü</button><button data-f="ay">Ay</button><button data-f="gecis">Geçişler</button><button data-f="aci">Açılar</button><button data-f="retro">Retrolar</button></div></div>
+      <ol class="zaman" id="takvim"></ol>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="icsBtn" type="button">Tümünü takvimime ekle</button><span class="not" style="margin:0;align-self:center">Her tarih için bir gün önce hatırlatma kurulur.</span></div>
+    </section>
+
+    <section class="bolum">
+      <div class="bolum-b"><h2>Haritan ve bugünün gökyüzü</h2><span>İç halka doğum haritan, dış halka bugünkü gezegenler</span></div>
+      <div class="cark-kutu"><div id="cark"></div><div><div class="ucbuyuk" id="ucbuyuk"></div><div class="tablo-kap"><table class="tablo" id="gTablo"></table></div></div></div>
+      <div class="lejant"><span><i style="background:#f0e6d2"></i>Doğum haritan</span><span><i style="background:#d9b96a"></i>Bugünkü gökyüzü</span></div>
+    </section>
+
+    <section class="bolum">
+      <div class="bolum-b"><h2>Senin için</h2></div>
+      <div class="kisayol">
+        <a href="/gunluk-yorumum.html">Günlük yorumum<small>Bugüne özel</small></a>
+        <a href="/profil.html">Profilim<small>Bilgilerim ve kişilerim</small></a>
+        <a href="/2027-burc-yorumlari.html" id="k2027">2027 yorumum<small>Yıl boyu rehber</small></a>
+        <a href="/dugun-tarihi-hesaplama.html">Düğün tarihi<small>En uygun günü bul</small></a>
+        <a href="/ay-takvimi.html">Ay takvimi<small>Evre ve ritüel</small></a>
+        <a href="/zaman-makinesi.html">Zaman makinesi<small>O gün gökyüzü</small></a>
+        <a href="/uyum-testi.html">Uyum testi<small>Sen ve o</small></a>
+        <a href="/#cards">Kişisel raporlar<small>Derin okumalar</small></a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/astronomy.browser.min.js"></script>
+<script src="/menu.js" defer></script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co", SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
+  var API = "https://astro-rapor.onrender.com/api/harita";
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY), A = window.Astronomy;
+  var VS = "\uFE0E";
+  var BN = ["Koç","Boğa","İkizler","Yengeç","Aslan","Başak","Terazi","Akrep","Yay","Oğlak","Kova","Balık"];
+  var GL = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"];
+  var SL = ["koc","boga","ikizler","yengec","aslan","basak","terazi","akrep","yay","oglak","kova","balik"];
+  var AYL = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  var GUN = ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+  var EV = ["","Kimlik & yeni başlangıç","Para & öz değer","İletişim & öğrenme","Ev & aile","Aşk & yaratıcılık","İş düzeni & sağlık","İlişki & evlilik","Ortak kaynak & dönüşüm","Yolculuk & eğitim","Kariyer & statü","Arkadaşlar & dilekler","İç dünya & kapanışlar"];
+  var EVK = ["","kimlik","para ve öz değer","iletişim ve öğrenme","ev ve aile","aşk ve yaratıcılık","iş düzeni ve sağlık","ilişki","ortak kaynaklar","yolculuk ve eğitim","kariyer","arkadaşlık ve topluluk","iç dünya"];
+  var AY_EV = ["",
+    "Duyguların yüzeyde; ruh halin başkalarına kolayca yansıyor. Kendine özen göstermek bugün önce gelir.",
+    "Güvende hissetme ihtiyacın artıyor. Para, konfor ve kendi değerin üzerine düşünmek için iyi bir gün.",
+    "Zihnin hareketli; mesajlar, kısa yollar ve sohbetler günün akışını belirliyor.",
+    "Evine ve ailene dönme günü. Biraz yavaşla, yuvanda güç topla.",
+    "Keyif, flört ve yaratıcılık günü. Kalbini hafifleten bir şeye zaman ayır.",
+    "Rutin ve beden ön planda. Küçük işleri bitirmek ve kendine iyi bakmak iyi gelir.",
+    "İlişkiler ve karşındaki insanlar gündemde. Birlikte karar almak bugün daha kolay.",
+    "Duygular derinleşiyor. Güven, yakınlık ve ortak konular üzerine düşünme günü.",
+    "Ufkunu açma isteği var. Okumak, öğrenmek ya da farklı bir bakış açısı iyi gelir.",
+    "Görünürlüğün artıyor; iş hayatında duyguların da fark edilebilir, profesyonel kal.",
+    "Arkadaşlar ve topluluklar enerjini yükseltiyor. Bir dileğini paylaşmak için güzel bir gün.",
+    "İçe dönüş zamanı. Dinlen, yalnız kalmaya izin ver, sezgine kulak ver."];
+  var GS = [null,["Başlangıç günü","Yeni bir işe ilk adımı at, inisiyatif al. Bugün başlattığın şey ivme kazanır."],["İş birliği ve sabır","Dinle, uzlaş, acele etme. İlişkilerde küçük incelikler büyük fark yaratır."],["İfade ve neşe","Yaz, konuş, paylaş, sosyalleş. Yaratıcı bir şey ortaya koymak için ideal."],["Düzen ve emek","Planla, sağlam temel at, detaylara bak. Bugünkü disiplin yarın kolaylık olur."],["Değişim ve hareket","Yeniliğe açıl, esnek ol. Küçük bir macera ya da rota değişikliği iyi gelir."],["Sevgi ve sorumluluk","Sevdiklerine zaman ayır, yuvanı güzelleştir. Şefkat bugün karşılık bulur."],["İçe dönüş ve derinlik","Araştır, dinlen, sezgine kulak ver. Cevaplar sessizlikte gelir."],["Güç ve sonuç","İş ve para konularına odaklan, karar al. Emeğinin karşılığını istemekten çekinme."],["Tamamlama ve bırakma","Biteni kapat, affet, yer aç. Yeni döngü için alan açmanın günü."]];
+  var YS = [null,"yeni başlangıçlar yılı","ilişkiler ve sabır yılı","ifade ve sosyallik yılı","emek ve temel yılı","değişim ve özgürlük yılı","aile ve sorumluluk yılı","içe dönüş ve bilgelik yılı","güç ve kazanım yılı","tamamlanma yılı"];
+  var PL = [["Güneş","Sun","☉"],["Ay","Moon","☽"],["Merkür","Mercury","☿"],["Venüs","Venus","♀"],["Mars","Mars","♂"],["Jüpiter","Jupiter","♃"],["Satürn","Saturn","♄"],["Uranüs","Uranus","♅"],["Neptün","Neptune","♆"],["Plüton","Pluto","♇"]];
+  var TP = {"Güneş":"Günün ışığı ve odağın","Merkür":"Düşünceler, yazışmalar ve planlar","Venüs":"Sevgi, uyum ve keyif","Mars":"Enerji, cesaret ve istek","Jüpiter":"Büyüme ve fırsat enerjisi","Satürn":"Sorumluluk ve olgunlaşma çağrısı","Uranüs":"Sürpriz ve değişim rüzgarı","Neptün":"Sezgi, hayal gücü ve incelik","Plüton":"Derin dönüşüm gücü"};
+  var NP = {"Güneş":"kimliğin ve özgüveninle","Ay":"duyguların ve iç dünyanla","Merkür":"zihninle ve iletişim tarzınla","Venüs":"ilişkilerin ve sevgi dilinle","Mars":"isteklerin ve harekete geçme gücünle","Jüpiter":"inançların ve şansınla","Satürn":"sorumlulukların ve sınırlarınla","Yükselen":"görünüşün ve dünyaya yaklaşımınla","MC":"kariyerin ve hedeflerinle"};
+  var ASP = [[0,"Kavuşum","☌","kav","bugün doğrudan buluşuyor; konu tam gündeminde."],[60,"Sekstil","⚹","uyum","tatlı bir uyum yakalıyor; küçük bir fırsat kapısı aralanıyor."],[90,"Kare","□","zor","sürtüşüyor; bu gerilim seni harekete geçmeye çağırıyor."],[120,"Üçgen","△","uyum","rahatça akıyor; zorlamadan ilerleyebilirsin."],[180,"Karşıt","☍","zor","karşı karşıya geliyor; dengeyi başkalarıyla ilişkinde arıyorsun."]];
+  var IPUCU = {
+    uyum:{"Güneş":"Görünür ol; bugün attığın adım fark edilir.","Merkür":"Ertelenen konuşmayı yap, mesajı gönder.","Venüs":"Sevdiğin biriyle zaman geçir ya da kendini şımart.","Mars":"Enerjini bir hedefe yönelt; spor da iyi gelir.","Jüpiter":"Bir fırsata evet de; iyimserliğin karşılık bulur.","Satürn":"Uzun vadeli bir plana somut bir adım ekle.","Uranüs":"Küçük bir yenilik dene, rutini kır.","Neptün":"Sanat, müzik ya da meditasyon için güzel bir an.","Plüton":"Seni tüketen bir şeyi bırakmak bugün kolaylaşıyor."},
+    zor:{"Güneş":"Egoyu değil amacı öne koy; inatlaşma.","Merkür":"Konuşmadan önce bir kez daha düşün, yazılanı iki kez oku.","Venüs":"Beklentilerini dile getir, kırgınlığı biriktirme.","Mars":"Öfkeyi harekete çevir; tartışmayı büyütme.","Jüpiter":"Aşırıya kaçma; söz vermeden önce hesabını yap.","Satürn":"Yavaşla, sınırlarını koru, her şeyi tek başına yüklenme.","Uranüs":"Ani kararları bir gece beklet.","Neptün":"Netlik gelene kadar büyük karar verme.","Plüton":"Kontrol etmeye çalıştığın şeyi gözden geçir."}};
+  function $(id){ return document.getElementById(id); }
+  function norm(d){ return ((d % 360) + 360) % 360; }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function iso(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+  function goster(id){ ["yukleniyor","girisGerek","dogumGerek","panel"].forEach(function(x){ $(x).classList.toggle("gizli", x !== id); }); }
+  function lon(body, d){ if(body === "Sun") return A.SunPosition(d).elon; if(body === "Moon") return A.EclipticGeoMoon(d).lon; return A.Ecliptic(A.GeoVector(A.Body[body], d, true)).elon; }
+  function indir(v){ while (v > 9) v = String(v).split("").reduce(function(a,b){ return a + +b; }, 0); return v; }
+
+  /* ---------- seri (üst üste gün) ---------- */
+  function seri(){
+    var bugun = iso(new Date()), s = { son:"", n:0 };
+    try { s = JSON.parse(localStorage.getItem("ay_seri") || '{"son":"","n":0}'); } catch(e){}
+    if (s.son !== bugun) { var dun = new Date(); dun.setDate(dun.getDate() - 1); s.n = (s.son === iso(dun)) ? s.n + 1 : 1; s.son = bugun; try { localStorage.setItem("ay_seri", JSON.stringify(s)); } catch(e){} }
+    $("seriN").textContent = s.n; $("seriT").innerHTML = s.n > 1 ? "gündür üst üste<br>buradasın" : "ilk günün,<br>hoş geldin";
+  }
+
+  /* ---------- Ay evresi çizimi ---------- */
+  function ayCiz(faz){
+    var r = 38, c = 43, k = Math.cos(faz * Math.PI / 180), buyur = faz <= 180, sag = [], sol = [];
+    for (var i = 0; i <= 40; i++) { var y = -r + 2 * r * i / 40, w = Math.sqrt(Math.max(0, r * r - y * y));
+      var x1 = buyur ? k * w : -w, x2 = buyur ? w : -k * w; sag.push((c + x2).toFixed(2) + "," + (c + y).toFixed(2)); sol.unshift((c + x1).toFixed(2) + "," + (c + y).toFixed(2)); }
+    return '<svg viewBox="0 0 86 86" aria-hidden="true"><defs><radialGradient id="ayG" cx="40%" cy="35%"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e7dcc0"/></radialGradient></defs><circle cx="43" cy="43" r="38" fill="#231c3a" stroke="rgba(217,185,106,.3)"/><polygon points="' + sag.concat(sol).join(" ") + '" fill="url(#ayG)"/><circle cx="43" cy="43" r="41" fill="none" stroke="rgba(217,185,106,.18)"/></svg>';
+  }
+
+  /* ---------- natal harita (sunucudan bir kez, sonra tarayıcıda saklı) ---------- */
+  function natalGetir(p){
+    var anahtar = [p.birthDate, p.birthTime, p.birthPlace].join("|");
+    try { var c = JSON.parse(localStorage.getItem("ay_natal_v1") || "null"); if (c && c.k === anahtar && c.v && c.v.ok) return Promise.resolve(c.v); } catch(e){}
+    var body = { name: p.name || "", birthDate: p.birthDate, birthPlace: p.birthPlace }; if (p.birthTime) body.birthTime = p.birthTime.slice(0,5);
+    return fetch(API, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) })
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if (j && j.ok) { delete j.cark; try { localStorage.setItem("ay_natal_v1", JSON.stringify({ k: anahtar, v: j })); } catch(e){} } return j; });
+  }
+  function hazirla(j){
+    var N = { noktalar: {}, cusp: null, saat: !!(j.evler && j.evler.length), gunes: 0 };
+    (j.gezegenler || []).forEach(function(g){ var i = BN.indexOf(g.burc); if (i < 0) return; N.noktalar[g.ad] = { lon: i * 30 + (+g.derece || 0), retro: !!g.retro, ev: g.ev }; });
+    if (j.yukselen) N.noktalar["Yükselen"] = { lon: BN.indexOf(j.yukselen.burc) * 30 + (+j.yukselen.derece || 0) };
+    if (j.mc) N.noktalar["MC"] = { lon: BN.indexOf(j.mc.burc) * 30 + (+j.mc.derece || 0) };
+    if (N.saat) { N.cusp = j.evler.slice().sort(function(a,b){ return a.ev - b.ev; }).map(function(e){ return BN.indexOf(e.burc) * 30 + (+e.derece || 0); }); }
+    N.gunes = N.noktalar["Güneş"] ? Math.floor(N.noktalar["Güneş"].lon / 30) : 0;
+    return N;
+  }
+  function evBul(N, l){
+    if (N.cusp) { for (var i = 0; i < 12; i++) { var a = N.cusp[i], b = N.cusp[(i + 1) % 12], s = norm(b - a); if (norm(l - a) < s) return i + 1; } return 1; }
+    return norm(Math.floor(l / 30) - N.gunes) + 1;
+  }
+
+  /* ---------- bugün ---------- */
+  function bugun(N, prof){
+    var d = new Date(), saat = d.getHours();
+    var ad = (prof.name || "").split(" ")[0];
+    $("selam").textContent = (saat < 5 ? "İyi geceler" : saat < 12 ? "Günaydın" : saat < 18 ? "İyi günler" : "İyi akşamlar") + (ad ? ", " + ad : "") + " ✦";
+    $("tarih").textContent = d.getDate() + " " + AYL[d.getMonth()] + " " + d.getFullYear() + ", " + GUN[d.getDay()];
+    var ml = lon("Moon", d), faz = A.MoonPhase(d), yuzde = Math.round((1 - Math.cos(faz * Math.PI / 180)) / 2 * 100), ev = evBul(N, ml);
+    var evre = faz < 10 || faz > 350 ? "Yeni Ay" : faz < 80 ? "Hilal, büyüyor" : faz < 100 ? "İlk dördün" : faz < 170 ? "Şişkin, büyüyor" : faz <= 190 ? "Dolunay" : faz < 260 ? "Şişkin, küçülüyor" : faz < 280 ? "Son dördün" : "Hilal, küçülüyor";
+    $("ayCiz").innerHTML = ayCiz(faz);
+    $("ayBurc").innerHTML = '<span class="sym">' + GL[Math.floor(ml / 30)] + VS + "</span> " + BN[Math.floor(ml / 30)] + " burcunda";
+    $("ayFaz").textContent = evre + " · %" + yuzde + " aydınlık";
+    $("ayEv").textContent = "Senin " + ev + ". evinde · " + EV[ev];
+    $("ayYorum").textContent = AY_EV[ev];
+    // numeroloji
+    var bd = prof.birthDate.split("-"), y = d.getFullYear();
+    var py = indir(indir(+bd[2]) + indir(+bd[1]) + indir(y)), pm = indir(py + d.getMonth() + 1), pd = indir(pm + d.getDate());
+    $("gunN").textContent = pd; $("gunBaslik").textContent = GS[pd][0]; $("gunYorum").textContent = GS[pd][1];
+    $("aySayi").textContent = "Ay sayın " + pm; $("yilSayi").textContent = y + ": " + py + " · " + YS[py];
+    $("k2027").setAttribute("href", "/2027-burc-yorumlari.html#" + SL[N.gunes]);
+  }
+
+  /* ---------- açılar ---------- */
+  function aciBul(tl, nl){
+    var fark = norm(tl - nl); if (fark > 180) fark = 360 - fark;
+    for (var i = 0; i < ASP.length; i++) { var o = Math.abs(fark - ASP[i][0]); if (o <= 3) return { a: ASP[i], orb: o }; }
+    return null;
+  }
+  function acilar(N){
+    var d = new Date(), yarin = new Date(d.getTime() + 864e5), l = [];
+    var hedefler = ["Güneş","Ay","Merkür","Venüs","Mars","Jüpiter","Satürn","Yükselen","MC"].filter(function(k){ return N.noktalar[k]; });
+    PL.forEach(function(p){
+      if (p[0] === "Ay") return;
+      var t0 = lon(p[1], d), t1 = lon(p[1], yarin), sinir = ["Uranüs","Neptün","Plüton"].indexOf(p[0]) >= 0 ? 1.5 : ["Jüpiter","Satürn"].indexOf(p[0]) >= 0 ? 2.5 : 3;
+      hedefler.forEach(function(h){
+        var x = aciBul(t0, N.noktalar[h].lon); if (!x || x.orb > sinir) return;
+        var y = aciBul(t1, N.noktalar[h].lon), yaklasiyor = y && y.a === x.a && y.orb < x.orb;
+        l.push({ tp: p, np: h, a: x.a, orb: x.orb, yak: yaklasiyor, agirlik: x.orb - (["Güneş","Ay","Yükselen"].indexOf(h) >= 0 ? .6 : 0) - (["Jüpiter","Satürn","Uranüs","Neptün","Plüton"].indexOf(p[0]) >= 0 ? .4 : 0) });
+      });
+    });
+    l.sort(function(a,b){ return a.agirlik - b.agirlik; });
+    var k = $("acilar");
+    if (!l.length) { k.innerHTML = '<div class="bos">Bugün haritanı sıkı açıyla etkileyen bir gezegen yok; sakin ve kendi ritminde bir gün. Ay\'ın hangi evinde olduğuna bakmak yeterli.</div>'; return; }
+    k.innerHTML = l.slice(0, 6).map(function(x){
+      var tur = x.a[3], ipTur = tur === "kav" ? (["Güneş","Merkür","Venüs","Jüpiter"].indexOf(x.tp[0]) >= 0 ? "uyum" : "zor") : tur;
+      var npAd = x.np === "Yükselen" || x.np === "MC" ? x.np : "natal " + x.np;
+      return '<div class="aci ' + tur + '"><div class="ab"><span class="sym">' + x.tp[2] + VS + '</span>' + x.tp[0] + ' <span class="sym">' + x.a[2] + VS + '</span> ' + npAd + '<em>' + x.a[1] + ' · ' + x.orb.toFixed(1) + '° · ' + (x.yak ? "güçleniyor" : "etkisi azalıyor") + '</em></div>' +
+        '<p>' + TP[x.tp[0]] + ' ' + NP[x.np] + ' ' + x.a[4] + '</p><div class="ip">✦ ' + IPUCU[ipTur][x.tp[0]] + '</div></div>';
+    }).join("");
+  }
+
+  /* ---------- 30 günlük takvim ---------- */
+  var OLAYLAR = [];
+  function takvim(N){
+    var bas = new Date(); bas.setHours(12, 0, 0, 0); var E = [];
+    var GECIS = {"Güneş":"Önümüzdeki bir ay ışık {k} alanında.","Merkür":"Konuşmalar ve planlar {k} alanına kayıyor.","Venüs":"Sevgi ve keyif {k} alanında.","Mars":"Enerjin {k} alanına yöneliyor.","Jüpiter":"Önümüzdeki yıl şans {k} alanında.","Satürn":"Uzun soluklu bir sorumluluk {k} alanında."};
+    var hedef = ["Güneş","Ay","Venüs","Yükselen"].filter(function(k){ return N.noktalar[k]; });
+    // f(t) işaret değiştirdiği anı saat hassasiyetinde bul
+    function kes(f, t0, t1){ var a = t0, b = t1, fa = f(a); for (var i = 0; i < 14; i++) { var m = new Date((a.getTime() + b.getTime()) / 2), fm = f(m); if ((fm < 0) === (fa < 0)) { a = m; fa = fm; } else b = m; } return new Date((a.getTime() + b.getTime()) / 2); }
+    function hiz(body, t){ var x = norm(lon(body, new Date(t.getTime() + 6 * 3600e3)) - lon(body, new Date(t.getTime() - 6 * 3600e3))); return x > 180 ? x - 360 : x; }
+    PL.forEach(function(p){
+      if (p[0] === "Ay") return;
+      var b = p[1];
+      for (var g = 0; g < 30; g++) {
+        var t0 = new Date(bas.getTime() + g * 864e5), t1 = new Date(t0.getTime() + 864e5), l0 = lon(b, t0), l1 = lon(b, t1);
+        // burç geçişi
+        if (GECIS[p[0]] && Math.floor(l0 / 30) !== Math.floor(l1 / 30)) {
+          var sinir = (hiz(b, t0) >= 0 ? Math.floor(l1 / 30) : Math.floor(l0 / 30)) * 30;
+          var tg = kes(function(t){ var x = norm(lon(b, t) - sinir); return x > 180 ? x - 360 : x; }, t0, t1), sn = Math.floor(lon(b, new Date(tg.getTime() + 3600e3)) / 30), ev = evBul(N, sn * 30 + 1);
+          E.push({ d: tg, tip: "gecis", b: p[0] + " " + BN[sn] + " burcuna geçiyor", a: "Senin " + ev + ". evin: " + EV[ev] + ". " + GECIS[p[0]].replace("{k}", EVK[ev]) });
+        }
+        // retro istasyonu
+        if (["Merkür","Venüs","Mars","Jüpiter","Satürn"].indexOf(p[0]) >= 0) {
+          var h0 = hiz(b, t0), h1 = hiz(b, t1);
+          if ((h0 >= 0) !== (h1 >= 0)) {
+            var ts = kes(function(t){ return hiz(b, t); }, t0, t1), ls = lon(b, ts), e2 = evBul(N, ls);
+            E.push({ d: ts, tip: "retro", b: p[0] + (h1 < 0 ? " geri gitmeye başlıyor" : " yeniden ileri gidiyor"), a: (h1 < 0 ? "Gözden geçirme dönemi: " : "Bekleyen işler hızlanıyor: ") + BN[Math.floor(ls / 30)] + " burcunda, senin " + e2 + ". evinde (" + EVK[e2] + ")." });
+          }
+        }
+        // natal noktalara tam açılar
+        if (["Güneş","Venüs","Mars","Jüpiter","Satürn"].indexOf(p[0]) >= 0) {
+          hedef.forEach(function(hn){
+            if (p[0] === "Güneş" && hn === "Güneş") return;
+            var nl = N.noktalar[hn].lon;
+            [0, 90, 120, 180].forEach(function(asp){
+              (asp === 0 || asp === 180 ? [asp] : [asp, 360 - asp]).forEach(function(tt){
+                var f = function(t){ return norm(lon(b, t) - nl - tt + 180) - 180; }, a0 = f(t0), a1 = f(t1);
+                if ((a0 < 0) !== (a1 < 0) && Math.abs(a0 - a1) < 20) {
+                  var A_ = ASP.filter(function(z){ return z[0] === asp; })[0];
+                  E.push({ d: kes(f, t0, t1), tip: "aci", b: p[0] + " " + A_[2] + VS + " " + (hn === "Yükselen" ? "Yükselen" : "natal " + hn) + " · " + A_[1], a: TP[p[0]] + " " + NP[hn] + " " + A_[4] });
+                }
+              });
+            });
+          });
+        }
+      }
+    });
+    // Ay evreleri
+    [[0,"Yeni Ay"],[180,"Dolunay"]].forEach(function(z){
+      var t = A.SearchMoonPhase(z[0], new Date(bas.getTime() - 12 * 3600e3), 32);
+      while (t && t.date - bas < 30.5 * 864e5) {
+        var ml = lon("Moon", t.date), ev = evBul(N, ml);
+        E.push({ d: t.date, tip: "ay", b: z[1] + " · " + BN[Math.floor(ml / 30)] + " burcunda", a: "Senin " + ev + ". evinde. " + (z[0] === 0 ? EV[ev] + " konusunda niyet koymak ve yeni bir şeye başlamak için güzel bir gün." : EV[ev] + " konusunda bir şey olgunlaşıyor; tamamlama ve bırakma zamanı.") });
+        t = A.SearchMoonPhase(z[0], new Date(t.date.getTime() + 5 * 864e5), 32);
+      }
+    });
+    // tutulmalar
+    try {
+      var gs = A.SearchGlobalSolarEclipse(bas); if (gs.peak.date - bas < 31 * 864e5) { var sl = lon("Sun", gs.peak.date), e1 = evBul(N, sl); E.push({ d: gs.peak.date, tip: "tut", b: "Güneş tutulması · " + BN[Math.floor(sl / 30)] + " burcunda", a: "Senin " + e1 + ". evinde: " + EV[e1] + " alanında yeni bir sayfa açılıyor. Büyük kararları birkaç gün beklet." }); }
+      var ls = A.SearchLunarEclipse(bas); if (ls.peak.date - bas < 31 * 864e5) { var l2 = lon("Moon", ls.peak.date), e2 = evBul(N, l2); E.push({ d: ls.peak.date, tip: "tut", b: "Ay tutulması · " + BN[Math.floor(l2 / 30)] + " burcunda", a: "Senin " + e2 + ". evinde: " + EV[e2] + " alanında bir dönem kapanıyor." }); }
+    } catch(e){}
+    E.sort(function(a,b){ return a.d - b.d; });
+    OLAYLAR = E; takvimCiz("hepsi");
+  }
+  function takvimCiz(f){
+    var l = OLAYLAR.filter(function(e){ return f === "hepsi" || e.tip === f || (f === "retro" && e.tip === "tut"); });
+    $("takvim").innerHTML = l.length ? l.map(function(e){ return '<li><time datetime="' + iso(e.d) + '">' + e.d.getDate() + " " + AYL[e.d.getMonth()].slice(0,3) + "<small>" + ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"][e.d.getDay()] + '</small></time><i class="nk ' + (e.tip === "aci" ? "nk-aci" : e.tip) + '"></i><div><b>' + esc(e.b) + "</b><span>" + esc(e.a) + "</span></div></li>"; }).join("") : '<li><span></span><span></span><div class="bos">Bu filtrede önümüzdeki 30 günde bir olay yok.</div></li>';
+  }
+  $("filtre").addEventListener("click", function(ev){ var b = ev.target.closest("button"); if (!b) return; this.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x === b); }); takvimCiz(b.dataset.f); });
+  function fold(line){ var enc = new TextEncoder(), out = [], cur = "", n = 0; for (var ch of line) { var b = enc.encode(ch).length; if (n + b > (out.length ? 74 : 75)) { out.push(cur); cur = ""; n = 0; } cur += ch; n += b; } out.push(cur); return out.join("\r\n "); }
+  function icsE(t){ return String(t).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
+  $("icsBtn").onclick = function(){
+    var L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Astro Yuvam//Kozmik Panel//TR","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:Astro Yuvam · Kişisel gökyüzüm"];
+    OLAYLAR.forEach(function(e, i){ var d1 = iso(e.d).replace(/-/g,""), n = new Date(e.d); n.setDate(n.getDate() + 1);
+      L.push("BEGIN:VEVENT","UID:panel-" + d1 + "-" + i + "@astroyuvam.com","DTSTAMP:" + new Date().toISOString().replace(/[-:]/g,"").slice(0,15) + "Z","DTSTART;VALUE=DATE:" + d1,"DTEND;VALUE=DATE:" + iso(n).replace(/-/g,""),"SUMMARY:" + icsE("✦ " + e.b),"DESCRIPTION:" + icsE(e.a + "\n\nKozmik Panelim: https://astroyuvam.com/panelim.html"),"TRANSP:TRANSPARENT","BEGIN:VALARM","TRIGGER:-PT15H","ACTION:DISPLAY","DESCRIPTION:" + icsE("Yarın: " + e.b),"END:VALARM","END:VEVENT"); });
+    L.push("END:VCALENDAR");
+    var u = URL.createObjectURL(new Blob([L.map(fold).join("\r\n") + "\r\n"], { type:"text/calendar;charset=utf-8" })), a = document.createElement("a"); a.href = u; a.download = "astroyuvam-30-gun.ics"; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(u); a.remove(); }, 3000);
+    if (window.gtag) gtag("event", "panel_ics");
+  };
+
+  /* ---------- natal + bugün çift halkalı çark ---------- */
+  function cark(N){
+    var S = 460, C = S / 2, R0 = 222, R1 = 190, R2 = 158, R3 = 64, off = N.noktalar["Yükselen"] ? N.noktalar["Yükselen"].lon : N.gunes * 30;
+    function P(l, r){ var a = (180 + l - off) * Math.PI / 180; return [C + r * Math.cos(a), C - r * Math.sin(a)]; }
+    var h = '<svg viewBox="0 0 ' + S + ' ' + S + '" role="img" aria-label="Doğum haritan ve bugünkü gökyüzü">';
+    h += '<circle cx="' + C + '" cy="' + C + '" r="' + R0 + '" fill="rgba(20,16,31,.7)" stroke="rgba(217,185,106,.55)"/><circle cx="' + C + '" cy="' + C + '" r="' + R1 + '" fill="none" stroke="rgba(217,185,106,.35)"/><circle cx="' + C + '" cy="' + C + '" r="' + R2 + '" fill="none" stroke="rgba(217,185,106,.22)"/><circle cx="' + C + '" cy="' + C + '" r="' + R3 + '" fill="rgba(217,185,106,.05)" stroke="rgba(217,185,106,.22)"/>';
+    for (var s = 0; s < 12; s++) { var a = P(s * 30, R0), b = P(s * 30, R1), m = P(s * 30 + 15, (R0 + R1) / 2); h += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + b[0].toFixed(1) + '" y2="' + b[1].toFixed(1) + '" stroke="rgba(217,185,106,.35)"/><text x="' + m[0].toFixed(1) + '" y="' + m[1].toFixed(1) + '" fill="rgba(231,207,149,.85)" font-size="16">' + GL[s] + VS + '</text>'; }
+    var cusp = N.cusp || Array.apply(null, Array(12)).map(function(_, i){ return (N.gunes + i) * 30; });
+    cusp.forEach(function(cl, i){ var a = P(cl, R1), b = P(cl, R3), n = P(cl + norm(cusp[(i + 1) % 12] - cl) / 2, R3 + 12); var ana = i % 3 === 0 && N.cusp;
+      h += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + b[0].toFixed(1) + '" y2="' + b[1].toFixed(1) + '" stroke="' + (ana ? "rgba(231,207,149,.6)" : "rgba(154,143,184,.25)") + '" stroke-width="' + (ana ? 1.4 : 1) + '"/><text x="' + n[0].toFixed(1) + '" y="' + n[1].toFixed(1) + '" fill="#9a8fb8" font-size="10" font-family="Segoe UI,sans-serif">' + (i + 1) + '</text>'; });
+    function yerlestir(list, rYazi, adim, rT1, rT2, renk, boyut){
+      list.sort(function(a,b){ return a.l - b.l; }); var son = -99, kat = 0;
+      list.forEach(function(p){ kat = (p.l - son < 8) ? (kat + 1) % 3 : 0; son = p.l; var q = P(p.l, rYazi - kat * adim), t1 = P(p.l, rT1), t2 = P(p.l, rT2);
+        h += '<line x1="' + t1[0].toFixed(1) + '" y1="' + t1[1].toFixed(1) + '" x2="' + t2[0].toFixed(1) + '" y2="' + t2[1].toFixed(1) + '" stroke="' + renk + '" stroke-opacity=".7"/><text x="' + q[0].toFixed(1) + '" y="' + q[1].toFixed(1) + '" fill="' + renk + '" font-size="' + boyut + '">' + p.g + VS + '</text>'; });
+    }
+    var natal = PL.filter(function(p){ return N.noktalar[p[0]]; }).map(function(p){ return { l: N.noktalar[p[0]].lon, g: p[2] }; });
+    var d = new Date(), trans = PL.map(function(p){ return { l: norm(lon(p[1], d)), g: p[2] }; });
+    yerlestir(natal, R2 - 18, 18, R2, R2 - 7, "#f0e6d2", 15);
+    yerlestir(trans, (R1 + R2) / 2, 0, R1, R1 - 5, "#e7cf95", 14);
+    if (N.noktalar["Yükselen"]) { var ac = P(N.noktalar["Yükselen"].lon, R0 + 12); h += '<text x="' + ac[0].toFixed(1) + '" y="' + ac[1].toFixed(1) + '" fill="#e7cf95" font-size="11" font-family="Segoe UI,sans-serif" font-weight="700">AC</text>'; }
+    h += '<text x="' + C + '" y="' + (C - 6) + '" fill="#e7cf95" font-size="12" font-family="Segoe UI,sans-serif">bugün</text><text x="' + C + '" y="' + (C + 12) + '" fill="#9a8fb8" font-size="11" font-family="Segoe UI,sans-serif">' + d.getDate() + " " + AYL[d.getMonth()] + '</text></svg>';
+    $("cark").innerHTML = h;
+    var uc = [["Güneş","Güneş"],["Ay","Ay"],["Yükselen","Yükselen"]];
+    $("ucbuyuk").innerHTML = uc.map(function(u){ var p = N.noktalar[u[0]]; return '<div><b><span class="sym">' + (p ? GL[Math.floor(p.lon / 30)] + VS : "?") + '</span> ' + (p ? BN[Math.floor(p.lon / 30)] : "Saat gerek") + '</b><span>' + u[1] + '</span></div>'; }).join("");
+    $("gTablo").innerHTML = "<tr><th>Gezegen</th><th>Doğumda</th><th>Bugün</th></tr>" + PL.map(function(p){ var n = N.noktalar[p[0]], t = norm(lon(p[1], d));
+      return "<tr><td><span class='sym'>" + p[2] + VS + "</span> " + p[0] + "</td><td>" + (n ? BN[Math.floor(n.lon / 30)] + " " + Math.floor(n.lon % 30) + "°" + (n.ev ? " · " + n.ev + ". ev" : "") : "–") + "</td><td>" + BN[Math.floor(t / 30)] + " · " + evBul(N, t) + ". ev</td></tr>"; }).join("");
+  }
+
+  /* ---------- akış ---------- */
+  function paneliAc(prof){
+    goster("yukleniyor");
+    natalGetir(prof).then(function(j){
+      if (!j || !j.ok) throw new Error((j && j.mesaj) || "harita");
+      var N = hazirla(j);
+      $("saatUyari").classList.toggle("gizli", N.saat);
+      seri(); bugun(N, prof); acilar(N); takvim(N); cark(N);
+      goster("panel");
+      if (window.gtag) gtag("event", "panel_acildi");
+    }).catch(function(e){
+      goster("dogumGerek");
+      $("dMsg").textContent = "Haritan şu an hesaplanamadı (" + (e.message === "harita" ? "sunucu uyanıyor olabilir" : e.message) + "). Bilgilerini kontrol edip tekrar dener misin?";
+      $("dTarih").value = prof.birthDate || ""; $("dSaat").value = prof.birthTime || ""; $("dYer").value = prof.birthPlace || "";
+    });
+  }
+  var kullanici = null;
+  $("dogumForm").addEventListener("submit", async function(e){
+    e.preventDefault(); var t = $("dTarih").value, s = $("dSaat").value, y = $("dYer").value.trim();
+    if (!t || !y) { $("dMsg").textContent = "Doğum tarihi ve yeri gerekli."; return; }
+    $("dKaydet").disabled = true; $("dMsg").textContent = "Kaydediliyor…";
+    var m = (kullanici && kullanici.user_metadata) || {};
+    var r = await sb.auth.updateUser({ data: { full_name: m.full_name || "", birth_date: t, birth_time: s || "", birth_place: y } });
+    $("dKaydet").disabled = false;
+    if (r.error) { $("dMsg").textContent = "Kaydedilemedi, tekrar dener misin?"; return; }
+    paneliAc({ name: m.full_name || "", birthDate: t, birthTime: s || "", birthPlace: y });
+  });
+  function genelGok(){
+    try { var d = new Date(), ml = lon("Moon", d), faz = A.MoonPhase(d), yuzde = Math.round((1 - Math.cos(faz * Math.PI / 180)) / 2 * 100);
+      var ug = indir(String(d.getDate()) .split("").concat(String(d.getMonth()+1).split(""), String(d.getFullYear()).split("")).reduce(function(a,b){ return a + +b; }, 0));
+      $("genelGok").innerHTML = "Şu an Ay <b>" + BN[Math.floor(ml / 30)] + "</b> burcunda ve %" + yuzde + " aydınlık; bugünün evrensel sayısı <b>" + ug + "</b>. Peki Ay senin hangi evinde, senin kişisel gün sayın ne? Kozmik Panel her sabah bunu senin haritana göre okur. Ücretsiz üye ol, 30 saniyede hazır."; } catch(e){}
+  }
+  (async function init(){
+    try {
+      var s = await sb.auth.getSession(), sess = s && s.data && s.data.session;
+      if (!sess) { genelGok(); goster("girisGerek"); return; }
+      kullanici = sess.user; var m = kullanici.user_metadata || {};
+      var prof = { name: m.full_name || m.name || "", birthDate: m.birth_date || "", birthTime: m.birth_time || "", birthPlace: m.birth_place || "" };
+      if (!prof.birthDate || !prof.birthPlace) { goster("dogumGerek"); $("dTarih").value = prof.birthDate; $("dSaat").value = prof.birthTime; $("dYer").value = prof.birthPlace; return; }
+      paneliAc(prof);
+    } catch(e) { genelGok(); goster("girisGerek"); }
+  })();
+})();
+</script>
+</body>
+</html>

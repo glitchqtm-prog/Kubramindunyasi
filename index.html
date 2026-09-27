@@ -217,15 +217,63 @@
 </section>
 
 <section class="section-block" id="daily-promo">
-  <a class="tool-feature" id="dailyPromoCard" href="/giris.html">
-    <span class="fic">✦</span>
-    <span class="ftx">
-      <span class="fbadge" id="dpBadge">★ Üyelere özel</span>
-      <span class="ftt" id="dpTitle">Sana Özel Günlük Yorum</span>
-      <span class="ftd" id="dpDesc">Kendi doğum haritana göre, bugünün gökyüzünden hazırlanan kişisel günlük yorumun. Üye ol, hemen başla — ilk yorumun seni bekliyor.</span>
-    </span>
-    <span class="farrow">→</span>
-  </a>
+  <style>
+    .uye-vitrin{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;background:radial-gradient(ellipse at 15% 0%,rgba(124,108,240,.16),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(217,185,106,.12),transparent 55%),var(--ay-panel);border:1px solid rgba(217,185,106,.35);border-radius:24px;padding:30px}
+    @media(max-width:820px){.uye-vitrin{grid-template-columns:1fr;padding:22px 18px}}
+    .uv-rozet{display:inline-block;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#241a06;background:linear-gradient(180deg,#e7cf95,var(--ay-gold));border-radius:10px;padding:3px 9px;font-weight:700}
+    .uye-vitrin .uv-bas{font-family:Georgia,serif;font-size:30px;line-height:1.15;color:var(--ay-ink);margin:12px 0 8px}
+    .uv-bas em{color:#e7cf95}
+    .uv-alt{color:var(--ay-muted);font-size:14.5px;line-height:1.6;margin:0 0 14px}
+    .uv-liste{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:8px}
+    .uv-liste li{position:relative;padding-left:24px;font-size:14px;color:var(--ay-ink);line-height:1.5}
+    .uv-liste li::before{content:"✦";position:absolute;left:2px;color:var(--ay-gold)}
+    .uv-liste b{color:#e7cf95;font-weight:600}
+    .uv-btn{display:inline-block;background:linear-gradient(180deg,#e7cf95,var(--ay-gold));color:#241a06;font-weight:700;padding:13px 24px;border-radius:30px;text-decoration:none;font-size:15px;box-shadow:0 10px 30px -12px rgba(217,185,106,.8)}
+    .uv-not{font-size:12.5px;color:var(--ay-muted);margin-top:10px}
+    .uv-not a{color:#e7cf95}
+    .uv-ekran{background:#120d1e;border:1px solid var(--ay-line);border-radius:18px;padding:16px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);position:relative}
+    .uv-ekran .ust{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ay-muted);margin-bottom:10px}
+    .uv-ekran .ust b{font-family:Georgia,serif;font-size:18px;color:var(--ay-ink);font-weight:600}
+    .uv-ekran .ust span{border:1px solid rgba(217,185,106,.4);border-radius:10px;padding:2px 8px;color:#e7cf95}
+    .uv-ikili{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .uv-k{background:#1c1733;border:1px solid var(--ay-line);border-radius:14px;padding:12px}
+    .uv-k small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ay-gold);margin-bottom:6px}
+    .uv-k b{font-family:Georgia,serif;font-size:17px;color:var(--ay-ink);font-weight:600}
+    .uv-k p{font-size:12px;color:var(--ay-muted);margin:4px 0 0;line-height:1.45}
+    .uv-k .n{font-family:Georgia,serif;font-size:38px;color:#e7cf95;line-height:1}
+    .uv-aci{margin-top:10px;background:#1c1733;border:1px solid var(--ay-line);border-left:3px solid #8fd8b0;border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--ay-ink)}
+    .uv-aci b{display:block;font-size:13px;margin-bottom:2px}
+    .uv-aci em{font-style:normal;color:#e7cf95;font-size:12px}
+    .uv-gun{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+    .uv-gun span{font-size:11.5px;color:var(--ay-ink);background:#1c1733;border:1px solid var(--ay-line);border-radius:10px;padding:4px 8px}
+    .uv-ornek{position:absolute;top:-10px;right:14px;font-size:10.5px;color:var(--ay-muted);background:#120d1e;border:1px solid var(--ay-line);border-radius:8px;padding:1px 7px}
+  </style>
+  <div class="uye-vitrin">
+    <div>
+      <span class="uv-rozet" id="uvRozet">Ücretsiz üyelik</span>
+      <h2 class="uv-bas" style="text-align:left" id="uvBaslik">Gökyüzün, <em>her gün</em> seninle.</h2>
+      <p class="uv-alt" id="uvAlt">Bir kez doğum bilgini gir; Astro Yuvam her sabah o günü senin haritana göre okusun. Üyelere özel:</p>
+      <ul class="uv-liste">
+        <li><b>Kozmik Panelim:</b> Ay bugün hangi evinde, kişisel gün sayın ve haritana dokunan açılar.</li>
+        <li><b>Sana özel günlük yorum:</b> doğum haritan ve bugünün gökyüzüyle yazılır.</li>
+        <li><b>30 günlük kişisel takvim:</b> sana özel tarihler, tek tıkla telefon takvimine.</li>
+        <li><b>Doğum haritan her zaman hazır,</b> sevdiklerinin haritaları da kayıtlı.</li>
+        <li><b>Asterna ile raporunu konuş:</b> bizden aldığın raporu satır satır incele.</li>
+      </ul>
+      <a class="uv-btn" id="uvBtn" href="/giris.html?mod=uye&amp;geri=%2Fpanelim.html">✦ Ücretsiz üye ol</a>
+      <div class="uv-not" id="uvNot">Kredi kartı gerekmez · 30 saniye · Zaten üye misin? <a href="/giris.html?mod=giris&amp;geri=%2Fpanelim.html">Giriş yap</a></div>
+    </div>
+    <a class="uv-ekran" href="/panelim.html" aria-label="Kozmik Panelim örnek görünüm" style="text-decoration:none">
+      <span class="uv-ornek">örnek görünüm</span>
+      <div class="ust"><b>Günaydın, Deniz ✦</b><span>4 gündür buradasın</span></div>
+      <div class="uv-ikili">
+        <div class="uv-k"><small>Bugün Ay</small><b>Balık burcunda</b><p>Senin 5. evinde: keyif, flört ve yaratıcılık günü.</p></div>
+        <div class="uv-k"><small>Kişisel gün sayın</small><div class="n">3</div><p>İfade ve neşe: yaz, konuş, paylaş.</p></div>
+      </div>
+      <div class="uv-aci"><b>Venüs △ natal Ay · Üçgen</b>Sevgi, uyum ve keyif duyguların ve iç dünyanla rahatça akıyor. <em>✦ Sevdiğin biriyle zaman geçir.</em></div>
+      <div class="uv-gun"><span>12 Eki · Yeni Ay 9. evinde</span><span>18 Eki · Merkür geri</span><span>+ takvimine ekle</span></div>
+    </a>
+  </div>
   <script>
   (function(){
     try{
@@ -240,10 +288,11 @@
         }
       }
       if(acik){
-        document.getElementById("dailyPromoCard").setAttribute("href","/gunluk-yorumum.html");
-        document.getElementById("dpBadge").textContent="★ Bugüne özel";
-        document.getElementById("dpTitle").textContent="Günlük Yorumun Hazır";
-        document.getElementById("dpDesc").textContent="Doğum haritana ve bugünün gökyüzüne göre sana özel yorumun seni bekliyor. Bugün gökyüzü senin için ne söylüyor?";
+        document.getElementById("uvRozet").textContent="Bugüne özel";
+        document.getElementById("uvBaslik").innerHTML="Panelin <em>bugünle</em> hazır.";
+        document.getElementById("uvAlt").textContent="Ay bugün senin hangi evinde, kişisel gün sayın ne ve bugün haritana hangi gezegenler dokunuyor? Hepsi Kozmik Panelinde.";
+        var b=document.getElementById("uvBtn"); b.textContent="✦ Kozmik Panelime git"; b.setAttribute("href","/panelim.html");
+        document.getElementById("uvNot").innerHTML='Sana özel günlük yorumun da hazır: <a href="/gunluk-yorumum.html">Günlük yorumum →</a>';
       }
     }catch(e){}
   })();

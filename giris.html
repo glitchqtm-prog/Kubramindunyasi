@@ -3,283 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giriş Yap / Üye Ol · Astro Yuvam</title>
-<meta name="description" content="Astro Yuvam hesabına giriş yap ya da yeni bir hesap oluştur. Aldığın raporlara buradan ulaşırsın.">
+<title>Üye Ol / Giriş Yap · Astro Yuvam</title>
+<meta name="description" content="Astro Yuvam'a ücretsiz üye ol: her gün sana özel Kozmik Panel, kişisel günlük yorum, 30 günlük kişisel gökyüzü takvimi, kayıtlı haritalar ve Asterna ile rapor sohbeti.">
 <meta name="robots" content="noindex">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="apple-touch-icon" href="/logo-512.png">
-
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
   :root{
-    --bg:#14101f;
-    --panel:#1d1730;
-    --panel-2:#191426;
-    --field:#241d38;
-    --field-2:#2c2447;
-    --gold:#d9b96a;
-    --gold-soft:#e7cf95;
-    --cream:#f0e6d2;
-    --muted:rgba(240,230,210,.58);
-    --muted-2:rgba(240,230,210,.4);
-    --line:rgba(217,185,106,.22);
-    --error:#e7a17a;
-    --ok:#a9d3a0;
+    --bg:#0f0b18;--panel:#1b1530;--panel-2:#161126;--field:#221b37;--field-2:#2a2244;
+    --gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:rgba(240,230,210,.62);--muted-2:rgba(240,230,210,.42);
+    --line:rgba(217,185,106,.22);--line-2:rgba(217,185,106,.4);--error:#f0a38a;--ok:#a9d3a0;--mor:#7c6cf0;
     color-scheme:dark;
   }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;color:var(--cream);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+    background:radial-gradient(1200px 700px at 30% -200px,rgba(124,108,240,.16),transparent 70%),radial-gradient(1000px 600px at 85% 110%,rgba(217,185,106,.10),transparent 70%),var(--bg)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.8;
+    background-image:radial-gradient(1.3px 1.3px at 12% 18%,rgba(240,230,210,.45),transparent),radial-gradient(1px 1px at 32% 62%,rgba(240,230,210,.3),transparent),radial-gradient(1.4px 1.4px at 58% 28%,rgba(240,230,210,.4),transparent),radial-gradient(1px 1px at 76% 70%,rgba(240,230,210,.3),transparent),radial-gradient(1.2px 1.2px at 90% 22%,rgba(240,230,210,.4),transparent),radial-gradient(1px 1px at 46% 88%,rgba(240,230,210,.28),transparent)}
+  a{color:var(--gold-soft)}
+  .wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:26px 18px 60px}
+  .shell{display:grid;grid-template-columns:1.08fr .92fr;gap:0;background:linear-gradient(180deg,rgba(27,21,48,.92),rgba(22,17,38,.92));border:1px solid var(--line);border-radius:26px;overflow:hidden;
+    box-shadow:0 40px 90px -40px rgba(0,0,0,.8),0 0 90px -40px rgba(217,185,106,.35);animation:rise .6s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.shell,.ast-img,.halka{animation:none!important}}
 
-  *{box-sizing:border-box;}
+  /* ---- sol: üyelik ayrıcalıkları ---- */
+  .aside{position:relative;padding:40px 36px 34px;border-right:1px solid var(--line);overflow:hidden;
+    background:radial-gradient(520px 380px at 70% 20%,rgba(217,185,106,.13),transparent 70%),radial-gradient(420px 320px at 10% 90%,rgba(124,108,240,.14),transparent 70%)}
+  .kicker{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+  .aside h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:40px;line-height:1.08;margin:10px 0 12px;color:var(--cream);max-width:420px}
+  .aside h2 em{font-style:italic;color:var(--gold-soft)}
+  .aside .lead{color:var(--muted);font-size:15px;line-height:1.65;max-width:400px;margin:0 0 22px}
+  @media (min-width:881px){.aside h2,.aside .lead,.aside .kicker{max-width:calc(100% - 215px)}}
+  .sahne{position:absolute;right:-8px;top:18px;width:250px;height:330px;pointer-events:none}
+  .halka{position:absolute;inset:40px 0 0 0;animation:don 90s linear infinite}
+  @keyframes don{to{transform:rotate(360deg)}}
+  .ast-img{position:absolute;right:18px;top:0;width:200px;height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6));animation:suz 6s ease-in-out infinite}
+  @keyframes suz{50%{transform:translateY(-8px)}}
+  .perks{list-style:none;padding:0;margin:0;display:grid;gap:10px;position:relative;z-index:1;max-width:470px}
+  .perk{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;padding:11px 12px;border-radius:14px;background:rgba(15,11,24,.45);border:1px solid rgba(217,185,106,.14);backdrop-filter:blur(2px)}
+  .perk svg{width:40px;height:40px}
+  .perk b{display:block;font-size:14.5px;color:var(--cream);font-weight:600;margin-bottom:2px}
+  .perk span{font-size:13px;color:var(--muted);line-height:1.5}
+  .perk .yeni{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#1a1428;background:var(--gold-soft);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+  .gokyuzu{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);position:relative;z-index:1}
+  .gokyuzu .nokta{width:8px;height:8px;border-radius:50%;background:#8fd8b0;box-shadow:0 0 0 0 rgba(143,216,176,.6);animation:nabiz 2s infinite}
+  @keyframes nabiz{70%{box-shadow:0 0 0 8px rgba(143,216,176,0)}100%{box-shadow:0 0 0 0 rgba(143,216,176,0)}}
+  .gokyuzu b{color:var(--cream);font-weight:500}
 
-  body{
-    margin:0;
-    min-height:100vh;
-    background:
-      radial-gradient(1100px 620px at 50% -160px, rgba(217,185,106,.13), transparent 70%),
-      radial-gradient(900px 500px at 85% 110%, rgba(120,90,180,.10), transparent 70%),
-      var(--bg);
-    color:var(--cream);
-    font-family:'Inter',system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background-image:
-      radial-gradient(1.4px 1.4px at 20% 30%, rgba(240,230,210,.35), transparent),
-      radial-gradient(1.2px 1.2px at 70% 20%, rgba(240,230,210,.28), transparent),
-      radial-gradient(1.3px 1.3px at 40% 75%, rgba(240,230,210,.22), transparent),
-      radial-gradient(1.1px 1.1px at 88% 62%, rgba(240,230,210,.30), transparent),
-      radial-gradient(1.2px 1.2px at 12% 82%, rgba(240,230,210,.20), transparent);
-  }
-
-  .wrap{
-    position:relative;z-index:1;min-height:100vh;
-    display:flex;align-items:center;justify-content:center;
-    padding:34px 16px 60px;
-  }
-
-  .shell{
-    width:100%;max-width:900px;
-    display:flex;
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:22px;
-    overflow:hidden;
-    box-shadow:0 34px 80px -34px rgba(0,0,0,.75), 0 0 70px -34px rgba(217,185,106,.32);
-    animation:rise .6s ease both;
-  }
-  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-  @media (prefers-reduced-motion:reduce){.shell{animation:none;}}
-
-  /* ---- Sol kozmik panel ---- */
-  .aside{
-    flex:0 0 42%;
-    position:relative;
-    padding:44px 34px;
-    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-    background:
-      radial-gradient(420px 300px at 50% 22%, rgba(217,185,106,.16), transparent 70%),
-      linear-gradient(160deg, #201a34, var(--panel-2));
-    overflow:hidden;
-  }
-  .aside::before{
-    content:"";position:absolute;inset:0;pointer-events:none;opacity:.9;
-    background-image:
-      radial-gradient(1.6px 1.6px at 25% 20%, rgba(240,230,210,.55), transparent),
-      radial-gradient(1.3px 1.3px at 65% 30%, rgba(240,230,210,.42), transparent),
-      radial-gradient(1.5px 1.5px at 78% 68%, rgba(240,230,210,.50), transparent),
-      radial-gradient(1.2px 1.2px at 35% 78%, rgba(240,230,210,.36), transparent),
-      radial-gradient(1.3px 1.3px at 15% 55%, rgba(240,230,210,.34), transparent),
-      radial-gradient(1.1px 1.1px at 88% 44%, rgba(240,230,210,.40), transparent);
-  }
-  .aside-inner{position:relative;z-index:1;}
-  .aside img{
-    width:82px;height:82px;border-radius:50%;
-    border:1px solid var(--line);
-    box-shadow:0 0 34px -6px rgba(217,185,106,.55);
-  }
-  .aside h2{
-    font-family:'Cormorant Garamond',Georgia,serif;
-    font-weight:600;font-size:30px;letter-spacing:.5px;
-    color:var(--gold-soft);margin:20px 0 12px;
-  }
-  .aside p{color:var(--muted);font-size:14.5px;line-height:1.6;margin:0;max-width:260px;}
-
-  /* ---- Sağ form paneli ---- */
-  .main{
-    flex:1;
-    padding:40px 38px 34px;
-    min-width:0;
-  }
-  /* mobil marka başlığı (sadece küçük ekran) */
-  .mini-brand{display:none;text-align:center;margin-bottom:8px;}
-  .mini-brand img{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 24px -6px rgba(217,185,106,.5);}
-
-  h1{
-    font-family:'Cormorant Garamond',Georgia,serif;
-    font-weight:600;font-size:27px;letter-spacing:.3px;
-    margin:0 0 6px;color:var(--gold-soft);text-align:center;
-  }
-  .sub{margin:0 0 22px;color:var(--muted);font-size:13.5px;line-height:1.55;text-align:center;}
-
-  .tabs{
-    display:flex;gap:6px;
-    background:var(--field);border:1px solid var(--line);
-    border-radius:12px;padding:5px;margin-bottom:22px;
-  }
-  .tab{
-    flex:1;border:0;background:transparent;color:var(--muted);
-    font-family:inherit;font-size:15px;font-weight:600;
-    padding:10px 0;border-radius:8px;cursor:pointer;
-    transition:color .2s,background .2s;
-  }
-  .tab.active{color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));}
-  .tab:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
-
-  form{display:flex;flex-direction:column;gap:14px;}
-  .field-group{display:flex;flex-direction:column;gap:6px;}
-  .row{display:flex;gap:12px;}
-  .row .field-group{flex:1;}
-  label{font-size:13px;color:var(--muted);padding-left:2px;}
-  input[type=text],input[type=email],input[type=password],input[type=date],input[type=time]{
-    width:100%;background:var(--field);border:1px solid var(--line);
-    border-radius:10px;padding:13px 14px;color:var(--cream);
-    font-family:inherit;font-size:15px;
-    transition:border-color .2s,box-shadow .2s;
-  }
-  input::placeholder{color:rgba(240,230,210,.32);}
-  input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,185,106,.18);}
-  input[type=date],input[type=time]{color-scheme:dark;}
-  .hint{font-size:12px;color:var(--muted);padding-left:2px;}
-
-  .birth-note{
-    font-size:12px;color:var(--muted);line-height:1.5;
-    background:rgba(217,185,106,.06);border:1px solid var(--line);
-    border-radius:10px;padding:10px 12px;
-  }
-
-  .consent{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--muted);line-height:1.5;padding:2px;}
-  .consent input{margin-top:2px;width:16px;height:16px;accent-color:var(--gold);flex-shrink:0;cursor:pointer;}
-  .consent a{color:var(--gold-soft);text-decoration:none;}
-  .consent a:hover{text-decoration:underline;}
-
-  .submit{
-    margin-top:4px;border:0;border-radius:11px;padding:14px;
-    font-family:inherit;font-size:15.5px;font-weight:600;color:#1a1428;
-    background:linear-gradient(180deg,var(--gold-soft),var(--gold));
-    cursor:pointer;transition:filter .2s,transform .05s;
-  }
-  .submit:hover{filter:brightness(1.06);}
-  .submit:active{transform:translateY(1px);}
-  .submit:disabled{opacity:.6;cursor:default;filter:none;}
-  .submit:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
-
-  .msg{margin-top:16px;font-size:14px;line-height:1.55;padding:12px 14px;border-radius:10px;display:none;}
-  .msg.show{display:block;}
-  .msg.error{background:rgba(231,161,122,.10);border:1px solid rgba(231,161,122,.4);color:var(--error);}
-  .msg.ok{background:rgba(169,211,160,.10);border:1px solid rgba(169,211,160,.4);color:var(--ok);}
-
-  .foot{margin-top:20px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;}
-  .foot a{color:var(--gold-soft);text-decoration:none;}
-  .foot a:hover{text-decoration:underline;}
-
+  /* ---- sağ: form ---- */
+  .main{padding:36px 36px 30px;min-width:0}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:30px;margin:0 0 4px;color:var(--gold-soft);text-align:center}
+  .sub{margin:0 0 18px;color:var(--muted);font-size:13.5px;line-height:1.55;text-align:center}
+  .rozetler{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+  .rozetler span{font-size:11.5px;color:var(--cream);background:rgba(217,185,106,.08);border:1px solid var(--line);border-radius:20px;padding:4px 10px}
+  .tabs{display:flex;gap:6px;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:18px;position:relative}
+  .tab{flex:1;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:15px;font-weight:600;padding:11px 0;border-radius:10px;cursor:pointer;transition:color .2s,background .25s}
+  .tab.active{color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));box-shadow:0 6px 18px -8px rgba(217,185,106,.7)}
+  .tab:focus-visible,.submit:focus-visible,.google:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px}
+  .google{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#1f1f1f;border:0;border-radius:12px;padding:13px;font:600 15px 'Inter',system-ui,sans-serif;cursor:pointer;transition:transform .05s,filter .2s}
+  .google:hover{filter:brightness(.96)}
+  .google:active{transform:translateY(1px)}
+  .ayrac{display:flex;align-items:center;gap:12px;color:var(--muted-2);font-size:12px;margin:16px 0}
+  .ayrac::before,.ayrac::after{content:"";flex:1;height:1px;background:var(--line)}
+  form{display:flex;flex-direction:column;gap:13px}
+  .fg{display:flex;flex-direction:column;gap:6px}
+  .row{display:flex;gap:10px}.row .fg{flex:1;min-width:0}
+  label{font-size:12.5px;color:var(--muted);padding-left:2px}
+  input[type=text],input[type=email],input[type=password],input[type=date],input[type=time]{width:100%;background:var(--field);border:1px solid var(--line);border-radius:11px;padding:13px 14px;color:var(--cream);font-family:inherit;font-size:15px;transition:border-color .2s,box-shadow .2s}
+  input::placeholder{color:rgba(240,230,210,.3)}
+  input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,185,106,.16)}
+  .sifre{position:relative}
+  .sifre input{padding-right:48px}
+  .goz{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);cursor:pointer;padding:8px;border-radius:8px}
+  .goz:hover{color:var(--cream)}
+  .guc{height:4px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;display:none}
+  .guc i{display:block;height:100%;width:0;transition:width .3s,background .3s}
+  .guc-yazi{font-size:11.5px;color:var(--muted);display:none}
+  .unuttum{align-self:flex-end;font-size:12.5px;background:none;border:0;color:var(--gold-soft);cursor:pointer;padding:0;margin-top:-4px}
+  details.dogum{border:1px solid var(--line);border-radius:13px;background:rgba(217,185,106,.05);padding:12px 14px}
+  details.dogum summary{cursor:pointer;list-style:none;font-size:14px;color:var(--cream);display:flex;align-items:center;gap:8px}
+  details.dogum summary::-webkit-details-marker{display:none}
+  details.dogum summary::after{content:"▾";margin-left:auto;color:var(--gold);transition:transform .2s}
+  details.dogum[open] summary::after{transform:rotate(180deg)}
+  details.dogum summary small{color:var(--gold-soft);font-size:11px;border:1px solid var(--line-2);border-radius:10px;padding:1px 7px}
+  details.dogum .ic{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .not{font-size:12px;color:var(--muted);line-height:1.5}
+  .consent{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .consent input{margin-top:2px;width:16px;height:16px;accent-color:var(--gold);flex-shrink:0;cursor:pointer}
+  .consent a{text-decoration:none}.consent a:hover{text-decoration:underline}
+  .submit{margin-top:2px;border:0;border-radius:12px;padding:14px;font-family:inherit;font-size:15.5px;font-weight:600;color:#1a1428;background:linear-gradient(180deg,var(--gold-soft),var(--gold));cursor:pointer;transition:filter .2s,transform .05s;box-shadow:0 10px 26px -12px rgba(217,185,106,.8)}
+  .submit:hover{filter:brightness(1.06)}.submit:active{transform:translateY(1px)}.submit:disabled{opacity:.6;cursor:default}
+  .msg{margin-top:14px;font-size:14px;line-height:1.55;padding:12px 14px;border-radius:11px;display:none}
+  .msg.show{display:block}
+  .msg.error{background:rgba(240,163,138,.10);border:1px solid rgba(240,163,138,.4);color:var(--error)}
+  .msg.ok{background:rgba(169,211,160,.10);border:1px solid rgba(169,211,160,.4);color:var(--ok)}
+  .msg button{background:none;border:0;color:var(--gold-soft);text-decoration:underline;cursor:pointer;font:inherit;padding:0}
+  .foot{margin-top:18px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6}
+  .foot a{text-decoration:none}.foot a:hover{text-decoration:underline}
+  .gizli{display:none!important}
   /* giriş yapılmış görünüm */
-  .welcome{text-align:center;display:none;padding:20px 0;}
-  .welcome.show{display:block;}
-  .welcome img{width:66px;height:66px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 24px -6px rgba(217,185,106,.5);margin-bottom:8px;}
-  .welcome h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:27px;color:var(--gold-soft);margin:8px 0 10px;}
-  .welcome p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 22px;}
-  .auth-body.hidden{display:none;}
-  .ghost-btn{
-    border:1px solid var(--line);background:transparent;color:var(--cream);
-    font-family:inherit;font-size:15px;font-weight:500;padding:12px 22px;border-radius:11px;cursor:pointer;
-    transition:background .2s,border-color .2s;
-  }
-  .ghost-btn:hover{background:var(--field);border-color:var(--gold);}
-  .ghost-btn:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;}
-
-  @media (max-width:760px){
-    .aside{display:none;}
-    .main{padding:30px 24px 28px;}
-    .mini-brand{display:block;}
-    .shell{max-width:440px;}
+  .welcome{text-align:center;padding:10px 0}
+  .welcome h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:30px;color:var(--gold-soft);margin:6px 0 8px}
+  .welcome p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 18px}
+  .welcome .av{width:92px;height:auto;filter:drop-shadow(0 10px 24px rgba(0,0,0,.6))}
+  .kisayol{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 16px;text-align:left}
+  .kisayol a{display:block;padding:11px 12px;border-radius:12px;background:var(--field);border:1px solid var(--line);text-decoration:none;color:var(--cream);font-size:13.5px}
+  .kisayol a:hover{border-color:var(--gold)}
+  .kisayol a small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+  .ghost-btn{border:1px solid var(--line);background:transparent;color:var(--cream);font-family:inherit;font-size:14px;padding:11px 20px;border-radius:11px;cursor:pointer}
+  .ghost-btn:hover{border-color:var(--gold)}
+  .buyuk{display:block;text-decoration:none;text-align:center}
+  @media (max-width:880px){
+    .shell{grid-template-columns:1fr}
+    .aside{order:2;border-right:0;border-top:1px solid var(--line);padding:28px 20px}
+    .main{order:1;padding:28px 20px 24px}
+    .sahne{display:none}
+    .aside h2{font-size:30px}
+    .perks{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
-
 <div id="astro-menu"></div>
-
 <div class="wrap">
   <main class="shell">
 
-    <!-- Sol kozmik panel -->
-    <div class="aside">
-      <div class="aside-inner">
-        <img src="/logo-512.png" alt="Astro Yuvam">
-        <h2>Astro Yuvam</h2>
-        <p>Raporlarına ulaş, sana özel gökyüzünü keşfet. Yıldızlar seni bekliyor.</p>
+    <!-- SOL: ÜYELİĞİN AÇTIKLARI -->
+    <section class="aside" aria-label="Üyelik ayrıcalıkları">
+      <div class="sahne" aria-hidden="true">
+        <svg class="halka" viewBox="0 0 250 250"><g fill="none" stroke="rgba(217,185,106,.35)"><circle cx="125" cy="125" r="118"/><circle cx="125" cy="125" r="92" stroke-dasharray="2 6"/></g>
+          <g fill="rgba(231,207,149,.55)" font-family="'Segoe UI Symbol','Noto Sans Symbols 2',serif" font-size="14" text-anchor="middle" dominant-baseline="central" id="halkaGlif"></g></svg>
+        <img class="ast-img" src="/asterna-karsilama-web.webp" alt="" width="200" height="310" decoding="async">
       </div>
-    </div>
+      <div class="kicker">Ücretsiz üyelik</div>
+      <h2>Gökyüzün, <em>her gün</em> seninle.</h2>
+      <p class="lead">Bir kez doğum bilgini gir; Astro Yuvam her sabah o günü senin haritana göre okusun. Ücretsiz, kredi kartı gerekmez, 30 saniye sürer.</p>
+      <ul class="perks">
+        <li class="perk"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="rgba(217,185,106,.1)" stroke="#d9b96a"/><circle cx="20" cy="20" r="9" fill="none" stroke="#e7cf95"/><path d="M20 4v6M20 30v6M4 20h6M30 20h6" stroke="#e7cf95"/></svg>
+          <div><b>Kozmik Panelim <span class="yeni">Yeni</span></b><span>Her gün: Ay bugün hangi evinde, kişisel gün sayın ve haritana dokunan açılar. Tek ekranda.</span></div></li>
+        <li class="perk"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="rgba(124,108,240,.12)" stroke="#a99cf0"/><path d="M13 14h14M13 20h14M13 26h9" stroke="#e7cf95" stroke-linecap="round"/></svg>
+          <div><b>Sana özel günlük yorum</b><span>Doğum haritan ve bugünün gökyüzüne göre yazılan, sadece senin için hazırlanan yorum.</span></div></li>
+        <li class="perk"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="9" width="26" height="24" rx="4" fill="rgba(217,185,106,.1)" stroke="#d9b96a"/><path d="M7 16h26M14 6v6M26 6v6" stroke="#e7cf95"/><circle cx="20" cy="24" r="3" fill="#e7cf95"/></svg>
+          <div><b>30 günlük kişisel gökyüzü takvimi <span class="yeni">Yeni</span></b><span>Senin evlerine düşen Yeni Ay'lar, retrolar ve açılar. Tek tıkla telefon takvimine, bir gün önce hatırlatmayla.</span></div></li>
+        <li class="perk"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="rgba(217,185,106,.1)" stroke="#d9b96a"/><path d="M20 2v36M2 20h36M7 7l26 26M33 7L7 33" stroke="rgba(231,207,149,.5)"/><circle cx="20" cy="20" r="4" fill="#e7cf95"/></svg>
+          <div><b>Doğum haritan her zaman hazır</b><span>Bir kez gir, çarkın ve gezegen tablon her girişte seni beklesin.</span></div></li>
+        <li class="perk"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="16" r="6" fill="none" stroke="#e7cf95"/><circle cx="27" cy="18" r="5" fill="none" stroke="#a99cf0"/><path d="M5 33c1-6 5-9 10-9s9 3 10 9M22 33c1-5 3-7 6-7s6 2 7 7" fill="none" stroke="#d9b96a"/></svg>
+          <div><b>Sevdiklerini kaydet</b><span>Partnerinin, çocuğunun, ailenin doğum bilgilerini sakla; rapor alırken tekrar tekrar girme.</span></div></li>
+        <li class="perk"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="rgba(217,185,106,.12)" stroke="#d9b96a"/><path d="M20 9l2.6 7.4L30 19l-7.4 2.6L20 29l-2.6-7.4L10 19l7.4-2.6z" fill="#e7cf95"/></svg>
+          <div><b>Asterna ile raporunu konuş</b><span>Bizden aldığın raporu Asterna'yla satır satır incele, aklına takılanı sor.</span></div></li>
+      </ul>
+      <div class="gokyuzu" id="gokyuzu" hidden><span class="nokta"></span><span id="gokyuzuMetin"></span></div>
+    </section>
 
-    <!-- Sağ form paneli -->
-    <div class="main">
-
-      <div class="auth-body" id="authBody">
-        <div class="mini-brand"><img src="/logo-512.png" alt="Astro Yuvam"></div>
-        <h1>Astro Yuvam hesabın</h1>
-        <p class="sub">Aldığın raporlara buradan ulaşırsın.</p>
+    <!-- SAĞ: FORM -->
+    <section class="main">
+      <div id="authBody">
+        <h1 id="baslik">Aramıza hoş geldin</h1>
+        <p class="sub" id="altBaslik">Üye ol ya da hesabına giriş yap.</p>
+        <div class="rozetler"><span>✦ Ücretsiz</span><span>✦ Kart gerekmez</span><span>✦ KVKK uyumlu</span></div>
 
         <div class="tabs" role="tablist">
-          <button class="tab active" id="tabLogin" role="tab">Giriş Yap</button>
-          <button class="tab" id="tabSignup" role="tab">Üye Ol</button>
+          <button class="tab" id="tabSignup" role="tab" type="button">Üye Ol</button>
+          <button class="tab active" id="tabLogin" role="tab" type="button">Giriş Yap</button>
         </div>
 
+        <button class="google" id="googleBtn" type="button">
+          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+          <span id="googleYazi">Google ile devam et</span>
+        </button>
+        <div class="ayrac">veya e-posta ile</div>
+
         <form id="authForm" autocomplete="on" novalidate>
-
-          <div class="field-group" id="nameGroup" style="display:none;">
-            <label for="name">Ad Soyad</label>
-            <input type="text" id="name" placeholder="İsteğe bağlı" autocomplete="name">
+          <div class="fg gizli" id="nameGroup">
+            <label for="name">Adın</label>
+            <input type="text" id="name" placeholder="Sana nasıl hitap edelim?" autocomplete="given-name">
           </div>
-
-          <div class="field-group">
+          <div class="fg">
             <label for="email">E-posta</label>
             <input type="email" id="email" placeholder="ornek@eposta.com" autocomplete="email" required>
           </div>
-
-          <div class="field-group">
+          <div class="fg" id="pwGroup">
             <label for="password">Şifre</label>
-            <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
-            <span class="hint" id="pwHint" style="display:none;">En az 6 karakter olmalı.</span>
+            <div class="sifre">
+              <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+              <button type="button" class="goz" id="goz" aria-label="Şifreyi göster"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+            <div class="guc" id="guc"><i></i></div><div class="guc-yazi" id="gucYazi"></div>
           </div>
+          <button type="button" class="unuttum" id="unuttumBtn">Şifremi unuttum</button>
 
-          <!-- Doğum bilgileri (yalnızca üye ol) -->
-          <div id="birthGroup" style="display:none;flex-direction:column;gap:14px;">
-            <div class="row">
-              <div class="field-group">
-                <label for="birthDate">Doğum Tarihi</label>
-                <input type="date" id="birthDate">
+          <details class="dogum gizli" id="birthGroup" open>
+            <summary>✦ Haritanı şimdi hazırlayalım <small>önerilir</small></summary>
+            <div class="ic">
+              <div class="row">
+                <div class="fg"><label for="birthDate">Doğum tarihi</label><input type="date" id="birthDate" min="1900-01-01" max="2030-12-31"></div>
+                <div class="fg"><label for="birthTime">Doğum saati</label><input type="time" id="birthTime"></div>
               </div>
-              <div class="field-group">
-                <label for="birthTime">Doğum Saati</label>
-                <input type="time" id="birthTime">
-              </div>
+              <div class="fg"><label for="birthPlace">Doğum yeri</label><input type="text" id="birthPlace" placeholder="Örn. Adana" autocomplete="off"></div>
+              <div class="not">Doğum bilgin, Kozmik Panelin ve kişisel yorumların için kullanılır; yalnızca sen görürsün. Saatini bilmiyorsan boş bırak, sonra profilinden ekleyebilirsin.</div>
             </div>
-            <div class="field-group">
-              <label for="birthPlace">Doğum Yeri</label>
-              <input type="text" id="birthPlace" placeholder="Örn. Adana, Türkiye">
-            </div>
-            <div class="birth-note">
-              Doğum bilgin isteğe bağlı. Eklersen, ileride sana özel günlük ve haftalık yorumlar sunabiliriz. Dilersen sonra profilinden de ekleyebilirsin.
-            </div>
-          </div>
+          </details>
 
-          <!-- KVKK onayı (yalnızca üye ol) -->
-          <label class="consent" id="consentGroup" style="display:none;">
+          <label class="consent gizli" id="consentGroup">
             <input type="checkbox" id="consentCheck">
             <span><a href="/gizlilik-kvkk.html" target="_blank">Gizlilik &amp; KVKK</a> ve <a href="/mesafeli-satis.html" target="_blank">Kullanım Şartları</a> metnini okudum, kabul ediyorum.</span>
           </label>
@@ -288,180 +218,209 @@
         </form>
 
         <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        <div class="foot">Bilgilerin güvende; Avrupa'daki güvenli sunucularda saklanır ve yalnızca hesabın için kullanılır.<br><a href="/">← Ana sayfaya dön</a></div>
+      </div>
 
-        <div class="foot">
-          Bilgilerin güvende; yalnızca hesabın için kullanılır.<br>
-          <a href="/">← Ana sayfaya dön</a>
+      <!-- ŞİFRE YENİLEME -->
+      <div id="yenileBody" class="gizli">
+        <h1>Yeni şifreni belirle</h1>
+        <p class="sub">Güçlü bir şifre seç; bir daha unutmaman için bir yere not et.</p>
+        <form id="yenileForm" novalidate>
+          <div class="fg"><label for="yeniSifre">Yeni şifre</label><input type="password" id="yeniSifre" autocomplete="new-password" placeholder="En az 8 karakter"></div>
+          <button type="submit" class="submit" id="yenileBtn">Şifremi güncelle</button>
+        </form>
+        <div class="msg" id="yenileMsg" role="status" aria-live="polite"></div>
+      </div>
+
+      <!-- GİRİŞ YAPILMIŞ -->
+      <div class="welcome gizli" id="welcome">
+        <img class="av" src="/asterna-selam-web.webp" alt="Asterna" width="92" height="168" decoding="async">
+        <h2 id="welcomeTitle">Hoş geldin</h2>
+        <p id="welcomeText">Gökyüzün hazır. Bugün seni neler bekliyor, birlikte bakalım.</p>
+        <a class="submit buyuk" href="/panelim.html">✦ Kozmik Panelime git</a>
+        <div class="kisayol">
+          <a href="/gunluk-yorumum.html">Günlük yorumum<small>Bugüne özel, sana özel</small></a>
+          <a href="/profil.html">Profilim<small>Doğum bilgilerim ve kişilerim</small></a>
+          <a href="/dugun-tarihi-hesaplama.html">Düğün tarihi<small>En uygun günü bul</small></a>
+          <a href="/2027-burc-yorumlari.html">2027 yorumum<small>Yıl boyu rehber</small></a>
         </div>
+        <button class="ghost-btn" id="logoutBtn" type="button">Çıkış yap</button>
       </div>
-
-      <!-- Giriş yapılmış görünüm -->
-      <div class="welcome" id="welcome">
-        <img src="/logo-512.png" alt="Astro Yuvam">
-        <h2 id="welcomeTitle">Hoş geldin 🌙</h2>
-        <p>Giriş yaptın. Doğum bilgilerini <a href="/profil.html" style="color:var(--gold-soft);text-decoration:none;">Profilim</a> sayfasından ekleyip güncelleyebilirsin. "Raporlarım" çok yakında burada olacak.</p>
-        <button class="ghost-btn" id="logoutBtn">Çıkış Yap</button>
-        <div class="foot"><a href="/">← Ana sayfaya dön</a></div>
-      </div>
-
-    </div>
+    </section>
   </main>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/menu.js" defer></script>
-
 <script>
 (function(){
   "use strict";
-
   var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co";
   var SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  function $(id){ return document.getElementById(id); }
+  var params = new URLSearchParams(location.search);
+  var GERI = (function(){ var g = params.get("geri") || ""; return /^\/[a-z0-9\-\/._#?=&]*$/i.test(g) ? g : ""; })();
 
-  var mode = "login";
+  var dahaOnce = false; try { dahaOnce = !!localStorage.getItem("ay_uye"); } catch (e) {}
+  var mode = params.get("mod") === "giris" ? "login" : (params.get("mod") === "uye" ? "signup" : (dahaOnce ? "login" : "signup"));
+  var sonEposta = "";
 
-  var authBody   = document.getElementById("authBody");
-  var welcome    = document.getElementById("welcome");
-  var welcomeTitle = document.getElementById("welcomeTitle");
-  var tabLogin   = document.getElementById("tabLogin");
-  var tabSignup  = document.getElementById("tabSignup");
-  var nameGroup  = document.getElementById("nameGroup");
-  var pwHint     = document.getElementById("pwHint");
-  var birthGroup = document.getElementById("birthGroup");
-  var consentGroup = document.getElementById("consentGroup");
-  var form       = document.getElementById("authForm");
-  var emailEl    = document.getElementById("email");
-  var passEl     = document.getElementById("password");
-  var nameEl     = document.getElementById("name");
-  var birthDateEl = document.getElementById("birthDate");
-  var birthTimeEl = document.getElementById("birthTime");
-  var birthPlaceEl = document.getElementById("birthPlace");
-  var consentEl  = document.getElementById("consentCheck");
-  var submitBtn  = document.getElementById("submitBtn");
-  var msg        = document.getElementById("msg");
-  var logoutBtn  = document.getElementById("logoutBtn");
+  // halka glifleri
+  (function(){ var g = $("halkaGlif"), GL = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"], h = "";
+    for (var i = 0; i < 12; i++){ var a = (i*30 - 90) * Math.PI/180; h += '<text x="'+(125+105*Math.cos(a)).toFixed(1)+'" y="'+(125+105*Math.sin(a)).toFixed(1)+'">'+GL[i]+'︎</text>'; }
+    g.innerHTML = h; })();
 
-  function showMsg(text, type){
-    msg.textContent = text;
-    msg.className = "msg show " + (type === "ok" ? "ok" : "error");
-  }
-  function clearMsg(){ msg.className = "msg"; msg.textContent = ""; }
+  function showMsg(el, html, type){ el.innerHTML = html; el.className = "msg show " + (type === "ok" ? "ok" : "error"); }
+  function clearMsg(el){ el.className = "msg"; el.innerHTML = ""; }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
 
   function setMode(next){
-    mode = next;
-    clearMsg();
-    var isSignup = (mode === "signup");
-    tabLogin.classList.toggle("active", !isSignup);
-    tabSignup.classList.toggle("active", isSignup);
-    nameGroup.style.display   = isSignup ? "flex" : "none";
-    pwHint.style.display      = isSignup ? "block" : "none";
-    birthGroup.style.display  = isSignup ? "flex" : "none";
-    consentGroup.style.display = isSignup ? "flex" : "none";
-    passEl.setAttribute("autocomplete", isSignup ? "new-password" : "current-password");
-    submitBtn.textContent = isSignup ? "Üye Ol" : "Giriş Yap";
+    mode = next; clearMsg($("msg"));
+    var s = mode === "signup";
+    $("tabLogin").classList.toggle("active", !s); $("tabSignup").classList.toggle("active", s);
+    ["nameGroup","birthGroup","consentGroup"].forEach(function(id){ $(id).classList.toggle("gizli", !s); });
+    $("unuttumBtn").classList.toggle("gizli", s);
+    $("guc").style.display = s ? "block" : "none"; $("gucYazi").style.display = s ? "block" : "none";
+    $("password").setAttribute("autocomplete", s ? "new-password" : "current-password");
+    $("password").placeholder = s ? "En az 8 karakter" : "••••••••";
+    $("submitBtn").textContent = s ? "Ücretsiz üye ol" : "Giriş yap";
+    $("baslik").textContent = s ? "Gökyüzün seni bekliyor" : "Tekrar hoş geldin";
+    $("altBaslik").textContent = s ? "30 saniyede ücretsiz hesabını oluştur." : "Hesabına giriş yap, panelin hazır.";
+    $("googleYazi").textContent = s ? "Google ile üye ol" : "Google ile giriş yap";
   }
+  $("tabLogin").onclick = function(){ setMode("login"); };
+  $("tabSignup").onclick = function(){ setMode("signup"); };
 
-  tabLogin.addEventListener("click", function(){ setMode("login"); });
-  tabSignup.addEventListener("click", function(){ setMode("signup"); });
+  // şifre göster/gizle + güç göstergesi
+  $("goz").onclick = function(){ var p = $("password"); var g = p.type === "password"; p.type = g ? "text" : "password"; this.setAttribute("aria-label", g ? "Şifreyi gizle" : "Şifreyi göster"); };
+  $("password").addEventListener("input", function(){
+    if (mode !== "signup") return;
+    var v = this.value, p = 0; if (v.length >= 8) p++; if (v.length >= 12) p++; if (/[A-ZÇĞİÖŞÜ]/.test(v) && /[a-zçğıöşü]/.test(v)) p++; if (/\d/.test(v)) p++; if (/[^A-Za-z0-9ÇĞİÖŞÜçğıöşü]/.test(v)) p++;
+    var r = ["#e98ea2","#e98ea2","#e7b36a","#d9b96a","#8fd8b0","#8fd8b0"], t = ["Çok zayıf","Zayıf","İdare eder","İyi","Güçlü","Çok güçlü"];
+    var i = v ? p : 0; $("guc").firstChild.style.width = (v ? Math.max(12, p/5*100) : 0) + "%"; $("guc").firstChild.style.background = r[i]; $("gucYazi").textContent = v ? "Şifre gücü: " + t[i] : "";
+  });
 
   function turkceHata(raw){
     var m = (raw || "").toLowerCase();
-    if(m.indexOf("invalid login credentials") !== -1) return "E-posta veya şifre hatalı. Lütfen kontrol et.";
-    if(m.indexOf("email not confirmed") !== -1) return "E-postanı henüz onaylamadın. Gelen kutunu ve spam klasörünü kontrol et.";
-    if(m.indexOf("already registered") !== -1 || m.indexOf("already been registered") !== -1) return "Bu e-posta zaten kayıtlı. Giriş yapmayı deneyebilirsin.";
-    if(m.indexOf("password should be at least") !== -1) return "Şifre en az 6 karakter olmalı.";
+    if(m.indexOf("invalid login credentials") !== -1) return "E-posta ya da şifre hatalı. Tekrar dener misin?";
+    if(m.indexOf("email not confirmed") !== -1) return "E-postanı henüz onaylamadın. Gelen kutunu ve spam klasörünü kontrol et. <button type='button' data-tekrar>Onay e-postasını tekrar gönder</button>";
+    if(m.indexOf("already registered") !== -1 || m.indexOf("already been registered") !== -1) return "Bu e-posta zaten kayıtlı. Giriş yap sekmesinden devam edebilirsin.";
+    if(m.indexOf("password should be at least") !== -1) return "Şifre en az 8 karakter olmalı.";
     if(m.indexOf("invalid email") !== -1 || m.indexOf("unable to validate email") !== -1) return "E-posta adresi geçersiz görünüyor.";
     if(m.indexOf("rate limit") !== -1 || m.indexOf("too many") !== -1) return "Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.";
     if(m.indexOf("for security purposes") !== -1) return "Kısa süre önce denedin. Birkaç saniye bekleyip tekrar dene.";
+    if(m.indexOf("same") !== -1 && m.indexOf("password") !== -1) return "Yeni şifre eskisiyle aynı olamaz.";
     return "Bir şeyler ters gitti. Lütfen tekrar dene.";
   }
-
-  function busy(on){
-    submitBtn.disabled = on;
-    submitBtn.textContent = on ? "Lütfen bekle…" : (mode === "signup" ? "Üye Ol" : "Giriş Yap");
+  function tekrarGonderBagla(){
+    var b = document.querySelector("[data-tekrar]"); if (!b) return;
+    b.onclick = async function(){ var e = sonEposta || $("email").value.trim(); if(!e) return;
+      b.disabled = true; var r = await sb.auth.resend({ type:"signup", email:e, options:{ emailRedirectTo:"https://astroyuvam.com/giris.html" } });
+      showMsg($("msg"), r.error ? turkceHata(r.error.message) : "Onay e-postasını tekrar gönderdik. Gelen kutunu ve spam klasörünü kontrol et.", r.error ? "error" : "ok"); };
   }
+  function busy(on){ $("submitBtn").disabled = on; $("submitBtn").textContent = on ? "Lütfen bekle…" : (mode === "signup" ? "Ücretsiz üye ol" : "Giriş yap"); }
 
-  form.addEventListener("submit", async function(e){
-    e.preventDefault();
-    clearMsg();
-
-    var email = emailEl.value.trim();
-    var password = passEl.value;
-
-    if(!email){ showMsg("E-posta adresini gir.", "error"); return; }
-    if(!password){ showMsg("Şifreni gir.", "error"); return; }
-
+  $("authForm").addEventListener("submit", async function(e){
+    e.preventDefault(); clearMsg($("msg"));
+    var email = $("email").value.trim(), password = $("password").value; sonEposta = email;
+    if(!email){ showMsg($("msg"), "E-posta adresini gir.", "error"); return; }
+    if(!password){ showMsg($("msg"), "Şifreni gir.", "error"); return; }
     if(mode === "signup"){
-      if(password.length < 6){ showMsg("Şifre en az 6 karakter olmalı.", "error"); return; }
-      if(!consentEl.checked){ showMsg("Devam etmek için Gizlilik & KVKK ve Kullanım Şartları'nı onaylaman gerekiyor.", "error"); return; }
+      if(password.length < 8){ showMsg($("msg"), "Şifre en az 8 karakter olmalı.", "error"); return; }
+      if(!$("consentCheck").checked){ showMsg($("msg"), "Devam etmek için Gizlilik &amp; KVKK ve Kullanım Şartları'nı onaylaman gerekiyor.", "error"); return; }
     }
-
     busy(true);
     try{
       if(mode === "signup"){
-        var res = await sb.auth.signUp({
-          email: email,
-          password: password,
-          options: {
-            data: {
-              full_name: nameEl.value.trim(),
-              birth_date: birthDateEl.value || "",
-              birth_time: birthTimeEl.value || "",
-              birth_place: birthPlaceEl.value.trim()
-            },
-            emailRedirectTo: "https://astroyuvam.com/giris.html"
-          }
-        });
-        if(res.error){ showMsg(turkceHata(res.error.message), "error"); }
+        var res = await sb.auth.signUp({ email: email, password: password, options: {
+          data: { full_name: $("name").value.trim(), birth_date: $("birthDate").value || "", birth_time: $("birthTime").value || "", birth_place: $("birthPlace").value.trim() },
+          emailRedirectTo: "https://astroyuvam.com/giris.html" + (GERI ? "?geri=" + encodeURIComponent(GERI) : "") } });
+        if(res.error){ showMsg($("msg"), turkceHata(res.error.message), "error"); tekrarGonderBagla(); }
         else{
-          form.reset();
-          showMsg("Hesabın oluşturuldu! E-posta adresine bir onay bağlantısı gönderdik. Bağlantıya tıkladıktan sonra giriş yapabilirsin. (Mail birkaç dakika gecikebilir; spam klasörünü de kontrol et.)", "ok");
+          $("authForm").reset();
+          showMsg($("msg"), "<b>Neredeyse tamam!</b> " + esc(email) + " adresine bir onay bağlantısı gönderdik. Bağlantıya tıkladığında hesabın açılacak ve Kozmik Panelin seni bekliyor olacak. E-posta birkaç dakika gecikebilir; spam klasörüne de bak. <button type='button' data-tekrar>Tekrar gönder</button>", "ok");
+          tekrarGonderBagla();
+          if (window.gtag) gtag("event", "sign_up", { method: "email" });
         }
       }else{
         var login = await sb.auth.signInWithPassword({ email: email, password: password });
-        if(login.error){ showMsg(turkceHata(login.error.message), "error"); }
-        else{ showLoggedIn(login.data.user); }
+        if(login.error){ showMsg($("msg"), turkceHata(login.error.message), "error"); tekrarGonderBagla(); }
+        else{ if (window.gtag) gtag("event", "login", { method: "email" }); girisSonrasi(login.data.user); }
       }
-    }catch(err){
-      showMsg("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dene.", "error");
-    }finally{
-      busy(false);
-    }
+    }catch(err){ showMsg($("msg"), "Bağlantı kurulamadı. İnternetini kontrol edip tekrar dene.", "error"); }
+    finally{ busy(false); }
   });
 
+  $("googleBtn").onclick = async function(){
+    this.disabled = true;
+    try{ await sb.auth.signInWithOAuth({ provider:"google", options:{ redirectTo:"https://astroyuvam.com/giris.html" + (GERI ? "?geri=" + encodeURIComponent(GERI) : "") } }); }
+    catch(e){ this.disabled = false; showMsg($("msg"), "Google bağlantısı açılamadı, tekrar dener misin?", "error"); }
+  };
+
+  $("unuttumBtn").onclick = async function(){
+    var email = $("email").value.trim();
+    if(!email){ showMsg($("msg"), "Önce e-posta adresini yaz, sonra “Şifremi unuttum”a bas.", "error"); $("email").focus(); return; }
+    this.disabled = true;
+    var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: "https://astroyuvam.com/giris.html?yenile=1" });
+    this.disabled = false;
+    showMsg($("msg"), r.error ? turkceHata(r.error.message) : "Şifre yenileme bağlantısını " + esc(email) + " adresine gönderdik. Bağlantıya tıklayınca yeni şifreni belirleyebileceksin.", r.error ? "error" : "ok");
+  };
+
+  $("yenileForm").addEventListener("submit", async function(e){
+    e.preventDefault(); var p = $("yeniSifre").value;
+    if(p.length < 8){ showMsg($("yenileMsg"), "Şifre en az 8 karakter olmalı.", "error"); return; }
+    $("yenileBtn").disabled = true;
+    var r = await sb.auth.updateUser({ password: p });
+    $("yenileBtn").disabled = false;
+    if(r.error){ showMsg($("yenileMsg"), turkceHata(r.error.message), "error"); return; }
+    showMsg($("yenileMsg"), "Şifren güncellendi ✓ Seni paneline götürüyoruz…", "ok");
+    setTimeout(function(){ location.href = "/panelim.html"; }, 1400);
+  });
+
+  function girisSonrasi(user){
+    try { localStorage.setItem("ay_uye", "1"); } catch (e) {}
+    if (GERI) { location.href = GERI; return; }
+    showLoggedIn(user);
+  }
   function showLoggedIn(user){
-    var ad = (user && user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name : (user ? user.email : "");
-    welcomeTitle.textContent = "Hoş geldin, " + ad + " 🌙";
-    authBody.classList.add("hidden");
-    welcome.classList.add("show");
+    var m = (user && user.user_metadata) || {};
+    var ad = (m.full_name || m.name || "").split(" ")[0] || "";
+    $("welcomeTitle").textContent = "Hoş geldin" + (ad ? ", " + ad : "") + " ✦";
+    $("welcomeText").textContent = m.birth_date ? "Kozmik Panelin bugünün gökyüzüyle hazır. Bugün seni neler bekliyor, birlikte bakalım." : "Doğum bilgilerini eklersen Kozmik Panelin sana özel hale gelir. Hemen paneline geç, birkaç saniye sürer.";
+    $("authBody").classList.add("gizli"); $("yenileBody").classList.add("gizli"); $("welcome").classList.remove("gizli");
   }
-  function showLoggedOut(){
-    welcome.classList.remove("show");
-    authBody.classList.remove("hidden");
-    clearMsg();
-    form.reset();
-    setMode("login");
-  }
+  $("logoutBtn").onclick = async function(){ this.disabled = true; try{ await sb.auth.signOut(); }catch(e){} this.disabled = false;
+    $("welcome").classList.add("gizli"); $("authBody").classList.remove("gizli"); $("authForm").reset(); setMode("login"); };
 
-  logoutBtn.addEventListener("click", async function(){
-    logoutBtn.disabled = true;
-    try{ await sb.auth.signOut(); }catch(e){}
-    logoutBtn.disabled = false;
-    showLoggedOut();
+  sb.auth.onAuthStateChange(function(ev, session){
+    if (ev === "PASSWORD_RECOVERY") { $("authBody").classList.add("gizli"); $("welcome").classList.add("gizli"); $("yenileBody").classList.remove("gizli"); }
   });
 
+  // canlı gökyüzü şeridi (hafif, sayfa açıldıktan sonra)
+  function gokyuzu(){
+    var s = document.createElement("script"); s.src = "/astronomy.browser.min.js"; s.async = true;
+    s.onload = function(){ try{
+      var A = window.Astronomy, d = new Date(), BN = ["Koç","Boğa","İkizler","Yengeç","Aslan","Başak","Terazi","Akrep","Yay","Oğlak","Kova","Balık"];
+      var ml = A.EclipticGeoMoon(d).lon, faz = A.MoonPhase(d), yuzde = Math.round((1 - Math.cos(faz*Math.PI/180))/2*100);
+      var ev = faz < 10 || faz > 350 ? "yeni ay" : faz < 170 ? "büyüyor" : faz <= 190 ? "dolunay" : "küçülüyor";
+      $("gokyuzuMetin").innerHTML = "Şu an Ay <b>" + BN[Math.floor(ml/30)] + "</b> burcunda, %" + yuzde + " aydınlık ve " + ev + ". Senin hangi evinde? Panelinde yazıyor.";
+      $("gokyuzu").hidden = false;
+    }catch(e){} };
+    document.head.appendChild(s);
+  }
+  if (document.readyState === "complete") gokyuzu(); else addEventListener("load", gokyuzu);
+
+  setMode(mode);
+  if (params.get("yenile")) { /* kurtarma bağlantısı: onAuthStateChange yakalar */ }
   (async function init(){
     try{
       var sess = await sb.auth.getSession();
-      if(sess && sess.data && sess.data.session){
-        showLoggedIn(sess.data.session.user);
-      }
+      if (params.get("yenile") && sess && sess.data && sess.data.session) { $("authBody").classList.add("gizli"); $("yenileBody").classList.remove("gizli"); return; }
+      if(sess && sess.data && sess.data.session){ girisSonrasi(sess.data.session.user); }
     }catch(e){}
   })();
-
 })();
 </script>
-
 </body>
 </html>

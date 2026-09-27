@@ -22,6 +22,24 @@
   var acildiMi = false;
   var ilkYanitYapildi = false; // "sunucu uyanıyor" notu YALNIZCA oturumun ilk yanıtında gösterilsin
 
+  // ---------- Sohbet hafızası: sayfa değişse de konuşma sürer ----------
+  // Tarayıcıda saklanır (sunucuya gitmez). 6 saat hiç yazışılmazsa kendiliğinden temizlenir.
+  var HAFIZA = "asterna_sohbet_v2", OMUR = 6 * 3600 * 1000;
+  function hafizaOku() {
+    try {
+      var h = JSON.parse(localStorage.getItem(HAFIZA) || "null");
+      if (!h || !h.t || Date.now() - h.t > OMUR) { localStorage.removeItem(HAFIZA); return null; }
+      return h;
+    } catch (e) { return null; }
+  }
+  function hafizaYaz() {
+    try {
+      localStorage.setItem(HAFIZA, JSON.stringify({ t: Date.now(), mesajlar: mesajlar.slice(-60), acik: panel.classList.contains("acik"),
+        raporId: raporId, raporBaslik: raporBaslik, ilk: ilkYanitYapildi }));
+    } catch (e) {}
+  }
+  function hafizaSil() { try { localStorage.removeItem(HAFIZA); } catch (e) {} }
+
   // ---------- Stil ----------
   var css = ''
     + '#asterna-fab{position:fixed;right:20px;bottom:20px;z-index:99998;width:62px;height:62px;border-radius:50%;'
@@ -43,7 +61,9 @@
     + 'display:flex;align-items:center;justify-content:center;color:#241a06;font-size:18px;flex:none}'
     + '.ast-head .ad{font-family:Georgia,serif;font-size:16px;color:#f0e6d2;line-height:1.1}'
     + '.ast-head .alt{font-size:11px;color:#9a8fb8}'
-    + '.ast-head .kapat{margin-left:auto;background:none;border:none;color:#9a8fb8;font-size:22px;cursor:pointer;line-height:1;padding:4px}'
+    + '.ast-head .yeni{margin-left:auto;background:none;border:1px solid #332a4d;border-radius:8px;color:#9a8fb8;font-size:15px;cursor:pointer;line-height:1;padding:5px 8px}'
+    + '.ast-head .yeni:hover{color:#f0e6d2;border-color:#d9b96a}'
+    + '.ast-head .kapat{margin-left:4px;background:none;border:none;color:#9a8fb8;font-size:22px;cursor:pointer;line-height:1;padding:4px}'
     + '.ast-head .kapat:hover{color:#f0e6d2}'
     + '.ast-akis{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:'
     + 'radial-gradient(ellipse at 50% -10%,#1d1533 0%,#14101f 60%)}'
@@ -109,6 +129,7 @@
     + '<div class="ast-head">'
     +   '<div class="ay">✦</div>'
     +   '<div><div class="ad">Asterna</div><div class="alt">Astroloji &amp; numeroloji uzmanın</div></div>'
+    +   '<button class="yeni" aria-label="Yeni sohbet başlat" title="Yeni sohbet">↺</button>'
     +   '<button class="kapat" aria-label="Kapat">×</button>'
     + '</div>'
     + '<div class="ast-akis" id="ast-akis"></div>'
@@ -138,13 +159,14 @@
     return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
   }
   // Bot mesajını güvenli göster: önce kaçışla, sonra **kalın** ve https linklerini biçimle.
+  function hedef(href) { return /^https?:\/\/(www\.)?astroyuvam\.com(\/|$)/i.test(href) ? "" : ' target="_blank" rel="noopener"'; }
   function linkify(s) {
     var e = escapeHtml(s);
     // 1) Markdown bağlantı [metin](adres) — metin **kalın** içerebilir; kalın adın kendisi tıklanabilir olur.
     e = e.replace(/\[([^\]]+)\]\(\s*((?:https?:\/\/|www\.|astroyuvam\.com)[^\s)]+)\s*\)/gi, function (m, txt, url) {
       var href = /^https?:\/\//i.test(url) ? url : "https://" + url;
       var inner = txt.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-      return '<a href="' + href + '" target="_blank" rel="noopener">' + inner + "</a>";
+      return '<a href="' + href + '"' + hedef(href) + '>' + inner + "</a>";
     });
     // 2) Kalan **kalın** → <strong>
     e = e.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
@@ -157,7 +179,7 @@
         var tail = "", m2 = u.match(/[.,;:!?)\]]+$/);
         if (m2) { tail = m2[0]; u = u.slice(0, -tail.length); }
         var href = /^https?:\/\//i.test(u) ? u : "https://" + u;
-        return '<a href="' + href + '" target="_blank" rel="noopener">' + u + "</a>" + tail;
+        return '<a href="' + href + '"' + hedef(href) + '>' + u + "</a>" + tail;
       });
     }
     return parts.join("");
@@ -220,27 +242,35 @@
     });
   }
 
+  // Sunucuya giden geçmiş: karşılama mesajı hariç son 20 mesaj; ilk mesaj her zaman kullanıcıdan olmalı.
+  function gidecek() {
+    var l = mesajlar.filter(function (m) { return !m.karsilama; }).slice(-20).map(function (m) { return { rol: m.rol, metin: m.metin }; });
+    while (l.length && l[0].rol !== "user") l.shift();
+    return l;
+  }
   // ---------- Gönderme ----------
   function gonder() {
     var txt = (metin.value || "").trim();
     if (!txt || bekliyor) return;
     ekle("user", txt);
-    mesajlar.push({ rol: "user", metin: txt });
+    mesajlar.push({ rol: "user", metin: txt }); hafizaYaz();
     metin.value = ""; metin.style.height = "auto";
     bekliyor = true; gonderBtn.disabled = true;
     var y = yaziyorGoster();
 
-    fetch(API, {
+    (raporId && !raporToken ? oturumAl().then(function (o) { if (o) raporToken = o.token; }) : Promise.resolve())
+    .then(function () { return fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(raporId ? { mesajlar: mesajlar.slice(-8), raporId: raporId, token: raporToken } : { mesajlar: mesajlar.slice(-8) })
-    })
+      body: JSON.stringify(raporId ? { mesajlar: gidecek(), raporId: raporId, token: raporToken } : { mesajlar: gidecek() })
+    }); })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
       .then(function (data) {
         yaziyorGizle();
         var cevap = (data && (data.cevap || data.mesaj)) || "Şu an yanıt veremedim, birazdan tekrar dener misin? ✦";
         ekle("asistan", cevap);
         mesajlar.push({ rol: "asistan", metin: cevap });
+        ilkYanitYapildi = true; hafizaYaz();
       })
       .catch(function () {
         yaziyorGizle();
@@ -286,7 +316,7 @@
   }
   function raporModalKapat() { modal.classList.remove("acik"); modal.innerHTML = ""; }
   function raporKaldir() {
-    raporId = ""; raporBaslik = ""; raporSerit.classList.remove("acik"); raporSerit.innerHTML = "";
+    raporId = ""; raporBaslik = ""; raporSerit.classList.remove("acik"); raporSerit.innerHTML = ""; hafizaYaz();
     ekle("asistan", "Rapor analiz modundan çıktık. Dilersen başka bir rapor seçebilir ya da genel sorularını sorabilirsin. ✦");
   }
   function raporSec(id, ad) {
@@ -296,7 +326,7 @@
     raporSerit.querySelector("#ast-rapor-kaldir").onclick = raporKaldir;
     raporModalKapat();
     ekle("asistan", ad + " raporunu birlikte inceleyebiliriz ✦ Merak ettiğin bölümü sorabilir ya da 'genel bir değerlendirme yapar mısın?' diyebilirsin.");
-    mesajlar.push({ rol: "asistan", metin: ad + " raporu analiz moduna alındı." });
+    mesajlar.push({ rol: "asistan", metin: ad + " raporu analiz moduna alındı." }); hafizaYaz();
   }
   function raporModalAc() {
     modal.innerHTML = '<p style="color:#9a8fb8;font-size:13px">Kontrol ediliyor…</p>';
@@ -358,15 +388,33 @@
   // ---------- Aç/Kapat ----------
   function ilkKarsilama() {
     if (mesajlar.length) return;
-    ekle("asistan", "Merhaba, ben Asterna ✦ Astroloji ve numerolojinin her dalında uzmanınım — Astro Yuvam'ın raporları ve araçlarıyla beslendim. Merak ettiğin bir kavramı açıklayabilir, sana en uygun okumayı birlikte bulabilir ya da ücretsiz araçlarda yol gösterebilirim. Üyeysen kendi raporunu satır satır inceleyebiliriz. Aklında ne var?\n\n✦ Beni neden kullanmalısın, neler yapabilirim? İstersen önce kısaca tanışalım: https://astroyuvam.com/asterna.html");
+    var k = "Merhaba, ben Asterna ✦ Astroloji ve numerolojinin her dalında uzmanınım — Astro Yuvam'ın raporları ve araçlarıyla beslendim. Merak ettiğin bir kavramı açıklayabilir, sana en uygun okumayı birlikte bulabilir ya da ücretsiz araçlarda yol gösterebilirim. Üyeysen kendi raporunu satır satır inceleyebiliriz. Aklında ne var?\n\n✦ Beni neden kullanmalısın, neler yapabilirim? İstersen önce kısaca tanışalım: https://astroyuvam.com/asterna.html";
+    ekle("asistan", k); mesajlar.push({ rol: "asistan", metin: k, karsilama: true }); hafizaYaz();
   }
   function ac() {
     panel.classList.add("acik"); acildiMi = true;
     ciplerCiz(); ilkKarsilama();
     setTimeout(function () { metin.focus(); }, 100);
   }
-  function kapat() { panel.classList.remove("acik"); }
+  function kapat() { panel.classList.remove("acik"); hafizaYaz(); }
   fab.onclick = function () { panel.classList.contains("acik") ? kapat() : ac(); };
   panel.querySelector(".kapat").onclick = kapat;
+  panel.querySelector(".yeni").onclick = function () {
+    mesajlar = []; raporId = ""; raporBaslik = ""; raporToken = "";
+    raporSerit.classList.remove("acik"); raporSerit.innerHTML = ""; akis.innerHTML = "";
+    hafizaSil(); ilkKarsilama(); hafizaYaz(); metin.focus();
+  };
+  // Önceki sayfadaki sohbeti geri getir
+  (function geriYukle() {
+    var h = hafizaOku(); if (!h || !h.mesajlar || !h.mesajlar.length) return;
+    mesajlar = h.mesajlar; ilkYanitYapildi = !!h.ilk;
+    mesajlar.forEach(function (m) { ekle(m.rol === "user" ? "user" : "asistan", m.metin); });
+    if (h.raporId) {
+      raporId = h.raporId; raporBaslik = h.raporBaslik || "Rapor";
+      raporSerit.innerHTML = '📄 ' + escapeHtml(raporBaslik) + ' — analiz modu <button id="ast-rapor-kaldir">kaldır</button>';
+      raporSerit.classList.add("acik"); raporSerit.querySelector("#ast-rapor-kaldir").onclick = raporKaldir;
+    }
+    if (h.acik) { panel.classList.add("acik"); acildiMi = true; ciplerCiz(); setTimeout(function () { akis.scrollTop = akis.scrollHeight; }, 50); }
+  })();
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && panel.classList.contains("acik")) kapat(); });
 })();
