@@ -41,7 +41,7 @@
       radial-gradient(1.2px 1.2px at 12% 82%, rgba(240,230,210,.20), transparent);
   }
   .wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:34px 16px 70px;}
-  .stack{width:100%;max-width:460px;display:flex;flex-direction:column;gap:20px;}
+  .stack{width:100%;max-width:540px;display:flex;flex-direction:column;gap:20px;}
   .card{
     background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:34px 30px 30px;
     box-shadow:0 30px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(217,185,106,.30);
@@ -108,6 +108,20 @@
   .icon-btn.danger:hover{color:var(--error);border-color:var(--error);}
   .empty{color:var(--muted);font-size:13px;text-align:center;padding:14px 0;line-height:1.5;}
   .add-title{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:.85;margin:4px 0 2px;}
+  /* Hesabım merkezi */
+  .hub{padding:26px 26px 22px;background:radial-gradient(420px 260px at 85% 0%,rgba(124,108,240,.18),transparent 70%),radial-gradient(420px 260px at 0% 100%,rgba(217,185,106,.12),transparent 70%),var(--panel)}
+  .hub-ust{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .hub-ust img{width:62px;height:auto;flex:none;filter:drop-shadow(0 8px 18px rgba(0,0,0,.55))}
+  .hub-ust .k{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+  .hub-ust h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:28px;margin:2px 0 2px;color:var(--cream);line-height:1.1}
+  .hub-ust p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+  .hub .gold-btn{display:block;text-align:center;margin:0 0 12px}
+  .hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hub-grid a{display:block;padding:12px 13px;border-radius:12px;background:var(--field);border:1px solid var(--line);text-decoration:none;color:var(--cream);font-size:14px;transition:border-color .15s,transform .15s}
+  .hub-grid a:hover{border-color:var(--gold);transform:translateY(-1px)}
+  .hub-grid small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+  .hub-eksik{margin-top:12px;font-size:12.5px;color:#f3d0da;background:rgba(229,155,176,.08);border:1px solid rgba(229,155,176,.35);border-radius:10px;padding:9px 12px}
+  @media(max-width:420px){.hub-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -116,6 +130,24 @@
 
 <div class="wrap">
   <div class="stack">
+
+    <!-- ===== HESABIM MERKEZİ (giriş yapınca) ===== -->
+    <section class="card hub" id="hubCard" style="display:none;">
+      <div class="hub-ust">
+        <img src="/asterna-selam-web.webp" alt="" width="62" height="113" decoding="async">
+        <div><div class="k">Hesabım</div><h2 id="hubSelam">Hoş geldin ✦</h2><p>Gökyüzün hazır. Bugün seni neler bekliyor, birlikte bakalım.</p></div>
+      </div>
+      <a class="gold-btn" href="/panelim.html">✦ Kozmik Panelime git</a>
+      <div class="hub-grid">
+        <a href="/gunluk-yorumum.html">Günlük yorumum<small>Bugüne özel, sana özel</small></a>
+        <a href="/haritada-evlilik-gostergeleri.html">Evlilik göstergelerim<small>7. ev, Juno ve Vertex</small></a>
+        <a href="/dugun-tarihi-hesaplama.html">Düğün tarihi<small>En uygun günü bul</small></a>
+        <a href="/2027-burc-yorumlari.html" id="hub2027">2027 yorumum<small>Yıl boyu rehber</small></a>
+        <a href="#peopleCard">Kayıtlı kişilerim<small>Partner, aile, çocuk</small></a>
+        <a href="/#cards">Kişisel raporlar<small>Derin okumalar</small></a>
+      </div>
+      <div class="hub-eksik" id="hubEksik" style="display:none;">Kozmik Panelinin sana özel çalışması için aşağıdan doğum tarihini ve yerini ekle. Saatini de eklersen evlerin ve yükselenin kesinleşir.</div>
+    </section>
 
     <!-- ===== KART 1: Profilim ===== -->
     <main class="card">
@@ -420,6 +452,16 @@
       if(sess && sess.data && sess.data.session){
         currentUserId = sess.data.session.user.id;
         doldur(sess.data.session.user);
+        try{
+          var um = sess.data.session.user.user_metadata || {}, ad = (um.full_name || um.name || "").split(" ")[0];
+          document.getElementById("hubSelam").textContent = "Hoş geldin" + (ad ? ", " + ad : "") + " ✦";
+          if(!um.birth_date || !um.birth_place) document.getElementById("hubEksik").style.display = "block";
+          if(um.birth_date){ var bd = um.birth_date.split("-"), g = +bd[2], a = +bd[1];
+            var C = [20,19,21,20,21,21,23,23,23,23,22,22], B = ["kova","balik","koc","boga","ikizler","yengec","aslan","basak","terazi","akrep","yay","oglak"];
+            var burc = g >= C[a - 1] ? B[a - 1] : B[(a + 10) % 12];
+            document.getElementById("hub2027").setAttribute("href", "/2027-burc-yorumlari.html#" + burc); }
+          document.getElementById("hubCard").style.display = "block";
+        }catch(e){}
         show(profileState);
         peopleCard.style.display = "block";
         loadPeople();

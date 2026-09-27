@@ -125,9 +125,9 @@
   ];
 
   var CSS = ''
-  + '.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:760px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}'
+  + '.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}'
   + '.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}'
-  + '.am-links{display:flex;gap:18px;font-size:14px;align-items:center}'
+  + '.am-links{display:flex;gap:18px;font-size:14px;align-items:center;white-space:nowrap}'
   + '.am-links>a{color:#f0e6d2;opacity:.82;text-decoration:none;transition:color .2s,opacity .2s}'
   + '.am-links>a:hover{opacity:1;color:#e7cf95}'
   + '.am-dropdown{position:relative;display:inline-block}'
@@ -220,8 +220,16 @@
     var linklerHTML = LINKLER.map(function(l){ return '<a href="'+l.href+'">'+esc(l.ad)+'</a>'; }).join("");
 
     // Giriş yapılmışsa "Günlük Yorumum" + "Profilim", yapılmamışsa "Giriş"
+    var HESAP = [
+      { href:"/panelim.html",        ad:"✦ Kozmik Panelim",  alt:"Bugün gökyüzü senin için" },
+      { href:"/gunluk-yorumum.html", ad:"✦ Günlük Yorumum",  alt:"Sana özel günlük yorum" },
+      { href:"/profil.html",         ad:"✦ Profilim",        alt:"Bilgilerim ve kayıtlı kişilerim" }
+    ];
     var hesapHTML = oturumAcikMi()
-      ? '<a href="/panelim.html">Kozmik Panelim</a><a href="/gunluk-yorumum.html">Günlük Yorumum</a><a href="/profil.html">Profilim</a>'
+      ? '<div class="am-dropdown">'
+        + '<button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Hesabım <span class="am-caret">▾</span></button>'
+        + '<div class="am-drop-menu" role="menu">'+linkItemsHTML(HESAP, simdi)+'</div>'
+        + '</div>'
       : '<a href="/giris.html">Giriş</a>';
 
     var html = ''

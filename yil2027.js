@@ -92,20 +92,10 @@
     out.push(cur); return out.join("\r\n ");
   }
   function ics(s) {
-    var P = D.P[s], L_ = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Astro Yuvam//2027 Burç Takvimi//TR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:Astro Yuvam 2027 · " + BN[s]];
-    P.tarih.forEach(function (t, i) {
-      var d = t[0].replace(/-/g, ""), dt = ymd(t[0]); dt.setDate(dt.getDate() + 1);
-      var d2 = dt.getFullYear() + String(dt.getMonth() + 1).padStart(2, "0") + String(dt.getDate()).padStart(2, "0");
-      L_.push("BEGIN:VEVENT", "UID:y27-" + SL[s] + "-" + i + "@astroyuvam.com", "DTSTAMP:20260927T000000Z", "DTSTART;VALUE=DATE:" + d, "DTEND;VALUE=DATE:" + d2,
-        "SUMMARY:" + icsEsc("✦ " + t[1]), "DESCRIPTION:" + icsEsc(t[2] + "\n\n" + BN[s] + " 2027 yorumu: " + SITE + "/2027-burc-yorumlari.html#" + SL[s]),
-        "URL:" + SITE + "/2027-burc-yorumlari.html#" + SL[s], "TRANSP:TRANSPARENT",
-        "BEGIN:VALARM", "TRIGGER:-PT15H", "ACTION:DISPLAY", "DESCRIPTION:" + icsEsc("Yarın: " + t[1]), "END:VALARM", "END:VEVENT");
-    });
-    L_.push("END:VCALENDAR");
-    var blob = new Blob([L_.map(fold).join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
-    indir(blob, "astroyuvam-2027-" + SL[s] + ".ics");
+    takvimAc({ ad: "Astro Yuvam 2027 · " + BN[s], olaylar: D.P[s].tarih, dosya: "astroyuvam-2027-" + SL[s] + ".ics", url: SITE + "/2027-burc-yorumlari.html#" + SL[s] });
     if (window.gtag) gtag("event", "y27_ics", { burc: SL[s] });
   }
+  function takvimAc(opt) { if (window.AYTakvim) return window.AYTakvim.ac(opt); var s = document.createElement("script"); s.src = "/takvim-ekle.js"; s.onload = function () { window.AYTakvim.ac(opt); }; document.head.appendChild(s); }
   function indir(blob, ad) {
     var u = URL.createObjectURL(blob), a = document.createElement("a"); a.href = u; a.download = ad; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 4000);

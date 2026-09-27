@@ -80,10 +80,9 @@
     else if (navigator.clipboard) navigator.clipboard.writeText(m).then(function () { var b = sonuc.querySelector(".dt-pay"); b.textContent = "Bağlantı kopyalandı"; setTimeout(function () { b.textContent = "Bu tarihi paylaş"; }, 2200); });
   }
   function ics() {
-    var d1 = iso(sec).replace(/-/g, ""), n = new Date(sec); n.setDate(n.getDate() + 1); var d2 = iso(n).replace(/-/g, "");
-    var t = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Astro Yuvam//Dugun Tarihi//TR", "BEGIN:VEVENT", "UID:dugun-" + d1 + "@astroyuvam.com", "DTSTAMP:20260927T000000Z", "DTSTART;VALUE=DATE:" + d1, "DTEND;VALUE=DATE:" + d2, "SUMMARY:✦ Büyük gün", "DESCRIPTION:Astro Yuvam düğün tarihi kontrolü: https://astroyuvam.com/dugun-tarihi-hesaplama.html#t=" + iso(sec), "BEGIN:VALARM", "TRIGGER:-P7D", "ACTION:DISPLAY", "DESCRIPTION:Büyük güne bir hafta kaldı", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-    var u = URL.createObjectURL(new Blob([t + "\r\n"], { type: "text/calendar;charset=utf-8" })), a = document.createElement("a"); a.href = u; a.download = "buyuk-gun-" + iso(sec) + ".ics"; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 3000);
+    takvimAc({ ad: "Astro Yuvam · Büyük gün", olaylar: [[iso(sec), "Büyük gün", "Astro Yuvam düğün tarihi kontrolü"]], dosya: "buyuk-gun-" + iso(sec) + ".ics", url: "https://astroyuvam.com/dugun-tarihi-hesaplama.html#t=" + iso(sec) });
   }
+  function takvimAc(opt) { if (window.AYTakvim) return window.AYTakvim.ac(opt); var s = document.createElement("script"); s.src = "/takvim-ekle.js"; s.onload = function () { window.AYTakvim.ac(opt); }; document.head.appendChild(s); }
   /* ---------- en iyi günleri bul ---------- */
   function bul(k) {
     var yil = k.querySelector(".dt-f-yil").value, ay = k.querySelector(".dt-f-ay").value, tip = k.querySelector(".dt-f-tip").value, l = [];
