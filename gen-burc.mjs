@@ -611,7 +611,7 @@ function renderSign(tur, b, y, ctx){
     <div class="b">İlgili İçerikler</div>
     <div class="satir"><a href="/${b.slug}-burcu.html">${b.ad} burcu özellikleri</a><a href="/${digerTur}/${b.slug}.html">${digerAd}</a><a href="/yukselen-burc-nedir.html">Yükselen burç nedir?</a></div>
   </div>
-  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; eğlence ve öz-farkındalık amaçlıdır, kesin kehanet değildir. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
+  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; öz-farkındalık ve rehberlik amaçlıdır. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
   <a class="geri" href="/${yol}.html">← Tüm ${gunluk?"günlük":"haftalık"} burç yorumları</a>
 </article>
 </body>
@@ -663,7 +663,7 @@ ${kartlar}
     <h3>Genel yorumun ötesine geç — kendi haritan ne diyor?</h3>
     <a class="cta" href="/#cards">Kişiye özel doğum haritası raporunu keşfet →</a>
   </div>
-  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; eğlence ve öz-farkındalık amaçlıdır, kesin kehanet değildir. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
+  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; öz-farkındalık ve rehberlik amaçlıdır. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
 </div>
 </body>
 </html>`;

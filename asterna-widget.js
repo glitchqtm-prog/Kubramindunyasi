@@ -152,7 +152,7 @@
   var raporSerit = panel.querySelector("#ast-rapor-serit");
   var modal = panel.querySelector("#ast-modal");
 
-  var CIPLER = ["Hangi rapor bana uygun?", "📄 Raporlarım", "Ücretsiz araçlar neler?", "Astroloji gerçek mi?"];
+  var CIPLER = ["Hangi rapor bana uygun?", "📄 Raporlarım", "Ücretsiz araçlar neler?", "Yükselen burcum ne demek?"];
 
   // ---------- Yardımcılar ----------
   function escapeHtml(s) {
