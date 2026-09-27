@@ -17,15 +17,34 @@
     var GA_ID = "G-QQ0SREFL4L";
     if(window.__gaYuklendi) return;   // aynı sayfada iki kez yüklenmesin
     window.__gaYuklendi = true;
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-    document.head.appendChild(s);
+    // Sayfa GA'yı kendi <head>'inde zaten yüklüyorsa ikinci kez yükleme (aksi hâlde görüntüleme çift sayılır)
+    if(typeof window.gtag === "function" || document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) return;
+    // Olaylar hemen sıraya alınır (hiçbir ziyaret kaybolmaz); 170 KB'lık GA dosyası ise
+    // sayfa tamamen çizildikten sonra ya da ilk dokunuşta iner — sayfa hızını etkilemez.
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     window.gtag = gtag;
     gtag("js", new Date());
     gtag("config", GA_ID);
+    sonraYukle(function(){
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(s);
+    }, 1200, true);
+  }
+
+  // Sayfa yüklendikten (load) belirli süre sonra — ya da ilk kullanıcı etkileşiminde — bir kez çalıştırır.
+  function sonraYukle(fn, gecikme, etkilesimle){
+    var oldu = false, olaylar = ["pointerdown","keydown","touchstart","scroll"];
+    function calis(){
+      if(oldu) return; oldu = true;
+      if(etkilesimle) olaylar.forEach(function(o){ window.removeEventListener(o, calis, true); });
+      try{ fn(); }catch(e){}
+    }
+    if(etkilesimle) olaylar.forEach(function(o){ window.addEventListener(o, calis, {capture:true, passive:true}); });
+    function zamanla(){ setTimeout(calis, gecikme); }
+    if(document.readyState === "complete") zamanla(); else window.addEventListener("load", zamanla);
   }
 
   // ——— Çerez bilgilendirme bandı: bir kez gösterilir, "Tamam"a basınca hatırlanır ———
@@ -34,7 +53,19 @@
   function cerezKapat(){ try{ localStorage.setItem(CEREZ_KEY, "1"); }catch(e){} }
 
   function cerezBandiGoster(){
-    if(cerezGorulduMu() || document.getElementById("ay-cerez")) return;
+    var hazir = document.getElementById("ay-cerez");
+    if(cerezGorulduMu()){ if(hazir && hazir.parentNode) hazir.parentNode.removeChild(hazir); return; }
+    if(hazir){ // sayfa bandı ilk görüntüyle birlikte hazır getirdi (ana sayfa) — yalnızca düğmeyi bağla
+      if(hazir.getAttribute("data-bagli")) return;
+      hazir.setAttribute("data-bagli","1");
+      var hb = hazir.querySelector(".ay-cerez-kabul");
+      if(hb) hb.addEventListener("click", function(){
+        cerezKapat();
+        hazir.classList.remove("ac-in");
+        setTimeout(function(){ if(hazir.parentNode) hazir.parentNode.removeChild(hazir); }, 320);
+      });
+      return;
+    }
     var bar = document.createElement("div");
     bar.id = "ay-cerez";
     bar.setAttribute("role","note");
@@ -185,18 +216,25 @@
   }
 
   function init(){
-    // Stil
-    var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
+    // Stil (sayfa menü stilini hazır getirdiyse tekrar eklenmez)
+    if(!document.getElementById("am-kritik")){
+      var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
+    } else if(!document.getElementById("ay-cerez-kritik")){
+      // Hazır stil yalnızca menüyü içeriyorsa çerez bandı stilini ekle
+      var st2 = document.createElement("style"); st2.textContent = CSS.slice(CSS.indexOf("#ay-cerez")); document.head.appendChild(st2);
+    }
 
     // Çerez onayı bandı + onaya bağlı GA
     cerezBaslat();
 
     // Asterna sağ-alt yardımcı balonu — tüm sayfalara buradan tek satırla yüklenir.
-    if(!document.getElementById("asterna-widget-js")){
+    // Sayfa çizildikten hemen sonra yüklenir (ilk görüntüyü geciktirmesin).
+    sonraYukle(function(){
+      if(document.getElementById("asterna-widget-js")) return;
       var aw = document.createElement("script");
-      aw.id = "asterna-widget-js"; aw.src = "/asterna-widget.js"; aw.defer = true;
+      aw.id = "asterna-widget-js"; aw.src = "/asterna-widget.js"; aw.async = true;
       document.body.appendChild(aw);
-    }
+    }, 0, true);
 
     // Şu anki sayfa (aria-current için)
     var simdi = (location.pathname.split("/").pop() || "index.html").toLowerCase();
@@ -251,7 +289,8 @@
     + '</nav>';
 
     var mount = document.getElementById("astro-menu");
-    if(mount){ mount.innerHTML = html; }
+    // Sayfa menüyü hazır getirdiyse (ör. ana sayfa) ve içerik aynıysa yeniden kurma — ilk çizimi hızlandırır.
+    if(mount){ if(mount.innerHTML !== html) mount.innerHTML = html; }
     else { document.body.insertAdjacentHTML("afterbegin", '<div id="astro-menu">'+html+'</div>'); mount = document.getElementById("astro-menu"); }
 
     // Sayfada birden fazla açılır menü olabilir (Keşfet + Burç Yorumları)
@@ -313,6 +352,12 @@
     document.addEventListener("keydown", function(e){ if(e.key === "Escape") hepsiniKapat(null); });
   }
 
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
+  // Menü sayfaya hazır gömülüyse (ana sayfa) kurulum ilk çizimden sonraya bırakılır; değilse hemen kurulur.
+  function basla(){
+    var m = document.getElementById("astro-menu");
+    if(m && m.querySelector(".am-nav")){ requestAnimationFrame(function(){ setTimeout(init, 0); }); }
+    else init();
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", basla);
+  else basla();
 })();
