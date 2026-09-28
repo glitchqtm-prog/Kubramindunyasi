@@ -1,0 +1,466 @@
+{
+ "kaynak": "Astro Yuvam — https://astroyuvam.com/bugun-gokyuzu.html",
+ "guncelleme": "2026-09-28T20:13:10.735Z",
+ "tarih": "2026-09-28",
+ "saatDilimi": "Europe/Istanbul (UTC+3)",
+ "not": "Konumlar Türkiye saatiyle 12:00 içindir. Tropikal zodyak, geosentrik görünür konum.",
+ "gezegenler": [
+  {
+   "ad": "Güneş",
+   "burc": "Terazi",
+   "derece": "5°16′",
+   "boylam": 185.261,
+   "retro": false,
+   "sonrakiBurc": {
+    "burc": "Akrep",
+    "zaman": "2026-10-23T09:38:40.312Z"
+   }
+  },
+  {
+   "ad": "Ay",
+   "burc": "Koç",
+   "derece": "26°42′",
+   "boylam": 26.693,
+   "retro": false,
+   "sonrakiBurc": {
+    "burc": "Boğa",
+    "zaman": "2026-09-28T14:40:18.750Z"
+   }
+  },
+  {
+   "ad": "Merkür",
+   "burc": "Terazi",
+   "derece": "27°08′",
+   "boylam": 207.133,
+   "retro": false,
+   "sonrakiBurc": {
+    "burc": "Akrep",
+    "zaman": "2026-09-30T11:45:14.062Z"
+   }
+  },
+  {
+   "ad": "Venüs",
+   "burc": "Akrep",
+   "derece": "8°02′",
+   "boylam": 218.03,
+   "retro": false,
+   "sonrakiBurc": {
+    "burc": "Terazi",
+    "zaman": "2026-10-25T08:57:11.250Z"
+   }
+  },
+  {
+   "ad": "Mars",
+   "burc": "Aslan",
+   "derece": "0°09′",
+   "boylam": 120.152,
+   "retro": false,
+   "sonrakiBurc": {
+    "burc": "Başak",
+    "zaman": "2026-11-25T23:37:30.000Z"
+   }
+  },
+  {
+   "ad": "Jüpiter",
+   "burc": "Aslan",
+   "derece": "19°07′",
+   "boylam": 139.116,
+   "retro": false,
+   "sonrakiBurc": {
+    "burc": "Başak",
+    "zaman": "2027-07-26T04:45:28.125Z"
+   }
+  },
+  {
+   "ad": "Satürn",
+   "burc": "Koç",
+   "derece": "11°47′",
+   "boylam": 11.781,
+   "retro": true,
+   "sonrakiBurc": {
+    "burc": "Boğa",
+    "zaman": "2028-04-13T04:05:23.437Z"
+   }
+  },
+  {
+   "ad": "Uranüs",
+   "burc": "İkizler",
+   "derece": "5°34′",
+   "boylam": 65.567,
+   "retro": true,
+   "sonrakiBurc": null
+  },
+  {
+   "ad": "Neptün",
+   "burc": "Koç",
+   "derece": "2°56′",
+   "boylam": 2.938,
+   "retro": true,
+   "sonrakiBurc": null
+  },
+  {
+   "ad": "Plüton",
+   "burc": "Kova",
+   "derece": "3°09′",
+   "boylam": 303.142,
+   "retro": true,
+   "sonrakiBurc": null
+  }
+ ],
+ "kuzeyAyDugumu": {
+  "burc": "Kova",
+  "derece": "27°51′",
+  "tip": "ortalama"
+ },
+ "ay": {
+  "burc": "Koç",
+  "evre": "Şişkin Ay (küçülen)",
+  "aydinlanmaYuzde": 96,
+  "bugunkuGecisler": [
+   {
+    "burc": "Boğa",
+    "zaman": "2026-09-28T14:40:18.750Z"
+   }
+  ]
+ },
+ "retrolar": [
+  {
+   "gezegen": "Merkür",
+   "suanRetro": false,
+   "aktifDonem": null,
+   "sonrakiDonem": {
+    "bas": "2026-10-24T07:30:00.000Z",
+    "bit": "2026-11-13T16:30:00.000Z",
+    "basBurc": "Akrep"
+   }
+  },
+  {
+   "gezegen": "Venüs",
+   "suanRetro": false,
+   "aktifDonem": null,
+   "sonrakiDonem": {
+    "bas": "2026-10-03T07:30:00.000Z",
+    "bit": "2026-11-14T00:45:00.000Z",
+    "basBurc": "Akrep"
+   }
+  },
+  {
+   "gezegen": "Mars",
+   "suanRetro": false,
+   "aktifDonem": null,
+   "sonrakiDonem": {
+    "bas": "2027-01-10T13:30:00.000Z",
+    "bit": "2027-04-01T14:15:00.000Z",
+    "basBurc": "Başak"
+   }
+  },
+  {
+   "gezegen": "Jüpiter",
+   "suanRetro": false,
+   "aktifDonem": null,
+   "sonrakiDonem": {
+    "bas": "2026-12-13T01:30:00.000Z",
+    "bit": "2027-04-13T02:15:00.000Z",
+    "basBurc": "Aslan"
+   }
+  },
+  {
+   "gezegen": "Satürn",
+   "suanRetro": true,
+   "aktifDonem": {
+    "bas": "2026-07-26T20:15:00.000Z",
+    "bit": "2026-12-11T00:00:00.000Z"
+   },
+   "sonrakiDonem": {
+    "bas": "2027-08-09T18:00:00.000Z",
+    "bit": null,
+    "basBurc": "Koç"
+   }
+  },
+  {
+   "gezegen": "Uranüs",
+   "suanRetro": true,
+   "aktifDonem": {
+    "bas": "2026-09-10T18:45:00.000Z",
+    "bit": "2027-02-08T12:45:00.000Z"
+   },
+   "sonrakiDonem": {
+    "bas": "2027-09-15T09:45:00.000Z",
+    "bit": null,
+    "basBurc": "İkizler"
+   }
+  },
+  {
+   "gezegen": "Neptün",
+   "suanRetro": true,
+   "aktifDonem": {
+    "bas": "2026-07-07T12:00:00.000Z",
+    "bit": "2026-12-12T22:30:00.000Z"
+   },
+   "sonrakiDonem": {
+    "bas": "2027-07-09T23:15:00.000Z",
+    "bit": null,
+    "basBurc": "Koç"
+   }
+  },
+  {
+   "gezegen": "Plüton",
+   "suanRetro": true,
+   "aktifDonem": {
+    "bas": "2026-05-06T15:45:00.000Z",
+    "bit": "2026-10-16T03:00:00.000Z"
+   },
+   "sonrakiDonem": {
+    "bas": "2027-05-08T12:45:00.000Z",
+    "bit": "2027-10-18T04:30:00.000Z",
+    "basBurc": "Kova"
+   }
+  }
+ ],
+ "lunasyonlar": [
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2026-10-10T15:50:36.724Z",
+   "burc": "Terazi",
+   "derece": "17°22′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2026-10-26T04:12:15.538Z",
+   "burc": "Boğa",
+   "derece": "2°46′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2026-11-09T07:02:42.392Z",
+   "burc": "Akrep",
+   "derece": "16°54′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2026-11-24T14:54:04.191Z",
+   "burc": "İkizler",
+   "derece": "2°21′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2026-12-09T00:52:31.284Z",
+   "burc": "Yay",
+   "derece": "16°57′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2026-12-24T01:28:45.040Z",
+   "burc": "Yengeç",
+   "derece": "2°14′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-01-07T20:25:05.910Z",
+   "burc": "Oğlak",
+   "derece": "17°19′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-01-22T12:17:50.281Z",
+   "burc": "Aslan",
+   "derece": "2°15′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-02-06T15:56:47.415Z",
+   "burc": "Kova",
+   "derece": "17°38′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-02-20T23:24:07.298Z",
+   "burc": "Başak",
+   "derece": "2°06′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-03-08T09:30:07.391Z",
+   "burc": "Balık",
+   "derece": "17°35′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-03-22T10:44:19.393Z",
+   "burc": "Terazi",
+   "derece": "1°35′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-04-06T23:51:45.366Z",
+   "burc": "Koç",
+   "derece": "16°57′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-04-20T22:27:44.813Z",
+   "burc": "Akrep",
+   "derece": "0°37′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-05-06T10:59:10.533Z",
+   "burc": "Boğa",
+   "derece": "15°43′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-05-20T10:59:39.474Z",
+   "burc": "Akrep",
+   "derece": "29°14′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-06-04T19:40:51.143Z",
+   "burc": "İkizler",
+   "derece": "13°59′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-06-19T00:45:01.303Z",
+   "burc": "Yay",
+   "derece": "27°34′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-07-04T03:02:32.965Z",
+   "burc": "Yengeç",
+   "derece": "11°58′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-07-18T15:45:36.038Z",
+   "burc": "Oğlak",
+   "derece": "25°49′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-08-02T10:05:42.274Z",
+   "burc": "Aslan",
+   "derece": "9°55′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-08-17T07:29:19.949Z",
+   "burc": "Kova",
+   "derece": "24°12′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-08-31T17:41:40.859Z",
+   "burc": "Başak",
+   "derece": "8°07′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-09-15T23:04:09.408Z",
+   "burc": "Balık",
+   "derece": "22°53′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-09-30T02:36:34.580Z",
+   "burc": "Terazi",
+   "derece": "6°44′"
+  },
+  {
+   "tur": "Dolunay",
+   "zaman": "2027-10-15T13:47:34.041Z",
+   "burc": "Koç",
+   "derece": "21°59′"
+  },
+  {
+   "tur": "Yeni Ay",
+   "zaman": "2027-10-29T13:37:04.567Z",
+   "burc": "Akrep",
+   "derece": "5°55′"
+  }
+ ],
+ "tutulmalar": [
+  {
+   "tur": "Güneş tutulması (halkalı)",
+   "zaman": "2027-02-06T15:59:32.957Z",
+   "burc": "Kova",
+   "derece": "17°38′"
+  },
+  {
+   "tur": "Ay tutulması (yarı gölge)",
+   "zaman": "2027-02-20T23:12:44.142Z",
+   "burc": "Başak",
+   "derece": "1°59′"
+  },
+  {
+   "tur": "Ay tutulması (yarı gölge)",
+   "zaman": "2027-07-18T16:02:54.880Z",
+   "burc": "Oğlak",
+   "derece": "25°58′"
+  },
+  {
+   "tur": "Güneş tutulması (tam)",
+   "zaman": "2027-08-02T10:06:34.636Z",
+   "burc": "Aslan",
+   "derece": "9°55′"
+  },
+  {
+   "tur": "Ay tutulması (yarı gölge)",
+   "zaman": "2027-08-17T07:13:44.931Z",
+   "burc": "Kova",
+   "derece": "24°04′"
+  },
+  {
+   "tur": "Ay tutulması (parçalı)",
+   "zaman": "2028-01-12T04:13:00.859Z",
+   "burc": "Yengeç",
+   "derece": "21°34′"
+  },
+  {
+   "tur": "Güneş tutulması (halkalı)",
+   "zaman": "2028-01-26T15:07:42.381Z",
+   "burc": "Kova",
+   "derece": "6°11′"
+  }
+ ],
+ "olaylar30Gun": [
+  {
+   "zaman": "2026-09-28T02:49:27.187Z",
+   "olay": "♂ Mars Aslan'a geçiyor"
+  },
+  {
+   "zaman": "2026-09-30T11:45:14.062Z",
+   "olay": "☿ Merkür Akrep'e geçiyor"
+  },
+  {
+   "zaman": "2026-10-03T07:30:00.000Z",
+   "olay": "♀ Venüs retro başlıyor · 8°29′ Akrep"
+  },
+  {
+   "zaman": "2026-10-10T15:50:36.724Z",
+   "olay": "🌑 Yeni Ay · 17°22′ Terazi"
+  },
+  {
+   "zaman": "2026-10-16T03:00:00.000Z",
+   "olay": "♇ Plüton düz harekete geçiyor (retro bitiyor) · 3°04′ Kova"
+  },
+  {
+   "zaman": "2026-10-23T09:38:40.312Z",
+   "olay": "☉ Güneş Akrep'e geçiyor"
+  },
+  {
+   "zaman": "2026-10-24T07:30:00.000Z",
+   "olay": "☿ Merkür retro başlıyor · 20°59′ Akrep"
+  },
+  {
+   "zaman": "2026-10-25T08:57:11.250Z",
+   "olay": "♀ Venüs Terazi'ye geçiyor"
+  },
+  {
+   "zaman": "2026-10-26T04:12:15.538Z",
+   "olay": "🌕 Dolunay · 2°46′ Boğa"
+  }
+ ]
+}
