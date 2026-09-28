@@ -47,6 +47,11 @@
   .dh-eyebrow{display:inline-block;color:var(--dh-gold);font-size:12px;letter-spacing:.22em;
     font-weight:700;text-transform:uppercase;border:1px solid var(--dh-line);border-radius:20px;
     padding:6px 16px;margin-bottom:22px}
+
+  .dh-ikon{width:150px;height:150px;margin:6px auto 24px;filter:drop-shadow(0 0 26px rgba(217,185,106,.30));animation:dhIk 6s ease-in-out infinite}
+  .dh-ikon svg{width:100%;height:100%;display:block}
+  @keyframes dhIk{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  @media (prefers-reduced-motion:reduce){.dh-ikon{animation:none}}
   .dh-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(31px,5.4vw,50px);
     line-height:1.12;margin:0 0 16px}
   .dh-hero h1 em{font-style:italic;color:var(--dh-gold-soft)}
@@ -220,25 +225,7 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="dh-hero">
-  <svg class="dh-oct" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <radialGradient id="dhCore" cx="38%" cy="32%" r="70%">
-        <stop offset="0%" stop-color="#ffe9b8"/><stop offset="70%" stop-color="#d9b96a"/><stop offset="100%" stop-color="#b78f3f"/>
-      </radialGradient>
-    </defs>
-    <g fill="none" stroke-width="1.4">
-      <rect x="33" y="33" width="84" height="84" rx="3" stroke="rgba(124,108,240,.55)"/>
-      <rect x="33" y="33" width="84" height="84" rx="3" stroke="rgba(217,185,106,.55)" transform="rotate(45 75 75)"/>
-    </g>
-    <g fill="#d9b96a">
-      <circle cx="33" cy="33" r="3.1"/><circle cx="117" cy="33" r="3.1"/>
-      <circle cx="117" cy="117" r="3.1"/><circle cx="33" cy="117" r="3.1"/>
-      <circle cx="75" cy="15.6" r="3.1"/><circle cx="134.4" cy="75" r="3.1"/>
-      <circle cx="75" cy="134.4" r="3.1"/><circle cx="15.6" cy="75" r="3.1"/>
-    </g>
-    <circle cx="75" cy="75" r="16" fill="url(#dhCore)" opacity=".95"/>
-    <circle cx="75" cy="75" r="16" fill="none" stroke="rgba(255,233,184,.35)" stroke-width="1"/>
-  </svg>
+  <div class="dh-ikon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgmatrix" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrmatrix" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgmatrix)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrmatrix)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polygon points="79.1,79.1 40.9,79.1 40.9,40.9 79.1,40.9"/><polygon points="87.0,60.0 60.0,87.0 33.0,60.0 60.0,33.0"/><circle cx="60" cy="60" r="7" fill="#e7cf95" fill-opacity=".3"/><circle cx="87.0" cy="60.0" r="2.6" fill="#a99cff" stroke="none"/><circle cx="79.1" cy="79.1" r="2.6" fill="#e7cf95" stroke="none"/><circle cx="60.0" cy="87.0" r="2.6" fill="#a99cff" stroke="none"/><circle cx="40.9" cy="79.1" r="2.6" fill="#e7cf95" stroke="none"/><circle cx="33.0" cy="60.0" r="2.6" fill="#a99cff" stroke="none"/><circle cx="40.9" cy="40.9" r="2.6" fill="#e7cf95" stroke="none"/><circle cx="60.0" cy="33.0" r="2.6" fill="#a99cff" stroke="none"/><circle cx="79.1" cy="40.9" r="2.6" fill="#e7cf95" stroke="none"/></g></svg></div>
   <div class="dh-eyebrow">Kader Matrisi · Numeroloji Raporu</div>
   <h1>Doğum tarihin, <em>seni nasıl kodluyor?</em></h1>
   <p class="dh-lead">Doğum tarihinden hesaplanan <b style="color:var(--dh-ink)">sekiz köşeli yıldızın — oktagramın —</b> 22 Büyük Arkana'nın diliyle çözülür. Karakterini, aşk ve para hatlarını, karmik kuyruğunu, çakralarını ve <b style="color:var(--dh-ink)">0–80 yaş arası her dönemini</b> tek tek okur. Gökyüzü değil; ruhunun sayıları.</p>

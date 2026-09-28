@@ -65,6 +65,11 @@
   .dh-eyebrow{display:inline-block;color:var(--dh-gold);font-size:12px;letter-spacing:.22em;
     font-weight:700;text-transform:uppercase;border:1px solid var(--dh-line);border-radius:20px;
     padding:6px 16px;margin-bottom:22px}
+
+  .dh-ikon{width:150px;height:150px;margin:6px auto 24px;filter:drop-shadow(0 0 26px rgba(217,185,106,.30));animation:dhIk 6s ease-in-out infinite}
+  .dh-ikon svg{width:100%;height:100%;display:block}
+  @keyframes dhIk{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  @media (prefers-reduced-motion:reduce){.dh-ikon{animation:none}}
   .dh-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(31px,5.4vw,50px);
     line-height:1.12;margin:0 0 16px}
   .dh-hero h1 em{font-style:italic;color:var(--dh-gold-soft)}
@@ -244,13 +249,7 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="dh-hero">
-  <div class="dh-orbit">
-    <div class="r r1"></div><div class="r r2"></div><div class="r r3"></div>
-    <div class="core"></div>
-    <div class="dot" style="top:2px;left:50%"></div>
-    <div class="dot" style="bottom:20px;right:10px;background:var(--dh-gold)"></div>
-    <div class="dot" style="top:52px;left:6px"></div>
-  </div>
+  <div class="dh-ikon"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgsecim" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrsecim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgsecim)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrsecim)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="34" y="38" width="52" height="46" rx="7"/><line x1="34" y1="51" x2="86" y2="51"/><line x1="46" y1="32" x2="46" y2="43"/><line x1="74" y1="32" x2="74" y2="43"/><circle cx="44" cy="61" r="1.8" fill="#e7cf95" fill-opacity=".55" stroke="none"/><circle cx="44" cy="73" r="1.8" fill="#e7cf95" fill-opacity=".55" stroke="none"/><circle cx="54" cy="61" r="1.8" fill="#e7cf95" fill-opacity=".55" stroke="none"/><circle cx="54" cy="73" r="1.8" fill="#e7cf95" fill-opacity=".55" stroke="none"/><circle cx="64" cy="61" r="1.8" fill="#e7cf95" fill-opacity=".55" stroke="none"/><circle cx="64" cy="73" r="1.8" fill="#e7cf95" fill-opacity=".55" stroke="none"/><polygon points="73.0,59.0 74.8,66.2 82.0,68.0 74.8,69.8 73.0,77.0 71.2,69.8 64.0,68.0 71.2,66.2" fill="#a99cff" stroke="none"/></g></svg></div>
   <div class="dh-eyebrow">Seçim Astrolojisi · PDF Rapor</div>
   <h1>Önemli işin için <em>en doğru an</em></h1>
   <p class="dh-lead">Bir işe başlanan anın gökyüzü, o işin karakterini taşır. Bu rapor verdiğin tarih aralığındaki <b style="color:var(--dh-ink)">her günü 10 dakikalık adımlarla</b> tarar ve sana en uygun günü ve saat penceresini net olarak verir.</p>
