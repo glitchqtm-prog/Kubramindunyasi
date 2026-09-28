@@ -392,12 +392,11 @@
 
     <section class="hs-blok hs-yz" id="yzbolum">
       <div class="hs-bas"><h2>Yapay zekâna haritanı öğret</h2><span class="hs-yz-rozet">Yeni</span></div>
-      <p class="hs-alt">ChatGPT, Claude ve diğer yapay zekâ asistanları gezegen konumlarını kendi başlarına hassas hesaplayamaz; Yükseleni ve evleri çoğu zaman tahmin eder. Aşağıdaki hazır metin, haritanın <b>doğrulanmış</b> değerlerini içerir. Asistanına bir kez ver; sonraki astroloji sorularını senin gerçek haritanla cevaplasın.</p>
+      <p class="hs-alt">ChatGPT gibi yapay zekâ asistanları gezegen konumlarını kendi başlarına hassas hesaplayamaz; Yükseleni ve evleri çoğu zaman tahmin eder. Aşağıdaki hazır metin, haritanın <b>doğrulanmış</b> değerlerini içerir. Asistanına bir kez ver; sonraki astroloji sorularını senin gerçek haritanla cevaplasın.</p>
       <textarea id="yzmetin" class="hs-yz-metin" readonly rows="9" aria-label="Yapay zekâ asistanın için harita metni"></textarea>
       <div class="hs-yz-dugme">
         <button type="button" class="hs-mini hs-yz-ana" id="yzkopya">📋 Metni kopyala</button>
         <a class="hs-mini" id="yzgpt" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT'de aç ↗</a>
-        <a class="hs-mini" id="yzclaude" href="https://claude.ai/new" target="_blank" rel="noopener">Claude'da aç ↗</a>
       </div>
       <p class="hs-yz-not">İpucu: ChatGPT'de metni gönderdikten sonra “Bunu hafızana kaydet” dersen, haritanı sonraki sohbetlerde de hatırlar. Metin yalnızca senin cihazında hazırlanır; hangi asistana vereceğine sen karar verirsin.</p>
     </section>
@@ -693,7 +692,7 @@
     L.push("");
     L.push("Gezegenler ve noktalar:");
     (data.gezegenler||[]).forEach(function(p){ L.push("- "+temiz(p.ad)+": "+p.burc+" "+dm(p.derece)+(data.evler&&p.ev?" · "+p.ev+". ev":"")+(p.retro&&temiz(p.ad).indexOf("Düğüm")<0?" · retro":"")); });
-    if(data.evler){ L.push(""); L.push("Ev uçları: "+data.evler.map(function(e){ return e.ev+". "+e.burc+" "+dm(e.derece); }).join(" · ")); }
+    if(data.evler){ L.push(""); var tam=/Tam Burç/.test(data.evSistemi||""); L.push(tam ? "Evler (her burç bir ev): "+data.evler.map(function(e){ return e.ev+". ev "+e.burc; }).join(" · ") : "Ev uçları: "+data.evler.map(function(e){ return e.ev+". "+e.burc+" "+dm(e.derece); }).join(" · ")); }
     var ac=(data.acilar||[]).filter(function(a){ return ANA.indexOf(temiz(a.a))>=0 && ANA.indexOf(temiz(a.b))>=0; }).sort(function(a,b){ return a.orb-b.orb; }).slice(0,14);
     if(ac.length){ L.push(""); L.push("En sıkı açılar: "+ac.map(function(a){ return temiz(a.a)+" "+a.aspect+" "+temiz(a.b)+" ("+a.orb.toFixed(1)+"°)"; }).join(" · ")); }
     if(data.not){ L.push(""); L.push("Not: "+data.not); }
@@ -701,7 +700,7 @@
     L.push("Haritamın ücretsiz etkileşimli hâli ve kişiye özel ayrıntılı analiz: https://astroyuvam.com/dogum-haritasi-hesaplama.html · https://astroyuvam.com/dogum-haritasi-analizi.html");
     var metin=L.join("\n"); $("yzmetin").value=metin;
     var q=encodeURIComponent(metin);
-    $("yzgpt").href="https://chatgpt.com/?q="+q; $("yzclaude").href="https://claude.ai/new?q="+q;
+    $("yzgpt").href="https://chatgpt.com/?q="+q;
   }
   $("yzkopya").addEventListener("click", function(){
     var t=$("yzmetin"), b=this, ok=function(){ b.textContent="✓ Kopyalandı"; setTimeout(function(){ b.textContent="📋 Metni kopyala"; },1800); };
