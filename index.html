@@ -361,9 +361,10 @@
 function kartlariKur(){
   // Raporları kategorilere ayır (yeni rapor eklendikçe ilgili gruba düşer, düzen bozulmaz).
   const KATEGORILER = [
-    { ad:"Kişisel Haritalar", alt:"Kendi doğum haritan ve kişisel döngülerin", ids:["natal","cocuk","solar_return","lunar_return","transit"] },
-    { ad:"İlişki Raporları",  alt:"İki kişinin uyumu ve ilişki dinamiği",      ids:["sinastri","matrix_uyum"] },
-    { ad:"Numeroloji & Soru Astrolojisi", alt:"Sayıların dili ve tek soruna anlık yanıt", ids:["matrix","horary"] }
+    { ad:"Kişisel Haritalar", alt:"Kendi doğum haritan ve hayatının alanları", ids:["natal","cocuk","kariyer","ask","karmik","vedik","astrokartografi"] },
+    { ad:"Zaman ve Öngörü",   alt:"Önündeki dönemler ve doğru anı seçmek",     ids:["transit","solar_return","lunar_return","progresyon","secim"] },
+    { ad:"İlişki Raporları",  alt:"İki kişinin uyumu ve ilişki dinamiği",      ids:["sinastri","iliski_haritasi","matrix_uyum"] },
+    { ad:"Numeroloji & Soru Astrolojisi", alt:"Sayıların dili ve tek soruna anlık yanıt", ids:["matrix","numeroloji","horary"] }
   ];
   const byId = Object.fromEntries(REPORTS.map(r => [r.id, r]));
   const container = document.getElementById("cards");

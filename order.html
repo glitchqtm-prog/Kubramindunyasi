@@ -83,7 +83,47 @@
     </div>
   </div>
 
-  <div class="row">
+  <!-- ✦ SEÇİM ASTROLOJİSİ: amaç + tarih aralığı + şehir -->
+  <div id="secimBox" style="display:none">
+    <label>Ne için en uygun anı arıyorsun? *</label>
+    <select id="sAmac">
+      <option value="nikah">Nikâh / evlilik</option>
+      <option value="nisan">Nişan / söz</option>
+      <option value="is_kurma">Şirket kurma / iş yeri açılışı</option>
+      <option value="sozlesme">Sözleşme / önemli imza</option>
+      <option value="tasinma">Taşınma / yeni eve giriş</option>
+      <option value="ev_alma">Ev / mülk satın alma</option>
+      <option value="lansman">Lansman / ürün ya da proje başlangıcı</option>
+      <option value="is_gorusmesi">İş görüşmesi / önemli toplantı</option>
+      <option value="seyahat">Önemli bir yolculuğa çıkış</option>
+      <option value="yatirim">Büyük alım / yatırım kararı</option>
+    </select>
+    <div class="row">
+      <div><label>En erken tarih *</label><input id="sBas" type="date"></div>
+      <div><label>En geç tarih *</label><input id="sBit" type="date"></div>
+    </div>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Aralık en az 3 gün, en fazla 6 ay olabilir. Aralık genişledikçe daha güçlü bir an bulma şansı artar.</div>
+    <label>İşin yapılacağı şehir *</label>
+    <input id="sYer" placeholder="Şehir, Ülke (örn: İzmir, Türkiye)">
+    <div class="row">
+      <div><label>Günlük en erken saat</label><input id="sSaatBas" type="time"></div>
+      <div><label>Günlük en geç saat</label><input id="sSaatBit" type="time"></div>
+    </div>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Boş bırakırsan işin türüne uygun saatler taranır (ör. nikâh için 10:00–20:00).</div>
+    <label style="display:flex;align-items:flex-start;gap:9px;margin-top:18px;font-weight:normal;cursor:pointer;line-height:1.5;color:var(--ink)">
+      <input type="checkbox" id="sKisisel" style="width:auto;margin-top:3px;flex:none" checked>
+      <span style="font-size:13px">Seçimi <strong>kendi doğum haritama göre kişiselleştir</strong> (önerilir — doğum tarihi, saati ve yeri gerekir)</span>
+    </label>
+  </div>
+
+  <!-- ✦ NUMEROLOJİ: doğumdaki tam ad -->
+  <div id="numBox" style="display:none">
+    <label>Doğumdaki tam adın *</label>
+    <input id="dogumAdi" placeholder="Nüfusta kayıtlı ad ve soyad (örn: Ayşe Nur Yılmaz)">
+    <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Numeroloji hesapları nüfusta kayıtlı ilk adına göre yapılır. Soyadın değiştiyse doğumdaki soyadını yaz.</div>
+  </div>
+
+  <div class="row" id="dogumRow">
     <div><label>Doğum Tarihi *</label><input id="birthDate" type="date"></div>
     <div id="timeWrap"><label>Saat * (bilmiyorsan 12:00)</label><input id="birthTime" type="time" value="12:00"></div>
   </div>
@@ -97,6 +137,15 @@
   <div id="placeWrap">
   <label>Doğum Yeri *</label>
   <input id="birthPlace" placeholder="Şehir, Ülke (örn: İstanbul, Türkiye)">
+  </div>
+
+  <!-- ✦ ASTROKARTOGRAFİ: kişinin kendi şehirleri (isteğe bağlı) -->
+  <div id="acgBox" style="display:none">
+    <label>Şu an yaşadığın şehir (isteğe bağlı)</label>
+    <input id="aYasadigi" placeholder="Şehir, Ülke">
+    <label>Aklındaki şehirler (isteğe bağlı, en fazla 3)</label>
+    <input id="aSehirler" placeholder="Virgülle ayır: Berlin, Lizbon, İzmir">
+    <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Taşınmayı, okumayı ya da tatil yapmayı düşündüğün şehirleri yazarsan, raporda her birinin sana ne getireceğini ayrıca net olarak söyleriz.</div>
   </div>
 
   <label id="relLabel">İlişki Durumun *</label>
@@ -142,14 +191,36 @@ const REPORTS = {
   matrix:       { name: "Kader Matrisi Raporu",       price: 400 },
   matrix_uyum:  { name: "Kader Matrisi Uyum Raporu",  price: 500 },
   transit:      { name: "Transit Raporu",             price: 300 },
-  horary:       { name: "Soru Astrolojisi (Horary) Raporu", price: 450 }
+  horary:       { name: "Soru Astrolojisi (Horary) Raporu", price: 450 },
+  astrokartografi: { name: "Astrokartografi — Dünyada Senin Yerin", price: 600 },
+  secim:        { name: "Seçim Astrolojisi — En Uygun Tarih", price: 600 },
+  iliski_haritasi: { name: "İlişki Haritası (Kompozit + Davison)", price: 500 },
+  kariyer:      { name: "Kariyer ve Meslek Haritası", price: 450 },
+  ask:          { name: "Aşk Haritası", price: 450 },
+  vedik:        { name: "Vedik Doğum Haritası", price: 450 },
+  progresyon:   { name: "Progresyon — Ruhsal Olgunlaşma Haritası", price: 400 },
+  karmik:       { name: "Karmik Harita", price: 400 },
+  numeroloji:   { name: "Kişisel Numeroloji Raporu", price: 350 }
+};
+// ✦ Yeni raporların form ayarları: saat zorunlu mu, ilişki/cinsiyet sorulur mu, özel kutu
+const YENI = {
+  astrokartografi: { saat:true, kutu:"acgBox" },
+  kariyer:         { saat:true },
+  ask:             { saat:true, iliski:"tekli", cinsiyet:true },
+  iliski_haritasi: { saat:true, iliski:"cift", partner:true },
+  progresyon:      { saat:true },
+  karmik:          { saat:true },
+  vedik:           { saat:true },
+  secim:           { saat:true, kutu:"secimBox", secim:true },
+  numeroloji:      { kutu:"numBox", sadeceTarih:true }
 };
 const type = new URLSearchParams(location.search).get("type") || "natal";
 const info = REPORTS[type] || REPORTS.natal;
+const Y = YENI[type] || null;
 document.getElementById("reportName").textContent = info.name;
 document.getElementById("price").innerHTML = "&#8378;" + info.price + " <span style='font-size:16px;color:var(--muted)'>tek seferlik</span>";
 
-const needsPartner = ["sinastri","matrix_uyum"].includes(type);
+const needsPartner = ["sinastri","matrix_uyum"].includes(type) || !!(Y && Y.partner);
 if (needsPartner) document.getElementById("partnerBox").classList.add("show");
 
 // HORARY: doğum verisi/ilişki/cinsiyet GEREKMEZ — sadece konu + soru.
@@ -186,6 +257,35 @@ if (isNumerology) {
   });
 }
 
+// ✦ YENİ RAPORLAR: alanları rapora göre aç/kapat
+if (Y) {
+  const gizle = id => { const el = document.getElementById(id); if (el) el.style.display = "none"; };
+  const genderLabel = document.getElementById("genderBox").previousElementSibling;
+  if (!Y.cinsiyet){ gizle("genderBox"); if (genderLabel && genderLabel.tagName === "LABEL") genderLabel.style.display = "none"; }
+  if (!Y.iliski){ gizle("relBox"); gizle("relLabel"); }
+  if (Y.kutu) document.getElementById(Y.kutu).style.display = "block";
+  if (Y.sadeceTarih){ gizle("timeWrap"); gizle("placeWrap"); }
+  if (Y.saat){
+    const t = document.getElementById("birthTime"); t.value = "";
+    document.querySelector("#timeWrap label").textContent = "Doğum Saati *";
+    const pt = document.getElementById("pTime"); if (pt) pt.value = "";
+    const pl = document.querySelector("#pTimeWrap label"); if (pl) pl.textContent = "Doğum Saati *";
+    const n = document.createElement("div");
+    n.style.cssText = "font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.55";
+    n.textContent = Y.secim
+      ? "Kişiselleştirme için nüfus kaydındaki ya da hastane belgesindeki saati yaz. Doğum saatini bilmiyorsan yukarıdaki kişiselleştirme işaretini kaldırman yeterli; seçim yine yapılır."
+      : "Bu rapor doğum saatine göre hesaplanır; nüfus kaydındaki ya da hastane belgesindeki saati yaz. Saatini bilmiyorsan Haritanı Tanı, Kader Matrisi ya da Numeroloji raporlarını tercih edebilirsin.";
+    document.getElementById("dogumRow").after(n);
+  }
+  if (Y.secim){
+    const kutu = document.getElementById("sKisisel");
+    const dogumAlanlari = () => { const on = kutu.checked; ["dogumRow","placeWrap"].forEach(id => document.getElementById(id).style.display = on ? "" : "none"); const n = document.getElementById("dogumRow").nextElementSibling; if (n && !n.id) n.style.display = on ? "" : "none"; };
+    kutu.onchange = dogumAlanlari; dogumAlanlari();
+  }
+  if (type === "numeroloji"){ const ad = document.getElementById("name"), da = document.getElementById("dogumAdi"); ad.addEventListener("input", () => { if (!da.dataset.el) da.value = ad.value; }); da.addEventListener("input", () => { da.dataset.el = "1"; }); }
+  const badge = document.querySelector(".badge"); if (badge) badge.textContent = "✦ YENİ RAPOR ✦";
+}
+
 // ÇOCUK raporu: muhatap ebeveyndir; ilişki durumu anlamsız olduğu için hiç sorulmaz.
 const isChild = type === "cocuk";
 
@@ -198,6 +298,8 @@ if (isChild) {
   // İlişki durumu alanını tamamen gizle
   document.getElementById("relLabel").style.display = "none";
   relBox.style.display = "none";
+} else if (Y && !Y.iliski) {
+  // yeni raporlarda ilişki durumu sorulmuyor
 } else {
   document.getElementById("relLabel").textContent = needsPartner ? "İlişkiniz Ne Aşamada? *" : "İlişki Durumun *";
   (needsPartner ? REL_CIFT : REL_TEKLI).forEach(opt => {
@@ -234,13 +336,43 @@ btn.onclick = async () => {
     statusEl.textContent = "Devam etmek için KVKK ve satış sözleşmesi onayını işaretlemelisin.";
     return;
   }
-  if (!isChild && !isHorary && !relationship) {
+  if (!isChild && !isHorary && (!Y || Y.iliski) && !relationship) {
     statusEl.className = "status err";
     statusEl.textContent = needsPartner ? "Lütfen ilişkinizin aşamasını seçin." : "Lütfen ilişki durumunu seç.";
     return;
   }
   let body;
-  if (isHorary) {
+  const hata = m => { statusEl.className = "status err"; statusEl.textContent = m; };
+  if (Y) {
+    body = { type, name: $("name"), email: $("email") };
+    const dogumGerek = !Y.secim || document.getElementById("sKisisel").checked;
+    if (dogumGerek){
+      body.birthDate = $("birthDate");
+      if (!body.birthDate) return hata("Lütfen doğum tarihini gir.");
+      if (!Y.sadeceTarih){
+        body.birthTime = $("birthTime"); body.birthPlace = $("birthPlace");
+        if (!body.birthTime) return hata("Bu rapor için doğum saati gerekli.");
+        if (!body.birthPlace) return hata("Lütfen doğum yerini yaz.");
+      }
+    }
+    if (Y.cinsiyet) body.gender = gender;
+    if (Y.iliski) body.relationship = relationship;
+    if (Y.partner){
+      body.partner = { name: $("pName"), birthDate: $("pDate"), birthTime: $("pTime"), birthPlace: $("pPlace") };
+      if (!body.partner.name || !body.partner.birthDate || !body.partner.birthTime || !body.partner.birthPlace) return hata("Partnerin adı, doğum tarihi, saati ve yeri gerekli.");
+    }
+    if (type === "astrokartografi"){
+      if ($("aYasadigi")) body.yasadigiSehir = $("aYasadigi");
+      const sh = $("aSehirler").split(",").map(x => x.trim()).filter(Boolean).slice(0, 3); if (sh.length) body.sehirler = sh;
+    }
+    if (Y.secim){
+      body.amac = document.getElementById("sAmac").value; body.basTarih = $("sBas"); body.bitTarih = $("sBit"); body.secimYeri = $("sYer");
+      if (!body.basTarih || !body.bitTarih) return hata("Lütfen tarih aralığını seç.");
+      if (!body.secimYeri) return hata("Lütfen işin yapılacağı şehri yaz.");
+      if ($("sSaatBas") && $("sSaatBit")){ body.gunSaatBas = $("sSaatBas"); body.gunSaatBit = $("sSaatBit"); }
+    }
+    if (type === "numeroloji"){ body.dogumAdi = $("dogumAdi") || $("name"); }
+  } else if (isHorary) {
     const soru = document.getElementById("hSoru").value.trim();
     if (!soru || soru.length < 5) {
       statusEl.className = "status err";
