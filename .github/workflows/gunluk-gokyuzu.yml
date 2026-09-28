@@ -1,0 +1,44 @@
+name: Günlük Gökyüzü Verisi
+
+on:
+  schedule:
+    - cron: "5 21 * * *"      # her gün 21:05 UTC = 00:05 Türkiye (yeni gün başlar başlamaz)
+  workflow_dispatch:          # "Run workflow" ile elle de çalıştırılabilir
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-guncelleme
+  cancel-in-progress: false
+
+jobs:
+  uret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu al
+        uses: actions/checkout@v4
+
+      - name: Node kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Bağımlılık (astronomy-engine)
+        run: npm install --no-save astronomy-engine
+
+      - name: Gökyüzü verisini üret
+        run: node gen-gokyuzu.mjs
+
+      - name: Değişiklikleri commit'le
+        run: |
+          git config user.name "astro-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add bugun-gokyuzu.html gokyuzu.json sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Değişiklik yok, commit atlanıyor."
+          else
+            git commit -m "Günlük gökyüzü verisi: $(TZ=Europe/Istanbul date +%F)"
+            git pull --rebase
+            git push
+          fi
