@@ -1,6 +1,6 @@
 # Astro Yuvam (astroyuvam.com)
 
-> Türkiye'ye yönelik Türkçe astroloji ve numeroloji sitesi. Doğum anının gerçek gezegen konumlarıyla (tropikal zodyak, Placidus evleri, Swiss Ephemeris ile doğrulanan efemeris hesabı) hazırlanan 18 çeşit kişiye özel PDF rapor (150–600 TL, tek seferlik, e-postaya teslim) ve üyelik gerektirmeyen 27 ücretsiz araç sunar. Kişiye özel doğum haritası analizi 500 TL'dir ve 20+ sayfadır. Her raporun 3 sayfalık gerçek örneği satın almadan önce indirilebilir.
+> Türkiye'ye yönelik Türkçe astroloji ve numeroloji sitesi. Doğum anının gerçek gezegen konumlarıyla (tropikal zodyak, Placidus evleri, Swiss Ephemeris ile doğrulanan efemeris hesabı) hazırlanan 18 çeşit kişiye özel PDF rapor (150–600 TL, tek seferlik, e-postaya teslim) ve üyelik gerektirmeyen 29 ücretsiz araç sunar. Kişiye özel doğum haritası analizi 500 TL'dir ve 20+ sayfadır. Her raporun 3 sayfalık gerçek örneği satın almadan önce indirilebilir.
 
 Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris motoruyla yapılır, yorum yapay zekâ destekli olarak kişiye özel yazılır. Sayfa sayıları alt sınırdır.
 
@@ -8,8 +8,10 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 
 - [Hakkımızda — Astro Yuvam nedir](https://astroyuvam.com/hakkimizda.html): Ne sunduğumuz, nasıl hesapladığımız ve ilkelerimiz
 - [Rapor fiyatları](https://astroyuvam.com/fiyatlar.html): 18 raporun fiyatı, sayfa sayısı ve gereken bilgiler
-- [27 ücretsiz araç](https://astroyuvam.com/ucretsiz-astroloji-araclari.html): Tüm ücretsiz hesaplayıcılar
-- [Ücretsiz doğum haritası hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark, tüm açılar, derece-dakika tabloları
+- [29 ücretsiz araç](https://astroyuvam.com/ucretsiz-astroloji-araclari.html): Tüm ücretsiz hesaplayıcılar
+- [Ücretsiz doğum haritası hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark, 4 ev sistemi, tüm açılar, derece-dakika tabloları
+- [Bugün gökyüzü (günlük veri)](https://astroyuvam.com/bugun-gokyuzu.html): Her gün güncellenen gezegen konumları, retrolar, Yeni Ay/Dolunay; makine okunur sürüm: https://astroyuvam.com/gokyuzu.json
+- [Doğum saatimi nasıl öğrenirim?](https://astroyuvam.com/dogum-saati-nasil-ogrenilir.html): e-Devlet, CİMER ve hastane yolları
 
 ## Kişiye özel raporlar (fiyat · uzunluk · gereken bilgi)
 
@@ -34,13 +36,15 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 
 ## Ücretsiz araçlar
 
-- [Ücretsiz Doğum Haritası Hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark, tüm gezegenler, evler ve açılar; derece-dakika tabloları, açı ızgarası, element dağılımı, PNG indirme.
+- [Ücretsiz Doğum Haritası Hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark; Placidus, Koch, Eşit Ev ve Tam Burç ev sistemleri; tüm açılar, derece-dakika tabloları, PNG indirme ve yapay zekâ asistanına aktarma.
+- [Doğduğum Gün Yaz Saati Var mıydı?](https://astroyuvam.com/yaz-saati-dogum-saati.html): Türkiye'nin 1920'den bugüne saat dilimi geçmişi: doğum saatinin yaz saati ve evrensel saat (UTC) karşılığı.
 - [Yükselen Burç Hesaplama](https://astroyuvam.com/yukselen-burc-nedir.html): Saat kaydırıcısıyla yükselen burcun doğum saatine göre nasıl değiştiğini canlı gör.
 - [Lilith Burcu Hesaplama](https://astroyuvam.com/lilith-burcu-hesaplama.html): Kara Ay Lilith'in burcu, derecesi ve evi (ortalama ve gerçek Lilith).
 - [Evlilik Göstergeleri Hesaplama](https://astroyuvam.com/haritada-evlilik-gostergeleri.html): 7. ev, yöneticisi, 7. evdeki gezegenler, Venüs, Juno ve Vertex tek seferde.
 - [Düğün Tarihi Hesaplama](https://astroyuvam.com/dugun-tarihi-hesaplama.html): Nikâh, nişan ve düğün için 2026–2028 arasında seçtiğin günü astrolojik açıdan kontrol et.
 - [Gökyüzü Zaman Makinesi](https://astroyuvam.com/zaman-makinesi.html): İlk buluşma, düğün, doğum günü — herhangi bir tarihin gökyüzü.
 - [Burç Uyum Testi](https://astroyuvam.com/uyum-testi.html): İki doğum tarihiyle iletişim, tutku ve güven uyumu.
+- [Bugün Gökyüzü: Günlük Gezegen Konumları](https://astroyuvam.com/bugun-gokyuzu.html): Her gün güncellenen gezegen dereceleri, retrolar, Yeni Ay–Dolunay ve tutulma takvimi.
 - [Şu An Gökyüzü](https://astroyuvam.com/gokyuzu.html): Gezegenler şu an nerede, bugünün gökyüzü ne anlatıyor.
 - [Ay Takvimi](https://astroyuvam.com/ay-takvimi.html): Bugünün ay evresi, aydınlanma oranı ve evreye özel niyet.
 - [Günlük Burç Yorumları](https://astroyuvam.com/gunluk-burc-yorumlari.html): 12 burç için her gün, gerçek gökyüzüne dayalı yorum.

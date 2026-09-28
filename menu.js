@@ -119,11 +119,13 @@
     { baslik:"Gökyüzü & Ay", items:[
       { href:"/dogum-haritasi-hesaplama.html", ad:"✦ Doğum Haritası", alt:"Haritanı ücretsiz çıkar" },
       { href:"/gokyuzu.html",        ad:"✦ Gökyüzü",                alt:"Şu an gökyüzü & günün fısıltısı" },
+      { href:"/bugun-gokyuzu.html",  ad:"✦ Bugün Gökyüzü",          alt:"Gezegen dereceleri, retrolar, dolunay takvimi" },
       { href:"/ay-takvimi.html",     ad:"✦ Ay Takvimi",             alt:"Bugünün ay evresi ve ritüeli" },
       { href:"/zaman-makinesi.html", ad:"✦ Gökyüzü Zaman Makinesi", alt:"O gün gökyüzü nasıldı?" },
       { href:"/dugun-tarihi-hesaplama.html", ad:"✦ Düğün Tarihi Hesaplama", alt:"Nikah, nişan ve düğün için en uygun gün" },
       { href:"/haritada-evlilik-gostergeleri.html", ad:"✦ Evlilik Göstergelerim", alt:"7. ev, Juno ve Vertex hesaplama" },
-      { href:"/lilith-burcu-hesaplama.html", ad:"✦ Lilith Burcu Hesaplama", alt:"Kara Ay Lilith hangi burçta, hangi evde?" }
+      { href:"/lilith-burcu-hesaplama.html", ad:"✦ Lilith Burcu Hesaplama", alt:"Kara Ay Lilith hangi burçta, hangi evde?" },
+      { href:"/yaz-saati-dogum-saati.html", ad:"✦ Doğduğum Gün Yaz Saati", alt:"Doğum saatinin UTC karşılığı"  }
     ]},
     { baslik:"Sor & Yorumla", items:[
       { href:"/asterna.html",        ad:"✦ Asterna",        alt:"Yapay zekâ rehberin — her şeyi sor" },
@@ -145,7 +147,7 @@
     { baslik:"Hakkında", items:[
       { href:"/hakkimizda.html", ad:"✦ Astro Yuvam Nedir?", alt:"Nasıl hesaplıyoruz, nasıl yazıyoruz" },
       { href:"/fiyatlar.html", ad:"✦ Rapor Fiyatları", alt:"18 rapor, fiyat ve sayfa sayısı" },
-      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"27 araç, üyelik gerekmez" },
+      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"29 araç, üyelik gerekmez" },
       { href:"/#nasil-calisir", ad:"✦ Nasıl Çalışır?", alt:"4 adımda kişisel raporun" },
       { href:"/#sss",           ad:"✦ Sıkça Sorulanlar", alt:"Merak edilenlerin cevabı" }
     ]}
