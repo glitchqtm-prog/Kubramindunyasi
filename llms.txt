@@ -1,0 +1,72 @@
+# Astro Yuvam (astroyuvam.com)
+
+> Türkiye'ye yönelik Türkçe astroloji ve numeroloji sitesi. Doğum anının gerçek gezegen konumlarıyla (tropikal zodyak, Placidus evleri, Swiss Ephemeris ile doğrulanan efemeris hesabı) hazırlanan 18 çeşit kişiye özel PDF rapor (150–600 TL, tek seferlik, e-postaya teslim) ve üyelik gerektirmeyen 27 ücretsiz araç sunar. Kişiye özel doğum haritası analizi 500 TL'dir ve 20+ sayfadır. Her raporun 3 sayfalık gerçek örneği satın almadan önce indirilebilir.
+
+Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris motoruyla yapılır, yorum yapay zekâ destekli olarak kişiye özel yazılır. Sayfa sayıları alt sınırdır.
+
+## Temel sayfalar
+
+- [Hakkımızda — Astro Yuvam nedir](https://astroyuvam.com/hakkimizda.html): Ne sunduğumuz, nasıl hesapladığımız ve ilkelerimiz
+- [Rapor fiyatları](https://astroyuvam.com/fiyatlar.html): 18 raporun fiyatı, sayfa sayısı ve gereken bilgiler
+- [27 ücretsiz araç](https://astroyuvam.com/ucretsiz-astroloji-araclari.html): Tüm ücretsiz hesaplayıcılar
+- [Ücretsiz doğum haritası hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark, tüm açılar, derece-dakika tabloları
+
+## Kişiye özel raporlar (fiyat · uzunluk · gereken bilgi)
+
+- [Doğum Haritası Analizi (Haritanı Tanı)](https://astroyuvam.com/dogum-haritasi-analizi.html): 500 TL · 20+ sayfa · Doğum tarihi, saati, yeri. Güneş-Ay-Yükselen, 12 evin tek tek yorumu, aşk, kariyer, para, yaşam amacı ve önündeki 12 aya tarihli öngörüler. Örnek: https://astroyuvam.com/ornek-dogum-haritasi-raporu.pdf
+- [Çocuğunu Tanı — Gelişim ve Eğitim](https://astroyuvam.com/cocugunu-tani-analizi.html): 500 TL · 14+ sayfa · Çocuğun doğum tarihi, saati, yeri. Yaşa göre öğrenme stili, dersler, dikkat, duygusal ihtiyaçlar, sosyal gelişim ve ebeveyne uygulama rehberi. Örnek: https://astroyuvam.com/ornek-cocugunu-tani-raporu.pdf
+- [Kariyer ve Meslek Haritası](https://astroyuvam.com/kariyer-haritasi-analizi.html): 450 TL · 14+ sayfa · Doğum tarihi, saati, yeri. Sana uygun 3 meslek alanı, çalışma tarzı, para kazanma yolu ve önümüzdeki 24 ayın kariyer dönemleri. Örnek: https://astroyuvam.com/ornek-kariyer-haritasi-raporu.pdf
+- [Aşk Haritası](https://astroyuvam.com/ask-haritasi-analizi.html): 450 TL · 11+ sayfa · Doğum tarihi, saati, yeri. Aşk dilin, partner profilin, tanışma ortamları ve önümüzdeki 24 ayın aşk dönemleri. Örnek: https://astroyuvam.com/ornek-ask-haritasi-raporu.pdf
+- [Karmik Harita](https://astroyuvam.com/karmik-harita-analizi.html): 400 TL · 13+ sayfa · Doğum tarihi, saati, yeri. Ay Düğümleri, Satürn, Chiron ve 12. ev ile ruh görevin; karmik eşiklerin yaşlarıyla birlikte. Örnek: https://astroyuvam.com/ornek-karmik-harita-raporu.pdf
+- [Vedik Doğum Haritası (Jyotiṣa)](https://astroyuvam.com/vedik-harita-analizi.html): 450 TL · 12+ sayfa · Doğum tarihi, saati, yeri. Lagna, nakşatra, Rasi ve Navamşa, yogalar, Mangal doşa, Sade Sati ve gerçek tarihli daşa dönemleri. Örnek: https://astroyuvam.com/ornek-vedik-harita-raporu.pdf
+- [Astrokartografi — Dünyada Senin Yerin](https://astroyuvam.com/astrokartografi-analizi.html): 600 TL · 13+ sayfa · Doğum tarihi, saati, yeri. 40 gezegen hattı; 81 il ve 170 dünya şehri tarama; aşk, kariyer, para ve huzur için en iyi şehirler. Örnek: https://astroyuvam.com/ornek-astrokartografi-raporu.pdf
+- [Transit Raporu (12 Aylık Öngörü)](https://astroyuvam.com/transit-analizi.html): 300 TL · 11+ sayfa · Doğum tarihi, saati, yeri. Önümüzdeki 12 ayı ev geçişleri ve açılarla tarih tarih anlatan öngörü raporu. Örnek: https://astroyuvam.com/ornek-transit-raporu.pdf
+- [Solar Return (Kişisel Yıl Haritası)](https://astroyuvam.com/solar-return-analizi.html): 250 TL · 14+ sayfa · Doğum tarihi, saati, yeri. Doğum gününden doğum gününe kişisel yeni yılının haritası ve temaları. Örnek: https://astroyuvam.com/ornek-solar-return-raporu.pdf
+- [Lunar Return (Aylık Duygusal Harita)](https://astroyuvam.com/lunar-return-analizi.html): 150 TL · 12+ sayfa · Doğum tarihi, saati, yeri. Ay'ın her ay doğum derecene döndüğü an: bu ayın duygusal döngüsü. Örnek: https://astroyuvam.com/ornek-lunar-return-raporu.pdf
+- [Progresyon — Ruhsal Olgunlaşma Haritası](https://astroyuvam.com/progresyon-analizi.html): 400 TL · 12+ sayfa · Doğum tarihi, saati, yeri. Hayat döngündeki evren, progres Ay'ın 3 yıllık takvimi ve yaklaşan dönüm noktaları. Örnek: https://astroyuvam.com/ornek-progresyon-raporu.pdf
+- [Seçim Astrolojisi — En Uygun Gün ve Saat](https://astroyuvam.com/secim-astrolojisi-analizi.html): 600 TL · 9+ sayfa · Doğum bilgisi, amaç, tarih aralığı. Nikâh, açılış, sözleşme, taşınma için aralıktaki her günü 10 dakikalık adımlarla tarayıp en uygun pencereyi verir. Örnek: https://astroyuvam.com/ornek-secim-astrolojisi-raporu.pdf
+- [Sinastri (İlişki Uyumu)](https://astroyuvam.com/sinastri-uyum-analizi.html): 500 TL · 18+ sayfa · İki kişinin doğum bilgileri. İki haritanın karşılaştırması: duygusal, fiziksel, zihinsel uyum ve 12 aylık tarihli ilişki öngörüleri. Örnek: https://astroyuvam.com/ornek-sinastri-raporu.pdf
+- [İlişki Haritası — Kompozit ve Davison](https://astroyuvam.com/iliski-haritasi-analizi.html): 500 TL · 14+ sayfa · İki kişinin doğum bilgileri. İlişkinin kendi haritası: özü, en güçlü yanı, en büyük sınavı ve önümüzdeki 15 ay. Örnek: https://astroyuvam.com/ornek-iliski-haritasi-raporu.pdf
+- [Kader Matrisi](https://astroyuvam.com/kader-matrisi-analizi.html): 400 TL · 24+ sayfa · Yalnızca doğum tarihi. 22 Büyük Arkana oktagramı: karmik kuyruk, aşk-para-yetenek hatları, çakralar, blokajlar ve yaş dönemleri. Örnek: https://astroyuvam.com/ornek-kader-matrisi-raporu.pdf
+- [Kader Matrisi Uyum](https://astroyuvam.com/kader-matrisi-uyum-analizi.html): 500 TL · 30+ sayfa · İki kişinin doğum tarihi. İki oktagramın birleşimi: ortak enerjiler, ilişki-para-karmik bağ blokajları ve kriz-çözüm rehberi. Örnek: https://astroyuvam.com/ornek-kader-matrisi-uyum-raporu.pdf
+- [Kişisel Numeroloji](https://astroyuvam.com/numeroloji-analizi.html): 350 TL · 13+ sayfa · Doğumdaki tam ad + doğum tarihi. Yaşam Yolu, İfade, Ruh Güdüsü, karmik borçlar, 4 zirve ve bu yılın kişisel sayıları (Pisagor). Örnek: https://astroyuvam.com/ornek-numeroloji-raporu.pdf
+- [Soru Astrolojisi (Horary)](https://astroyuvam.com/soru-astrolojisi-analizi.html): 450 TL · 3–4 sayfa · Yalnızca net bir soru. Aklındaki tek somut soruya, sorunun sorulduğu anın gökyüzünden en başta net bir cevapla başlayan okuma. Örnek: https://astroyuvam.com/ornek-soru-astrolojisi-raporu.pdf
+
+## Ücretsiz araçlar
+
+- [Ücretsiz Doğum Haritası Hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark, tüm gezegenler, evler ve açılar; derece-dakika tabloları, açı ızgarası, element dağılımı, PNG indirme.
+- [Yükselen Burç Hesaplama](https://astroyuvam.com/yukselen-burc-nedir.html): Saat kaydırıcısıyla yükselen burcun doğum saatine göre nasıl değiştiğini canlı gör.
+- [Lilith Burcu Hesaplama](https://astroyuvam.com/lilith-burcu-hesaplama.html): Kara Ay Lilith'in burcu, derecesi ve evi (ortalama ve gerçek Lilith).
+- [Evlilik Göstergeleri Hesaplama](https://astroyuvam.com/haritada-evlilik-gostergeleri.html): 7. ev, yöneticisi, 7. evdeki gezegenler, Venüs, Juno ve Vertex tek seferde.
+- [Düğün Tarihi Hesaplama](https://astroyuvam.com/dugun-tarihi-hesaplama.html): Nikâh, nişan ve düğün için 2026–2028 arasında seçtiğin günü astrolojik açıdan kontrol et.
+- [Gökyüzü Zaman Makinesi](https://astroyuvam.com/zaman-makinesi.html): İlk buluşma, düğün, doğum günü — herhangi bir tarihin gökyüzü.
+- [Burç Uyum Testi](https://astroyuvam.com/uyum-testi.html): İki doğum tarihiyle iletişim, tutku ve güven uyumu.
+- [Şu An Gökyüzü](https://astroyuvam.com/gokyuzu.html): Gezegenler şu an nerede, bugünün gökyüzü ne anlatıyor.
+- [Ay Takvimi](https://astroyuvam.com/ay-takvimi.html): Bugünün ay evresi, aydınlanma oranı ve evreye özel niyet.
+- [Günlük Burç Yorumları](https://astroyuvam.com/gunluk-burc-yorumlari.html): 12 burç için her gün, gerçek gökyüzüne dayalı yorum.
+- [Haftalık Burç Yorumları](https://astroyuvam.com/haftalik-burc-yorumlari.html): 12 burç için haftanın genel gidişatı.
+- [2027 Burç Yorumları](https://astroyuvam.com/2027-burc-yorumlari.html): 12 burç için yıl boyu aşk, kariyer ve para rehberi.
+- [Yaşam Yolu Sayısı Hesaplama](https://astroyuvam.com/yasam-yolu.html): Doğum tarihinden yaşam yolu sayın; usta sayılar korunur.
+- [İsim Titreşimi (İsim Numerolojisi)](https://astroyuvam.com/isim-titresimi.html): Bir ismin sayısal titreşimi — kendi adın ya da bebek adı adayları.
+- [Günün Kartın](https://astroyuvam.com/gunun-kartin.html): Bugüne özel Majör Arkana kartın.
+- [Kozmik Nabız](https://astroyuvam.com/kozmik-nabiz.html): Güne özel kelimen, rengin ve kısa yansıman.
+- [Astro İkizin](https://astroyuvam.com/astro-ikizin.html): Doğum tarihine göre mitolojik kozmik ikizin.
+- [Asterna — Astroloji Yapay Zekâ Rehberi](https://astroyuvam.com/asterna.html): Astroloji ve numeroloji sorularını sor; her sayfada sağ alttan açılır.
+- [Yıldızlara Sor](https://astroyuvam.com/yildizlara-sor.html): Satürn dönüşü, yükselen, Kader Matrisi… kavramları sade dille öğren.
+- [Rüya Sembolü](https://astroyuvam.com/ruya-sembolu.html): Rüyandaki motifin arketipsel anlamı.
+- [Hangi Burçsun? Testi](https://astroyuvam.com/hangi-burcsun.html): 10 soruluk eğlenceli burç enerjisi testi.
+- [Açı (Aspekt) Gezgini](https://astroyuvam.com/acilar-aspektler.html): Kavuşum, kare, üçgen ve karşıtı çember üzerinde canlı gör.
+- [12 Ev Etkileşimli Rehberi](https://astroyuvam.com/astrolojide-evler.html): Evleri tıklayarak her evin anlamını keşfet.
+- [Doğum Haritası Çarkı Nasıl Okunur?](https://astroyuvam.com/dogum-haritasi-carki.html): Çarkın katmanlarını tıklayarak öğren.
+- [Retrograd Animasyonu](https://astroyuvam.com/retrograd-nedir.html): Gezegenlerin neden geri gidiyormuş gibi göründüğünü animasyonla gör.
+- [12 Burç Profili](https://astroyuvam.com/burclar.html): Her burcun karakteri, elementi, aşkı ve kariyeri.
+- [22 Majör Arkana Profili](https://astroyuvam.com/arkanalar.html): Kader Matrisi arkanalarının ışık ve gölge yanları.
+
+## Rehber yazılar
+
+- [Yıldız Günlüğü](https://astroyuvam.com/yildiz-gunlugu.html): Astroloji ve numeroloji üzerine 30'dan fazla Türkçe rehber yazı
+
+## İletişim
+
+- E-posta: astroyuvam@gmail.com
+- Instagram / YouTube / X: @astroyuvam

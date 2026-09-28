@@ -143,6 +143,9 @@
       { href:"/arkanalar.html", ad:"✦ Arkana Profilleri", alt:"22 Majör Arkana ve anlamları" }
     ]},
     { baslik:"Hakkında", items:[
+      { href:"/hakkimizda.html", ad:"✦ Astro Yuvam Nedir?", alt:"Nasıl hesaplıyoruz, nasıl yazıyoruz" },
+      { href:"/fiyatlar.html", ad:"✦ Rapor Fiyatları", alt:"18 rapor, fiyat ve sayfa sayısı" },
+      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"27 araç, üyelik gerekmez" },
       { href:"/#nasil-calisir", ad:"✦ Nasıl Çalışır?", alt:"4 adımda kişisel raporun" },
       { href:"/#sss",           ad:"✦ Sıkça Sorulanlar", alt:"Merak edilenlerin cevabı" }
     ]}
