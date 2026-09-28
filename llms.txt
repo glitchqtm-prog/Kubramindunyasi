@@ -66,6 +66,17 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 - [12 Burç Profili](https://astroyuvam.com/burclar.html): Her burcun karakteri, elementi, aşkı ve kariyeri.
 - [22 Majör Arkana Profili](https://astroyuvam.com/arkanalar.html): Kader Matrisi arkanalarının ışık ve gölge yanları.
 
+## Hayat soruları (astroloji ve numerolojiyle cevaplar)
+
+- [Hangi şehre taşınmalıyım?](https://astroyuvam.com/hangi-sehre-tasinmaliyim.html): Astrokartografi ile aşk, kariyer, para ve huzur için hatlar
+- [Nikâh için en uygun tarih nasıl seçilir?](https://astroyuvam.com/nikah-tarihi-nasil-secilir.html): 2026–2028 retro ve tutulma takvimi, tarih kontrol aracı
+- [Hangi mesleği seçmeliyim?](https://astroyuvam.com/hangi-meslegi-secmeliyim.html): MC, 10. ev ve 12 MC burcuna göre meslek eğilimleri
+- [Neden hep aynı tip insana âşık oluyorum?](https://astroyuvam.com/neden-hep-ayni-tip-insana-asik-oluyorum.html): Venüs, Mars, Ay ve 7. ev ile aşk döngüsü
+- [Bebeğime hangi ismi koymalıyım?](https://astroyuvam.com/bebek-ismi-numeroloji.html): Numerolojiye göre isim karşılaştırma hesaplayıcısı
+- [Bu iş teklifini kabul etmeli miyim?](https://astroyuvam.com/is-teklifini-kabul-etmeli-miyim.html): Soru astrolojisi (horary) ile karar soruları
+- [Çocuğum nasıl öğrenir?](https://astroyuvam.com/cocugum-nasil-ogrenir.html): Merkür ve Ay ile çocuğun öğrenme stili
+- [Doğum saatimi nasıl öğrenirim?](https://astroyuvam.com/dogum-saati-nasil-ogrenilir.html): e-Devlet, CİMER ve hastane yolları
+
 ## Rehber yazılar
 
 - [Yıldız Günlüğü](https://astroyuvam.com/yildiz-gunlugu.html): Astroloji ve numeroloji üzerine 30'dan fazla Türkçe rehber yazı
