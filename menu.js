@@ -137,6 +137,7 @@
       { href:"/hangi-burcsun.html",  ad:"✦ Hangi Burçsun?",    alt:"10 soruluk eğlenceli test" },
       { href:"/uyum-testi.html",     ad:"✦ Uyum Testi",        alt:"Sen & O ne kadar uyumlusunuz?" },
       { href:"/hayatina-kim-giriyor.html", ad:"✦ Hayatına Kim Giriyor?", alt:"Onun gezegenleri senin hangi evine düşüyor?" },
+      { href:"/evlenecegin-kisiyle-nerede-tanisirsin.html", ad:"✦ Nerede Tanışacaksın?", alt:"Evleneceğin kişiyle tanışma sahnen" },
       { href:"/yasam-yolu.html",     ad:"✦ Yaşam Yolu Sayın",  alt:"Doğum tarihinden anında" },
       { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" },
       { href:"/astro-ikizin.html",   ad:"✦ Astro İkizin",      alt:"Doğduğun günün mitolojik ikizi" }
