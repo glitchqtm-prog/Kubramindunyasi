@@ -136,6 +136,7 @@
     { baslik:"Testler & Sayılar", items:[
       { href:"/hangi-burcsun.html",  ad:"✦ Hangi Burçsun?",    alt:"10 soruluk eğlenceli test" },
       { href:"/uyum-testi.html",     ad:"✦ Uyum Testi",        alt:"Sen & O ne kadar uyumlusunuz?" },
+      { href:"/hayatina-kim-giriyor.html", ad:"✦ Hayatına Kim Giriyor?", alt:"Onun gezegenleri senin hangi evine düşüyor?" },
       { href:"/yasam-yolu.html",     ad:"✦ Yaşam Yolu Sayın",  alt:"Doğum tarihinden anında" },
       { href:"/isim-titresimi.html", ad:"✦ İsminin Titreşimi", alt:"Bir ismin sayısal titreşimi" },
       { href:"/astro-ikizin.html",   ad:"✦ Astro İkizin",      alt:"Doğduğun günün mitolojik ikizi" }
@@ -147,7 +148,7 @@
     { baslik:"Hakkında", items:[
       { href:"/hakkimizda.html", ad:"✦ Astro Yuvam Nedir?", alt:"Nasıl hesaplıyoruz, nasıl yazıyoruz" },
       { href:"/fiyatlar.html", ad:"✦ Rapor Fiyatları", alt:"18 rapor, fiyat ve sayfa sayısı" },
-      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"29 araç, üyelik gerekmez" },
+      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"30 araç, üyelik gerekmez" },
       { href:"/#nasil-calisir", ad:"✦ Nasıl Çalışır?", alt:"4 adımda kişisel raporun" },
       { href:"/#sss",           ad:"✦ Sıkça Sorulanlar", alt:"Merak edilenlerin cevabı" }
     ]}
