@@ -167,6 +167,12 @@
   .chartbox.f-uyumlu [data-t="Kare"],.chartbox.f-uyumlu [data-t="Karşıt"],.chartbox.f-uyumlu [data-t="Quincunx"]{display:none}
   .chartbox.f-sert [data-t="Üçgen"],.chartbox.f-sert [data-t="Sekstil"],.chartbox.f-sert [data-t="Quincunx"]{display:none}
   .chartbox.f-ana [data-a="Ceres"],.chartbox.f-ana [data-b="Ceres"],.chartbox.f-ana [data-a="Pallas"],.chartbox.f-ana [data-b="Pallas"],.chartbox.f-ana [data-a="Juno"],.chartbox.f-ana [data-b="Juno"],.chartbox.f-ana [data-a="Vesta"],.chartbox.f-ana [data-b="Vesta"],.chartbox.f-ana [data-a="Lilith"],.chartbox.f-ana [data-b="Lilith"],.chartbox.f-ana [data-a="Chiron"],.chartbox.f-ana [data-b="Chiron"],.chartbox.f-ana [data-a="Kuzey Ay Düğümü"],.chartbox.f-ana [data-b="Kuzey Ay Düğümü"],.chartbox.f-ana [data-a="Güney Ay Düğümü"],.chartbox.f-ana [data-b="Güney Ay Düğümü"]{display:none}
+  .hs-kusatma{margin:10px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(217,185,106,.06);font-size:.9rem;line-height:1.65;color:#d9d0e8}
+  .yz-soru{margin:10px 0 12px;padding:10px 12px;border-left:3px solid var(--gold);background:rgba(217,185,106,.07);border-radius:0 10px 10px 0}
+  .yz-soru b{display:block;color:var(--gold-soft);font-size:1.02rem;margin-bottom:3px}.yz-soru span{font-size:.9rem;color:#cfc5e0;line-height:1.55}
+  .hs-detay h4,.ek-kart h4{margin:14px 0 4px;font-size:.98rem;color:var(--gold-soft)}
+  .ek-kart p{margin:0 0 6px}.yz-not{font-size:.86rem;color:#cfc5e0;font-style:italic}
+  .yz-aci{margin:8px 0 0;padding-left:18px}.yz-aci li{font-size:.9rem;line-height:1.6;color:#d9d0e8;margin:3px 0}
   .chartbox.f-ana .cw-a[data-ek],.chartbox.f-ana .cw-as[data-ek]{display:none}
   #tablo tr.ek td:first-child .g{color:#b69ae0;font-size:.8em;font-weight:700}
   #tablo tr.ek-bas td{font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:#b69ae0;padding-top:14px;cursor:default}
@@ -344,6 +350,7 @@
       </div>
       <div class="hs-evfark" id="evfark" hidden></div>
       <div class="chartbox" id="cark"></div>
+      <div class="hs-kusatma" id="kusatma" hidden></div>
       <div class="hs-detay" id="detay" hidden></div>
       <details class="hs-rehber">
         <summary>Çarkı nasıl okursun?</summary>
@@ -561,14 +568,36 @@
   function acilariOf(ad){ return (VERI.acilar||[]).filter(function(a){ return temiz(a.a)===ad||temiz(a.b)===ad; }).sort(function(a,b){ return a.orb-b.orb; }); }
   function sikilik(orb){ return orb<=1 ? '<span class="hs-sik s1">çok sıkı</span>' : orb<=3 ? '<span class="hs-sik s2">güçlü</span>' : '<span class="hs-sik s3">geniş</span>'; }
 
+  function yorumHTML(p, saatVar){
+    var y=p.yorum, s='<p class="yz-soru"><b>'+y.baslik+'</b><span>'+y.soru+'</span></p>';
+    s+='<h4>'+(SIGN_GLYPH[p.burc]||"")+' '+y.burcBaslik+'</h4><p>'+y.burcMetni+'</p>';
+    if(y.evMetni) s+='<h4>🏠 '+y.evBaslik+'</h4><p>'+y.evMetni+'</p>';
+    if(!saatVar) s+='<p class="yz-not">Doğum saati girilmediği için ev yorumu gösterilmiyor; saatini ekleyince bu noktanın hayatının hangi alanında çalıştığını da görürsün.</p>';
+    return s;
+  }
+  function kusatmaNotu(data){
+    var k=$("kusatma"); if(!k) return;
+    var sis=String(data.evSistemi||""); if(!data.evler || !/Placidus|Koch/.test(sis)){ k.hidden=true; return; }
+    var say={}; data.evler.forEach(function(e){ say[e.burc]=(say[e.burc]||0)+1; });
+    var yok=BURCLAR.filter(function(b){ return !say[b]; }), iki=BURCLAR.filter(function(b){ return say[b]>1; });
+    if(!yok.length){ k.hidden=true; return; }
+    var g=function(l){ return l.map(function(b){ return (SIGN_GLYPH[b]||"")+' '+b; }).join(" ve "); };
+    k.innerHTML='<b>Neden bazı burç simgelerinin derecesi yok?</b> Bu haritada '+g(yok)+' <b>kuşatılmış burç</b>: hiçbir ev bu burçta başlamıyor, bir evin tam ortasında kalıyor. Bu yüzden çarkta derecesi yazmaz; yerini görebilmen için yalnızca simgesi gösterilir. Buna karşılık '+g(iki)+' iki ev ucunda birden yer alır. '+sis.replace(/ \(.*\)/,"")+' gibi evleri eşit bölmeyen sistemlerde, özellikle Türkiye enlemlerinde bu çok yaygındır; hesap hatası değildir. astro.com gibi siteler aynı haritayı aynı ev uçlarıyla çizer ama kuşatılmış burcun simgesini hiç göstermez. Evleri 30° eşit bölen <b>Eşit Ev</b> ya da <b>Tam Burç</b> sistemlerinde her burç bir ev ucunda bulunur.';
+    k.hidden=false;
+  }
+
   function gezegenDetay(ad){
     var p=gezegenBul(ad); if(!p) return;
     var d=$("detay"), anl=PL[ad]||["",""], saatVar=!VERI.dogumBilgi.saatBilinmiyor;
     var s='<button class="hs-kapat" type="button" aria-label="Kapat">×</button><h3>'+(PL_GLYPH[ad]||"")+' '+ad+' — '+(SIGN_GLYPH[p.burc]||"")+' '+p.burc+' '+dm(p.derece)+(p.retro?' ℞':'')+'</h3>';
     s+='<span class="etiket">'+p.burc+' burcunda</span>'+(saatVar&&p.ev?'<span class="etiket">'+p.ev+'. evde</span>':'')+(p.retro?'<span class="etiket">geri harekette (℞)</span>':'');
+    if(p.yorum){ s+=yorumHTML(p, saatVar); }
+    else {
     s+='<p><b>'+ad+'</b> '+anl[0]+' demektir. '+anl[1]+'</p>';
     s+='<p>'+p.burc+' burcunda bu enerji <b>'+(BURC[p.burc]||"")+'</b> bir tarzla ifade bulur.'+(saatVar&&p.ev?' '+p.ev+'. evde olduğu için en çok <b>'+EV[p.ev]+'</b> alanında hissedilir.':'')+'</p>';
-    if(p.retro && ad.indexOf("Düğüm")<0) s+='<p>Doğduğun anda geri harekette olduğu için bu enerji önce içe döner; zamanla daha bilinçli ve kendine özgü bir ustalığa dönüşür.</p>';
+    }
+    if(p.retro && ad.indexOf("Düğüm")<0 && !p.ek) s+='<p class="yz-not">℞ Doğduğun anda geri harekette: bu konular sende önce içeride olgunlaşır, sonra dışarı çıkar. İlk denemede değil, ikinci üçüncü seferde oturduğunu görebilirsin.</p>';
+    if(p.acilarC && p.acilarC.length) s+='<ul class="yz-aci">'+p.acilarC.map(function(c){ return '<li>'+c+'</li>'; }).join("")+'</ul>';
     var al=acilariOf(ad);
     if(al.length){ s+='<p style="margin-bottom:2px"><b>Açıları</b> (dokun, açıklaması açılsın):</p><ul>';
       al.forEach(function(a,i){ var o=temiz(a.a)===ad?temiz(a.b):temiz(a.a); s+='<li data-i="'+VERI.acilar.indexOf(a)+'"><span style="color:'+ASP_COLOR[a.aspect]+'">'+(ASP_GLYPH[a.aspect]||"")+'</span> '+a.aspect+' '+(PL_GLYPH[o]||"")+' '+o+' — '+a.orb.toFixed(1)+'°'+sikilik(a.orb)+'</li>'; });
@@ -736,7 +765,7 @@
     var ekler=data.ekNoktalar||[];
     if(!PL.AC){ PL.AC=["Yükselen, yani dışa yansıyan yüzün","Dünyaya nasıl göründüğünü ve hayata nasıl başladığını anlatır."]; PL.MC=["Tepe Noktası, yani hedefin ve kariyer yönün","Toplumda nasıl tanınmak istediğini anlatır."]; }
     ekler.forEach(function(p){ PL[p.ad]=[p.anlam,p.aciklama]; PL_GLYPH[p.ad]=p.kod; });
-    data.tumNoktalar=(data.gezegenler||[]).concat(ekler.map(function(p){ return { ad:p.ad, burc:p.burc, derece:p.derece, ev:p.ev, retro:p.retro, ek:true, kod:p.kod }; }));
+    data.tumNoktalar=(data.gezegenler||[]).concat(ekler.map(function(p){ return { ad:p.ad, burc:p.burc, derece:p.derece, ev:p.ev, retro:p.retro, ek:true, kod:p.kod, yorum:p.yorum, acilarC:p.acilar }; }));
   }
   function ekBolum(data){
     var bolum=$("ek-bolum"), kutu=$("ek-kartlar"), not=$("ek-not"), ekler=data.ekNoktalar||[], saatVar=!data.dogumBilgi.saatBilinmiyor;
@@ -746,10 +775,10 @@
     if(!ekler.length && !notlar.length){ bolum.style.display="none"; return; }
     kutu.innerHTML="";
     ekler.forEach(function(p){
-      var ac=(data.acilar||[]).filter(function(a){ return a.ek && a.a===p.ad; }).sort(function(a,b){ return a.orb-b.orb; }).slice(0,3);
-      var metin='<b>'+p.ad+'</b> '+p.anlam+' demektir. '+p.aciklama+' '+p.burc+' burcunda bu tema <b>'+(BURC[p.burc]||"")+'</b> bir tarzla çalışır.'+(saatVar&&p.ev?' '+p.ev+'. evde olduğu için en çok <b>'+EV_KISA[p.ev]+'</b> alanında hissedilir.':'');
-      if(ac.length) metin+=' '+ac.map(function(a){ return (a.b==="AC"?"Yükselen":a.b)+' ile '+a.aspect.toLocaleLowerCase("tr")+' ('+a.orb.toFixed(1)+'°)'; }).join(", ")+(ac.length>1?' açıları':' açısı')+' bu noktayı haritanda daha görünür kılar.';
-      var d=el("div","",'<span class="ek-k">'+p.kod+'</span><b>'+p.ad+'</b><small>'+(SIGN_GLYPH[p.burc]||"")+' '+p.burc+' '+dm(p.derece)+(p.retro?' ℞':'')+(saatVar&&p.ev?' · '+p.ev+'. ev':'')+'</small><p>'+metin+'</p>');
+      var ic;
+      if(p.yorum){ ic=yorumHTML(p, saatVar)+((p.acilar&&p.acilar.length)?'<ul class="yz-aci">'+p.acilar.map(function(c){ return '<li>'+c+'</li>'; }).join("")+'</ul>':''); }
+      else ic='<p><b>'+p.ad+'</b> '+p.anlam+'. '+p.aciklama+'</p>';
+      var d=el("div","",'<span class="ek-k">'+p.kod+'</span><b>'+p.ad+'</b><small>'+(SIGN_GLYPH[p.burc]||"")+' '+p.burc+' '+dm(p.derece)+(p.retro?' ℞':'')+(saatVar&&p.ev?' · '+p.ev+'. ev':'')+'</small>'+ic);
       d.onclick=function(){ gezegenDetay(p.ad); var c=$("cark"); if(c.scrollIntoView) c.scrollIntoView({behavior:"smooth",block:"start"}); };
       kutu.appendChild(d);
     });
@@ -761,8 +790,10 @@
     if(ys==null){ bolum.style.display="none"; return; }
     kutu.innerHTML="";
     if(!ys.length) kutu.appendChild(el("div","",'<p>Bu 30 parlak yıldızdan hiçbiri gezegenlerinle ya da köşelerinle 1° içinde buluşmuyor. Bu çok yaygındır: sabit yıldızlar yalnızca bu kadar sıkı temasta haritada söz sahibi olur.</p>'));
-    ys.forEach(function(y){ var nk=({"Yükselen":"Yükselen'inle","Alçalan":"Alçalan'ınla","MC":"Tepe Noktan (MC) ile","IC":"IC ile"})[y.nokta]||(y.nokta+" ile");
-      kutu.appendChild(el("div","",'<b><span class="yz-y">★</span>'+y.yildiz+'</b><small>'+nk+' kavuşuk · '+y.orb.toFixed(1)+'° · '+(SIGN_GLYPH[y.sign]||"")+' '+y.sign+' '+dm(y.degree)+'</small><p>'+y.anlam+'</p>')); });
+    var AD={"Yükselen":"Yükselen","Alçalan":"Alçalan (7. ev ucu)","MC":"Tepe Noktası (MC)","IC":"IC (4. ev ucu)"}, grup={}, sira=[];
+    ys.forEach(function(y){ if(!grup[y.yildiz]){ grup[y.yildiz]={ y:y, temas:[] }; sira.push(y.yildiz); } grup[y.yildiz].temas.push((AD[y.nokta]||y.nokta)+' ('+y.orb.toFixed(1).replace(".",",")+'°)'); });
+    sira.forEach(function(k){ var g=grup[k], y=g.y, t=g.temas, liste=t.length>1 ? t.slice(0,-1).join(", ")+" ve "+t[t.length-1] : t[0];
+      kutu.appendChild(el("div","",'<b><span class="yz-y">★</span>'+y.yildiz+'</b><small>'+(SIGN_GLYPH[y.sign]||"")+' '+y.sign+' '+dm(y.degree)+' · '+liste+' ile kavuşuk</small><p>'+y.anlam+'</p>')); });
     bolum.style.display="block";
   }
 
@@ -772,7 +803,7 @@
     $("ozet").textContent=(d.isim?d.isim+" — ":"")+(d.tarih||"")+(d.saat?(" • "+d.saat):" • saat yok")+(yer?(" • "+yer):"");
     var box=$("cark"); box.innerHTML=data.cark||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt"; ["filtre","acifiltre"].forEach(function(k){ var bs=$(k).querySelectorAll("button"); for(var i=0;i<bs.length;i++) bs[i].classList.toggle("on", i===0); }); $("detay").hidden=true; $("acidetay").hidden=true;
     var ps=box.querySelectorAll(".cw-p"); for(var i=0;i<ps.length;i++) ps[i].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); });
-    bigPoints(data); tabloDoldur(data.tumNoktalar); ekBolum(data); yildizBolum(data); if(window.AYEK&&AYEK.haritaHazir) AYEK.haritaHazir(true); aciFiltre="hepsi"; aciHepsi=false; acilarDoldur(); izgaraKur(); denge(); oneCikanlar(); yzKur(data);
+    bigPoints(data); kusatmaNotu(data); tabloDoldur(data.tumNoktalar); ekBolum(data); yildizBolum(data); if(window.AYEK&&AYEK.haritaHazir) AYEK.haritaHazir(true); aciFiltre="hepsi"; aciHepsi=false; acilarDoldur(); izgaraKur(); denge(); oneCikanlar(); yzKur(data);
     var note=$("note"); if(data.not){ note.textContent=data.not; goster(note); } else { gizle(note); note.textContent=""; }
     $("evsisbar").classList.toggle("kapali", !data.evler);
     goster($("result")); if(!sessiz && $("result").scrollIntoView) $("result").scrollIntoView({behavior:"smooth",block:"start"});
