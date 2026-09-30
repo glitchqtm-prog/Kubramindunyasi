@@ -43,10 +43,11 @@ jobs:
         run: |
           git config user.name "astro-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add gunluk-burc-yorumlari.html haftalik-burc-yorumlari.html gunluk-burc-yorumlari haftalik-burc-yorumlari
+          git add gunluk-burc-yorumlari.html haftalik-burc-yorumlari.html gunluk-burc-yorumlari haftalik-burc-yorumlari sitemap.xml
           if git diff --cached --quiet; then
             echo "Değişiklik yok, commit atlanıyor."
           else
             git commit -m "Burç yorumları güncellendi: $(TZ=Europe/Istanbul date +%F)"
+            git pull --rebase
             git push
           fi
