@@ -110,19 +110,41 @@
   .rapor-kategori{max-width:1120px;margin:0 auto;padding:0 22px}
   .rapor-kategori .kat-h{color:var(--ay-gold);font-size:22px;text-align:center;margin:48px 0 4px}
   .rapor-kategori .kat-sub{color:var(--ay-muted);text-align:center;font-size:13.5px;margin-bottom:24px}
-  .rapor-grid{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-items:stretch}
-  .rapor-grid > .card{flex:0 1 320px;max-width:340px;width:auto!important;margin:0!important;display:flex;flex-direction:column}
-  .rapor-grid > .card > p{overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
-  .rapor-grid > .card.acik > p{-webkit-line-clamp:unset;display:block}
-  .rapor-grid > .card .kart-btn{margin-top:auto}
-  .rapor-grid > .card > p{margin-bottom:18px}
-  .kart-detay{background:none;border:none;color:var(--ay-gold);font:inherit;font-size:12.5px;cursor:pointer;padding:6px 0 2px;min-height:28px;min-width:44px;text-align:left;align-self:flex-start;opacity:.9}
-  .kart-detay:hover{opacity:1;text-decoration:underline}
+  .rapor-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;align-items:stretch}
+  .rk{position:relative;flex:1 1 300px;max-width:360px;min-width:0;display:flex;flex-direction:column;padding:22px 22px 20px;border-radius:18px;border:1px solid rgba(217,185,106,.22);background:radial-gradient(120% 70% at 50% -10%,rgba(217,185,106,.10),transparent 60%),linear-gradient(180deg,#191628,#100e1b);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px rgba(0,0,0,.25);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .rk:hover{transform:translateY(-3px);border-color:rgba(217,185,106,.55);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 18px 44px rgba(0,0,0,.4),0 0 0 1px rgba(217,185,106,.12)}
+  .rk-ust{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .rk-ikon{flex:none;width:58px;height:58px;filter:drop-shadow(0 0 12px rgba(217,185,106,.2))}.rk-ikon svg{width:100%;height:100%;display:block}
+  .rk h3{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.25;margin:0;color:var(--ink)}
+  .rk-etiket{display:inline-block;margin-top:5px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-soft);opacity:.85}
+  .rk p{color:#b3aec4;font-size:14px;line-height:1.6;margin:0 0 16px;flex:1}
+  .rk ul{list-style:none;margin:0 0 18px;padding:12px 0 0;border-top:1px solid rgba(255,255,255,.07);display:grid;gap:7px}
+  .rk li{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.45;color:#cfc9dc}
+  .rk li svg{flex:none;width:15px;height:15px;margin-top:2px;color:var(--gold)}
+  .rk li a{color:var(--gold-soft);text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(232,211,163,.4)}
+  .rk li a:hover{text-decoration-color:currentColor}
+  .rk-alt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07)}
+  .rk-fiyat{line-height:1.1}.rk-fiyat b{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--gold-soft);letter-spacing:.3px}.rk-fiyat span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+  .rk-btn{flex:none;display:inline-flex;align-items:center;gap:7px;padding:12px 18px;min-height:44px;border-radius:12px;background:linear-gradient(180deg,#ecd7a0,#d2ae62);color:#1d1606;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 6px 18px rgba(217,185,106,.18);transition:filter .2s,transform .15s}
+  .rk-btn:hover{filter:brightness(1.06)}.rk-btn:active{transform:scale(.98)}
+  .rk-btn svg{width:16px;height:16px;transition:transform .2s}.rk:hover .rk-btn svg{transform:translateX(2px)}
+  .rk-rozet{position:absolute;top:-10px;right:18px;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;font-weight:700;color:#1d1606;background:linear-gradient(180deg,#ecd7a0,#d2ae62);padding:4px 11px;border-radius:20px}
+  @media(max-width:420px){.rk{padding:20px 18px 18px}.rk-btn{padding:12px 15px}}
+  .kat-kaydir{display:none}
+  @media(max-width:640px){
+    .rapor-kategori{padding:0}.rapor-kategori .kat-h,.rapor-kategori .kat-sub{padding:0 16px}.rapor-kategori .kat-sub{margin-bottom:10px}
+    .kat-kaydir{display:block;margin-top:3px;font-size:12.5px;color:var(--gold-soft);opacity:.8}
+    .rapor-grid{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 16px;padding:12px 16px 16px;gap:12px;scrollbar-width:none;overscroll-behavior-x:contain}
+    .rapor-grid::-webkit-scrollbar{display:none}
+    .rk{flex:0 0 86%;max-width:340px;scroll-snap-align:start}
+    .rk:hover{transform:none}
+  }
+  @media (prefers-reduced-motion:reduce){.rk,.rk-btn,.rk-btn svg{transition:none}}
   /* Hız: ekran dışındaki bölümler görünür olana kadar çizilmez (görünüm değişmez) */
   #daily-promo,#cards,#araclar,#nasil-calisir,#sss{content-visibility:auto}
   #araclar>h2,#nasil-calisir>h2,#sss>h2{margin-top:0}#araclar>.tools-more{margin-bottom:0} /* kapsama nedeniyle birleşmeyen boşlukları eşitler */
-  #daily-promo{contain-intrinsic-size:auto 916px}#cards{contain-intrinsic-size:auto 3410px}#araclar{contain-intrinsic-size:auto 1297px}#nasil-calisir{contain-intrinsic-size:auto 952px}#sss{contain-intrinsic-size:auto 874px}
-  @media(min-width:821px){#daily-promo{contain-intrinsic-size:auto 524px}#cards{contain-intrinsic-size:auto 1729px}#araclar{contain-intrinsic-size:auto 630px}#nasil-calisir{contain-intrinsic-size:auto 291px}#sss{contain-intrinsic-size:auto 802px}}
+  #daily-promo{contain-intrinsic-size:auto 916px}#cards{contain-intrinsic-size:auto 2010px}#araclar{contain-intrinsic-size:auto 1297px}#nasil-calisir{contain-intrinsic-size:auto 952px}#sss{contain-intrinsic-size:auto 874px}
+  @media(min-width:821px){#daily-promo{contain-intrinsic-size:auto 524px}#cards{contain-intrinsic-size:auto 2880px}#araclar{contain-intrinsic-size:auto 630px}#nasil-calisir{contain-intrinsic-size:auto 291px}#sss{contain-intrinsic-size:auto 802px}}
 </style>
 <style id="ay-cerez-kritik">#ay-cerez{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1b1530;border-top:1px solid #332a4d;box-shadow:0 -12px 34px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .32s ease;font-family:"Segoe UI",system-ui,sans-serif}#ay-cerez.ac-in{transform:translateY(0)}.ay-cerez-in{max-width:980px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.ay-cerez-tx{margin:0;color:#f0e6d2;opacity:.9;font-size:13.5px;line-height:1.55;flex:1;min-width:230px}.ay-cerez-tx a{color:#e7cf95;text-decoration:underline}.ay-cerez-bt{display:flex;gap:10px;flex-shrink:0}.ay-cerez-kabul{background:linear-gradient(180deg,#e7cf95,#d9b96a);border:none;color:#1a1428;font:inherit;font-weight:bold;font-size:13.5px;padding:9px 26px;border-radius:20px;cursor:pointer;transition:filter .2s}.ay-cerez-kabul:hover{filter:brightness(1.06)}@media (max-width:600px){.ay-cerez-in{padding:12px 16px}.ay-cerez-bt{width:100%}.ay-cerez-kabul{flex:1}}@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}#ay-cerez.ac-in{animation:ayCerezGir .32s ease}@keyframes ayCerezGir{from{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){#ay-cerez.ac-in{animation:none}}</style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -390,14 +412,29 @@ function kartlariKur(){
   const byId = Object.fromEntries(REPORTS.map(r => [r.id, r]));
   const container = document.getElementById("cards");
 
+  // Kart ayrıntıları: sayfa sayısı, gerekenler, ücretsiz örnek PDF, kısa ve net fayda cümlesi
+  const EK = {"natal":{"s":"20+","g":"Doğum tarihi, saati, yeri","o":"ornek-dogum-haritasi-raporu.pdf","k":"Güneş-Ay-Yükselen, 12 evin tek tek yorumu, aşk, kariyer, para, yaşam amacı ve önündeki 12 aya tarihli öngörüler."},"cocuk":{"s":"14+","g":"Çocuğun doğum tarihi, saati, yeri","o":"ornek-cocugunu-tani-raporu.pdf","k":"Yaşa göre öğrenme stili, dersler, dikkat, duygusal ihtiyaçlar, sosyal gelişim ve ebeveyne uygulama rehberi."},"kariyer":{"s":"14+","g":"Doğum tarihi, saati, yeri","o":"ornek-kariyer-haritasi-raporu.pdf","k":"Sana uygun 3 meslek alanı, çalışma tarzı, para kazanma yolu ve önümüzdeki 24 ayın kariyer dönemleri."},"ask":{"s":"11+","g":"Doğum tarihi, saati, yeri","o":"ornek-ask-haritasi-raporu.pdf","k":"Aşk dilin, partner profilin, tanışma ortamları ve önümüzdeki 24 ayın aşk dönemleri."},"karmik":{"s":"13+","g":"Doğum tarihi, saati, yeri","o":"ornek-karmik-harita-raporu.pdf","k":"Ay Düğümleri, Satürn, Chiron ve 12. ev ile ruh görevin; karmik eşiklerin yaşlarıyla birlikte."},"vedik":{"s":"12+","g":"Doğum tarihi, saati, yeri","o":"ornek-vedik-harita-raporu.pdf","k":"Lagna, nakşatra, Rasi ve Navamşa, yogalar, Mangal doşa, Sade Sati ve gerçek tarihli daşa dönemleri."},"astrokartografi":{"s":"13+","g":"Doğum tarihi, saati, yeri","o":"ornek-astrokartografi-raporu.pdf","k":"40 gezegen hattı; 81 il ve 170 dünya şehri tarama; aşk, kariyer, para ve huzur için en iyi şehirler."},"transit":{"s":"11+","g":"Doğum tarihi, saati, yeri","o":"ornek-transit-raporu.pdf","k":"Önümüzdeki 12 ayı ev geçişleri ve açılarla tarih tarih anlatan öngörü raporu."},"solar_return":{"s":"14+","g":"Doğum tarihi, saati, yeri","o":"ornek-solar-return-raporu.pdf","k":"Doğum gününden doğum gününe kişisel yeni yılının haritası ve temaları."},"lunar_return":{"s":"12+","g":"Doğum tarihi, saati, yeri","o":"ornek-lunar-return-raporu.pdf","k":"Ay'ın her ay doğum derecene döndüğü an: bu ayın duygusal döngüsü."},"progresyon":{"s":"12+","g":"Doğum tarihi, saati, yeri","o":"ornek-progresyon-raporu.pdf","k":"Hayat döngündeki evren, progres Ay'ın 3 yıllık takvimi ve yaklaşan dönüm noktaları."},"secim":{"s":"9+","g":"Doğum bilgisi, amaç, tarih aralığı","o":"ornek-secim-astrolojisi-raporu.pdf","k":"Nikâh, açılış, sözleşme, taşınma için aralıktaki her günü 10 dakikalık adımlarla tarayıp en uygun pencereyi verir."},"sinastri":{"s":"18+","g":"İki kişinin doğum bilgileri","o":"ornek-sinastri-raporu.pdf","k":"İki haritanın karşılaştırması: duygusal, fiziksel, zihinsel uyum ve 12 aylık tarihli ilişki öngörüleri."},"iliski_haritasi":{"s":"14+","g":"İki kişinin doğum bilgileri","o":"ornek-iliski-haritasi-raporu.pdf","k":"İlişkinin kendi haritası: özü, en güçlü yanı, en büyük sınavı ve önümüzdeki 15 ay."},"matrix":{"s":"24+","g":"Yalnızca doğum tarihi","o":"ornek-kader-matrisi-raporu.pdf","k":"22 Büyük Arkana oktagramı: karmik kuyruk, aşk-para-yetenek hatları, çakralar, blokajlar ve yaş dönemleri."},"matrix_uyum":{"s":"30+","g":"İki kişinin doğum tarihi","o":"ornek-kader-matrisi-uyum-raporu.pdf","k":"İki oktagramın birleşimi: ortak enerjiler, ilişki-para-karmik bağ blokajları ve kriz-çözüm rehberi."},"numeroloji":{"s":"13+","g":"Doğumdaki tam ad + doğum tarihi","o":"ornek-numeroloji-raporu.pdf","k":"Yaşam Yolu, İfade, Ruh Güdüsü, karmik borçlar, 4 zirve ve bu yılın kişisel sayıları (Pisagor)."},"horary":{"s":"3–4","g":"Yalnızca net bir soru","o":"ornek-soru-astrolojisi-raporu.pdf","k":"Aklındaki tek somut soruya, sorunun sorulduğu anın gökyüzünden en başta net bir cevapla başlayan okuma."}};
+  const CHK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>';
+  const DOC = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z"/><path d="M9.5 1.8V5h3M6 8.5h4.5M6 11h4.5"/></svg>';
+  const OK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+  const ONERI = { natal:"Başlangıç için önerilen" };
   function kartHTML(r){
-    const uzun = (r.short || "").length > 130;
+    const e = EK[r.id] || {};
+    const href = r.page || ("order.html?type=" + r.id);
+    const ikon = (typeof RAPOR_IKON!=="undefined" && RAPOR_IKON[r.id]) ? RAPOR_IKON[r.id] : "";
+    const fiyat = Number(r.price).toLocaleString("tr-TR");
     return `
-      ${(typeof RAPOR_IKON!=="undefined" && RAPOR_IKON[r.id]) ? `<div class="kart-ikon">${RAPOR_IKON[r.id]}</div>` : `<div class="icon-orbit"><div class="ring"></div><div class="ring in"></div><div class="core"></div></div>`}
-      <h3>${r.title}</h3>
-      <p>${r.short}</p>
-      ${uzun ? `<button type="button" class="kart-detay">Detayları gör ▾</button>` : ``}
-      <a class="btn btn-primary btn-block kart-btn" href="${r.page || ("order.html?type=" + r.id)}" aria-label="Detaylı Bilgi: ${r.title}">✦ Detaylı Bilgi</a>`;
+      ${ONERI[r.id] ? `<span class="rk-rozet">${ONERI[r.id]}</span>` : ``}
+      <div class="rk-ust">${ikon ? `<div class="rk-ikon">${ikon}</div>` : ``}<div><h3>${r.title}</h3>${e.s ? `<span class="rk-etiket">${e.s} sayfa · PDF</span>` : ``}</div></div>
+      <p>${e.k || r.short}</p>
+      <ul>
+        ${e.g ? `<li>${CHK}<span>Gerekenler: ${e.g.charAt(0).toLocaleLowerCase("tr") + e.g.slice(1)}</span></li>` : ``}
+        ${e.o ? `<li>${DOC}<span><a href="/${e.o}" target="_blank" rel="noopener">Ücretsiz 3 sayfalık örneği gör</a></span></li>` : ``}
+      </ul>
+      <div class="rk-alt">
+        <div class="rk-fiyat"><b>${fiyat} TL</b><span>tek seferlik · e-postana gelir</span></div>
+        <a class="rk-btn" href="${href}" aria-label="${r.title}: incele ve sipariş ver">İncele ${OK}</a>
+      </div>`;
   }
 
   KATEGORILER.forEach(kat => {
@@ -405,17 +442,12 @@ function kartlariKur(){
     if (!raporlar.length) return;
     const bolum = document.createElement("div");
     bolum.className = "rapor-kategori";
-    bolum.innerHTML = `<h2 class="kat-h">${kat.ad}</h2><div class="kat-sub">${kat.alt}</div><div class="rapor-grid"></div>`;
+    bolum.innerHTML = `<h2 class="kat-h">${kat.ad}</h2><div class="kat-sub">${kat.alt}<span class="kat-kaydir">${raporlar.length} rapor · yana kaydır →</span></div><div class="rapor-grid"></div>`;
     const grid = bolum.querySelector(".rapor-grid");
     raporlar.forEach(r => {
-      const card = document.createElement("div");
-      card.className = "card";
+      const card = document.createElement("article");
+      card.className = "rk";
       card.innerHTML = kartHTML(r);
-      const btn = card.querySelector(".kart-detay");
-      if (btn) btn.addEventListener("click", () => {
-        const acik = card.classList.toggle("acik");
-        btn.textContent = acik ? "Gizle ▴" : "Detayları gör ▾";
-      });
       grid.appendChild(card);
     });
     container.appendChild(bolum);
@@ -427,13 +459,11 @@ function kartlariKur(){
   if (digerler.length){
     const bolum = document.createElement("div");
     bolum.className = "rapor-kategori";
-    bolum.innerHTML = `<h2 class="kat-h">Diğer Raporlar</h2><div class="kat-sub">Yeni eklenenler</div><div class="rapor-grid"></div>`;
+    bolum.innerHTML = `<h2 class="kat-h">Diğer Raporlar</h2><div class="kat-sub">Yeni eklenenler<span class="kat-kaydir">yana kaydır →</span></div><div class="rapor-grid"></div>`;
     const grid = bolum.querySelector(".rapor-grid");
     digerler.forEach(r => {
-      const card = document.createElement("div");
-      card.className = "card"; card.innerHTML = kartHTML(r);
-      const btn = card.querySelector(".kart-detay");
-      if (btn) btn.addEventListener("click", () => { const a=card.classList.toggle("acik"); btn.textContent=a?"Gizle ▴":"Detayları gör ▾"; });
+      const card = document.createElement("article");
+      card.className = "rk"; card.innerHTML = kartHTML(r);
       grid.appendChild(card);
     });
     container.appendChild(bolum);
