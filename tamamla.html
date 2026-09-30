@@ -17,7 +17,7 @@
   h1{ text-align:center; color:var(--cream); font-size:26px; margin:.3em 0 .1em; }
   .lead{ text-align:center; color:var(--text); font-size:15px; margin:0 0 22px; }
   label{ display:block; margin:16px 0 6px; color:var(--gold-soft); font-size:14px; font-weight:bold; }
-  input[type=text], input[type=date], input[type=time], textarea, select{
+  input[type=text], input[type=date], input[type=time], textarea, select, input.dg-in{
     width:100%; padding:12px 14px; background:#120e1c; border:1px solid var(--line); border-radius:10px;
     color:var(--cream); font-family:inherit; font-size:15px; }
   textarea{ min-height:96px; resize:vertical; }
@@ -38,6 +38,7 @@
   .foot{ text-align:center; color:var(--muted); font-size:12px; margin-top:22px; }
 </style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/dogum-giris.js" defer></script>
 </head>
 <body>
   <div class="top"><a href="/">✦ Astro Yuvam</a></div>
@@ -89,10 +90,10 @@ function formuKur(){
     h += `<label>Sorun</label><textarea id="soru" placeholder="Net, tek bir soru yaz (ör. 'Bu işe girer miyim?')"></textarea>
           <div class="hint">Horary tek ve net bir soruya en iyi cevabı verir.</div>`;
   } else {
-    h += `<label>Doğum Tarihi</label><input type="date" id="birthDate">`;
+    h += `<label>Doğum Tarihi</label><input type="date" id="birthDate" data-dg min="1900-01-01" max="2030-12-31">`;
     if(!isNumerology(type)){
-      h += `<label>Doğum Saati <span style="color:var(--muted);font-weight:normal">(bilmiyorsan boş bırak)</span></label><input type="time" id="birthTime">`;
-      h += `<label>Doğum Yeri</label><input type="text" id="birthPlace" placeholder="Şehir, Ülke (ör. İstanbul, Türkiye)">`;
+      h += `<label>Doğum Saati <span style="color:var(--muted);font-weight:normal">(bilmiyorsan boş bırak)</span></label><input type="time" id="birthTime" data-dg>`;
+      h += `<label>Doğum Yeri</label><input type="text" id="birthPlace" data-yer placeholder="Şehir, Ülke (ör. İstanbul, Türkiye)">`;
     }
     // cinsiyet
     const gLabels = (type==="cocuk") ? ["Kız","Erkek"] : ["Kadın","Erkek"];
@@ -108,10 +109,10 @@ function formuKur(){
     if(needsPartner(type)){
       h += `<div class="partner"><h3>Partner Bilgileri</h3>
               <label>Partner Ad Soyad</label><input type="text" id="pName" placeholder="Partnerin adı">
-              <label>Partner Doğum Tarihi</label><input type="date" id="pDate">`;
+              <label>Partner Doğum Tarihi</label><input type="date" id="pDate" data-dg min="1900-01-01" max="2030-12-31">`;
       if(!isNumerology(type)){
-        h += `<label>Partner Doğum Saati <span style="color:var(--muted);font-weight:normal">(opsiyonel)</span></label><input type="time" id="pTime">
-              <label>Partner Doğum Yeri</label><input type="text" id="pPlace" placeholder="Şehir, Ülke">`;
+        h += `<label>Partner Doğum Saati <span style="color:var(--muted);font-weight:normal">(opsiyonel)</span></label><input type="time" id="pTime" data-dg>
+              <label>Partner Doğum Yeri</label><input type="text" id="pPlace" data-yer placeholder="Şehir, Ülke">`;
       }
       h += `</div>`;
     }

@@ -226,6 +226,8 @@
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 
+
+
 <style id="ay-bag-css">
 .ay-ro{max-width:720px;margin:30px auto 8px;padding:18px 18px 14px;border:1px solid #3a2f5c;border-radius:18px;background:linear-gradient(180deg,#241c3d,#1b1530);font-family:'Segoe UI',system-ui,sans-serif;text-align:left}
 .ay-ro-b{font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:#d9b96a;margin:0 0 4px}
@@ -244,6 +246,7 @@
 .ay-kt-l a:hover{border-color:#d9b96a}
 .ay-kt .ay-ro{margin-top:0}
 </style>
+<script src="/dogum-giris.js" defer></script>
 </head>
 <body>
 
@@ -261,28 +264,21 @@
         <input id="ad" type="text" placeholder="Haritanın üstünde görünür" maxlength="60" autocomplete="off">
       </div>
       <div>
-        <label>Doğum Tarihi</label>
-        <div class="triple">
-          <select id="gun" aria-label="Gün"></select>
-          <select id="ay" aria-label="Ay"></select>
-          <select id="yil" aria-label="Yıl"></select>
-        </div>
+        <label for="dtarih">Doğum Tarihi</label>
+        <input id="dtarih" type="date" data-dg min="1900-01-01" max="2030-12-31" aria-label="Doğum tarihi (gün.ay.yıl)">
       </div>
     </div>
 
     <div class="row" style="margin-top:14px">
       <div>
-        <label>Doğum Saati</label>
-        <div class="triple">
-          <select id="saat" aria-label="Saat"></select>
-          <select id="dakika" aria-label="Dakika"></select>
-        </div>
+        <label for="dsaat">Doğum Saati</label>
+        <input id="dsaat" type="time" data-dg aria-label="Doğum saati (saat:dakika)">
         <label class="chk"><input id="saatyok" type="checkbox"> Doğum saatimi bilmiyorum</label>
       </div>
       <div>
-        <label for="yer">Doğum Yeri</label>
-        <input id="yer" type="text" placeholder="Örn: İstanbul" autocomplete="off">
-        <div class="hint">Şehir adı yeterli (Türkiye ya da dünya).</div>
+        <label for="yer">Doğum Yeri (şehir, ülke)</label>
+        <input id="yer" type="text" data-yer placeholder="Şehir, Ülke — örn. İzmir, Türkiye" autocomplete="off">
+        <div class="hint">Doğduğun şehri (istersen ilçeyi) yazmaya başla ve listeden seç. Dünyanın her yerindeki yerler var; aynı adı taşıyan yerler il ve ülkesiyle ayrılır.</div>
       </div>
     </div>
 
@@ -300,7 +296,6 @@
     </div>
 
     <button id="git" class="btn">✦ Haritamı Çıkar</button>
-    <div class="hint">Not: Sunucu bir süre boştaysa ilk hesaplama birkaç saniye sürebilir.</div>
   </div>
 
   <div class="err" id="err"></div>
@@ -417,7 +412,11 @@
 
   
 
-  <!--AYBAG:oneri--><aside class="ay-ro" aria-label="Bu konuyla ilgili kişiye özel raporlar"><div class="ay-ro-b">Bu konuda sana özel</div><div class="ay-ro-h">Haritanın bir alanına derinlemesine bak</div><div class="ay-ro-g"><a class="ay-ro-k" href="/kariyer-haritasi-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgkkariyer" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrkkariyer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgkkariyer)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrkkariyer)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 84 L50 54 L60 66 L70 48 L90 84 Z" fill="#e7cf95" fill-opacity=".16"/><path d="M30 84 L50 54 L60 66 L70 48 L90 84"/><line x1="70" y1="48" x2="70" y2="30" stroke="#a99cff" stroke-width="1.8"/><path d="M65 35 l5 -6 l5 6" stroke="#a99cff" stroke-width="1.8"/><polygon points="46.0,30.0 47.2,34.8 52.0,36.0 47.2,37.2 46.0,42.0 44.8,37.2 40.0,36.0 44.8,34.8" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Kariyer ve Meslek Haritası</b><span>Sana uygun 3 meslek alanı, çalışma tarzı, para kazanma yolu ve önümüzdeki 24 ayın kariyer dönemleri.</span><em>14+ sayfa PDF · ₺450</em></span></a><a class="ay-ro-k" href="/ask-haritasi-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgkask" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrkask" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgkask)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrkask)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 82 C 38 68 34 56 38 48 C 42 40 54 39 60 49 C 66 39 78 40 82 48 C 86 56 82 68 60 82Z" fill="#e7cf95" fill-opacity=".2"/><path d="M60 82 C 38 68 34 56 38 48 C 42 40 54 39 60 49 C 66 39 78 40 82 48 C 86 56 82 68 60 82Z"/><ellipse cx="60" cy="60" rx="34" ry="11" transform="rotate(-18 60 60)" stroke="#a99cff" stroke-width="1.4" stroke-opacity=".85"/><circle cx="90" cy="50" r="3" fill="#a99cff" stroke="none"/><polygon points="48.0,48.0 48.8,51.2 52.0,52.0 48.8,52.8 48.0,56.0 47.2,52.8 44.0,52.0 47.2,51.2" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Aşk Haritası</b><span>Aşk dilin, partner profilin, tanışma ortamları ve önümüzdeki 24 ayın aşk dönemleri.</span><em>11+ sayfa PDF · ₺450</em></span></a><a class="ay-ro-k" href="/karmik-harita-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgkkarmik" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrkkarmik" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgkkarmik)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrkkarmik)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M44 70 a10 10 0 1 1 10 -10 v12 M76 70 a10 10 0 1 0 -10 -10 v12"/><path d="M54 72 q6 10 12 0" stroke-opacity=".6"/><circle cx="44" cy="80" r="4.2" /><circle cx="76" cy="80" r="4.2" /><path d="M36 42 C 46 30 74 30 84 42" stroke="#a99cff" stroke-width="1.6"/><polygon points="60.0,28.0 61.2,32.8 66.0,34.0 61.2,35.2 60.0,40.0 58.8,35.2 54.0,34.0 58.8,32.8" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Karmik Harita</b><span>Ay Düğümleri, Satürn, Chiron ve 12. ev ile ruh görevin; karmik eşiklerin yaşlarıyla birlikte.</span><em>13+ sayfa PDF · ₺400</em></span></a><a class="ay-ro-k" href="/dogum-haritasi-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgknatal" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrknatal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgknatal)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrknatal)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="60" cy="60" r="30" /><circle cx="60" cy="60" r="19" stroke-opacity=".55"/><line x1="79.0" y1="60.0" x2="90.0" y2="60.0" stroke-width="1.4"/><line x1="76.5" y1="69.5" x2="86.0" y2="75.0" stroke-width="1.4"/><line x1="69.5" y1="76.5" x2="75.0" y2="86.0" stroke-width="1.4"/><line x1="60.0" y1="79.0" x2="60.0" y2="90.0" stroke-width="1.4"/><line x1="50.5" y1="76.5" x2="45.0" y2="86.0" stroke-width="1.4"/><line x1="43.5" y1="69.5" x2="34.0" y2="75.0" stroke-width="1.4"/><line x1="41.0" y1="60.0" x2="30.0" y2="60.0" stroke-width="1.4"/><line x1="43.5" y1="50.5" x2="34.0" y2="45.0" stroke-width="1.4"/><line x1="50.5" y1="43.5" x2="45.0" y2="34.0" stroke-width="1.4"/><line x1="60.0" y1="41.0" x2="60.0" y2="30.0" stroke-width="1.4"/><line x1="69.5" y1="43.5" x2="75.0" y2="34.0" stroke-width="1.4"/><line x1="76.5" y1="50.5" x2="86.0" y2="45.0" stroke-width="1.4"/><line x1="30" y1="60" x2="90" y2="60" stroke-width="2.6"/><line x1="60" y1="30" x2="60" y2="90" stroke-width="1.6" stroke-opacity=".7"/><circle cx="71" cy="48" r="3.4" fill="#e7cf95" stroke="none"/><circle cx="46" cy="70" r="3" fill="#a99cff" stroke="none"/><circle cx="66" cy="74" r="2.4" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Doğum Haritası Analizi (Haritanı Tanı)</b><span>Güneş-Ay-Yükselen, 12 evin tek tek yorumu, aşk, kariyer, para, yaşam amacı ve önündeki 12 aya tarihli öngörüler.</span><em>20+ sayfa PDF · ₺500</em></span></a></div><a class="ay-ro-t" href="/fiyatlar.html">Tüm raporlar ve fiyatları →</a></aside><!--/AYBAG:oneri-->
+  
+
+  
+
+          <!--AYBAG:oneri--><aside class="ay-ro" aria-label="Bu konuyla ilgili kişiye özel raporlar"><div class="ay-ro-b">Bu konuda sana özel</div><div class="ay-ro-h">Haritanın bir alanına derinlemesine bak</div><div class="ay-ro-g"><a class="ay-ro-k" href="/kariyer-haritasi-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgkkariyer" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrkkariyer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgkkariyer)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrkkariyer)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 84 L50 54 L60 66 L70 48 L90 84 Z" fill="#e7cf95" fill-opacity=".16"/><path d="M30 84 L50 54 L60 66 L70 48 L90 84"/><line x1="70" y1="48" x2="70" y2="30" stroke="#a99cff" stroke-width="1.8"/><path d="M65 35 l5 -6 l5 6" stroke="#a99cff" stroke-width="1.8"/><polygon points="46.0,30.0 47.2,34.8 52.0,36.0 47.2,37.2 46.0,42.0 44.8,37.2 40.0,36.0 44.8,34.8" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Kariyer ve Meslek Haritası</b><span>Sana uygun 3 meslek alanı, çalışma tarzı, para kazanma yolu ve önümüzdeki 24 ayın kariyer dönemleri.</span><em>14+ sayfa PDF · ₺450</em></span></a><a class="ay-ro-k" href="/ask-haritasi-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgkask" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrkask" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgkask)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrkask)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 82 C 38 68 34 56 38 48 C 42 40 54 39 60 49 C 66 39 78 40 82 48 C 86 56 82 68 60 82Z" fill="#e7cf95" fill-opacity=".2"/><path d="M60 82 C 38 68 34 56 38 48 C 42 40 54 39 60 49 C 66 39 78 40 82 48 C 86 56 82 68 60 82Z"/><ellipse cx="60" cy="60" rx="34" ry="11" transform="rotate(-18 60 60)" stroke="#a99cff" stroke-width="1.4" stroke-opacity=".85"/><circle cx="90" cy="50" r="3" fill="#a99cff" stroke="none"/><polygon points="48.0,48.0 48.8,51.2 52.0,52.0 48.8,52.8 48.0,56.0 47.2,52.8 44.0,52.0 47.2,51.2" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Aşk Haritası</b><span>Aşk dilin, partner profilin, tanışma ortamları ve önümüzdeki 24 ayın aşk dönemleri.</span><em>11+ sayfa PDF · ₺450</em></span></a><a class="ay-ro-k" href="/karmik-harita-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgkkarmik" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrkkarmik" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgkkarmik)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrkkarmik)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M44 70 a10 10 0 1 1 10 -10 v12 M76 70 a10 10 0 1 0 -10 -10 v12"/><path d="M54 72 q6 10 12 0" stroke-opacity=".6"/><circle cx="44" cy="80" r="4.2" /><circle cx="76" cy="80" r="4.2" /><path d="M36 42 C 46 30 74 30 84 42" stroke="#a99cff" stroke-width="1.6"/><polygon points="60.0,28.0 61.2,32.8 66.0,34.0 61.2,35.2 60.0,40.0 58.8,35.2 54.0,34.0 58.8,32.8" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Karmik Harita</b><span>Ay Düğümleri, Satürn, Chiron ve 12. ev ile ruh görevin; karmik eşiklerin yaşlarıyla birlikte.</span><em>13+ sayfa PDF · ₺400</em></span></a><a class="ay-ro-k" href="/dogum-haritasi-analizi.html"><span class="ay-ro-i"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="mgknatal" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#3a2f72"/><stop offset=".6" stop-color="#1c1638"/><stop offset="1" stop-color="#0e0b1d"/></radialGradient><linearGradient id="mrknatal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dfa6"/><stop offset=".5" stop-color="#c9a24e"/><stop offset="1" stop-color="#f0d99a"/></linearGradient></defs><circle cx="60" cy="60" r="57" fill="url(#mgknatal)"/><circle cx="60" cy="60" r="57" fill="none" stroke="url(#mrknatal)" stroke-width="1.6"/><circle cx="60" cy="60" r="50.5" fill="none" stroke="#e7cf95" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="1.5 3.2"/><circle cx="60" cy="60" r="34" fill="#e7cf95" fill-opacity=".06"/><g fill="none" stroke="#e7cf95" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="60" cy="60" r="30" /><circle cx="60" cy="60" r="19" stroke-opacity=".55"/><line x1="79.0" y1="60.0" x2="90.0" y2="60.0" stroke-width="1.4"/><line x1="76.5" y1="69.5" x2="86.0" y2="75.0" stroke-width="1.4"/><line x1="69.5" y1="76.5" x2="75.0" y2="86.0" stroke-width="1.4"/><line x1="60.0" y1="79.0" x2="60.0" y2="90.0" stroke-width="1.4"/><line x1="50.5" y1="76.5" x2="45.0" y2="86.0" stroke-width="1.4"/><line x1="43.5" y1="69.5" x2="34.0" y2="75.0" stroke-width="1.4"/><line x1="41.0" y1="60.0" x2="30.0" y2="60.0" stroke-width="1.4"/><line x1="43.5" y1="50.5" x2="34.0" y2="45.0" stroke-width="1.4"/><line x1="50.5" y1="43.5" x2="45.0" y2="34.0" stroke-width="1.4"/><line x1="60.0" y1="41.0" x2="60.0" y2="30.0" stroke-width="1.4"/><line x1="69.5" y1="43.5" x2="75.0" y2="34.0" stroke-width="1.4"/><line x1="76.5" y1="50.5" x2="86.0" y2="45.0" stroke-width="1.4"/><line x1="30" y1="60" x2="90" y2="60" stroke-width="2.6"/><line x1="60" y1="30" x2="60" y2="90" stroke-width="1.6" stroke-opacity=".7"/><circle cx="71" cy="48" r="3.4" fill="#e7cf95" stroke="none"/><circle cx="46" cy="70" r="3" fill="#a99cff" stroke="none"/><circle cx="66" cy="74" r="2.4" fill="#e7cf95" stroke="none"/></g></svg></span><span class="ay-ro-x"><b>Doğum Haritası Analizi (Haritanı Tanı)</b><span>Güneş-Ay-Yükselen, 12 evin tek tek yorumu, aşk, kariyer, para, yaşam amacı ve önündeki 12 aya tarihli öngörüler.</span><em>20+ sayfa PDF · ₺500</em></span></a></div><a class="ay-ro-t" href="/fiyatlar.html">Tüm raporlar ve fiyatları →</a></aside><!--/AYBAG:oneri-->
 
   <h2>Sıkça Sorulan Sorular</h2>
   <div class="faq">
@@ -509,16 +508,10 @@
   function opt(sel, val, text, selected){ var o=document.createElement("option"); o.value=val; o.textContent=text; if(selected)o.selected=true; sel.appendChild(o); }
   function el(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 
-  // Seçicileri doldur
-  var gun=$("gun"), ay=$("ay"), yil=$("yil"), saat=$("saat"), dakika=$("dakika");
-  opt(gun,"","Gün",true); for(var d=1;d<=31;d++) opt(gun,pad(d),pad(d));
-  opt(ay,"","Ay",true); for(var m=0;m<12;m++) opt(ay,pad(m+1),AYLAR[m]);
-  var thisYear=new Date().getFullYear();
-  opt(yil,"","Yıl",true); for(var y=thisYear;y>=1920;y--) opt(yil,String(y),String(y));
-  opt(saat,"","Saat",true); for(var h=0;h<24;h++) opt(saat,pad(h),pad(h));
-  opt(dakika,"","Dk",true); for(var mi=0;mi<60;mi++) opt(dakika,pad(mi),pad(mi));
+  // Tarih ve saat alanları (dogum-giris.js bunları "GG.AA.YYYY" / "SS:DD" yazılan kolay alanlara çevirir)
+  var tarih=$("dtarih"), saat=$("dsaat");
   var saatyok=$("saatyok");
-  saatyok.addEventListener("change", function(){ var off=saatyok.checked; saat.disabled=off; dakika.disabled=off; if(off){ saat.value=""; dakika.value=""; } });
+  saatyok.addEventListener("change", function(){ var off=saatyok.checked; saat.disabled=off; if(off){ saat.value=""; } });
 
   function goster(e){ e.style.display="block"; }
   function gizle(e){ e.style.display="none"; }
@@ -756,11 +749,12 @@
 
   function gonder(){
     gizle($("err")); gizle($("result"));
-    var isim=$("ad").value.trim(), g=gun.value, a=ay.value, y=yil.value, yer=$("yer").value.trim();
-    if(!g||!a||!y){ return hata("Lütfen doğum tarihini eksiksiz seç (gün, ay, yıl)."); }
-    if(!yer){ return hata("Lütfen doğum yerini yaz (örn: İstanbul)."); }
-    var body={ name:isim, birthDate:y+"-"+a+"-"+g, birthPlace:yer };
-    if(!saatyok.checked && saat.value!=="" && dakika.value!=="") body.birthTime=saat.value+":"+dakika.value;
+    var isim=$("ad").value.trim(), t=tarih.value, yer=$("yer").value.trim();
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(t)){ return hata("Lütfen doğum tarihini gün.ay.yıl şeklinde eksiksiz yaz (örn. 14.03.1992)."); }
+    if(!yer){ return hata("Lütfen doğum yerini şehir ve ülke olarak yaz (örn. İzmir, Türkiye)."); }
+    var body={ name:isim, birthDate:t, birthPlace:yer };
+    var st=(saat.value||"").slice(0,5);
+    if(!saatyok.checked && st){ body.birthTime=st; }
     var ev=$("evsis").value||"placidus"; SON_GOVDE={}; for(var k in body) SON_GOVDE[k]=body[k]; EV_ONBELLEK={}; body.evSistemi=ev;
     var btn=$("git"); btn.disabled=true; goster($("loading"));
     if($("loading").scrollIntoView) $("loading").scrollIntoView({behavior:"smooth",block:"center"});
@@ -773,7 +767,7 @@
         if(!j.ok){ return hata(j.mesaj||"Harita şu an hesaplanamadı, birazdan tekrar dene."); }
         gizle($("loading")); EV_ONBELLEK[ev]=j; AKTIF_EV=ev; evDugmeleri(ev); $("evfark").hidden=true; ciz(j);
       })
-      .catch(function(){ btn.disabled=false; hata("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dener misin? (Sunucu uykudaysa birkaç saniye sonra tekrar dene.)"); });
+      .catch(function(){ btn.disabled=false; hata("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dener misin?"); });
   }
   $("git").addEventListener("click", gonder);
 })();

@@ -202,7 +202,7 @@ async function sor(metin){
     }
   }catch(e){
     yaziyor(false);
-    ekle("asistan", "Bağlantı kurulamadı. Birazdan tekrar dener misin? (İlk açılışta sunucu birkaç saniye uyanıyor olabilir.)");
+    ekle("asistan", "Bağlantı kurulamadı. İnternetini kontrol edip birazdan tekrar dener misin?");
   }finally{
     mesgul=false; if(!bitti) send.disabled=false; q.focus();
   }

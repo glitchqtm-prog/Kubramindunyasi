@@ -231,7 +231,7 @@
         astro().catch(function () {}).then(function () { btn.disabled = false; msg.textContent = ""; sonuc(k, g, null, jd); });
         return;
       }
-      btn.disabled = true; msg.textContent = "Haritan hesaplanıyor… (sunucu uykudaysa birkaç saniye sürebilir)";
+      btn.disabled = true; msg.textContent = "Haritan hesaplanıyor…";
       Promise.all([haritaGetir(g), astro()]).then(function (r) {
         btn.disabled = false; var j = r[0];
         if (!j || !j.ok) { msg.textContent = (j && (j.mesaj || (j.errors && j.errors.join(" ")))) || "Harita şu an hesaplanamadı; yalnızca burcunu gösteriyorum."; sonuc(k, g, null, jd); return; }

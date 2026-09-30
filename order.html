@@ -46,6 +46,7 @@
   @keyframes pulse{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
 </style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
+<script src="/dogum-giris.js" defer></script>
 </head>
 <body>
 <header><a href="/" class="logo">✦ Astro Yuvam</a></header>
@@ -104,7 +105,7 @@
     </div>
     <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Aralık en az 3 gün, en fazla 6 ay olabilir. Aralık genişledikçe daha güçlü bir an bulma şansı artar.</div>
     <label>İşin yapılacağı şehir *</label>
-    <input id="sYer" placeholder="Şehir, Ülke (örn: İzmir, Türkiye)">
+    <input id="sYer" data-yer placeholder="Şehir, Ülke (örn: İzmir, Türkiye)">
     <div class="row">
       <div><label>Günlük en erken saat</label><input id="sSaatBas" type="time"></div>
       <div><label>Günlük en geç saat</label><input id="sSaatBit" type="time"></div>
@@ -124,8 +125,8 @@
   </div>
 
   <div class="row" id="dogumRow">
-    <div><label>Doğum Tarihi *</label><input id="birthDate" type="date"></div>
-    <div id="timeWrap"><label>Saat * (bilmiyorsan 12:00)</label><input id="birthTime" type="time" value="12:00"></div>
+    <div><label>Doğum Tarihi *</label><input id="birthDate" type="date" data-dg min="1900-01-01" max="2030-12-31"></div>
+    <div id="timeWrap"><label>Saat * (bilmiyorsan 12:00)</label><input id="birthTime" type="time" data-dg value="12:00"></div>
   </div>
 
   <label>Cinsiyet</label>
@@ -136,13 +137,13 @@
 
   <div id="placeWrap">
   <label>Doğum Yeri *</label>
-  <input id="birthPlace" placeholder="Şehir, Ülke (örn: İstanbul, Türkiye)">
+  <input id="birthPlace" data-yer placeholder="Şehir, Ülke (örn: İstanbul, Türkiye)">
   </div>
 
   <!-- ✦ ASTROKARTOGRAFİ: kişinin kendi şehirleri (isteğe bağlı) -->
   <div id="acgBox" style="display:none">
     <label>Şu an yaşadığın şehir (isteğe bağlı)</label>
-    <input id="aYasadigi" placeholder="Şehir, Ülke">
+    <input id="aYasadigi" data-yer placeholder="Şehir, Ülke">
     <label>Aklındaki şehirler (isteğe bağlı, en fazla 3)</label>
     <input id="aSehirler" placeholder="Virgülle ayır: Berlin, Lizbon, İzmir">
     <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Taşınmayı, okumayı ya da tatil yapmayı düşündüğün şehirleri yazarsan, raporda her birinin sana ne getireceğini ayrıca net olarak söyleriz.</div>
@@ -156,12 +157,12 @@
     <label>Partner Ad Soyad *</label>
     <input id="pName" placeholder="Partnerin adı soyadı">
     <div class="row">
-      <div><label>Doğum Tarihi *</label><input id="pDate" type="date"></div>
-      <div id="pTimeWrap"><label>Saat</label><input id="pTime" type="time" value="12:00"></div>
+      <div><label>Doğum Tarihi *</label><input id="pDate" type="date" data-dg min="1900-01-01" max="2030-12-31"></div>
+      <div id="pTimeWrap"><label>Saat</label><input id="pTime" type="time" data-dg value="12:00"></div>
     </div>
     <div id="pPlaceWrap">
     <label>Doğum Yeri *</label>
-    <input id="pPlace" placeholder="Şehir, Ülke">
+    <input id="pPlace" data-yer placeholder="Şehir, Ülke">
     </div>
   </fieldset>
 

@@ -214,14 +214,6 @@
       i = (i + 1) % DUSUNME_SOZLERI.length;
       d.textContent = DUSUNME_SOZLERI[i];
     }, 2400);
-    // "İlk yanıt biraz sürebilir" notu YALNIZCA oturumun ilk yanıtında ve gecikirse (Render uyanıyor olabilir).
-    if (!ilkYanitYapildi) {
-      d.__t = setTimeout(function () {
-        if (!d.isConnected) return;
-        if (d.__rot) { clearInterval(d.__rot); d.__rot = null; }
-        d.textContent = "Asterna uyanıyor… ilk yanıt biraz sürebilir ✦";
-      }, 7000);
-    }
     return d;
   }
   function yaziyorGizle() {

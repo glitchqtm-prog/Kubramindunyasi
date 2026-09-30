@@ -162,9 +162,9 @@
   function kur(k) {
     k.innerHTML = '<form class="ev-form" novalidate>' +
       '<label>Adın (isteğe bağlı)<input type="text" class="ev-ad" autocomplete="given-name"></label>' +
-      '<label>Doğum tarihi<input type="date" class="ev-tarih" min="1930-01-01" max="2030-12-31" required></label>' +
-      '<label>Doğum saati<input type="time" class="ev-saat"><span class="ev-cb"><input type="checkbox" class="ev-saatyok"> Saatimi bilmiyorum</span></label>' +
-      '<label>Doğum yeri<input type="text" class="ev-yer" placeholder="Örn. İzmir" required></label>' +
+      '<label>Doğum tarihi<input type="date" data-dg class="ev-tarih" min="1930-01-01" max="2030-12-31" required></label>' +
+      '<label>Doğum saati<input type="time" data-dg class="ev-saat"><span class="ev-cb"><input type="checkbox" class="ev-saatyok"> Saatimi bilmiyorum</span></label>' +
+      '<label>Doğum yeri<input type="text" data-yer class="ev-yer" placeholder="Örn. İzmir" required></label>' +
       '<label class="tam">Partnerinin Güneş burcu (isteğe bağlı)<select class="ev-partner"><option value="">Seçme</option>' + BN.map(function (b, i) { return '<option value="' + i + '">' + GL[i] + VS + " " + b + "</option>"; }).join("") + "</select></label>" +
       '<button class="ev-btn tam" type="submit">✦ Evlilik göstergelerimi hesapla</button><div class="ev-msg tam" aria-live="polite"></div></form><div class="ev-sonuc" hidden></div>';
     var f = $(".ev-form", k), msg = $(".ev-msg", k);
@@ -176,7 +176,7 @@
       var g = { name: $(".ev-ad", k).value.trim(), birthDate: $(".ev-tarih", k).value, birthTime: $(".ev-saatyok", k).checked ? "" : ($(".ev-saat", k).value || "").slice(0, 5), birthPlace: $(".ev-yer", k).value.trim() };
       if (!/^\d{4}-\d{2}-\d{2}$/.test(g.birthDate)) { msg.textContent = "Lütfen doğum tarihini seç."; return; }
       if (!g.birthPlace) { msg.textContent = "Lütfen doğum yerini yaz."; return; }
-      var btn = $(".ev-btn", f); btn.disabled = true; msg.textContent = "Haritan hesaplanıyor… (sunucu uykudaysa birkaç saniye sürebilir)";
+      var btn = $(".ev-btn", f); btn.disabled = true; msg.textContent = "Haritan hesaplanıyor…";
       Promise.all([haritaGetir(g), yukle("/juno-veri.js")]).then(function (r) {
         btn.disabled = false; var j = r[0];
         if (!j || !j.ok) { msg.textContent = (j && (j.mesaj || (j.errors && j.errors.join(" ")))) || "Harita şu an hesaplanamadı, birazdan tekrar dener misin?"; return; }

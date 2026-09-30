@@ -63,14 +63,15 @@
   .field-group{display:flex;flex-direction:column;gap:6px;}
   .row{display:flex;gap:12px;} .row .field-group{flex:1;}
   label{font-size:13px;color:var(--muted);padding-left:2px;}
-  input[type=text],input[type=date],input[type=time],select{
+  input[type=text],input[type=date],input[type=time],select,input.dg-in{
     width:100%;background:var(--field);border:1px solid var(--line);border-radius:10px;
     padding:12px 13px;color:var(--cream);font-family:inherit;font-size:15px;
     transition:border-color .2s,box-shadow .2s;
   }
   input::placeholder{color:rgba(240,230,210,.32);}
   input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,185,106,.18);}
-  input[type=date],input[type=time]{color-scheme:dark;}
+  input[type=date],input[type=time],
+  input.dg-in{color-scheme:dark;}
   select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23d9b96a' d='M6 8 0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;}
   .readonly-box{background:rgba(217,185,106,.05);border:1px dashed var(--line);border-radius:10px;padding:12px 13px;color:var(--muted);font-size:15px;word-break:break-all;}
   .birth-note{font-size:12px;color:var(--muted);line-height:1.5;background:rgba(217,185,106,.06);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
@@ -126,6 +127,7 @@
 <style id="am-kritik">.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}.am-links{display:flex;gap:18px;font-size:14px;align-items:center;white-space:nowrap}.am-links>a{color:#f0e6d2;opacity:.82;text-decoration:none;transition:color .2s,opacity .2s}.am-links>a:hover{opacity:1;color:#e7cf95}.am-dropdown{position:relative;display:inline-block}.am-drop-btn{background:none;border:none;color:#f0e6d2;opacity:.82;font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .2s,opacity .2s}.am-drop-btn:hover,.am-drop-btn[aria-expanded="true"]{opacity:1;color:#e7cf95}.am-caret{font-size:11px;transition:transform .2s}.am-drop-btn[aria-expanded="true"] .am-caret{transform:rotate(180deg)}.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:262px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible;transform:translateY(0)}.am-cat + .am-cat{border-top:1px solid #2c2545;margin-top:2px}.am-cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;font:inherit;color:#d9b96a;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;opacity:.9;padding:12px 12px;text-align:left;border-radius:8px;transition:background .15s,color .15s,opacity .15s}.am-cat-btn:hover{opacity:1;color:#e7cf95;background:rgba(217,185,106,.06)}.am-cat-caret{font-size:10px;opacity:.75;transition:transform .22s}.am-cat.open>.am-cat-btn{color:#e7cf95;opacity:1}.am-cat.open>.am-cat-btn .am-cat-caret{transform:rotate(180deg)}.am-cat-items{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}.am-cat.open>.am-cat-items{grid-template-rows:1fr}.am-cat-inner{overflow:hidden;min-height:0}.am-drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:#f0e6d2;font-size:14.5px;text-decoration:none;transition:background .15s}.am-drop-menu a:hover{background:rgba(217,185,106,.10);color:#e7cf95}.am-drop-menu a[aria-current="page"]{color:#e7cf95;background:rgba(217,185,106,.08)}.am-sub{display:block;font-size:12px;color:#9a8fb8;margin-top:2px}.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}.am-dropdown{position:static}.am-drop-menu{left:50%;right:auto;transform:translate(-50%,-6px);width:min(88vw,320px);min-width:0}.am-dropdown.open .am-drop-menu{transform:translate(-50%,0)}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}</style>
 <style id="ay-cerez-kritik">#ay-cerez{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1b1530;border-top:1px solid #332a4d;box-shadow:0 -12px 34px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .32s ease;font-family:"Segoe UI",system-ui,sans-serif}#ay-cerez.ac-in{transform:translateY(0)}.ay-cerez-in{max-width:980px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.ay-cerez-tx{margin:0;color:#f0e6d2;opacity:.9;font-size:13.5px;line-height:1.55;flex:1;min-width:230px}.ay-cerez-tx a{color:#e7cf95;text-decoration:underline}.ay-cerez-bt{display:flex;gap:10px;flex-shrink:0}.ay-cerez-kabul{background:linear-gradient(180deg,#e7cf95,#d9b96a);border:none;color:#1a1428;font:inherit;font-weight:bold;font-size:13.5px;padding:9px 26px;border-radius:20px;cursor:pointer;transition:filter .2s}.ay-cerez-kabul:hover{filter:brightness(1.06)}@media (max-width:600px){.ay-cerez-in{padding:12px 16px}.ay-cerez-bt{width:100%}.ay-cerez-kabul{flex:1}}@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}#ay-cerez.ac-in{animation:ayCerezGir .32s ease}@keyframes ayCerezGir{from{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){#ay-cerez.ac-in{animation:none}}</style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
+<script src="/dogum-giris.js" defer></script>
 </head>
 <body>
 
@@ -184,16 +186,16 @@
           <div class="row">
             <div class="field-group">
               <label for="birthDate">Doğum Tarihi</label>
-              <input type="date" id="birthDate">
+              <input type="date" id="birthDate" data-dg min="1900-01-01" max="2030-12-31">
             </div>
             <div class="field-group">
               <label for="birthTime">Doğum Saati</label>
-              <input type="time" id="birthTime">
+              <input type="time" id="birthTime" data-dg>
             </div>
           </div>
           <div class="field-group">
             <label for="birthPlace">Doğum Yeri</label>
-            <input type="text" id="birthPlace" placeholder="Örn. Adana, Türkiye">
+            <input type="text" id="birthPlace" data-yer placeholder="Örn. Adana, Türkiye">
           </div>
           <div class="birth-note">
             Bu bilgiler senin kendine özel günlük ve haftalık yorumların için kullanılacak.
@@ -223,17 +225,17 @@
         <div class="row">
           <div class="field-group">
             <label for="pDate">Doğum Tarihi</label>
-            <input type="date" id="pDate">
+            <input type="date" id="pDate" data-dg min="1900-01-01" max="2030-12-31">
           </div>
           <div class="field-group">
             <label for="pTime">Doğum Saati</label>
-            <input type="time" id="pTime">
+            <input type="time" id="pTime" data-dg>
           </div>
         </div>
         <div class="row">
           <div class="field-group">
             <label for="pPlace">Doğum Yeri</label>
-            <input type="text" id="pPlace" placeholder="Örn. İzmir, Türkiye">
+            <input type="text" id="pPlace" data-yer placeholder="Örn. İzmir, Türkiye">
           </div>
           <div class="field-group">
             <label for="pGender">Cinsiyet</label>

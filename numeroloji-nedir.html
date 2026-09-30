@@ -70,8 +70,10 @@
   .nw-cap span{font-size:13px;color:var(--muted)}
   .hesapla{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
   .hesapla .hl{display:block;font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:.3px}
-  .hesapla input[type=date]{width:100%;background:#0f0b1a;border:1px solid var(--line);border-radius:8px;color:var(--cream);padding:9px 10px;font-family:inherit;font-size:14px;margin-bottom:10px;color-scheme:dark}
-  .hesapla input[type=date]:focus{outline:none;border-color:var(--gold)}
+  .hesapla input[type=date],
+  .hesapla input.dg-in{width:100%;background:#0f0b1a;border:1px solid var(--line);border-radius:8px;color:var(--cream);padding:9px 10px;font-family:inherit;font-size:14px;margin-bottom:10px;color-scheme:dark}
+  .hesapla input[type=date]:focus,
+  .hesapla input.dg-in:focus{outline:none;border-color:var(--gold)}
   .hesapla button{width:100%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;border:none;border-radius:8px;padding:10px;font-weight:bold;font-size:14px;cursor:pointer;transition:filter .15s}
   .hesapla button:hover{filter:brightness(1.06)}
   .hesapla .cik{margin-top:12px;font-size:13.5px;min-height:20px}
@@ -143,6 +145,7 @@
 .ay-kt-l a:hover{border-color:#d9b96a}
 .ay-kt .ay-ro{margin-top:0}
 </style>
+<script src="/dogum-giris.js" defer></script>
 </head>
 <body>
 <div id="astro-menu"><nav class="am-nav"><a class="am-brand" href="/">✦ ASTRO YUVAM</a><div class="am-links"><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Burç Yorumları <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><a href="/yildiz-gunlugu.html">Yıldız Günlüğü</a><a href="/giris.html">Giriş</a><a href="/#cards" class="am-cta">Raporlar</a></div></nav></div>
@@ -216,7 +219,7 @@
         <div class="nw-cap" id="nw-cap"><b>1 — Lider</b><span>bağımsızlık · irade</span></div>
         <div class="hesapla">
           <span class="hl">Doğum tarihinle kendi yaşam yolu sayını gör:</span>
-          <input type="date" id="dt" aria-label="Doğum tarihi" min="1900-01-01" max="2026-12-31">
+          <input type="date" data-dg id="dt" aria-label="Doğum tarihi" min="1900-01-01" max="2026-12-31">
           <button id="hesapBtn" type="button">Yaşam Yolumu Göster</button>
           <div class="cik" id="hesapCik"></div>
         </div>
