@@ -582,7 +582,7 @@
     var yok=BURCLAR.filter(function(b){ return !say[b]; }), iki=BURCLAR.filter(function(b){ return say[b]>1; });
     if(!yok.length){ k.hidden=true; return; }
     var g=function(l){ return l.map(function(b){ return (SIGN_GLYPH[b]||"")+' '+b; }).join(" ve "); };
-    k.innerHTML='<b>Neden bazı burç simgelerinin derecesi yok?</b> Bu haritada '+g(yok)+' <b>kuşatılmış burç</b>: hiçbir ev bu burçta başlamıyor, bir evin tam ortasında kalıyor. Bu yüzden çarkta derecesi yazmaz; yerini görebilmen için yalnızca simgesi gösterilir. Buna karşılık '+g(iki)+' iki ev ucunda birden yer alır. '+sis.replace(/ \(.*\)/,"")+' gibi evleri eşit bölmeyen sistemlerde, özellikle Türkiye enlemlerinde bu çok yaygındır; hesap hatası değildir. astro.com gibi siteler aynı haritayı aynı ev uçlarıyla çizer ama kuşatılmış burcun simgesini hiç göstermez. Evleri 30° eşit bölen <b>Eşit Ev</b> ya da <b>Tam Burç</b> sistemlerinde her burç bir ev ucunda bulunur.';
+    k.innerHTML='<b>Neden bazı burç simgelerinin derecesi yok?</b> Bu haritada '+g(yok)+' <b>kuşatılmış burç</b>: hiçbir ev bu burçta başlamıyor, bir evin tam ortasında kalıyor. Bu yüzden çarkta derecesi yazmaz; yerini görebilmen için yalnızca simgesi gösterilir. Buna karşılık '+g(iki)+' iki ev ucunda birden yer alır. '+sis.replace(/ \(.*\)/,"")+' gibi evleri eşit bölmeyen sistemlerde, özellikle Türkiye enlemlerinde bu çok yaygındır ve haritanın doğal bir özelliğidir. Kuşatılmış burcun konuları hayatında daha içten, kendi zamanında açılır. Evleri 30° eşit bölen <b>Eşit Ev</b> ya da <b>Tam Burç</b> sistemlerinde her burç bir ev ucunda bulunur.';
     k.hidden=false;
   }
 
