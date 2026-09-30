@@ -167,6 +167,14 @@
   .chartbox.f-uyumlu [data-t="Kare"],.chartbox.f-uyumlu [data-t="Karşıt"],.chartbox.f-uyumlu [data-t="Quincunx"]{display:none}
   .chartbox.f-sert [data-t="Üçgen"],.chartbox.f-sert [data-t="Sekstil"],.chartbox.f-sert [data-t="Quincunx"]{display:none}
   .chartbox.f-ana [data-a="Ceres"],.chartbox.f-ana [data-b="Ceres"],.chartbox.f-ana [data-a="Pallas"],.chartbox.f-ana [data-b="Pallas"],.chartbox.f-ana [data-a="Juno"],.chartbox.f-ana [data-b="Juno"],.chartbox.f-ana [data-a="Vesta"],.chartbox.f-ana [data-b="Vesta"],.chartbox.f-ana [data-a="Lilith"],.chartbox.f-ana [data-b="Lilith"],.chartbox.f-ana [data-a="Chiron"],.chartbox.f-ana [data-b="Chiron"],.chartbox.f-ana [data-a="Kuzey Ay Düğümü"],.chartbox.f-ana [data-b="Kuzey Ay Düğümü"],.chartbox.f-ana [data-a="Güney Ay Düğümü"],.chartbox.f-ana [data-b="Güney Ay Düğümü"]{display:none}
+  .chartbox.f-ana .cw-a[data-ek],.chartbox.f-ana .cw-as[data-ek]{display:none}
+  #tablo tr.ek td:first-child .g{color:#b69ae0;font-size:.8em;font-weight:700}
+  #tablo tr.ek-bas td{font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:#b69ae0;padding-top:14px;cursor:default}
+  .ek-kart{display:grid;gap:10px}.ek-kart>div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(106,63,160,.07);cursor:pointer}
+  .ek-kart b{color:var(--cream)}.ek-kart .ek-k{display:inline-block;min-width:26px;text-align:center;font-size:.75rem;font-weight:700;color:#b69ae0;border:1px solid #6a3fa0;border-radius:6px;padding:1px 5px;margin-right:6px}
+  .ek-kart small{display:block;color:var(--gold-soft);margin:3px 0 5px}.ek-kart p{margin:0;font-size:.9rem;line-height:1.55;color:#d9d0e8}
+  .ek-not{font-size:.85rem;color:#e0b25a;margin:10px 0 0}
+  .yz-kart>div{background:rgba(217,185,106,.06);cursor:default}.yz-kart .yz-y{color:#e0b25a;margin-right:6px}
   .chartbox.odak .cw-a,.chartbox.odak .cw-as{opacity:.07}
   .chartbox.odak .cw-p{opacity:.3}
   .chartbox.odak .cw-a.on,.chartbox.odak .cw-as.on{opacity:1}
@@ -247,6 +255,8 @@
 .ay-kt .ay-ro{margin-top:0}
 </style>
 <script src="/dogum-giris.js" defer></script>
+<script src="/ek-katalog.js" defer></script>
+<script src="/ek-secim.js" defer></script>
 </head>
 <body>
 
@@ -294,6 +304,8 @@
         <div class="hint">Emin değilsen Placidus'ta bırak. Harita çıktıktan sonra da tek dokunuşla değiştirebilirsin. <a href="#ev-sistemleri">Ev sistemi nedir?</a></div>
       </div>
     </div>
+
+    <details class="ek-kutu" id="eksecim"><summary>✦ Ek noktalar ve sabit yıldızlar</summary></details>
 
     <button id="git" class="btn">✦ Haritamı Çıkar</button>
   </div>
@@ -354,6 +366,19 @@
       <h2>Gezegen ve Nokta Yerleşimleri</h2>
       <p class="hs-alt">Bir satıra dokun: o yerleşimin sana ne anlattığı açılır ve çarkta işaretlenir.</p>
       <div class="hs-tablo-sar"><table id="tablo"><thead><tr><th>Nokta</th><th>Burç</th><th>Derece</th><th>Ev</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="hs-blok" id="ek-bolum" style="display:none">
+      <div class="hs-bas"><h2>Seçtiğin Ek Noktalar</h2><span class="hs-dugmeler"><button type="button" class="hs-mini" id="ek-degis">✦ Nokta ekle / çıkar</button></span></div>
+      <p class="hs-alt">Çarkta mor renkle gösterilir. Bir karta dokun: çarkta işaretlenir ve açıları açılır.</p>
+      <div class="ek-kart" id="ek-kartlar"></div>
+      <p class="ek-not" id="ek-not" hidden></p>
+    </section>
+
+    <section class="hs-blok" id="yildiz-bolum" style="display:none">
+      <h2>Sabit Yıldız Kavuşumların</h2>
+      <p class="hs-alt">Gökyüzünün en parlak ve en çok yorumlanan 30 yıldızından, doğduğun anda bir gezegeninle ya da haritanın köşeleriyle 1° içinde buluşanlar. Sabit yıldızlar ancak bu kadar sıkı temasta öne çıkar.</p>
+      <div class="ek-kart yz-kart" id="yildiz-kartlar"></div>
     </section>
 
     <section class="hs-blok" id="acilar-bolum" style="display:none">
@@ -532,7 +557,7 @@
       var o=x.getAttribute("data-a")===ad?x.getAttribute("data-b"):x.getAttribute("data-a");
       var q=svg.querySelectorAll('.cw-p[data-ad="'+o+'"]'); for(var j=0;j<q.length;j++) q[j].classList.add("on"); } }
   }
-  function gezegenBul(ad){ return (VERI.gezegenler||[]).filter(function(p){ return temiz(p.ad)===ad; })[0]; }
+  function gezegenBul(ad){ return (VERI.tumNoktalar||VERI.gezegenler||[]).filter(function(p){ return temiz(p.ad)===ad; })[0]; }
   function acilariOf(ad){ return (VERI.acilar||[]).filter(function(a){ return temiz(a.a)===ad||temiz(a.b)===ad; }).sort(function(a,b){ return a.orb-b.orb; }); }
   function sikilik(orb){ return orb<=1 ? '<span class="hs-sik s1">çok sıkı</span>' : orb<=3 ? '<span class="hs-sik s2">güçlü</span>' : '<span class="hs-sik s3">geniş</span>'; }
 
@@ -580,8 +605,10 @@
   function tabloDoldur(gezegenler){
     var tb=$("tablo").getElementsByTagName("tbody")[0]; tb.innerHTML="";
     var saatVar=!VERI.dogumBilgi.saatBilinmiyor;
+    var ekBaslik=false;
     (gezegenler||[]).forEach(function(p){
-      var ad=temiz(p.ad), tr=document.createElement("tr"); tr.setAttribute("data-ad", ad);
+      if(p.ek && !ekBaslik){ ekBaslik=true; var th=document.createElement("tr"); th.className="ek-bas"; th.innerHTML='<td colspan="4">✦ Ek noktalar</td>'; tb.appendChild(th); }
+      var ad=temiz(p.ad), tr=document.createElement("tr"); tr.setAttribute("data-ad", ad); if(p.ek) tr.className="ek";
       tr.innerHTML='<td><span class="g">'+(PL_GLYPH[ad]||"")+'</span>'+ad+'</td>'+
         '<td><span class="g">'+(SIGN_GLYPH[p.burc]||"")+'</span>'+p.burc+(p.retro?'<span class="retro">℞</span>':'')+'</td>'+
         '<td>'+dm(p.derece)+'</td><td>'+(saatVar&&p.ev?p.ev:"—")+'</td>';
@@ -661,7 +688,7 @@
     if(sik) kart("En sıkı gezegen açısı", (PL_GLYPH[temiz(sik.a)]||"")+" "+temiz(sik.a)+" "+ASP_GLYPH[sik.aspect]+" "+(PL_GLYPH[temiz(sik.b)]||"")+" "+temiz(sik.b), sik.aspect+", orb "+sik.orb.toFixed(1)+"° — haritanın en belirgin temaslarından biri.");
     var ret=ana.filter(function(p){ return p.retro; }).map(function(p){ return temiz(p.ad); });
     kart("Geri hareketteki gezegenler", ret.length ? ret.length+" gezegen ℞" : "Hiçbiri", ret.length ? ret.join(", ")+": bu temalar önce içe döner, zamanla sana özgü bir derinlik kazanır." : "Gezegenlerin enerjisi doğrudan, dışa dönük akıyor.");
-    var uy=0, se=0; (VERI.acilar||[]).forEach(function(a){ if(a.aspect==="Üçgen"||a.aspect==="Sekstil") uy++; if(a.aspect==="Kare"||a.aspect==="Karşıt") se++; });
+    var uy=0, se=0; (VERI.acilar||[]).forEach(function(a){ if(a.ek) return; if(a.aspect==="Üçgen"||a.aspect==="Sekstil") uy++; if(a.aspect==="Kare"||a.aspect==="Karşıt") se++; });
     kart("Açı dengesi", uy+" uyumlu · "+se+" zorlayıcı", uy>=se ? "Haritanda akış ve kolaylık ağır basıyor; yeteneklerin kendiliğinden ortaya çıkar." : "Haritanda gerilim ve eylem ağır basıyor; zorluklar seni büyüten bir motora dönüşür.");
   }
 
@@ -685,6 +712,8 @@
     L.push("");
     L.push("Gezegenler ve noktalar:");
     (data.gezegenler||[]).forEach(function(p){ L.push("- "+temiz(p.ad)+": "+p.burc+" "+dm(p.derece)+(data.evler&&p.ev?" · "+p.ev+". ev":"")+(p.retro&&temiz(p.ad).indexOf("Düğüm")<0?" · retro":"")); });
+    if(data.ekNoktalar&&data.ekNoktalar.length){ L.push(""); L.push("Ek noktalar (Astro Yuvam, JPL yörüngelerinden hesaplandı):"); data.ekNoktalar.forEach(function(p){ L.push("- "+p.ad+": "+p.burc+" "+dm(p.derece)+(data.evler&&p.ev?" · "+p.ev+". ev":"")+(p.retro?" · retro":"")); }); }
+    if(data.sabitYildizlar&&data.sabitYildizlar.length){ L.push(""); L.push("Sabit yıldız kavuşumları (1° içinde): "+data.sabitYildizlar.map(function(y){ return y.yildiz+" – "+y.nokta+" ("+y.orb.toFixed(1)+"°)"; }).join(" · ")); }
     if(data.evler){ L.push(""); var tam=/Tam Burç/.test(data.evSistemi||""); L.push(tam ? "Evler (her burç bir ev): "+data.evler.map(function(e){ return e.ev+". ev "+e.burc; }).join(" · ") : "Ev uçları: "+data.evler.map(function(e){ return e.ev+". "+e.burc+" "+dm(e.derece); }).join(" · ")); }
     var ac=(data.acilar||[]).filter(function(a){ return ANA.indexOf(temiz(a.a))>=0 && ANA.indexOf(temiz(a.b))>=0; }).sort(function(a,b){ return a.orb-b.orb; }).slice(0,14);
     if(ac.length){ L.push(""); L.push("En sıkı açılar: "+ac.map(function(a){ return temiz(a.a)+" "+a.aspect+" "+temiz(a.b)+" ("+a.orb.toFixed(1)+"°)"; }).join(" · ")); }
@@ -701,13 +730,49 @@
     else { t.select(); document.execCommand("copy"); ok(); }
   });
 
+  // —— Ek noktalar ve sabit yıldızlar ——
+  var EV_KISA = EV;
+  function ekHazirla(data){
+    var ekler=data.ekNoktalar||[];
+    if(!PL.AC){ PL.AC=["Yükselen, yani dışa yansıyan yüzün","Dünyaya nasıl göründüğünü ve hayata nasıl başladığını anlatır."]; PL.MC=["Tepe Noktası, yani hedefin ve kariyer yönün","Toplumda nasıl tanınmak istediğini anlatır."]; }
+    ekler.forEach(function(p){ PL[p.ad]=[p.anlam,p.aciklama]; PL_GLYPH[p.ad]=p.kod; });
+    data.tumNoktalar=(data.gezegenler||[]).concat(ekler.map(function(p){ return { ad:p.ad, burc:p.burc, derece:p.derece, ev:p.ev, retro:p.retro, ek:true, kod:p.kod }; }));
+  }
+  function ekBolum(data){
+    var bolum=$("ek-bolum"), kutu=$("ek-kartlar"), not=$("ek-not"), ekler=data.ekNoktalar||[], saatVar=!data.dogumBilgi.saatBilinmiyor;
+    var notlar=[]; if(data.ekSinir) notlar.push(data.ekSinir);
+    var atl=(data.ekAtlanan||[]).filter(function(a){ return a.neden; });
+    if(atl.length) notlar.push(atl.map(function(a){ return (a.ad||a.id)+": "+a.neden; }).join(" · ")+".");
+    if(!ekler.length && !notlar.length){ bolum.style.display="none"; return; }
+    kutu.innerHTML="";
+    ekler.forEach(function(p){
+      var ac=(data.acilar||[]).filter(function(a){ return a.ek && a.a===p.ad; }).sort(function(a,b){ return a.orb-b.orb; }).slice(0,3);
+      var metin='<b>'+p.ad+'</b> '+p.anlam+' demektir. '+p.aciklama+' '+p.burc+' burcunda bu tema <b>'+(BURC[p.burc]||"")+'</b> bir tarzla çalışır.'+(saatVar&&p.ev?' '+p.ev+'. evde olduğu için en çok <b>'+EV_KISA[p.ev]+'</b> alanında hissedilir.':'');
+      if(ac.length) metin+=' '+ac.map(function(a){ return (a.b==="AC"?"Yükselen":a.b)+' ile '+a.aspect.toLocaleLowerCase("tr")+' ('+a.orb.toFixed(1)+'°)'; }).join(", ")+(ac.length>1?' açıları':' açısı')+' bu noktayı haritanda daha görünür kılar.';
+      var d=el("div","",'<span class="ek-k">'+p.kod+'</span><b>'+p.ad+'</b><small>'+(SIGN_GLYPH[p.burc]||"")+' '+p.burc+' '+dm(p.derece)+(p.retro?' ℞':'')+(saatVar&&p.ev?' · '+p.ev+'. ev':'')+'</small><p>'+metin+'</p>');
+      d.onclick=function(){ gezegenDetay(p.ad); var c=$("cark"); if(c.scrollIntoView) c.scrollIntoView({behavior:"smooth",block:"start"}); };
+      kutu.appendChild(d);
+    });
+    not.hidden=!notlar.length; not.textContent=notlar.join(" ");
+    bolum.style.display="block";
+  }
+  function yildizBolum(data){
+    var bolum=$("yildiz-bolum"), kutu=$("yildiz-kartlar"), ys=data.sabitYildizlar;
+    if(ys==null){ bolum.style.display="none"; return; }
+    kutu.innerHTML="";
+    if(!ys.length) kutu.appendChild(el("div","",'<p>Bu 30 parlak yıldızdan hiçbiri gezegenlerinle ya da köşelerinle 1° içinde buluşmuyor. Bu çok yaygındır: sabit yıldızlar yalnızca bu kadar sıkı temasta haritada söz sahibi olur.</p>'));
+    ys.forEach(function(y){ var nk=({"Yükselen":"Yükselen'inle","Alçalan":"Alçalan'ınla","MC":"Tepe Noktan (MC) ile","IC":"IC ile"})[y.nokta]||(y.nokta+" ile");
+      kutu.appendChild(el("div","",'<b><span class="yz-y">★</span>'+y.yildiz+'</b><small>'+nk+' kavuşuk · '+y.orb.toFixed(1)+'° · '+(SIGN_GLYPH[y.sign]||"")+' '+y.sign+' '+dm(y.degree)+'</small><p>'+y.anlam+'</p>')); });
+    bolum.style.display="block";
+  }
+
   function ciz(data, sessiz){
-    VERI=data;
+    VERI=data; ekHazirla(data);
     var d=data.dogumBilgi||{}, yer=String(d.yer||"").replace("Türkiye Cumhuriyeti","Türkiye");
     $("ozet").textContent=(d.isim?d.isim+" — ":"")+(d.tarih||"")+(d.saat?(" • "+d.saat):" • saat yok")+(yer?(" • "+yer):"");
     var box=$("cark"); box.innerHTML=data.cark||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt"; ["filtre","acifiltre"].forEach(function(k){ var bs=$(k).querySelectorAll("button"); for(var i=0;i<bs.length;i++) bs[i].classList.toggle("on", i===0); }); $("detay").hidden=true; $("acidetay").hidden=true;
     var ps=box.querySelectorAll(".cw-p"); for(var i=0;i<ps.length;i++) ps[i].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); });
-    bigPoints(data); tabloDoldur(data.gezegenler); aciFiltre="hepsi"; aciHepsi=false; acilarDoldur(); izgaraKur(); denge(); oneCikanlar(); yzKur(data);
+    bigPoints(data); tabloDoldur(data.tumNoktalar); ekBolum(data); yildizBolum(data); if(window.AYEK&&AYEK.haritaHazir) AYEK.haritaHazir(true); aciFiltre="hepsi"; aciHepsi=false; acilarDoldur(); izgaraKur(); denge(); oneCikanlar(); yzKur(data);
     var note=$("note"); if(data.not){ note.textContent=data.not; goster(note); } else { gizle(note); note.textContent=""; }
     $("evsisbar").classList.toggle("kapali", !data.evler);
     goster($("result")); if(!sessiz && $("result").scrollIntoView) $("result").scrollIntoView({behavior:"smooth",block:"start"});
@@ -755,6 +820,7 @@
     var body={ name:isim, birthDate:t, birthPlace:yer };
     var st=(saat.value||"").slice(0,5);
     if(!saatyok.checked && st){ body.birthTime=st; }
+    if(window.AYEK){ var ekSec=AYEK.secili(); if(ekSec.length) body.ekler=ekSec; if(AYEK.yildiz()) body.yildizlar=true; }
     var ev=$("evsis").value||"placidus"; SON_GOVDE={}; for(var k in body) SON_GOVDE[k]=body[k]; EV_ONBELLEK={}; body.evSistemi=ev;
     var btn=$("git"); btn.disabled=true; goster($("loading"));
     if($("loading").scrollIntoView) $("loading").scrollIntoView({behavior:"smooth",block:"center"});
@@ -770,6 +836,19 @@
       .catch(function(){ btn.disabled=false; hata("Bağlantı kurulamadı. İnternetini kontrol edip tekrar dener misin?"); });
   }
   $("git").addEventListener("click", gonder);
+  $("ek-degis").addEventListener("click", function(){ if(window.AYEK) AYEK.ac(); });
+  function ekYenile(){
+    if(!SON_GOVDE || !window.AYEK) return;
+    var e=AYEK.secili(); if(e.length) SON_GOVDE.ekler=e; else delete SON_GOVDE.ekler;
+    if(AYEK.yildiz()) SON_GOVDE.yildizlar=true; else delete SON_GOVDE.yildizlar;
+    EV_ONBELLEK={}; var body={}; for(var k in SON_GOVDE) body[k]=SON_GOVDE[k]; body.evSistemi=AKTIF_EV;
+    var btn=$("ek-gun"); if(btn){ btn.disabled=true; btn.textContent="Güncelleniyor…"; }
+    fetch(API,{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body) })
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if(btn){ btn.disabled=false; btn.textContent="Haritayı bu noktalarla güncelle"; } if(!j||!j.ok){ return hata((j&&j.mesaj)||"Harita şu an güncellenemedi, birazdan tekrar dene."); } EV_ONBELLEK[AKTIF_EV]=j; ciz(j); })
+      .catch(function(){ if(btn){ btn.disabled=false; btn.textContent="Haritayı bu noktalarla güncelle"; } hata("Bağlantı kurulamadı, birazdan tekrar dene."); });
+  }
+  (function bagla(){ if(window.AYEK){ AYEK.yenile=ekYenile; return; } setTimeout(bagla, 200); })();
 })();
 </script>
 <div id="ay-cerez" class="ac-in" role="note" aria-label="Çerez bilgilendirmesi"><div class="ay-cerez-in"><p class="ay-cerez-tx">Deneyimini iyileştirmek ve ziyaret istatistikleri için çerezler kullanıyoruz. Ayrıntılar için <a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a> metnimize göz atabilirsin.</p><div class="ay-cerez-bt"><button type="button" class="ay-cerez-kabul">Tamam</button></div></div></div>
