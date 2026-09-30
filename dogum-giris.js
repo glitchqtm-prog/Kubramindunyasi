@@ -219,14 +219,49 @@
     if (r.country) p.push(temizUlke(r.country));
     return p.join(", ");
   }
-  function ara(q) {
+  // Türkiye il/ilçe listesi: konum servisinin tanımadığı ilçeler (ör. Çukurova, Sarıçam) için. İlk aramada bir kez yüklenir.
+  var ilcePromise = null;
+  function sadeYaz(x) { return String(x || "").toLocaleLowerCase("tr").replace(/ı/g, "i").normalize("NFD").replace(/[̀-ͯ]/g, "").trim(); }
+  function ilceler() {
+    if (!ilcePromise) ilcePromise = fetch("/ilceler.json").then(function (r) { return r.json(); }).then(function (j) {
+      var l = []; Object.keys(j).forEach(function (il) { j[il].forEach(function (ilce) { l.push({ n: ilce, s: sadeYaz(ilce), il: il }); }); }); return l;
+    }).catch(function () { ilcePromise = null; return []; });
+    return ilcePromise;
+  }
+  function ilceBul(q, liste) {
+    var sq = sadeYaz(q); if (sq.length < 3) return [];
+    var tam = [], bas = [];
+    liste.forEach(function (x) { if (x.s === sq) tam.push(x); else if (x.s.indexOf(sq) === 0) bas.push(x); });
+    return tam.concat(bas).slice(0, 4).map(function (x) {
+      return { name: x.n, admin1: x.il, country: "Türkiye", country_code: "TR", ilce: true };
+    });
+  }
+  function servis(q) {
     var key = LANG + "|" + q.toLocaleLowerCase("tr");
     if (onbellek[key]) return onbellek[key];
-    var u = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(q) + "&count=7&language=" + LANG + "&format=json";
+    var u = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(q) + "&count=10&language=" + LANG + "&format=json";
     onbellek[key] = fetch(u).then(function (r) { return r.json(); }).then(function (j) {
-      return (j && j.results || []).filter(function (r) { return r.feature_code !== "PCLI" && r.latitude != null; });
+      var l = (j && j.results || []).filter(function (r) { return r.latitude != null && r.feature_code !== "PCLI"; });
+      // Havalimanı, manastır gibi yerleşim olmayan yerleri çıkar (yerleşim kodları PPL ile başlar)
+      var yer = l.filter(function (r) { return !r.feature_code || /^PPL/.test(r.feature_code); });
+      return yer.length ? yer : l;
     }).catch(function () { delete onbellek[key]; return null; });
     return onbellek[key];
+  }
+  function ara(q) {
+    return Promise.all([servis(q), ilceler()]).then(function (v) {
+      var l = v[0], ilc = ilceBul(q, v[1]);
+      if (l === null && !ilc.length) return null;
+      l = l || [];
+      // Servis ilçeyi doğru ilde zaten bulduysa tekrar ekleme; onu ilçe olarak işaretleyip öne al
+      var ekle = ilc.filter(function (d) {
+        var var_ = l.filter(function (r) { return r.country_code === "TR" && sadeYaz(r.name) === sadeYaz(d.name) && (sadeYaz(r.admin1) === sadeYaz(d.admin1) || sadeYaz(r.admin2) === sadeYaz(d.admin1)); })[0];
+        if (var_) { var_.ilce = true; var_.admin1 = d.admin1; return false; }
+        return true;
+      });
+      var one = l.filter(function (r) { return r.ilce; }), kalan = l.filter(function (r) { return !r.ilce; });
+      return ekle.concat(one, kalan).slice(0, 8);
+    });
   }
   function yerKur(el) {
     el.setAttribute("autocomplete", "off");
@@ -249,11 +284,12 @@
       ul.innerHTML = "";
       if (!liste || !liste.length) {
         var b = D.createElement("li"); b.className = "bos";
-        b.textContent = liste ? "“" + q + "” için sonuç yok. Yazımı kontrol et ya da en yakın büyük şehri yaz." : "Öneriler şu an yüklenemedi; şehri ve ülkeyi yazman yeterli.";
+        b.textContent = liste ? "“" + q + "” için sonuç yok. Yazımı kontrol et ya da doğduğun ili/şehri yaz." : "Öneriler şu an yüklenemedi; şehri ve ülkeyi yazman yeterli.";
         ul.appendChild(b);
       } else liste.forEach(function (r, i) {
         var li = D.createElement("li"); li.id = lid + "-" + i; li.setAttribute("role", "option");
-        var ust = [r.admin1 !== r.name ? r.admin1 : "", r.admin2 && r.admin2 !== r.name && r.admin2 !== r.admin1 ? r.admin2 : "", temizUlke(r.country)].filter(Boolean).join(" · ");
+        var ust = r.ilce ? (r.admin1 + " ilçesi · Türkiye")
+          : [r.admin1 !== r.name ? r.admin1 : "", r.admin2 && r.admin2 !== r.name && r.admin2 !== r.admin1 ? r.admin2 : "", temizUlke(r.country)].filter(Boolean).join(" · ");
         li.appendChild(D.createTextNode(r.name));
         var sm = D.createElement("small"); sm.textContent = ust; li.appendChild(sm);
         li.addEventListener("mousedown", function (e) { e.preventDefault(); sec_(i); });
@@ -296,9 +332,9 @@
       ara(parca[0]).then(function (l) {
         if (el.value.trim() !== v || l === null) return;
         if (!l.length) { durum(s, "Bu yeri bulamadık; yazımı kontrol et ya da listeden seç.", "hata"); return; }
-        var ek = parca.slice(1).map(function (x) { return x.toLocaleLowerCase("tr"); }), r = l[0];
+        var ek = parca.slice(1).map(sadeYaz), r = l[0];
         if (ek.length) for (var i = 0; i < l.length; i++) {
-          var c = [l[i].country, l[i].admin1, l[i].country_code].map(function (x) { return String(x || "").toLocaleLowerCase("tr"); });
+          var c = [l[i].country, l[i].admin1, l[i].admin2, l[i].country_code].map(sadeYaz);
           if (ek.some(function (e) { return c.indexOf(e) >= 0; })) { r = l[i]; break; }
         }
         durum(s, "Bulunan konum: " + etiket(r) + (l.length > 1 ? " — farklıysa listeden seç." : ""), "ok");
