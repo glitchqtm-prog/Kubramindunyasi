@@ -1,15 +1,15 @@
 {
  "kaynak": "Astro Yuvam — https://astroyuvam.com/bugun-gokyuzu.html",
- "guncelleme": "2026-09-30T00:06:04.431Z",
- "tarih": "2026-09-30",
+ "guncelleme": "2026-10-01T00:24:30.251Z",
+ "tarih": "2026-10-01",
  "saatDilimi": "Europe/Istanbul (UTC+3)",
  "not": "Konumlar Türkiye saatiyle 12:00 içindir. Tropikal zodyak, geosentrik görünür konum.",
  "gezegenler": [
   {
    "ad": "Güneş",
    "burc": "Terazi",
-   "derece": "7°13′",
-   "boylam": 187.224,
+   "derece": "8°12′",
+   "boylam": 188.207,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Akrep",
@@ -18,31 +18,31 @@
   },
   {
    "ad": "Ay",
-   "burc": "Boğa",
-   "derece": "24°59′",
-   "boylam": 54.987,
+   "burc": "İkizler",
+   "derece": "9°16′",
+   "boylam": 69.264,
    "retro": false,
    "sonrakiBurc": {
-    "burc": "İkizler",
-    "zaman": "2026-09-30T17:26:15.000Z"
+    "burc": "Yengeç",
+    "zaman": "2026-10-02T19:54:22.500Z"
    }
   },
   {
    "ad": "Merkür",
-   "burc": "Terazi",
-   "derece": "29°51′",
-   "boylam": 209.847,
+   "burc": "Akrep",
+   "derece": "1°10′",
+   "boylam": 211.174,
    "retro": false,
    "sonrakiBurc": {
-    "burc": "Akrep",
-    "zaman": "2026-09-30T11:45:14.062Z"
+    "burc": "Yay",
+    "zaman": "2026-12-06T08:33:59.062Z"
    }
   },
   {
    "ad": "Venüs",
    "burc": "Akrep",
-   "derece": "8°19′",
-   "boylam": 218.324,
+   "derece": "8°25′",
+   "boylam": 218.416,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Terazi",
@@ -52,8 +52,8 @@
   {
    "ad": "Mars",
    "burc": "Aslan",
-   "derece": "1°19′",
-   "boylam": 121.324,
+   "derece": "1°54′",
+   "boylam": 121.907,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Başak",
@@ -63,8 +63,8 @@
   {
    "ad": "Jüpiter",
    "burc": "Aslan",
-   "derece": "19°29′",
-   "boylam": 139.479,
+   "derece": "19°39′",
+   "boylam": 139.658,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Başak",
@@ -74,8 +74,8 @@
   {
    "ad": "Satürn",
    "burc": "Koç",
-   "derece": "11°37′",
-   "boylam": 11.625,
+   "derece": "11°33′",
+   "boylam": 11.546,
    "retro": true,
    "sonrakiBurc": {
     "burc": "Boğa",
@@ -85,43 +85,38 @@
   {
    "ad": "Uranüs",
    "burc": "İkizler",
-   "derece": "5°32′",
-   "boylam": 65.536,
+   "derece": "5°31′",
+   "boylam": 65.519,
    "retro": true,
    "sonrakiBurc": null
   },
   {
    "ad": "Neptün",
    "burc": "Koç",
-   "derece": "2°53′",
-   "boylam": 2.883,
+   "derece": "2°51′",
+   "boylam": 2.855,
    "retro": true,
    "sonrakiBurc": null
   },
   {
    "ad": "Plüton",
    "burc": "Kova",
-   "derece": "3°08′",
-   "boylam": 303.126,
+   "derece": "3°07′",
+   "boylam": 303.119,
    "retro": true,
    "sonrakiBurc": null
   }
  ],
  "kuzeyAyDugumu": {
   "burc": "Kova",
-  "derece": "27°45′",
+  "derece": "27°41′",
   "tip": "ortalama"
  },
  "ay": {
-  "burc": "Boğa",
+  "burc": "İkizler",
   "evre": "Şişkin Ay (küçülen)",
-  "aydinlanmaYuzde": 84,
-  "bugunkuGecisler": [
-   {
-    "burc": "İkizler",
-    "zaman": "2026-09-30T17:26:15.000Z"
-   }
-  ]
+  "aydinlanmaYuzde": 74,
+  "bugunkuGecisler": []
  },
  "retrolar": [
   {
@@ -426,10 +421,6 @@
   }
  ],
  "olaylar30Gun": [
-  {
-   "zaman": "2026-09-30T11:45:14.062Z",
-   "olay": "☿ Merkür Akrep'e geçiyor"
-  },
   {
    "zaman": "2026-10-03T07:30:00.000Z",
    "olay": "♀ Venüs retro başlıyor · 8°29′ Akrep"
