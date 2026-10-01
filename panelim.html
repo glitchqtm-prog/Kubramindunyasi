@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
   :root{--bg-1:#0c0914;--bg-2:#14101f;--panel:#1c1733;--panel-2:#241c3d;--gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:#9a8fb8;--line:#332a4d;--mor:#a99cf0;--yesil:#8fd8b0;--pembe:#e98ea2}
-  *{box-sizing:border-box}html,body{margin:0}
+  *{box-sizing:border-box}html,body{margin:0}html{background:#0c0914}
   body{background:radial-gradient(ellipse at 50% -10%,#241c3d 0%,var(--bg-2) 55%,var(--bg-1) 100%) fixed;color:var(--cream);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.55}
   a{color:var(--gold-soft);text-decoration:none}
   .wrap{max-width:1040px;margin:0 auto;padding:10px 18px 70px}
@@ -88,6 +88,34 @@
   .filtre{display:flex;gap:6px;flex-wrap:wrap}
   .filtre button{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--cream);border-radius:16px;padding:5px 12px;font:12.5px 'Segoe UI',system-ui,sans-serif;cursor:pointer}
   .filtre button.on{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;border-color:var(--gold)}
+  /* bu hafta */
+  .hafta{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+  @media(max-width:760px){.hafta{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch}.hafta button{flex:0 0 31%;scroll-snap-align:start}}
+  .hafta button{appearance:none;cursor:pointer;text-align:left;background:rgba(28,23,51,.75);border:1px solid var(--line);border-radius:16px;padding:11px 10px 10px;color:var(--cream);font:inherit;position:relative;transition:border-color .15s,transform .15s}
+  .hafta button:hover{border-color:rgba(217,185,106,.6)}
+  .hafta button.on{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,185,106,.16),rgba(28,23,51,.85))}
+  .hafta .hg{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+  .hafta .ht{font-family:Georgia,serif;font-size:19px;line-height:1.1;margin:2px 0 6px}
+  .hafta .hb{font-size:12.5px;color:#e2d9ee;display:block}
+  .hafta .he{display:block;font-size:12px;color:var(--gold-soft);margin-top:4px;line-height:1.3}
+  .hafta .hn{position:absolute;top:9px;right:10px;font-family:Georgia,serif;font-size:15px;color:var(--muted)}
+  .hafta .hd{position:absolute;bottom:9px;right:10px;width:7px;height:7px;border-radius:50%;background:var(--pembe);box-shadow:0 0 8px var(--pembe)}
+  .enler{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+  .enler span{font-size:13px;background:rgba(217,185,106,.08);border:1px solid rgba(217,185,106,.3);border-radius:20px;padding:5px 12px;color:var(--cream)}
+  .enler b{color:var(--gold-soft);font-weight:600}
+  .gun-detay{margin-top:12px;background:rgba(28,23,51,.7);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:16px;padding:14px 16px}
+  .gun-detay h3{margin:0 0 4px;font-family:Georgia,serif;font-weight:600;font-size:19px;color:var(--gold-soft)}
+  .gun-detay p{margin:6px 0 0;font-size:14.5px;color:#e9e1f2}
+  .gun-detay .olay{margin-top:8px;font-size:13.5px;color:#f3d0da}
+  /* aşk haritam */
+  .ask-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media(max-width:860px){.ask-g{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.ask-g{grid-template-columns:1fr}}
+  .ask-k{background:radial-gradient(ellipse at 100% 0%,rgba(233,142,162,.12),transparent 60%),rgba(28,23,51,.75);border:1px solid var(--line);border-radius:16px;padding:14px 15px}
+  .ask-k small{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+  .ask-k b{display:block;font-family:Georgia,serif;font-weight:600;font-size:17px;line-height:1.3;margin:5px 0 4px;color:var(--cream)}
+  .ask-k span{display:block;font-size:12px;color:var(--mor)}
+  .ask-oz{margin:0 0 12px;font-size:14px;color:var(--cream);background:rgba(217,185,106,.08);border:1px solid rgba(217,185,106,.3);border-radius:14px;padding:10px 14px}
   /* kısayollar */
   .kisayol{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:760px){.kisayol{grid-template-columns:repeat(2,1fr)}}
@@ -135,6 +163,7 @@
     <p id="genelGok">Her sabah gökyüzünü senin haritana göre okuyan kişisel bir ekran. Ücretsiz üye ol, 30 saniyede hazır.</p>
     <div class="ozellik">
       <div><b>Ay bugün hangi evinde?</b>Duygusal havanı ve günün temasını gösterir.</div>
+      <div><b>Bu hafta gün gün</b>Aşk, iş ya da dinlenmek için hangi gün daha uygun, haritana göre.</div>
       <div><b>Kişisel gün sayın</b>Numerolojiye göre bugünün enerjisi ve önerisi.</div>
       <div><b>Haritana dokunan açılar</b>Bugün gökyüzünün seni en çok etkileyen noktaları.</div>
       <div><b>30 günlük kişisel takvim</b>Sana özel tarihler, tek tıkla telefonuna.</div>
@@ -181,6 +210,20 @@
       </section>
     </div>
 
+    <section class="bolum" aria-label="Bu hafta gün gün">
+      <div class="bolum-b"><h2>Bu hafta gün gün</h2><span>Ay her 2-3 günde bir evini değiştirir; hangi gün ne için daha uygun, buradan bak</span></div>
+      <div class="enler" id="enler"></div>
+      <div class="hafta" id="hafta" role="tablist"></div>
+      <div class="gun-detay" id="gunDetay" aria-live="polite"></div>
+    </section>
+
+    <section class="bolum gizli" id="askBolum" aria-label="Aşk haritam">
+      <div class="bolum-b"><h2>Aşk haritam</h2><span>Serendip, 7. ev, Vertex ve Groom: evleneceğin kişiyle tanışma işaretlerin</span></div>
+      <div class="ask-oz gizli" id="askOz"></div>
+      <div class="ask-g" id="askG"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><a class="btn ghost" href="/evlenecegin-kisiyle-nerede-tanisirsin.html">Tamamını oku ve paylaş →</a><span class="not" style="margin:0">Haritan değişmediği için bu sonuç hep aynı kalır.</span></div>
+    </section>
+
     <section class="bolum">
       <div class="bolum-b"><h2>Bugün haritana dokunan gökyüzü</h2><span>Gezegenlerin bugünkü konumu ile doğum haritan arasındaki en güçlü açılar</span></div>
       <div class="acilar" id="acilar"></div>
@@ -204,11 +247,10 @@
       <div class="kisayol">
         <a href="/gunluk-yorumum.html">Günlük yorumum<small>Bugüne özel</small></a>
         <a href="/profil.html">Profilim<small>Bilgilerim ve kişilerim</small></a>
+        <a href="/dogum-haritasi-hesaplama.html">Doğum haritam<small>Asteroitler ve ek noktalarla</small></a>
         <a href="/2027-burc-yorumlari.html" id="k2027">2027 yorumum<small>Yıl boyu rehber</small></a>
-        <a href="/dugun-tarihi-hesaplama.html">Düğün tarihi<small>En uygun günü bul</small></a>
-        <a href="/ay-takvimi.html">Ay takvimi<small>Evre ve ritüel</small></a>
-        <a href="/zaman-makinesi.html">Zaman makinesi<small>O gün gökyüzü</small></a>
-        <a href="/uyum-testi.html">Uyum testi<small>Sen ve o</small></a>
+        <a href="/evlenecegin-kisiyle-nerede-tanisirsin.html">Nerede tanışacaksın?<small>Evleneceğin kişiyle</small></a>
+        <a href="/hayatina-kim-giriyor.html">Hayatına kim giriyor?<small>Onun gezegenleri senin evlerinde</small></a>
         <a href="/#cards">Kişisel raporlar<small>Derin okumalar</small></a>
       </div>
     </section>
@@ -230,30 +272,33 @@
   var SL = ["koc","boga","ikizler","yengec","aslan","basak","terazi","akrep","yay","oglak","kova","balik"];
   var AYL = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
   var GUN = ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
-  var EV = ["","Kimlik & yeni başlangıç","Para & öz değer","İletişim & öğrenme","Ev & aile","Aşk & yaratıcılık","İş düzeni & sağlık","İlişki & evlilik","Ortak kaynak & dönüşüm","Yolculuk & eğitim","Kariyer & statü","Arkadaşlar & dilekler","İç dünya & kapanışlar"];
+  var EV = ["","Kendin ve görünüşün","Para ve alışveriş","Mesajlar ve yakın çevre","Ev ve aile","Aşk ve keyif","İş ve günlük düzen","İlişki ve evlilik","Güven ve yakınlık","Yolculuk ve öğrenme","İş ve hedefler","Arkadaşlar","Dinlenme ve iç dünya"];
   var EVK = ["","kimlik","para ve öz değer","iletişim ve öğrenme","ev ve aile","aşk ve yaratıcılık","iş düzeni ve sağlık","ilişki","ortak kaynaklar","yolculuk ve eğitim","kariyer","arkadaşlık ve topluluk","iç dünya"];
   var AY_EV = ["",
-    "Duyguların yüzeyde; ruh halin başkalarına kolayca yansıyor. Kendine özen göstermek bugün önce gelir.",
-    "Güvende hissetme ihtiyacın artıyor. Para, konfor ve kendi değerin üzerine düşünmek için iyi bir gün.",
-    "Zihnin hareketli; mesajlar, kısa yollar ve sohbetler günün akışını belirliyor.",
-    "Evine ve ailene dönme günü. Biraz yavaşla, yuvanda güç topla.",
-    "Keyif, flört ve yaratıcılık günü. Kalbini hafifleten bir şeye zaman ayır.",
-    "Rutin ve beden ön planda. Küçük işleri bitirmek ve kendine iyi bakmak iyi gelir.",
-    "İlişkiler ve karşındaki insanlar gündemde. Birlikte karar almak bugün daha kolay.",
-    "Duygular derinleşiyor. Güven, yakınlık ve ortak konular üzerine düşünme günü.",
-    "Ufkunu açma isteği var. Okumak, öğrenmek ya da farklı bir bakış açısı iyi gelir.",
-    "Görünürlüğün artıyor; iş hayatında duyguların da fark edilebilir, profesyonel kal.",
-    "Arkadaşlar ve topluluklar enerjini yükseltiyor. Bir dileğini paylaşmak için güzel bir gün.",
-    "İçe dönüş zamanı. Dinlen, yalnız kalmaya izin ver, sezgine kulak ver."];
+    "Duyguların bugün yüzünden okunur. Kendine iyi bakmak, sevdiğin bir şeyi giymek ya da saçınla ilgilenmek iyi gelir.",
+    "Aklın bugün parada ve konforda olabilir. Harcamalarına bir göz atmak ya da evine küçük bir dokunuş yapmak içini rahatlatır.",
+    "Telefonun sık çalabilir, mesajlar artar. Kardeşinle ya da bir arkadaşınla laflamak, kısa bir yere gidip gelmek günün havası.",
+    "Evde olmak isteyeceğin bir gün. Annenle ya da ailenden biriyle konuşmak, evi toparlamak, erkenden eve dönmek iyi gelir.",
+    "Keyif ve flört günü. Bir buluşma, sevdiğin bir dizi, bir hobi ya da çocuklarla oyun kalbini hafifletir.",
+    "İşler ve günlük düzen ön planda. Ertelediğin küçük işleri bitirmek, kısa bir yürüyüş ya da düzgün bir öğün iyi gelir.",
+    "Gün karşındaki insanlarla geçer. Sevgilinle ya da eşinle konuşmak, birlikte karar vermek bugün daha kolay.",
+    "Duyguların derinleşir; yüzeysel sohbetler bugün sana yetmeyebilir. Güvendiğin biriyle içini dökmek iyi gelir.",
+    "Rutinden çıkma isteği var. Yeni bir yer görmek, bir şey öğrenmek ya da uzakta yaşayan birini aramak iyi gelir.",
+    "İşte ya da okulda gözler üzerinde olabilir. Duygularını işe karıştırmamaya çalış; emeğin fark edilir.",
+    "Arkadaşlar günü. Grup sohbetinde canlanmak, bir arkadaşla buluşmak ya da bir hayalini paylaşmak iyi gelir.",
+    "Biraz geri çekilme günü. Dinlenmek, erken yatmak, kimseye bir şey açıklamadan kendi başına kalmak iyi gelir."];
+  // Evlerin gündelik karşılığı (takvim ve haftalık şerit için)
+  var EVS = ["","görünüşün, tarzın ve kendine ayırdığın zaman","paran, harcamaların ve alışverişlerin","mesajların, telefonların, kardeşlerin ve komşuların","evin ve ailen","aşk hayatın, eğlencen ve hobilerin","iş temponun, günlük düzenin ve sağlığın","sevgilin ya da eşin ve yakın ilişkilerin","güven, yakınlık ve ortak paran","yolculukların, okulun ve öğrendiğin şeyler","işin, hedeflerin ve emeğinin görünmesi","arkadaşların, arkadaş grubun ve gelecek hayallerin","iç dünyan, uykun ve dinlenme ihtiyacın"];
+  var GUNET = ["","kendine bakım","para ve alışveriş","mesajlar, sohbet","ev ve aile","aşk ve keyif","iş ve düzen","ilişki, birliktelik","derin sohbet","yeni yerler, öğrenme","iş ve hedefler","arkadaşlar","dinlenme"];
   var GS = [null,["Başlangıç günü","Yeni bir işe ilk adımı at, inisiyatif al. Bugün başlattığın şey ivme kazanır."],["İş birliği ve sabır","Dinle, uzlaş, acele etme. İlişkilerde küçük incelikler büyük fark yaratır."],["İfade ve neşe","Yaz, konuş, paylaş, sosyalleş. Yaratıcı bir şey ortaya koymak için ideal."],["Düzen ve emek","Planla, sağlam temel at, detaylara bak. Bugünkü disiplin yarın kolaylık olur."],["Değişim ve hareket","Yeniliğe açıl, esnek ol. Küçük bir macera ya da rota değişikliği iyi gelir."],["Sevgi ve sorumluluk","Sevdiklerine zaman ayır, yuvanı güzelleştir. Şefkat bugün karşılık bulur."],["İçe dönüş ve derinlik","Araştır, dinlen, sezgine kulak ver. Cevaplar sessizlikte gelir."],["Güç ve sonuç","İş ve para konularına odaklan, karar al. Emeğinin karşılığını istemekten çekinme."],["Tamamlama ve bırakma","Biteni kapat, affet, yer aç. Yeni döngü için alan açmanın günü."]];
   var YS = [null,"yeni başlangıçlar yılı","ilişkiler ve sabır yılı","ifade ve sosyallik yılı","emek ve temel yılı","değişim ve özgürlük yılı","aile ve sorumluluk yılı","içe dönüş ve bilgelik yılı","güç ve kazanım yılı","tamamlanma yılı"];
   var PL = [["Güneş","Sun","☉"],["Ay","Moon","☽"],["Merkür","Mercury","☿"],["Venüs","Venus","♀"],["Mars","Mars","♂"],["Jüpiter","Jupiter","♃"],["Satürn","Saturn","♄"],["Uranüs","Uranus","♅"],["Neptün","Neptune","♆"],["Plüton","Pluto","♇"]];
-  var TP = {"Güneş":"Günün ışığı ve odağın","Merkür":"Düşünceler, yazışmalar ve planlar","Venüs":"Sevgi, uyum ve keyif","Mars":"Enerji, cesaret ve istek","Jüpiter":"Büyüme ve fırsat enerjisi","Satürn":"Sorumluluk ve olgunlaşma çağrısı","Uranüs":"Sürpriz ve değişim rüzgarı","Neptün":"Sezgi, hayal gücü ve incelik","Plüton":"Derin dönüşüm gücü"};
-  var NP = {"Güneş":"kimliğin ve özgüveninle","Ay":"duyguların ve iç dünyanla","Merkür":"zihninle ve iletişim tarzınla","Venüs":"ilişkilerin ve sevgi dilinle","Mars":"isteklerin ve harekete geçme gücünle","Jüpiter":"inançların ve şansınla","Satürn":"sorumlulukların ve sınırlarınla","Yükselen":"görünüşün ve dünyaya yaklaşımınla","MC":"kariyerin ve hedeflerinle"};
-  var ASP = [[0,"Kavuşum","☌","kav","bugün doğrudan buluşuyor; konu tam gündeminde."],[60,"Sekstil","⚹","uyum","tatlı bir uyum yakalıyor; küçük bir fırsat kapısı aralanıyor."],[90,"Kare","□","zor","sürtüşüyor; bu gerilim seni harekete geçmeye çağırıyor."],[120,"Üçgen","△","uyum","rahatça akıyor; zorlamadan ilerleyebilirsin."],[180,"Karşıt","☍","zor","karşı karşıya geliyor; dengeyi başkalarıyla ilişkinde arıyorsun."]];
+  var TP = {"Güneş":"Bugün ilgi ve dikkat","Merkür":"Mesajlar, telefonlar ve konuşmalar","Venüs":"Tatlı sözler, keyif ve alışveriş isteği","Mars":"Hız, sabırsızlık ve yüksek enerji","Jüpiter":"Fırsat ve iyi haber ihtimali","Satürn":"Sorumluluk, ciddiyet ve biraz gecikme","Uranüs":"Ani değişiklikler ve sürprizler","Neptün":"Hayaller, duygusallık ve biraz dağınıklık","Plüton":"Yoğun ve derin duygular"};
+  var NP = {"Güneş":"kendinle ve özgüveninle ilgili konulara","Ay":"duygularına, evine ve ailene","Merkür":"konuşmalarına, derslerine ve yazışmalarına","Venüs":"aşk hayatına, ilişkine ve paraya","Mars":"isteklerine ve enerjine","Jüpiter":"şansına ve planlarına","Satürn":"sorumluluklarına","Yükselen":"görünüşüne ve insanların sana bakışına","MC":"işine ve hedeflerine"};
+  var ASP = [[0,"Kavuşum","☌","kav","doğrudan dokunuyor."],[60,"Sekstil","⚹","uyum","küçük bir kolaylık getiriyor."],[90,"Kare","□","zor","biraz gerginlik katıyor."],[120,"Üçgen","△","uyum","rahatça akıyor."],[180,"Karşıt","☍","zor","başka biri üzerinden dokunuyor."]];
   var IPUCU = {
-    uyum:{"Güneş":"Görünür ol; bugün attığın adım fark edilir.","Merkür":"Ertelenen konuşmayı yap, mesajı gönder.","Venüs":"Sevdiğin biriyle zaman geçir ya da kendini şımart.","Mars":"Enerjini bir hedefe yönelt; spor da iyi gelir.","Jüpiter":"Bir fırsata evet de; iyimserliğin karşılık bulur.","Satürn":"Uzun vadeli bir plana somut bir adım ekle.","Uranüs":"Küçük bir yenilik dene, rutini kır.","Neptün":"Sanat, müzik ya da meditasyon için güzel bir an.","Plüton":"Seni tüketen bir şeyi bırakmak bugün kolaylaşıyor."},
-    zor:{"Güneş":"Egoyu değil amacı öne koy; inatlaşma.","Merkür":"Konuşmadan önce bir kez daha düşün, yazılanı iki kez oku.","Venüs":"Beklentilerini dile getir, kırgınlığı biriktirme.","Mars":"Öfkeyi harekete çevir; tartışmayı büyütme.","Jüpiter":"Aşırıya kaçma; söz vermeden önce hesabını yap.","Satürn":"Yavaşla, sınırlarını koru, her şeyi tek başına yüklenme.","Uranüs":"Ani kararları bir gece beklet.","Neptün":"Netlik gelene kadar büyük karar verme.","Plüton":"Kontrol etmeye çalıştığın şeyi gözden geçir."}};
+    uyum:{"Güneş":"Fark edilmek için iyi bir gün; ertelediğin bir şeyi ortaya koyabilirsin.","Merkür":"Beklediğin bir mesaj ya da arama gelebilir; ertelediğin konuşmayı yapmak kolaylaşır.","Venüs":"Sevdiğin biriyle buluşmak, kendine küçük bir şey almak ya da güzel bir yemek iyi gelir.","Mars":"Enerjin yüksek; ertelediğin bir işi bitirmek ya da yürüyüşe çıkmak için iyi bir gün.","Jüpiter":"Bir teklif ya da iyi bir haber gelebilir; evet demeye açık ol.","Satürn":"Uzun süredir uğraştığın bir işte somut bir adım atabilirsin.","Uranüs":"Plan dışı bir gelişme hoş bir sürprize dönüşebilir; rutini kırmayı dene.","Neptün":"Müzik, film ya da hayal kurmak için güzel bir an; sezgilerin güçlü.","Plüton":"Seni yoran bir şeyi bırakmak bugün daha kolay olabilir."},
+    zor:{"Güneş":"İnatlaşmaya müsait bir gün; haklı çıkmak yerine sonuca bak.","Merkür":"Yanlış anlaşılmaya açık bir gün; önemli mesajı göndermeden bir kez daha oku.","Venüs":"Kırgınlık birikebilir; beklentini açıkça söylemek iyi gelir. Gereksiz harcamaya dikkat.","Mars":"Çabuk sinirlenebilirsin; trafikte ve tartışmalarda sakin kalmaya çalış.","Jüpiter":"Fazla söz vermeye ve fazla harcamaya müsait bir gün; abartıya kaçma.","Satürn":"İşler yavaş ilerleyebilir; her şeyi tek başına yüklenme.","Uranüs":"Ani kararları bir gece beklet; planların son anda değişebilir.","Neptün":"Kafan biraz dağınık olabilir; önemli kararı netleşince ver.","Plüton":"Kontrol etmeye çalıştığın bir konu seni yorabilir; biraz bırakmayı dene."}};
   function $(id){ return document.getElementById(id); }
   function norm(d){ return ((d % 360) + 360) % 360; }
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
@@ -322,6 +367,45 @@
     $("k2027").setAttribute("href", "/2027-burc-yorumlari.html#" + SL[N.gunes]);
   }
 
+  /* ---------- bu hafta gün gün ---------- */
+  function kisiselGun(prof, d){ var bd = prof.birthDate.split("-"), py = indir(indir(+bd[2]) + indir(+bd[1]) + indir(d.getFullYear())), pm = indir(py + d.getMonth() + 1); return indir(pm + d.getDate()); }
+  var ENLER = [["💘","Aşk ve buluşma için",[5,7]],["💼","İş ve para için",[10,2,6]],["👯","Arkadaşlar ve sohbet için",[11,3]],["🌙","Dinlenmek için",[12,4]]];
+  function hafta(N, prof){
+    var gunler = [], bugunD = new Date();
+    for (var i = 0; i < 7; i++) { var d = new Date(bugunD.getFullYear(), bugunD.getMonth(), bugunD.getDate() + i, 12), ml = lon("Moon", d), ev = evBul(N, ml);
+      var olay = OLAYLAR.filter(function(e){ return iso(e.d) === iso(d); });
+      gunler.push({ d: d, ml: ml, ev: ev, n: kisiselGun(prof, d), olay: olay }); }
+    $("enler").innerHTML = ENLER.map(function(e){ var g = null; e[2].some(function(h){ g = gunler.filter(function(x){ return x.ev === h; })[0]; return !!g; });
+      return g ? '<span>' + e[0] + ' ' + e[1] + ': <b>' + (iso(g.d) === iso(bugunD) ? "bugün" : GUN[g.d.getDay()]) + '</b></span>' : ""; }).join("");
+    $("hafta").innerHTML = gunler.map(function(g, i){
+      return '<button type="button" role="tab" data-i="' + i + '"' + (i === 0 ? ' class="on" aria-selected="true"' : ' aria-selected="false"') + '><span class="hg">' + (i === 0 ? "Bugün" : i === 1 ? "Yarın" : ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"][g.d.getDay()]) + '</span><span class="hn">' + g.n + '</span><div class="ht">' + g.d.getDate() + " " + AYL[g.d.getMonth()].slice(0,3) + '</div><span class="hb"><span class="sym">' + GL[Math.floor(g.ml / 30)] + VS + '</span> Ay ' + g.ev + '. evinde</span><span class="he">' + GUNET[g.ev] + '</span>' + (g.olay.length ? '<i class="hd" title="' + esc(g.olay.map(function(o){ return o.b; }).join(" · ")) + '"></i>' : "") + '</button>';
+    }).join("");
+    function detay(i){ var g = gunler[i];
+      $("gunDetay").innerHTML = '<h3>' + (i === 0 ? "Bugün" : i === 1 ? "Yarın" : GUN[g.d.getDay()]) + ', ' + g.d.getDate() + " " + AYL[g.d.getMonth()] + '</h3><div class="kucuk">Ay ' + BN[Math.floor(g.ml / 30)] + ' burcunda, senin ' + g.ev + '. evinde · kişisel gün sayın ' + g.n + ' (' + GS[g.n][0].toLocaleLowerCase("tr") + ')</div><p>' + AY_EV[g.ev] + '</p>' + g.olay.map(function(o){ return '<div class="olay">✦ ' + esc(o.b) + ': ' + esc(o.a) + '</div>'; }).join("");
+    }
+    $("hafta").onclick = function(ev){ var b = ev.target.closest("button"); if (!b) return; this.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x === b); x.setAttribute("aria-selected", x === b ? "true" : "false"); }); detay(+b.dataset.i); if (window.gtag) gtag("event", "panel_hafta_gun"); };
+    detay(0);
+  }
+
+  /* ---------- aşk haritam (yapay zekâ yok; sonuç cihazda saklanır) ---------- */
+  function askHaritam(prof){
+    var anahtar = [prof.birthDate, prof.birthTime, prof.birthPlace].join("|");
+    function ciz(j){
+      if (!j || !j.ok || !j.kartlar || !j.kartlar.length) return;
+      var ilk = function(t){ t = String(t || ""); var i = t.search(/[.!?]\s/); return i > 0 ? t.slice(0, i + 1) : t; };
+      $("askG").innerHTML = j.kartlar.map(function(k){ var ana = k.yer || ilk(k.metin);
+        return '<div class="ask-k"><small>' + k.ikon + ' ' + esc(k.baslik) + '</small><b>' + esc(ana) + '</b><span>' + esc(k.alt) + '</span></div>'; }).join("");
+      if (j.ozet) { $("askOz").innerHTML = j.ozet.ikon + " " + esc(j.ozet.metin); $("askOz").classList.remove("gizli"); }
+      $("askBolum").classList.remove("gizli");
+    }
+    try { var c = JSON.parse(localStorage.getItem("ay_ask_v1") || "null"); if (c && c.k === anahtar && c.v && c.v.ok) return ciz(c.v); } catch(e){}
+    var body = { name: prof.name || "", birthDate: prof.birthDate, birthPlace: prof.birthPlace }; if (prof.birthTime) body.birthTime = prof.birthTime.slice(0,5);
+    fetch(API.replace("/api/harita", "/api/nerede-tanisirsin"), { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) })
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if (j && j.ok && !(j.eksik && j.eksik.length)) { try { localStorage.setItem("ay_ask_v1", JSON.stringify({ k: anahtar, v: j })); } catch(e){} } ciz(j); })
+      .catch(function(){});
+  }
+
   /* ---------- açılar ---------- */
   function aciBul(tl, nl){
     var fark = norm(tl - nl); if (fark > 180) fark = 360 - fark;
@@ -355,7 +439,8 @@
   var OLAYLAR = [];
   function takvim(N){
     var bas = new Date(); bas.setHours(12, 0, 0, 0); var E = [];
-    var GECIS = {"Güneş":"Önümüzdeki bir ay ışık {k} alanında.","Merkür":"Konuşmalar ve planlar {k} alanına kayıyor.","Venüs":"Sevgi ve keyif {k} alanında.","Mars":"Enerjin {k} alanına yöneliyor.","Jüpiter":"Önümüzdeki yıl şans {k} alanında.","Satürn":"Uzun soluklu bir sorumluluk {k} alanında."};
+    var GECIS = {"Güneş":"Önümüzdeki bir ay en çok bununla meşgul olabilirsin: {k}.","Merkür":"Birkaç hafta boyunca en çok konuşacağın, yazışacağın konu: {k}.","Venüs":"Hayatının tatlılaştığı alan: {k}. Güzel bir buluşma ya da hoş bir sürpriz buradan gelebilir.","Mars":"Enerjinin ve sabırsızlığının aktığı alan: {k}. Harekete geçmek kolay, tartışmaya da müsait.","Jüpiter":"Önümüzdeki aylarda fırsatların büyüdüğü alan: {k}.","Satürn":"Uzun süre emek ve sabır isteyecek alan: {k}."};
+    var RETRO = {"Merkür":["Üç hafta kadar eskiler geri gelebilir, planlar aksayabilir: {k}. Eski mesajlar, eski tanıdıklar, yarım kalan işler gündeme gelebilir.","Aksayan yazışmalar ve planlar yoluna giriyor: {k}."],"Venüs":["Altı hafta kadar aşkta ve parada geçmiş gündeme gelebilir: {k}. Eski bir sevgili, yarım kalan bir konu ya da yeniden düşünülen bir harcama olabilir.","Aşkta ve parada bekleyen konular netleşiyor: {k}."],"Mars":["Enerjin içe döner, işler yavaşlar: {k}. Yeni kavgalara değil, yarım kalanı bitirmeye odaklanma zamanı.","Yavaşlayan işler yeniden hız kazanıyor: {k}."],"Jüpiter":["Uzun vadeli bir plan yeniden gözden geçiriliyor: {k}.","Bekleyen bir fırsat yeniden hareketleniyor: {k}."],"Satürn":["Bir sorumluluk yeniden önüne geliyor: {k}. Eksik kalan temeli sağlamlaştırma zamanı.","Ağır gelen bir konu hafiflemeye başlıyor: {k}."]};
     var hedef = ["Güneş","Ay","Venüs","Yükselen"].filter(function(k){ return N.noktalar[k]; });
     // f(t) işaret değiştirdiği anı saat hassasiyetinde bul
     function kes(f, t0, t1){ var a = t0, b = t1, fa = f(a); for (var i = 0; i < 14; i++) { var m = new Date((a.getTime() + b.getTime()) / 2), fm = f(m); if ((fm < 0) === (fa < 0)) { a = m; fa = fm; } else b = m; } return new Date((a.getTime() + b.getTime()) / 2); }
@@ -369,14 +454,14 @@
         if (GECIS[p[0]] && Math.floor(l0 / 30) !== Math.floor(l1 / 30)) {
           var sinir = (hiz(b, t0) >= 0 ? Math.floor(l1 / 30) : Math.floor(l0 / 30)) * 30;
           var tg = kes(function(t){ var x = norm(lon(b, t) - sinir); return x > 180 ? x - 360 : x; }, t0, t1), sn = Math.floor(lon(b, new Date(tg.getTime() + 3600e3)) / 30), ev = evBul(N, sn * 30 + 1);
-          E.push({ d: tg, tip: "gecis", b: p[0] + " " + BN[sn] + " burcuna geçiyor", a: "Senin " + ev + ". evin: " + EV[ev] + ". " + GECIS[p[0]].replace("{k}", EVK[ev]) });
+          E.push({ d: tg, tip: "gecis", b: p[0] + " " + BN[sn] + " burcuna geçiyor", a: "Senin " + ev + ". evin. " + GECIS[p[0]].replace("{k}", EVS[ev]) });
         }
         // retro istasyonu
         if (["Merkür","Venüs","Mars","Jüpiter","Satürn"].indexOf(p[0]) >= 0) {
           var h0 = hiz(b, t0), h1 = hiz(b, t1);
           if ((h0 >= 0) !== (h1 >= 0)) {
             var ts = kes(function(t){ return hiz(b, t); }, t0, t1), ls = lon(b, ts), e2 = evBul(N, ls);
-            E.push({ d: ts, tip: "retro", b: p[0] + (h1 < 0 ? " geri gitmeye başlıyor" : " yeniden ileri gidiyor"), a: (h1 < 0 ? "Gözden geçirme dönemi: " : "Bekleyen işler hızlanıyor: ") + BN[Math.floor(ls / 30)] + " burcunda, senin " + e2 + ". evinde (" + EVK[e2] + ")." });
+            E.push({ d: ts, tip: "retro", b: p[0] + (h1 < 0 ? " geri gitmeye başlıyor" : " yeniden ileri gidiyor"), a: BN[Math.floor(ls / 30)] + " burcunda, senin " + e2 + ". evinde. " + RETRO[p[0]][h1 < 0 ? 0 : 1].replace("{k}", EVS[e2]) });
           }
         }
         // natal noktalara tam açılar
@@ -402,14 +487,14 @@
       var t = A.SearchMoonPhase(z[0], new Date(bas.getTime() - 12 * 3600e3), 32);
       while (t && t.date - bas < 30.5 * 864e5) {
         var ml = lon("Moon", t.date), ev = evBul(N, ml);
-        E.push({ d: t.date, tip: "ay", b: z[1] + " · " + BN[Math.floor(ml / 30)] + " burcunda", a: "Senin " + ev + ". evinde. " + (z[0] === 0 ? EV[ev] + " konusunda niyet koymak ve yeni bir şeye başlamak için güzel bir gün." : EV[ev] + " konusunda bir şey olgunlaşıyor; tamamlama ve bırakma zamanı.") });
+        E.push({ d: t.date, tip: "ay", b: z[1] + " · " + BN[Math.floor(ml / 30)] + " burcunda", a: "Senin " + ev + ". evinde: " + EVS[ev] + ". " + (z[0] === 0 ? "Bu konuda yeni bir şeye başlamak, bir niyet koymak için güzel bir gün." : "Bu konuda bir şey netleşebilir, duygular yükselebilir; bitmesi gereken bir şeyi bırakma zamanı.") });
         t = A.SearchMoonPhase(z[0], new Date(t.date.getTime() + 5 * 864e5), 32);
       }
     });
     // tutulmalar
     try {
-      var gs = A.SearchGlobalSolarEclipse(bas); if (gs.peak.date - bas < 31 * 864e5) { var sl = lon("Sun", gs.peak.date), e1 = evBul(N, sl); E.push({ d: gs.peak.date, tip: "tut", b: "Güneş tutulması · " + BN[Math.floor(sl / 30)] + " burcunda", a: "Senin " + e1 + ". evinde: " + EV[e1] + " alanında yeni bir sayfa açılıyor. Büyük kararları birkaç gün beklet." }); }
-      var ls = A.SearchLunarEclipse(bas); if (ls.peak.date - bas < 31 * 864e5) { var l2 = lon("Moon", ls.peak.date), e2 = evBul(N, l2); E.push({ d: ls.peak.date, tip: "tut", b: "Ay tutulması · " + BN[Math.floor(l2 / 30)] + " burcunda", a: "Senin " + e2 + ". evinde: " + EV[e2] + " alanında bir dönem kapanıyor." }); }
+      var gs = A.SearchGlobalSolarEclipse(bas); if (gs.peak.date - bas < 31 * 864e5) { var sl = lon("Sun", gs.peak.date), e1 = evBul(N, sl); E.push({ d: gs.peak.date, tip: "tut", b: "Güneş tutulması · " + BN[Math.floor(sl / 30)] + " burcunda", a: "Senin " + e1 + ". evinde: " + EVS[e1] + ". Bu konuda yeni bir sayfa açılıyor; büyük kararları birkaç gün beklet." }); }
+      var ls = A.SearchLunarEclipse(bas); if (ls.peak.date - bas < 31 * 864e5) { var l2 = lon("Moon", ls.peak.date), e2 = evBul(N, l2); E.push({ d: ls.peak.date, tip: "tut", b: "Ay tutulması · " + BN[Math.floor(l2 / 30)] + " burcunda", a: "Senin " + e2 + ". evinde: " + EVS[e2] + ". Bu konuda bir dönem kapanıyor; duygular yüksek olabilir." }); }
     } catch(e){}
     E.sort(function(a,b){ return a.d - b.d; });
     OLAYLAR = E; takvimCiz("hepsi");
@@ -429,7 +514,7 @@
   function cark(N){
     var S = 460, C = S / 2, R0 = 222, R1 = 190, R2 = 158, R3 = 64, off = N.noktalar["Yükselen"] ? N.noktalar["Yükselen"].lon : N.gunes * 30;
     function P(l, r){ var a = (180 + l - off) * Math.PI / 180; return [C + r * Math.cos(a), C - r * Math.sin(a)]; }
-    var h = '<svg viewBox="0 0 ' + S + ' ' + S + '" role="img" aria-label="Doğum haritan ve bugünkü gökyüzü">';
+    var h = '<svg viewBox="-18 -18 ' + (S + 36) + ' ' + (S + 36) + '" role="img" aria-label="Doğum haritan ve bugünkü gökyüzü">';
     h += '<circle cx="' + C + '" cy="' + C + '" r="' + R0 + '" fill="rgba(20,16,31,.7)" stroke="rgba(217,185,106,.55)"/><circle cx="' + C + '" cy="' + C + '" r="' + R1 + '" fill="none" stroke="rgba(217,185,106,.35)"/><circle cx="' + C + '" cy="' + C + '" r="' + R2 + '" fill="none" stroke="rgba(217,185,106,.22)"/><circle cx="' + C + '" cy="' + C + '" r="' + R3 + '" fill="rgba(217,185,106,.05)" stroke="rgba(217,185,106,.22)"/>';
     for (var s = 0; s < 12; s++) { var a = P(s * 30, R0), b = P(s * 30, R1), m = P(s * 30 + 15, (R0 + R1) / 2); h += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + b[0].toFixed(1) + '" y2="' + b[1].toFixed(1) + '" stroke="rgba(217,185,106,.35)"/><text x="' + m[0].toFixed(1) + '" y="' + m[1].toFixed(1) + '" fill="rgba(231,207,149,.85)" font-size="16">' + GL[s] + VS + '</text>'; }
     var cusp = N.cusp || Array.apply(null, Array(12)).map(function(_, i){ return (N.gunes + i) * 30; });
@@ -460,7 +545,7 @@
       if (!j || !j.ok) throw new Error((j && j.mesaj) || "harita");
       var N = hazirla(j);
       $("saatUyari").classList.toggle("gizli", N.saat);
-      seri(); bugun(N, prof); acilar(N); takvim(N); cark(N);
+      seri(); bugun(N, prof); acilar(N); takvim(N); hafta(N, prof); cark(N); askHaritam(prof);
       goster("panel");
       if (window.gtag) gtag("event", "panel_acildi");
     }).catch(function(e){

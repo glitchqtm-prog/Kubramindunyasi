@@ -128,6 +128,7 @@
 
   <div class="card">
     <div class="tek">
+      <p class="hint" id="doluNot" hidden style="margin:0 0 4px">✓ Bilgilerin üye panelinden dolduruldu; istersen değiştirebilirsin.</p>
       <label for="aad">İsim (isteğe bağlı)</label>
       <input type="text" id="aad" placeholder="Adın" maxlength="40" autocomplete="off">
       <label for="atarih">Doğum tarihi</label>
@@ -223,6 +224,12 @@
   });
 })();
 </script>
+<script>/* Üye panelini açmış kişide doğum bilgileri kendiliğinden dolar (yalnızca bu cihazda saklı bilgi). */
+(function(){try{var c=JSON.parse(localStorage.getItem("ay_natal_v1")||"null");if(!c||!c.k)return;var p=String(c.k).split("|");
+function koy(id,v){var e=document.getElementById(id);if(!e||!v||e.value)return;e.value=v;try{e.dispatchEvent(new Event("input",{bubbles:true}));e.dispatchEvent(new Event("change",{bubbles:true}));}catch(x){}}
+function doldur(){koy("atarih",p[0]);koy("asaat",(p[1]||"").slice(0,5));koy("ayer",p[2]);
+var n=document.getElementById("doluNot");if(n&&p[0])n.hidden=false;}
+if(document.readyState==="complete")setTimeout(doldur,300);else addEventListener("load",function(){setTimeout(doldur,300);});}catch(e){}})();</script>
 <div id="ay-cerez" class="ac-in" role="note" aria-label="Çerez bilgilendirmesi"><div class="ay-cerez-in"><p class="ay-cerez-tx">Deneyimini iyileştirmek ve ziyaret istatistikleri için çerezler kullanıyoruz. Ayrıntılar için <a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a> metnimize göz atabilirsin.</p><div class="ay-cerez-bt"><button type="button" class="ay-cerez-kabul">Tamam</button></div></div></div>
 <script>try{if(localStorage.getItem("ay_cerez_bilgi_v1")==="1"){var c=document.getElementById("ay-cerez");c.parentNode.removeChild(c);}}catch(e){}</script>
 </body>
