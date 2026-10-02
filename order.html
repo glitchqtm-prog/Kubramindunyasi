@@ -166,6 +166,25 @@
     </div>
   </fieldset>
 
+  <!-- ✦ SESLİ seçenek: yalnızca sunucuda bu rapor için açıksa görünür (/api/sesli-secenekler) -->
+  <div id="sesliBox" style="display:none">
+    <label>Cevabını nasıl almak istersin?</label>
+    <div class="genders" id="teslimBox">
+      <button type="button" data-t="pdf" class="active">📄 PDF rapor</button>
+      <button type="button" data-t="sesli">🎙️ Sesli anlatım</button>
+    </div>
+    <div id="sesliDetay" style="display:none">
+      <div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;padding:12px;background:#0f0b1a;border:1px solid var(--line);border-radius:8px">🎙️ Haritana bakıp cevabını yaklaşık 5 dakikalık bir <strong>ses kaydıyla</strong> anlatırız. Kayıt hazır olduğunda seçtiğin yoldan sana ulaşır.</div>
+      <label>Ses kaydını nereden almak istersin? *</label>
+      <select id="sesKanal">
+        <option value="eposta">E-posta (yukarıdaki adrese)</option>
+        <option value="whatsapp">WhatsApp</option>
+        <option value="instagram">Instagram</option>
+      </select>
+      <input id="sesAdres" style="display:none;margin-top:10px" maxlength="80">
+    </div>
+  </div>
+
   <button class="submit" id="btn">RAPORUNU SİPARİŞ ET →</button>
   <label style="display:flex;align-items:flex-start;gap:9px;margin-top:20px;font-weight:normal;cursor:pointer;line-height:1.5">
     <input type="checkbox" id="consent" style="width:auto;margin-top:3px;flex:none">
@@ -219,7 +238,32 @@ const type = new URLSearchParams(location.search).get("type") || "natal";
 const info = REPORTS[type] || REPORTS.natal;
 const Y = YENI[type] || null;
 document.getElementById("reportName").textContent = info.name;
-document.getElementById("price").innerHTML = "&#8378;" + info.price + " <span style='font-size:16px;color:var(--muted)'>tek seferlik</span>";
+const fiyatYaz = f => { document.getElementById("price").innerHTML = "&#8378;" + f + " <span style='font-size:16px;color:var(--muted)'>tek seferlik</span>"; };
+fiyatYaz(info.price);
+
+// ✦ SESLİ seçenek — sunucu bu rapor için açıksa göster; kapalıysa form hiç değişmez
+let teslimSekli = "pdf", sesliFiyat = null;
+fetch(API + "/api/sesli-secenekler").then(r => r.json()).then(d => {
+  const s = d && d.sesli && d.sesli[type];
+  if (!s || !s.fiyat) return;
+  sesliFiyat = s.fiyat;
+  document.getElementById("sesliBox").style.display = "block";
+  const tb = document.getElementById("teslimBox");
+  tb.querySelector('[data-t="pdf"]').innerHTML = "📄 PDF rapor · &#8378;" + info.price;
+  tb.querySelector('[data-t="sesli"]').innerHTML = "🎙️ Sesli anlatım · &#8378;" + s.fiyat;
+  tb.querySelectorAll("button").forEach(b => b.onclick = () => {
+    tb.querySelectorAll("button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active"); teslimSekli = b.dataset.t;
+    document.getElementById("sesliDetay").style.display = teslimSekli === "sesli" ? "block" : "none";
+    fiyatYaz(teslimSekli === "sesli" ? sesliFiyat : info.price);
+  });
+  const kanal = document.getElementById("sesKanal"), adres = document.getElementById("sesAdres");
+  kanal.onchange = () => {
+    adres.style.display = kanal.value === "eposta" ? "none" : "block";
+    adres.placeholder = kanal.value === "whatsapp" ? "WhatsApp numaran (örn: 0555 123 45 67)" : "Instagram kullanıcı adın (örn: @kullaniciadi)";
+    adres.type = kanal.value === "whatsapp" ? "tel" : "text";
+  };
+}).catch(() => {});
 
 const needsPartner = ["sinastri","matrix_uyum"].includes(type) || !!(Y && Y.partner);
 if (needsPartner) document.getElementById("partnerBox").classList.add("show");
@@ -390,6 +434,12 @@ btn.onclick = async () => {
     }
   }
 
+  if (teslimSekli === "sesli") {
+    const tur = document.getElementById("sesKanal").value, adres = $("sesAdres");
+    if (tur !== "eposta" && adres.length < 3) return hata(tur === "whatsapp" ? "Ses kaydı için WhatsApp numaranı yaz." : "Ses kaydı için Instagram kullanıcı adını yaz.");
+    body.sesli = true; body.sesKanali = { tur, adres };
+  }
+
   btn.disabled = true; btn.textContent = "GÖNDERİLİYOR…";
   statusEl.className = "status info";
   statusEl.innerHTML = "<span class='dot'></span>Bilgilerin gönderiliyor, lütfen bekle…<br><span style='font-size:12.5px;opacity:.85'>Bu işlem birkaç saniye sürebilir. Birazdan güvenli ödeme sayfasına yönlendirileceksin.</span>";
@@ -400,7 +450,7 @@ btn.onclick = async () => {
     const data = await res.json();
     if (!res.ok) throw new Error((data.errors || [data.error || "Bilinmeyen hata"]).join(" "));
     statusEl.className = "status ok";
-    statusEl.innerHTML = "✦ Bilgilerin alındı — güvenli ödeme sayfasına yönlendiriliyorsun…<br><span style='font-size:12.5px;opacity:.85'>Ödeme ekranında da <strong>aynı e-posta adresini</strong> kullan. Ödeme onaylanınca raporun otomatik hazırlanıp e-postana gönderilecek.</span>";
+    statusEl.innerHTML = "✦ Bilgilerin alındı — güvenli ödeme sayfasına yönlendiriliyorsun…<br><span style='font-size:12.5px;opacity:.85'>Ödeme ekranında da <strong>aynı e-posta adresini</strong> kullan. " + (body.sesli ? "Ödeme onaylanınca haritana bakılıp ses kaydın hazırlanacak." : "Ödeme onaylanınca raporun sana özel hazırlanıp e-postana gönderilecek.") + "</span>";
     btn.textContent = "ÖDEMEYE GİDİLİYOR…";
     // Ödeme Shopier'de alınır; onay webhook'u gelince rapor sunucuda otomatik üretilir.
     if (data.paymentUrl) { setTimeout(() => { window.location.href = data.paymentUrl; }, 1000); return; }

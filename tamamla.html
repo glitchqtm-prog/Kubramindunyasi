@@ -158,7 +158,7 @@ async function gonder(){
     if(r.ok && data.ok){
       document.getElementById("form").style.display="none";
       go.style.display="none";
-      msg(data.message || "Bilgilerin alındı! Raporun birkaç dakika içinde e-postana gelecek. ✦","ok");
+      msg(data.message || "Bilgilerin alındı! Raporun sana özel hazırlanıp en geç 24 saat içinde e-postana gelecek. ✦","ok");
     } else {
       go.disabled=false;
       msg((data.errors && data.errors.join(" ")) || "Bir sorun oldu, lütfen tekrar dene.","err");
