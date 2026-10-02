@@ -193,6 +193,8 @@
     </div>
     <div class="uyari gizli" id="saatUyari">Doğum saatin kayıtlı olmadığı için evler Güneş burcuna göre yaklaşık hesaplandı. Kesin sonuç için <a href="/profil.html">profilinden saatini ekle</a>.</div>
 
+    <section class="gizli" id="peDgBolum" aria-label="Doğum günü"></section>
+
     <div class="grid3">
       <section class="kart ay-kart" aria-label="Bugün Ay">
         <div id="ayCiz"></div>
@@ -215,7 +217,10 @@
       <div class="enler" id="enler"></div>
       <div class="hafta" id="hafta" role="tablist"></div>
       <div class="gun-detay" id="gunDetay" aria-live="polite"></div>
+      <div class="gizli" id="peMail"></div>
     </section>
+
+    <section class="bolum gizli" id="peOrtakBolum" aria-label="Sevdiğinle bu hafta"></section>
 
     <section class="bolum gizli" id="askBolum" aria-label="Aşk haritam">
       <div class="bolum-b"><h2>Aşk haritam</h2><span>Serendip, 7. ev, Vertex ve Groom: evleneceğin kişiyle tanışma işaretlerin</span></div>
@@ -223,6 +228,8 @@
       <div class="ask-g" id="askG"></div>
       <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><a class="btn ghost" href="/evlenecegin-kisiyle-nerede-tanisirsin.html">Tamamını oku ve paylaş →</a><span class="not" style="margin:0">Haritan değişmediği için bu sonuç hep aynı kalır.</span></div>
     </section>
+
+    <section class="bolum gizli" id="peAynaBolum" aria-label="Haritan seni nasıl anlatıyor"></section>
 
     <section class="bolum">
       <div class="bolum-b"><h2>Bugün haritana dokunan gökyüzü</h2><span>Gezegenlerin bugünkü konumu ile doğum haritan arasındaki en güçlü açılar</span></div>
@@ -235,6 +242,8 @@
       <ol class="zaman" id="takvim"></ol>
       <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="icsBtn" type="button">Tümünü takvimime ekle</button><span class="not" style="margin:0;align-self:center">Her tarih için bir gün önce hatırlatma kurulur.</span></div>
     </section>
+
+    <section class="bolum gizli" id="peDonumBolum" aria-label="Hayatının dönüm yılları"></section>
 
     <section class="bolum">
       <div class="bolum-b"><h2>Haritan ve bugünün gökyüzü</h2><span>İç halka doğum haritan, dış halka bugünkü gezegenler</span></div>
@@ -546,6 +555,8 @@
       var N = hazirla(j);
       $("saatUyari").classList.toggle("gizli", N.saat);
       seri(); bugun(N, prof); acilar(N); takvim(N); hafta(N, prof); cark(N); askHaritam(prof);
+      var ctx = { N: N, prof: prof, A: A, lon: lon, evBul: evBul, hazirla: hazirla, EVS: EVS, GUNET: GUNET, sb: sb, kullanici: kullanici, api: API.replace("/api/harita", "") };
+      if (window.AYPanelEk) window.AYPanelEk.baslat(ctx); else { var pe = document.createElement("script"); pe.src = "/panel-ek.js?v=1"; pe.onload = function(){ window.AYPanelEk && window.AYPanelEk.baslat(ctx); }; document.head.appendChild(pe); }
       goster("panel");
       if (window.gtag) gtag("event", "panel_acildi");
     }).catch(function(e){
