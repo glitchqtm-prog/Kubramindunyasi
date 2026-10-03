@@ -204,9 +204,9 @@
     var d=VERI||{kartlar:[]}, s=[], by={};
     d.kartlar.forEach(function(k){ by[k.tur]=k; });
     function ilk(t){ return kucuk(t.split(".")[0]); }
-    if(by.odysseus) s.push("⛵ dönüş nasıl gelir: "+ilk(by.odysseus.metin));
-    if(by.penelope) s.push("🧵 ben nasıl beklerim: "+ilk(by.penelope.metin));
-    if(by.nostalgia) s.push("📷 geçmiş beni neyle yakalar: "+ilk(by.nostalgia.metin));
+    if(by.odysseus) s.push("⛵ dönüş nasıl gelir: "+kucuk(by.odysseus.yer||ilk(by.odysseus.metin)));
+    if(by.penelope) s.push("🧵 ben nasıl beklerim: "+kucuk(by.penelope.yer||ilk(by.penelope.metin)));
+    if(by.nostalgia) s.push("📷 geçmiş beni neyle yakalar: "+kucuk(by.nostalgia.yer||ilk(by.nostalgia.metin)));
     if(by.venus) s.push("♀ eski sevgili dönemi: "+by.venus.yer);
     return "eski sevgili nasıl geri döner, haritama baktım 👀\n"+s.join("\n")+"\n\nsen de bak 👉 "+URL_S;
   }
