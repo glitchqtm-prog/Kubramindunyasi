@@ -1,0 +1,29 @@
+{
+ "page": "venus-mars-burcu.html",
+ "proposed_en_slug": "venus-and-mars-signs.html",
+ "proposed_en_title": "Venus and Mars Signs: How You Love and What You Desire | Astro Yuvam",
+ "en_search_potential": "medium",
+ "en_competition": "very_high",
+ "target_en_queries": [
+  "venus and mars signs",
+  "what is my venus sign",
+  "venus sign meaning",
+  "mars sign meaning in love"
+ ],
+ "visible_word_count": 614,
+ "inline_js_turkish_string_count": 1,
+ "backend_calls": [],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (injected dynamically by the inline loader at line 73, not a static <script src>)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Not as is. It builds the whole Turkish nav (GRUPLAR, about 87 lines with Turkish text such as 'Keşfet', 'Burç Yorumları', 'Haritanı ücretsiz çıkar'), the Turkish cookie banner ('Deneyimini iyileştirmek...', link to /gizlilik-kvkk.html, button 'Tamam') and the GA loader. EN pages need a shared English variant (e.g. /en/menu.js or a lang flag) with an EN-only nav, the language switcher, an English cookie notice/privacy link, and no 'Raporlar' (/#cards) CTA. This is site-wide EN infrastructure, not specific to this page."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "report_upsells": "1) Lines 106 (<!--AYBAG:oneri--> aside): two paid cards, 'Aşk Haritası' /ask-haritasi-analizi.html '11+ sayfa PDF · ₺450' and 'Sinastri (İlişki Uyumu)' /sinastri-uyum-analizi.html '18+ sayfa PDF · ₺500', plus a 'Tüm raporlar ve fiyatları →' link to /fiyatlar.html. Remove all of it. 2) Line 99 .kapanis closing box ends with an upsell link to /ask-haritasi-analizi.html ('kişiye özel raporun tüm resmi gösterir'). Rewrite it to point at a free EN tool (birth chart / Venus-Mars calculator). 3) Line 109 <!--AYBAG:ilgili--> related links: /ask-haritasi-analizi.html and /sinastri-uyum-analizi.html are paid, and /haritada-evlilik-gostergeleri.html and /neden-hep-ayni-tip-insana-asik-oluyorum.html are TR-only. Replace them with EN pages or drop them. 4) Line 71 nav: 'Raporlar' CTA to /#cards (comes from the shared header/menu.js). 5) Body links /uyum-testi.html (line 91, free compatibility test, TR-only) and /sinastri-nedir.html (line 89, TR-only): link to EN equivalents only if they exist in the batch, otherwise remove. None of these upsells is a TR link inside inline JS.",
+ "turkey_specific_content": "Very little, and none of it is in the article itself. The only Turkey-specific items are the ₺ prices in the upsell aside (removed anyway), the KVKK privacy link and Turkish wording in the cookie banner (line 115, also in menu.js; needs an EN privacy/cookie notice), and the Turkish date format '19 Eylül 2026 · 6 dk okuma' (line 77; becomes 'September 19, 2026 · 5 min read'). There are no cities, no timezone/DST content and no e-Devlet. The article is universal astrology content written in a casual second person ('sen'), which maps directly to English 'you'. The JSON-LD Article and FAQPage (lines 14-15) are Turkish and must be fully rewritten in English, with mainEntityOfPage set to the /en/ URL. Also needed: html lang='en', an EN canonical, and reciprocal hreflang tr/en/x-default. Following the user's instruction, the EN copy must not name or compare itself to any third-party astrology site.",
+ "recommend_phase1": false,
+ "rationale": "This is a pure static blog article (Yıldız Günlüğü). The body is about 482 words, about 614 visible words including chrome. It has no tool, no fetch() calls, no page-specific scripts and no Turkish strings in inline JS apart from 'Hesabım' in the login-state header swap (line 72). Translating it is trivial and carries almost no JS risk. That is its only strength. It fails the main phase-1 criterion of a client-side tool with unique value.\n\nIn English, 'venus sign' and 'mars sign' are high-volume topics, but the SERP is saturated by high-authority horoscope sites, women's-magazine astrology sections and big chart-calculator sites. Those pages offer per-sign interpretations for all 12 Venus and 12 Mars signs plus a calculator. A thin 480-word generic explainer has no per-sign content and no calculator, so it is very unlikely to rank for anything meaningful on a new /en/ section. Even the long-tail 'venus and mars signs' query is answered by much richer pages. The page also mostly funnels to paid Turkish reports (Aşk Haritası, Sinastri) and to TR-only pages. Once those are removed, the EN page has nowhere useful to send visitors unless EN birth-chart or compatibility tools exist.\n\nBetter path: make it a phase-2 item and rebuild it as a 'Venus and Mars Sign Calculator'. The ingredients already exist client-side. /astronomy.browser.min.js is in the repo, and zaman-makinesi.html (around lines 261 and 288-289) already computes Venus/Mars ecliptic longitudes with Astronomy.GeoVector + Astronomy.Ecliptic. Add a native date (plus optional time) input with no dogum-giris.js, show the Venus and Mars sign in English, and add 12+12 short English interpretations. That would be a genuine tool targeting 'venus sign calculator' / 'mars sign calculator' (very high volume, very high competition, but tools convert better than articles). The cost is new development and writing about 24 interpretations, not translation.\n\nIf phase 1 needs a cheap supporting article to interlink EN tools, this page could be included at low cost. On its own merits it should not take one of the 6-9 slots."
+}

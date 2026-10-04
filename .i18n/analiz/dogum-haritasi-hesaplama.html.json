@@ -1,0 +1,80 @@
+{
+ "page": "dogum-haritasi-hesaplama.html",
+ "proposed_en_slug": "birth-chart-calculator.html",
+ "proposed_en_title": "Free Birth Chart Calculator – Natal Chart Wheel, Houses & Aspects | Astro Yuvam",
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "target_en_queries": [
+  "free birth chart calculator",
+  "natal chart calculator with houses",
+  "whole sign vs placidus birth chart (compare house systems)",
+  "birth chart text for ChatGPT"
+ ],
+ "backend_calls": [
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/harita (first calculation, gonder(), line 858; handler server.js:745-834)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "dogumBilgi.{isim,tarih,saat,yer}, yukselen/mc {burc,derece}, gezegenler[] {ad,burc,derece,ev,retro,element,yorum}, evler[], elementDengesi (keyed Ateş/Toprak/Hava/Su), evSistemi, acilar[] {a,b,aspect,orb}, cark (SVG string), not",
+   "notes": "Mostly fixed vocabulary that a dictionary can translate: sign names, planet names (some end in ' (yaklaşık)'), aspects (Kavuşum/Üçgen/Sekstil/Kare/Karşıt/Quincunx), elements, house systems (Placidus/Koch/Eşit Ev/Tam Burç/'Porphyry (yüksek enlem)'). lib/mcp-dil.js already has TR->EN for all of these. FREE-FORM TURKISH PROSE that a dictionary cannot handle: (1) gezegenler[].yorum = noktaYorumu() from lib/nokta-yorum.js plus 517 KB lib/yorumlar.json (baslik/soru/burcMetni/evMetni). There is no English version anywhere, and the MCP English path does not interpret either. Workaround: the page already has a fallback for p.yorum==null (gezegenDetay lines 595-598, using the client-side PL/BURC/EV/ACI dictionaries), so the EN page can ignore p.yorum and translate those dictionaries. English interpretations will be thinner than the Turkish ones. (2) `not` (no-birth-time warning) is Turkish; replace it with English when dogumBilgi.saatBilinmiyor is true (NOT.saatYok.en exists in mcp-dil.js). (3) `cark` SVG has a Turkish title ('Doğum Haritası', wheel.js:73) and legend ('Üçgen, Sekstil, Kare, Karşıt, retro, ek noktalar', wheel.js:268-273). Fix by string-replacing inside the <text> nodes on the client, or with a tiny backend change: pass aciAdlari('en') and BASLIK.harita.en, which lib/mcp.js:424 already does for ChatGPT. data-ad/data-a attributes stay Turkish and work as internal keys. (4) dogumBilgi.tarih is 'DD.MM.YYYY' (fmtTarihTR, server.js:1132); reformat it on the client from the ISO input. (5) dogumBilgi.yer comes back in Turkish because geo.js searches with language=tr ('Londra, Birleşik Krallık'); show the user's English autocomplete label instead. (6) BUG RISK: if geocode finds no match it silently falls back to 'Ankara (varsayılan)' with Europe/Istanbul (geo.js:5). The EN page must detect '(varsayılan)' in yer and show an error. (7) Error messages are Turkish: 429 mesaj, 400 errors[], 500 mesaj. Map them by HTTP status to English strings. Recommended small backend change: a `dil:'en'` flag that reuses mcp-dil.js (wheel legend/title, translated names, English not/errors, skip noktaYorumu to cut payload, error instead of Ankara fallback)."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/harita with evSistemi (house-system switch, evDegistir(), line 839)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "Same response, re-rendered with ciz(). evFark() compares houses and builds the message on the client (lines 821-829). Error shows j.mesaj.",
+   "notes": "Same as the first call. The evFark diff text is client-side Turkish to translate. The client must keep Turkish keys internally: EV_AD and the /Placidus|Koch/ and /Tam Burç/ regexes (lines 580, 746) depend on the Turkish evSistemi string."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/harita with ekler[] / yildizlar:true (asteroid and fixed-star refresh, ekYenile(), line 877; also sent from gonder() line 854 when AYEK has selections)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "ekNoktalar[] {ad,kod,burc,derece,ev,anlam,aciklama,yorum,acilar[] (sentences from aciCumlesi)}, sabitYildizlar[] {yildiz e.g. \"Regulus (Aslan'ın Kalbi)\", anlam, nokta, sign, degree, orb}, ekSinir, ekAtlanan[].neden",
+   "notes": "Free-form Turkish prose for 67 asteroids and 30 fixed stars: anlam/aciklama from lib/ek-noktalar.js, yorum from yorumlar.json, aspect sentences from aciCumlesi with Turkish grammar. This would need backend translation. Recommendation: drop the asteroids/fixed-stars feature from the EN v1 page (omit ek-katalog.js, ek-secim.js, #eksecim, #ek-bolum, #yildiz-bolum). The main script guards window.AYEK, but line 870 calls $(\"ek-degis\").addEventListener with no guard, so keep a hidden #ek-degis or add a null check."
+  },
+  {
+   "endpoint": "GET https://geocoding-api.open-meteo.com/v1/search (dogum-giris.js place autocomplete, third party)",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "name, admin1, admin2, country in the suggestion list",
+   "notes": "Uses &language= from <html lang> (dogum-giris.js:10, 186), so an EN page with lang=\"en\" gets English place names automatically. The labels around it ('✓ Konum:', 'Bulunan konum', 'sonuç yok', 'ilçesi · Türkiye') are Turkish."
+  },
+  {
+   "endpoint": "GET /ilceler.json (dogum-giris.js Turkish district list merged into suggestions)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "Turkish district names labelled '<il> ilçesi · Türkiye'",
+   "notes": "Only matters for Turkey. On EN skip it, e.g. when LANG !== 'tr', to save a request and avoid Turkish labels."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/dogum-giris.js",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "PARTLY. The world city autocomplete for input[data-yer] is needed: it is core UX, and the backend geocodes the free-text place. The date/time masking is NOT needed: it turns native inputs into Turkish 'GG.AA.YYYY' / 'SS:DD' fields, and DD.MM is ambiguous for US users. Remove data-dg from #dtarih/#dsaat and use native inputs, which already yield ISO / HH:MM (AM/PM is shown per locale), so gonder() works unchanged. About 20 Turkish strings need EN equivalents: month/weekday names, placeholders, validation errors, 'gece/sabah/akşam', '✓ Konum:', 'Bulunan konum', 'sonuç yok', 'ilçesi · Türkiye', and the default placeholder 'İzmir, Türkiye'. Options: an i18n branch keyed on the existing LANG variable plus skipping /ilceler.json when LANG!=='tr', or a small dogum-giris-en.js."
+  },
+  {
+   "src": "/ek-katalog.js",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No for phase 1. 15 KB catalog of 67 asteroids with Turkish anlam/aciklama, Turkish group names and packs ('💞 Aşk paketi'), and 30 star names with Turkish glosses. Translating it is also pointless unless the backend's ek/star prose is translated too."
+  },
+  {
+   "src": "/ek-secim.js",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No for phase 1. About 15 Turkish UI strings (intro, search placeholder, 'Temizle', 'Haritayı bu noktalarla güncelle', limit warnings). It depends on ek-katalog.js."
+  },
+  {
+   "src": "/menu.js (lazy-injected by the inline loader, line 481)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Needs an EN variant or EN mode. It builds the whole Turkish nav (Keşfet / Burç Yorumları / Raporlar -> /#cards / Giriş) and also starts GA4. The EN page needs an English nav with the language switcher, no paid-report links, and GA kept."
+  }
+ ],
+ "translation_risk": "medium",
+ "translation_effort": "large",
+ "recommend_phase1": true,
+ "visible_word_count": 1390,
+ "inline_js_turkish_string_count": 210,
+ "turkey_specific_content": "Placeholder and examples 'İzmir, Türkiye' (line 291 input placeholder, line 850 error text) -> 'London, United Kingdom' / 'New York, USA'. Hint 'il ve ülkesiyle' (line 292) -> 'state/region and country'. kusatmaNotu (line 585) says intercepted signs are common 'özellikle Türkiye enlemlerinde' -> 'at mid and high latitudes (e.g. UK, Canada, northern US)'. 'Türkiye Cumhuriyeti'->'Türkiye' replacements (lines 735, 802) are harmless and can be removed. Backend geocode (lib/geo.js) is Turkey-centric: search language=tr, so names like 'Londra' come back; a district-of-Türkiye heuristic runs when no country is typed; the not-found fallback is a silent 'Ankara (varsayılan)' with Europe/Istanbul. For EN, display the user's chosen label and treat '(varsayılan)' as an error. Timezone/DST is global (luxon IANA zone in localToUTC), so no Turkey-only DST logic. Date format DD.MM.YYYY (dogum-giris.js and backend dogumBilgi.tarih) -> use native date input and Intl 'en' formatting; US users expect 12h time, which native type=time handles. FAQ links to Turkish-only pages dogum-saati-nasil-ogrenilir.html and yaz-saati-dogum-saati.html (a Turkey DST tool) (line 457) -> remove or link to EN equivalents if they get built. The cookie banner links to gizlilik-kvkk.html (Turkish KVKK law, line 885) -> needs an English privacy page. dogum-giris.js merges /ilceler.json (Turkey's 81 provinces/973 districts) -> skip on EN. The 'Teach your AI' text (yzKur, lines 734-755) is Turkish and links to the Turkish paid report -> translate it and point to the EN calculator URL. PNG file name 'dogum-haritasi-astroyuvam.png' (line 728) -> 'birth-chart-astroyuvam.png'. No references to the site the user said not to name, in this page or its scripts (checked).",
+ "report_upsells": "Remove or replace all of these on EN, because reports are Turkish-only: (1) Nav 'Raporlar' CTA -> /#cards (line 269, and menu.js). (2) Lede says the chart uses 'the same engine as our paid reports' (line 274); rephrase as 'Swiss Ephemeris precision'. (3) Paid-report CTA block (lines 431-435): 'Doğum Haritası Raporu … 500 TL' -> /dogum-haritasi-analizi.html. (4) <!--AYBAG:oneri--> aside (line 451): Kariyer ₺450, Aşk ₺450, Karmik ₺400, Doğum Haritası Analizi ₺500, plus /fiyatlar.html link, about 105 words; delete it, or swap in links to other EN free tools. (5) House-system cards (line 440): 'Astro Yuvam raporları Placidus kullanır' and the link 'Vedik Harita raporumuz' -> /vedik-harita-analizi.html. (6) FAQ (lines 453-475): Q1 'deep personal interpretation is in the paid report'; the whole Q 'Kişiye özel doğum haritası analizi ne kadar?' with 500 TL and /fiyatlar.html (lines 464-466); the Placidus FAQ 'raporlarımız da onu kullanır'. (7) JSON-LD FAQPage (lines 29-60): 2 of 5 answers mention 500 TL / paid report; rewrite it fully in English without them. (8) yzKur AI text (line 751) links to dogum-haritasi-analizi.html. (9) Backend 429 message says 'Dilersen Raporlar'a göz atabilirsin' (server.js:751); replace it on the client with English text. (10) Login/'Hesabım' swap script (line 270) and the Giriş link belong to the Turkish account and order flow; drop them on EN.",
+ "rationale": "Include it in phase 1, but as a trimmed v1. This is the hub tool: 'birth chart calculator', 'natal chart', 'free birth chart' and 'birth chart' are among the highest-volume astrology queries in English. Every other EN tool page (rising sign, moon sign, etc.) will want a 'see your full chart' link, so an EN section without it would feel hollow. Be honest about ranking: competition is extreme (astro-seek, cafeastrology, astrology.com, astro-charts, Co-Star/CHANI apps, plus the large reference site we must never name), so a new /en/ subfolder will almost certainly not rank for the head terms soon. Realistic wins are long-tail angles the page really has: one-tap house-system comparison that shows which planets change house (Placidus/Koch/Equal/Whole Sign), an intercepted-sign explanation, an interactive filterable wheel with PNG download, and 'teach your AI your chart' text export. Feasibility is good because the calculation is universal (Swiss Ephemeris, IANA timezones) and the returned data is mostly fixed vocabulary that lib/mcp-dil.js already translates. Caveats that make it large and medium-risk: (a) about 1,390 visible words plus about 200 words of JSON-LD, and about 210 unique Turkish JS literals (about 1,150 words); roughly 55 of those are vocabulary keys, the rest sentences built with Turkish grammar by concatenation (e.g. lines 597, 616, 714-721). (b) The JS logic keys on Turkish names from the backend: ASP_COLOR/ASP_GLYPH, filter data-f='Kavuşum', ANA list, gezegenBul('Güneş'), indexOf('Düğüm'), /Placidus|Koch/, /Tam Burç/, ' (yaklaşık)'. Translation must be a display-only layer (t(name)); search-and-replace would break filters, highlighting and element counts. (c) Rich per-planet interpretations (yorumlar.json, 517 KB Turkish prose) cannot be used. Force the existing short client-side fallback text (PL/BURC/EV/ACI, about 60 strings), so EN interpretations will be modest and the selling point is the chart itself, not readings. (d) Drop asteroids/fixed stars (Turkish prose from the backend). (e) Fix the wheel SVG title/legend (client string-replace, or ideally a small `dil:'en'` flag on /api/harita reusing mcp-dil.js the way lib/mcp.js:424 already does), and guard the silent Ankara geocode fallback. (f) Remove the 10 paid-report touchpoints listed. With those cuts the build is about 1-1.5 days and worth it as the cornerstone of the EN section; if phase 1 must be only quick wins, it is the one large item to schedule deliberately rather than skip."
+}

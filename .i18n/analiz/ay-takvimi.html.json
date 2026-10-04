@@ -1,0 +1,59 @@
+{
+ "page": "ay-takvimi.html",
+ "proposed_en_slug": "moon-calendar.html",
+ "proposed_en_title": "Moon Calendar 2026–2027: Full Moon, New Moon & Moon Phase Dates with Zodiac Signs",
+ "target_en_queries": [
+  "moon calendar 2027",
+  "full moon calendar 2027 with zodiac signs",
+  "moon phase today",
+  "new moon dates 2026 2027 astrology"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 1080,
+ "inline_js_turkish_string_count": 80,
+ "backend_calls": [
+  {
+   "endpoint": "(none from the page itself) The page has no fetch(). The phase tool (lines 268-355) runs fully client-side.",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a",
+   "notes": "The tool needs no backend. All output comes from the inline EVRELER/AYLAR arrays."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (+ GET /api/raporlarim), loaded indirectly: line 111 loader -> /menu.js -> /asterna-widget.js",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (AI chat answer), mesaj (error/limit messages)",
+   "notes": "server.js:658. The answer is free-form Turkish prose from lib/asterna.js, whose system prompt says 'ÜSLUP: Türkçe' and pitches the 18 Turkish reports. A dictionary cannot translate it. The English page must not load menu.js or the widget. Ship an English menu script without the asterna/pwa loaders."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (no <script src> tag; injected by the inline loader at line 111)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No, not as it is. It builds the Turkish nav (Keşfet, Burç Yorumları, Giriş, a 'Raporlar' CTA to /#cards), the Turkish cookie banner that links to KVKK, and GA. It also loads asterna-widget.js and pwa.js. The English page needs an English menu script (or a lang branch) with only GA, the English nav, an English cookie notice and the TR/EN switcher. The inline 'Hesabım' swap at line 110 also needs translating or removing."
+  },
+  {
+   "src": "/asterna-widget.js (loaded by menu.js)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It is a Turkish-only AI chat with about 65 Turkish lines, and it calls /api/asterna, which answers in Turkish and upsells reports."
+  },
+  {
+   "src": "/pwa.js (loaded by menu.js)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It shows the Turkish 'Ana ekrana ekle' install prompt and a menu link, and registers sw.js, whose fallback is the Turkish offline.html. Leave it out of phase 1."
+  },
+  {
+   "src": "/astronomy.browser.min.js (not loaded by this page; already in the repo and used by zaman-makinesi.html and panelim.html)",
+   "has_turkish_ui_strings": false,
+   "needed_for_en": "Recommended. It lets the English tool compute exact phase times (SearchMoonQuarter/NextMoonQuarter), illumination and the Moon's sign in the visitor's own time zone. The current mean-synodic formula cannot do this accurately (see rationale)."
+  }
+ ],
+ "turkey_specific_content": "(1) Times are in Turkey time: the meta description says 'Türkiye saatiyle', line 147 says '<b>Türkiye saatiyle (UTC+3)</b>', and all 58 table rows (lines 151-227) plus the eclipse times (232-236) are UTC+3. Adapt: put a static table in UTC in the HTML for crawlers, then use JS to rewrite each time into the visitor's local zone with Intl.DateTimeFormat. Even better, generate the whole table client-side with astronomy.browser.min.js and keep a UTC fallback. The repo has no generator for this table; it was built with Astronomy Engine (3 Oct 13:25:33 UTC = 16:25 TR checks out), so a small Node script can regenerate it in UTC. (2) The FAQ at line 252 says Turkey has used UTC+3 year-round since 2016, so no DST correction is needed. Replace it with: times are shown in your local zone, DST is applied automatically. (3) Line 238 says eclipses may not be visible from Turkey. Make it global, and say where the 2 Aug 2027 total solar eclipse is visible (Spain, North Africa, Egypt). That eclipse is a strong English traffic hook. (4) Turkish month and weekday names: the AYLAR array at line 272, the table dates, and the Turkish '%42' percent style at line 330. Use Intl or English names and write '42%'. (5) Turkish sign and phase names in the table (Yengeç, Terazi, ...; Yeni Ay, İlk Dördün, Dolunay, Son Dördün). The TR->EN maps in lib/mcp-dil.js cover these, or simply regenerate the table in English. (6) The cookie banner links to /gizlilik-kvkk.html (KVKK is Turkish law). The English page needs an English privacy notice or a GDPR-style cookie line. (7) Internal links go to Turkish-only articles (dolunay-yeni-ay-ay-dongusu, dolunay-rituelleri, bugun-gokyuzu, ay-burcu-nedir at lines 248 and 253). Point them to English phase-1 pages, for example an English moon sign calculator, or remove them. No TL prices or Turkish cities appear in the tool itself.",
+ "report_upsells": "Line 109 (static nav), repeated by menu.js: '<a href=\"/#cards\" class=\"am-cta\">Raporlar</a>'. Line 257: '<a class=\"cta\" href=\"/#cards\">Doğum haritanda Ay nerede? Raporunu al →</a>'. Line 260: the <!--AYBAG:oneri--> aside selling Lunar Return (/lunar-return-analizi.html, ₺150) and Transit Raporu (/transit-analizi.html, ₺300), plus the 'Tüm raporlar ve fiyatları →' link to /fiyatlar.html. Indirectly, the asterna-widget (via menu.js) also pushes Turkish reports. Remove all of these on the English page. Replace the CTA with a link to a free English tool, e.g. 'Find your Moon sign' (English moon sign or birth chart page, if it is in phase 1), and the aside with an English related-tools block.",
+ "translation_risk": "low",
+ "translation_effort": "medium",
+ "recommend_phase1": true,
+ "rationale": "Why it fits phase 1: it is fully client-side (no fetch, no backend), the topic is universal, and the JS is easy to translate. The user-facing text sits in one data array (EVRELER, 8 phases x name/short/theme/message/ritual/3 keywords ≈ 64 strings) plus AYLAR (12) and 3 template labels ('Aydınlanma', 'Sıradaki Dolunay', 'Sıradaki Yeni Ay'). Translating these cannot break logic. Static content is about 1,080 words, but about 580 of those are the generated table, which should be regenerated rather than translated. The real prose is about 500 static words plus about 360 words of JS rituals and messages.\n\nWeaknesses (honest view): (1) Competition is very high. 'Moon phase today' and 'next full moon' get a Google answer box and are dominated by timeanddate, moongiant, NASA, almanac.com and space.com. The astrology angle ('full moon in Taurus October 2026 meaning') is dominated by Cafe Astrology, Astrology King, Chani and big magazines. A new /en/ section on a Turkish domain will not rank for the head terms soon. Realistic wins are long-tail queries: 'moon calendar 2027 with zodiac signs', 'moon phase ritual today', 'new moon dates 2027 astrology'. (2) The interactive tool is inaccurate. Lines 270-323 use a mean synodic month from a 2000 reference. Compared with Astronomy Engine over 100 quarters from Oct 2026, the error reaches about 23 hours. The 'next full/new moon' date (shown as a UTC date via trTarih) falls on the wrong UTC day in 12 of 50 cases. Line 147 claims the table and the tool use the same library, which is false: only the table does. An English page offered to a global audience with this formula would be noticeably wrong against timeanddate.\n\nRecommendation: include it in phase 1 as a cheap, low-risk hub page that also links to the other English moon and astrology tools, but only with the upgrade. Rebuild the tool on the local /astronomy.browser.min.js to get exact phase times, illumination and the Moon's current zodiac sign, all shown in the visitor's time zone through Intl. Give the table a UTC baseline that is localized client-side. Add an English eclipse section that highlights the 2 Aug 2027 total solar eclipse. The 'phase + Moon sign + ritual' combination in local time is its small edge over the astronomy sites. Its priority in the batch is mid to low, behind unique calculators such as the birth chart and moon/rising sign tools. If the batch must shrink, drop this page before any of those. Also: ship a separate English menu script (no asterna, no pwa, no /#cards CTA), add hreflang tr/en between the two versions, use an evergreen slug and update the year range in the title each year."
+}

@@ -1,0 +1,61 @@
+{
+ "page": "/home/user/kubramindunyasi/burclar.html",
+ "proposed_en_slug": "zodiac-signs.html",
+ "proposed_en_title": "The 12 Zodiac Signs: Dates, Elements & Modalities",
+ "target_en_queries": [
+  "12 zodiac signs and their traits",
+  "zodiac signs elements and modalities",
+  "zodiac sign dates",
+  "cardinal fixed mutable signs"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 515,
+ "inline_js_turkish_string_count": 1,
+ "backend_calls": [
+  {
+   "endpoint": "(none direct) burclar.html makes no fetch() calls itself",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a. All content is static HTML: 12 sign cards, 2 tables, intro text, FAQ.",
+   "notes": "The only inline scripts are the Supabase login-token check that swaps 'Giriş' for 'Hesabım' (line 66), the deferred loader for /menu.js (line 67) and a cookie-banner dismiss check (line 126). None of them call the network."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (indirect: menu.js line 245 injects /asterna-widget.js, which calls this)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (AI chat answer), mesaj (error and rate-limit messages)",
+   "notes": "server.js:658-713. Returns free-form AI text, plus hard-coded Turkish canned replies and errors ('Bugünlük sohbet hakkın doldu...', 'Şu an yanıt veremedim...'). The system prompt in lib/asterna.js:115 forces Turkish ('ÜSLUP: Türkçe...'), and the canned answers (lib/asterna.js ~272) are Turkish and point to Turkish pages and reports. A dictionary can't translate this. The English page must not load asterna-widget.js unless the backend gets an English mode."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (indirect: asterna-widget.js line 341, logged-in users only)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "The user's purchased Turkish reports list",
+   "notes": "Only matters for logged-in buyers of the Turkish reports. It isn't relevant to English visitors, so drop it along with the widget."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (loaded dynamically by the inline loader at line 67, not via <script src>)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Partly. It sets up GA4 (G-QQ0SREFL4L), fills the nav dropdowns and draws the cookie banner. All its UI is Turkish: about 83 quoted Turkish strings across 382 lines, covering the GRUPLAR menu items, the 'Hesabım' account menu, and cookie text linking to gizlilik-kvkk.html. It also loads asterna-widget.js and pwa.js. The English pages need an English variant, either /en/menu.js or a lang branch on <html lang='en'>. That variant should keep GA, list only English pages, add the TR/EN switcher, drop Raporlar (/#cards), Giriş and Hesabım, skip Asterna, and point the cookie banner to an English privacy page."
+  },
+  {
+   "src": "/asterna-widget.js (injected by menu.js line 245)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. This is the Turkish AI chat bubble (65 Turkish lines) and it calls /api/asterna, which answers in Turkish and upsells Turkish reports. Leave it out of English pages."
+  },
+  {
+   "src": "/pwa.js (injected by menu.js line 253)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Optional. The install prompt is Turkish (15 Turkish lines) and the manifest is the Turkish app. Skip it on English pages or translate it later."
+  }
+ ],
+ "turkey_specific_content": "Nothing on the page is tied to Turkey as a place: no cities, no TL prices on the page itself, no e-Devlet, no DST data. The tropical sign date ranges (Aries 21 Mar–19 Apr ... Pisces 19 Feb–20 Mar) are the standard Western ranges, so they carry over directly. What needs adapting:\n(1) Turkish sign names and months in the cards (lines 75-86) and tables (lines 93-106). Translate them: Koç→Aries, Ateş/Toprak/Hava/Su→Fire/Earth/Air/Water, Öncü/Sabit/Değişken→Cardinal/Fixed/Mutable. lib/mcp-dil.js already has the TR->EN sign names.\n(2) Every card links to a Turkish sign page (koc-burcu.html etc.), and the body links to /gunes-ay-yukselen.html and /dogum-haritasi-nedir.html. All of these need English equivalents, such as /en/aries.html, or the English hub just funnels people into Turkish pages.\n(3) The cookie banner cites 'Gizlilik & KVKK' (KVKK is Turkey's data-protection law). It needs an English privacy/GDPR page.\n(4) The nav items (Keşfet, Burç Yorumları, Yıldız Günlüğü, Giriş, Raporlar) are Turkish and point to Turkish-only features.\n(5) The copy uses the informal Turkish 'sen'. Plain 'you' works in English.\n(6) The FAQPage JSON-LD (line 11) has to be rewritten in English.\n(7) The 'Astro Yuvam' brand can stay. The page has no astro.com mention to remove.",
+ "report_upsells": "These must go or be replaced on the English page:\n(a) Line 65: the nav CTA 'Raporlar' → /#cards. Remove it.\n(b) Line 66: the inline Supabase check that turns 'Giriş' into a 'Hesabım' account dropdown. Accounts exist only for buying Turkish reports, so drop this script and the login link.\n(c) Lines 118-122: the .cta-kutu box 'Sadece güneş burcundan fazlası' with the button 'Doğum haritası raporunu al →' → /#cards (the paid Turkish natal report). Point it to the free English birth chart / big-three tool if phase 1 has one, otherwise remove it.\nThe page itself has no <!--AYBAG:oneri--> block. However, all 12 sign pages it links to have one: for example koc-burcu.html:336 sells ₺500 and ₺450 PDFs and links /fiyatlar.html. Any English sign pages would need those blocks stripped too.",
+ "translation_effort": "small",
+ "translation_risk": "low",
+ "recommend_phase1": false,
+ "rationale": "burclar.html is a static hub page: about 515 visible words, 12 link cards, an elements table, a modalities table, a short combined-explanation paragraph and a 3-question FAQ. It has no tool and no fetch(). Its inline JS holds one Turkish string ('Hesabım', line 66). Translating the page alone would take about an hour with essentially zero JS risk.\n\nIt still isn't a good phase-1 pick, for three reasons:\n(1) No unique value. It is generic introductory text with no calculator, so nothing distinguishes it in English.\n(2) Its whole job is to route visitors to the 12 sign pages, which exist only in Turkish. Each is about 1,470-1,675 words without upsells, roughly 18,000 words in total, plus the burc-imza.js and burc-lab.js widgets with about 80 Turkish lines. An English hub that links to Turkish pages is a dead end, and translating all 12 sign pages is far beyond a 6-9 page batch.\n(3) English SERPs for 'zodiac signs', '12 zodiac signs and their traits' and 'zodiac sign dates' have huge volume but are dominated by Wikipedia, astrology.com, cafeastrology, astrostyle, horoscope.com, Co-Star, Allure and similar sites. A thin 500-word hub on a new /en/ section has almost no chance to rank. The narrower 'elements and modalities' / 'cardinal fixed mutable' angle the page covers is somewhat more winnable, but still crowded with established sites.\n\nIndirect cost: the page loads /menu.js, which is Turkish and injects the Turkish asterna-widget.js and pwa.js. The English section needs its own English menu and banner script whatever happens; that is shared infrastructure, not a reason to pick this page.\n\nRecommendation: put client-side tools in phase 1. Bring zodiac-signs.html in phase 2 as the English hub, together with English sign pages, once those are scheduled. Until then, the TR/EN switcher on burclar.html can point to /en/. If an English reference on elements and modalities is wanted early, fold this page's two tables and FAQ into the /en/ index or an English 'big three' article rather than publishing a standalone hub."
+}

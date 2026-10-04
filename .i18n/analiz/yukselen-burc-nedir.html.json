@@ -1,0 +1,61 @@
+{
+ "page": "yukselen-burc-nedir.html",
+ "proposed_en_slug": "what-is-a-rising-sign.html",
+ "proposed_en_title": "What Is a Rising Sign? Interactive Ascendant Wheel and the 12 Risings Explained",
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "target_en_queries": [
+  "what is a rising sign",
+  "rising sign meaning",
+  "why does rising sign need birth time",
+  "rising sign by time of birth"
+ ],
+ "visible_word_count": 1014,
+ "inline_js_turkish_string_count": 12,
+ "backend_calls": [
+  {
+   "endpoint": "NONE on the page itself: no fetch() in the inline JS (lines 260-279) or anywhere in yukselen-burc-nedir.html",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a. The wheel is fully client-side: slider hour -> idx=floor(h/2)%12 -> isim[idx] (line 267/271/274).",
+   "notes": "Nothing to translate server-side, so lib/mcp-dil.js is not needed. Swapping the 12-name array is enough."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (indirect: menu.js line ~244 injects /asterna-widget.js)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (chat reply), mesaj (rate-limit/error text), shown in the Asterna chat bubble",
+   "notes": "server.js lines 658-716. Free-form Turkish AI prose (lib/asterna.js line 115: persona says 'ÜSLUP: Türkçe'), Turkish canned answers from asternaHazir() and Turkish error strings. It also steers users toward the paid reports. It can't work in English without backend and prompt changes, so the EN page must not load menu.js/asterna-widget.js as they are."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (indirect: asterna-widget.js line 13, logged-in members only)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "the member's saved Turkish report titles in the widget",
+   "notes": "Only for the Turkish paid-report account flow. Leave it out of EN."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (no static <script src>; injected dynamically by the inline loader at line 126)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Not as is. It has ~83 Turkish strings (Keşfet/Burç Yorumları menus, about 30 Turkish tool links, the KVKK cookie banner text, /fiyatlar.html and report links). It also loads GA, asterna-widget.js and pwa.js. EN needs its own menu with a language switcher and only EN links: either an en-menu.js or a language-aware GRUPLAR array keyed off <html lang> or the /en/ path. Copy over only the GA bootstrap and the cookie-banner logic, with English text."
+  },
+  {
+   "src": "/asterna-widget.js (injected by menu.js lines 244-247)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It is a Turkish AI chat widget with ~45 Turkish strings, calls /api/asterna (Turkish-only prose) and promotes the paid Turkish reports. Exclude it on /en/."
+  },
+  {
+   "src": "/pwa.js (injected by menu.js lines 252-255)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No, optional. It shows a Turkish install prompt ('Şimdi değil', ...), and manifest.json is lang 'tr' with a Turkish description. Skip it in phase 1."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "The topic is fully universal. Turkey-specific bits:\n(1) 'nüfus kaydından öğrenmek' (Turkish civil registry / e-Devlet birth record) appears at line 200, in the FAQ at line 236 and in the FAQPage JSON-LD at line 17. Replace with 'check your birth certificate or hospital records, or ask a parent'.\n(2) The cookie banner at line 280 cites 'Gizlilik & KVKK' (the Turkish data-protection law) and links /gizlilik-kvkk.html. EN needs an English privacy/cookie notice (GDPR-style wording), or at least an English summary page.\n(3) The related links at line 254 point to Turkey-only tools: /yaz-saati-dogum-saati.html (Turkish DST history) and /dogum-saati-nasil-ogrenilir.html (Turkish registry guide). Drop them, or point them at EN equivalents if those are ever built.\n(4) The upsell at line 245 has ₺500/₺600 prices and '81 il' (Turkish provinces). Remove it entirely.\n(5) Date format '24 Eylül 2026' (line 130). Use 'Updated September 24, 2026'.\n(6) Turkish sign names: 12 in the inline JS array (line 267), 12 in the table (lines 211-222), plus 'Koç' as static default text (lines 178, 182). Swap for Aries…Pisces. The glyphs are Unicode and need no change.\n(7) The informal 'sen' register and 'Ben Aslan'ım' translate naturally ('I'm a Leo').\n(8) Internal links to Turkish pages (/gunes-ay-yukselen.html, /astroloji-nedir.html, /astrolojide-evler.html, /dogum-haritasi-carki.html, /dogum-haritasi-nedir.html, /dogum-haritasi-hesaplama.html, /yildiz-gunlugu.html) must go to EN counterparts or be removed. Otherwise the page becomes a dead end into Turkish content.\nSEO plumbing: lang=\"en\", canonical /en/what-is-a-rising-sign.html, hreflang tr/en/x-default on both versions, and translated og tags and Article/FAQPage JSON-LD. Keep the brand name 'Astro Yuvam'. Per the user's instruction, never mention the reference site's name anywhere in the copy, meta tags or code.",
+ "report_upsells": "Remove all of these on EN:\n(a) Line 124, nav CTA 'Raporlar' -> /#cards (class am-cta).\n(b) Line 245, the <!--AYBAG:oneri--> aside selling 'Doğum Haritası Analizi' (₺500, /dogum-haritasi-analizi.html) and 'Astrokartografi' (₺600, /astrokartografi-analizi.html), plus the link 'Tüm raporlar ve fiyatları' -> /fiyatlar.html.\n(c) Line 254, inside <!--AYBAG:ilgili-->: links to the paid product pages /dogum-haritasi-analizi.html and /astrokartografi-analizi.html.\n(d) Indirect: the menu.js dropdown links to /fiyatlar.html and report pages, and asterna-widget.js chat recommends the paid reports. Neither should load on EN.\n(e) Line 125, the logged-in 'Hesabım' swap: Turkish account UI tied to report purchases. Omit it.\nThe free CTA at lines 228-231 ('Ücretsiz doğum haritanı çıkar' -> /dogum-haritasi-hesaplama.html) is not a paid upsell. On EN it should point to an English birth-chart or rising-sign calculator only if one exists. The Turkish one calls /api/harita, so it needs its own feasibility check. Otherwise replace the CTA with links to other EN pages.",
+ "recommend_phase1": false,
+ "rationale": "Translation is trivial and safe: ~850 article words (~1,014 including chrome), one 18-line inline script with only a 12-name array, no fetch, and no dependency on dogum-giris.js or other shared calculation scripts. This would be one of the cheapest pages to port.\n\nIt is a weak phase-1 pick on value, though.\n1. It is a generic informational explainer competing against a very crowded SERP. 'What is a rising sign' and 'rising sign meaning' are dominated by cafeastrology, astrology.com, astrostyle, Co-Star/The Pattern blogs, Allure, Cosmopolitan and Refinery29. A new /en/ folder on a Turkish domain has almost no chance to rank with a 850-word overview and 12 one-line descriptions, where competitors run 2-5k words or a full article per rising sign.\n2. The 'interactive' wheel is a teaching toy, not a calculator. It maps clock hour to sign with a fixed formula, floor(h/2)%12 (line 271), so 00:00 is always Aries whatever the birth date. That is astronomically wrong for most visitors. An English user searching 'rising sign calculator' would feel misled. Minor bug: the static fallback shows '06:00 — Koç', but on load the JS sets 06:00 to Yengeç/Cancer (lines 178/182 vs 271).\n3. Every outbound link (CTA, related links, TOC links) goes to Turkish-only pages. In isolation it would be a dead end, so it only makes sense alongside EN versions of the birth chart calculator and the Big Three / houses pages.\nRecommendation: phase 2, as a supporting article for an English birth-chart/rising-sign calculator. If you want it in phase 1 anyway (low cost, topical support), first add a Sun-sign selector so the wheel gives an approximate rising sign: rising ≈ sunSign + floor(((h-6+24)%24)/2), since at sunrise the rising sign is the Sun sign. That turns it into a modest 'rising sign by time of birth' estimator. Also expand the 12-risings section, ship an English menu/footer without menu.js and Asterna, and add an English privacy notice."
+}

@@ -1,0 +1,66 @@
+{
+ "page": "/home/user/kubramindunyasi/hangi-burcsun.html",
+ "proposed_en_slug": "which-zodiac-sign-are-you-quiz.html",
+ "proposed_en_title": "Which Zodiac Sign Are You? 10-Question Personality Quiz + Zodiac Sign Dates Chart",
+ "target_en_queries": [
+  "which zodiac sign are you quiz",
+  "what zodiac sign am I quiz",
+  "zodiac personality quiz",
+  "zodiac sign dates chart"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 455,
+ "inline_js_turkish_string_count": 140,
+ "backend_calls": [
+  {
+   "endpoint": "(none on the page itself) - hangi-burcsun.html has zero fetch() calls; quiz scoring and results are 100% client-side (lines 244-436)",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a",
+   "notes": "Quiz is self-contained: BURCLAR (l.248-297) + SORULAR (l.300-351) + scoring in bitir() (l.386-406). Nothing comes from astro-rapor.onrender.com."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (INDIRECT: inline loader l.111 injects /menu.js, which injects /asterna-widget.js, menu.js l.243-248)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (AI chat answer), mesaj (errors/rate-limit text)",
+   "notes": "server.js l.658+: free-form Turkish prose (canned answers via asternaHazir, LLM answers via asternaCevap, Turkish error messages like 'Bugünlük rapor analizi hakkın doldu'). lib/asterna.js system prompt is Turkish and promotes Turkish pages and paid reports. A dictionary can't translate this. The EN page must not load asterna-widget.js, so EN needs its own menu script, or a language flag in menu.js that skips the widget."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (INDIRECT, asterna-widget.js l.13, only for logged-in users)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "list of the user's purchased Turkish reports",
+   "notes": "Account/report feature, Turkish only. Not relevant to EN. It goes away once the widget is dropped."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (injected by the inline loader at l.111, not a static <script src>)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Not as-is. It holds about 80 Turkish strings: the Keşfet/Burç Yorumları menu groups (e.g. l.137 '✦ Hangi Burçsun?'), the cookie banner and the Raporlar CTA. It also loads GA4 (fine to keep), asterna-widget.js and pwa.js. EN needs an English menu (a separate menu-en.js, or menu.js keyed on <html lang>/path) that lists only EN pages, has no Raporlar/Giriş links and does not load asterna-widget.js."
+  },
+  {
+   "src": "/asterna-widget.js (loaded by menu.js)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It's a Turkish AI chat bubble (about 65 Turkish lines) backed by /api/asterna, which answers in Turkish prose and upsells Turkish reports. Exclude it on EN."
+  },
+  {
+   "src": "/pwa.js (loaded by menu.js after 3 s)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Optional. It has about 15 lines of Turkish install-prompt text. Skip it on EN, or translate the prompt. manifest.json is the Turkish PWA manifest."
+  },
+  {
+   "src": "https://www.googletagmanager.com/gtag/js (GA4 G-QQ0SREFL4L via menu.js)",
+   "has_turkish_ui_strings": false,
+   "needed_for_en": "Yes, keep analytics. The EN menu script should init GA the same way."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "Very little real Turkey-specific content. The topic is universal Western tropical astrology. Items to adapt:\n(1) l.202 says the date ranges in the table are 'commonly used in Turkey'. The ranges themselves (Aries Mar 21–Apr 19 … Pisces Feb 19–Mar 20) match the standard Western ranges used by astrology.com and others, so keep the dates and reword this as 'the commonly used tropical-zodiac dates'.\n(2) Turkish sign names are used as object keys in BURCLAR (l.249-296) and shown directly via #s-ad (l.396) and the share text (l.411). Rename the keys to Aries…Pisces; the Object.entries iteration order sets the tie-break, so keep the same order. Translate elmod values ('Ateş · Öncü' → 'Fire · Cardinal'), the anahtar keywords, yorum, isik and the 10 questions with 40 options. Leave the internal codes ates/toprak/hava/su and oncu/sabit/degisken untouched, because scoring depends on them.\n(3) Table vocabulary: Element / Modality (Öncü = Cardinal, Sabit = Fixed, Değişken = Mutable) / Ruling planet. lib/mcp-dil.js already maps sign and planet names TR→EN.\n(4) All internal links point to Turkish pages: koc-burcu.html…balik-burcu.html (l.206-217), dogum-haritasi-hesaplama.html (l.221), yukselen-burc-nedir.html, ay-burcu-nedir.html (l.223), burclar.html, gunes-ay-yukselen.html, uyum-testi.html (l.227-229). On EN, link only to EN pages that exist in phase 1 (e.g. an EN birth chart or rising sign tool if built) and drop the rest. The sign names in the table become plain text.\n(5) The cookie banner (l.437) cites 'Gizlilik & KVKK', which is Turkish data-protection law. EN needs an English privacy notice (GDPR-style wording) and an EN privacy page link.\n(6) Login/Hesabım swap script (l.159) and the Giriş link: the Supabase account area is Turkish only, so remove both on EN.\n(7) The share text and title (l.411, 414) and toasts (l.418, 420) need English; the share URL is hardcoded to /hangi-burcsun.html and must point to the EN slug.\n(8) <html lang=\"tr\"> becomes en; add hreflang tr/en/x-default pairs and an EN canonical.\nNo cities, TL prices (apart from the upsell block), e-Devlet or timezone logic.",
+ "report_upsells": "Remove all of these on EN:\n(a) l.236 <!--AYBAG:oneri--> aside 'Bu konuda sana özel'. It links /dogum-haritasi-analizi.html ('20+ sayfa PDF · ₺500') and /ask-haritasi-analizi.html ('11+ sayfa PDF · ₺450') plus /fiyatlar.html 'Tüm raporlar ve fiyatları →'. Delete the whole block and the unused #ay-bag-css (l.117-134), or replace it with links to free EN tools.\n(b) l.239 disclaimer sentence linking /#cards 'Raporlar'. Keep only the 'for entertainment; your real sign is determined by birth date' part.\n(c) Nav l.158: 'Raporlar' CTA to /#cards (class am-cta) and 'Giriş'. Also remove whatever report links the menu.js dropdowns add.\n(d) Indirectly, asterna-widget.js (the Asterna chat promotes paid Turkish reports).",
+ "rationale": "Technically this is about the easiest page on the site to put into English. There is no backend call: the quiz is pure client-side JS. That code is roughly 140 Turkish strings (about 650 words): 12 sign names, 12 element/modality labels, 36 keywords, 12 descriptions, 12 'light side' lines, 10 questions with 40 answers, a 'Soru x / y' counter, the share text and 2 toasts. There's also about 315 words of static info section and about 40 words of hero, intro and buttons. Everything sits in plain data objects, so translation won't break the logic as long as the el/mod codes stay unchanged. The content is universal, and the zodiac dates already match the Western standard. The only shared-script work is an English menu that skips asterna-widget.js and pwa.js. That work is shared by every EN page anyway.\n\nThe case against phase 1 is commercial. Unique value and ranking odds are low. 'Which zodiac sign are you quiz' and 'what zodiac sign am I' have real English demand. But BuzzFeed, Cosmopolitan, Playbuzz-style quiz sites, astrology.com and dozens of quiz farms dominate those results. 'Zodiac sign dates' is owned by astrology.com, Cafe Astrology, Allure, Wikipedia and similar sites. A generic 10-question quiz on a new /en/ subfolder with Turkish domain authority is very unlikely to rank. Its main upside is social sharing (navigator.share) and being an entry point that links to EN tools. On top of that, most of its internal links (12 sign pages, rising and moon sign explainers, compatibility) would be dead on EN unless those pages are also built.\n\nRecommendation: leave it out of the core phase 1, which should go to client-side calculators with distinctive output (birth chart, rising or moon sign and so on, if their backends allow English output). Use it as a cheap filler or early phase 2 page. If it does go in, add a client-side birth-date sign finder (a trivial date→sign lookup) so it also targets 'what is my zodiac sign' and 'zodiac sign calculator'. Estimated effort is 1–2 hours.\n\nMinor notes for the translator. Question 8 (l.336) has two water answers and no earth answer, and question 9 (l.341) has two earth answers and no water answer. Ties go to whichever sign comes first in object order (Aries). Both are harmless but worth knowing.",
+ "recommend_phase1": false
+}

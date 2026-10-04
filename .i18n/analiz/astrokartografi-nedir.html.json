@@ -1,0 +1,61 @@
+{
+ "page": "/home/user/kubramindunyasi/astrokartografi-nedir.html",
+ "proposed_en_slug": "what-is-astrocartography.html",
+ "proposed_en_title": "What Is Astrocartography? Your Birth Chart on the World Map",
+ "target_en_queries": [
+  "what is astrocartography",
+  "astrocartography meaning",
+  "astrocartography lines explained",
+  "how does astrocartography work"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 605,
+ "inline_js_turkish_string_count": 1,
+ "backend_calls": [
+  {
+   "endpoint": "(none on the page itself) - astrokartografi-nedir.html has no fetch() and no tool",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a",
+   "notes": "This is a plain article (lines 74-116). The only inline scripts are the auth-menu swap (line 72), the lazy menu.js loader (line 73) and the cookie-banner hide (line 118). The astrocartography engine (backend lib/astrokartografi.js) has no public endpoint in server.js. It is only used by the paid report (lib/yeni-raporlar.js), so there is no free map that an EN page could show."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (indirect: menu.js line 246 injects /asterna-widget.js)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (chat answer), mesaj (errors such as 'Bugünlük rapor analizi hakkın doldu')",
+   "notes": "server.js:658. The answers are free-form Turkish prose: canned replies from asternaHazir plus AI replies, and the system prompt in lib/asterna.js:115 forces 'ÜSLUP: Türkçe'. A dictionary cannot translate this. The EN page should not load the widget unless the backend gets an EN mode."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (indirect, via asterna-widget.js)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "titles of the logged-in member's Turkish reports; 401 mesaj 'Raporlarını görmek için giriş yapmalısın.'",
+   "notes": "server.js:643. Members only, and it lists Turkish paid reports. EN pages do not need it."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (no static <script src>; injected by the inline loader at line 73)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Needed, but as an EN variant. It renders the whole top nav with Turkish labels (Keşfet, Burç Yorumları, Hesabım, Raporlar -> /#cards, the tool list), the KVKK cookie banner text, and it loads GA, asterna-widget.js and pwa.js. EN pages need either a language branch on /en/ paths (EN labels, links only to EN pages, a language switcher, no /#cards Raporlar CTA, no Asterna) or a separate /en/menu.js. Also translate the static nav markup on line 71 and the 'Hesabım' string on line 72."
+  },
+  {
+   "src": "/asterna-widget.js (loaded by menu.js:246)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It is a Turkish AI chat that calls /api/asterna and /api/raporlarim, and the backend replies in Turkish. Skip it on /en/."
+  },
+  {
+   "src": "/pwa.js (loaded by menu.js:254)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Optional. The install prompt is Turkish ('Şimdi değil', and so on), and manifest.json is the Turkish app. Skip it on EN pages, or add EN strings."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "The article body (about 456 words, lines 79-100) is universal: Jim Lewis, the 1970s, and the themes of Venus, Jupiter, Sun and Saturn. Turkey-specific parts are all in the surrounding elements. (1) The upsell copy says '81 il ve 170 dünya şehri tarama' and shows ₺600 and ₺500 prices (line 108). (2) The cookie banner links to gizlilik-kvkk.html, which follows Turkish KVKK law (line 117); EN needs an EN privacy/cookie notice written for GDPR. (3) The date is in Turkish format, '15 Ağustos 2026 · 6 dk okuma' (line 77); use 'August 15, 2026 · 6 min read'. (4) The 'Yıldız Günlüğü' blog kicker and back link (lines 75 and 115) point to a Turkish blog index; replace with an EN articles index or remove. (5) The JSON-LD Article and FAQPage blocks (lines 14-15, 8 Turkish strings) need translating, plus canonical, og tags, hreflang tr/en/x-default and html lang='en'. (6) The tone is informal Turkish 'sen'; translate to natural 'you'. (7) Trademark: 'Astro*Carto*Graphy' (A*C*G) is a registered trademark associated with Jim Lewis, so use the generic 'astrocartography' and do not suggest any affiliation. Do not name the reference astrology site anywhere in EN copy.",
+ "report_upsells": "Line 71 nav: 'Raporlar' CTA links to /#cards (Turkish paid report cards). Line 101 .kapanis: the closing paragraph links 'kişiye özel raporun' to /astrokartografi-analizi.html (paid). Line 108 <!--AYBAG:oneri--> aside: two paid cards, /astrokartografi-analizi.html (Astrokartografi, 13+ page PDF, ₺600) and /dogum-haritasi-analizi.html (20+ page PDF, ₺500), plus a 'Tüm raporlar ve fiyatları →' link to /fiyatlar.html. Line 111 .ilgili <!--AYBAG:ilgili--> block: links to both paid report pages, /dogum-haritasi-hesaplama.html and /hangi-sehre-tasinmaliyim.html (Turkish article). All of these must be removed on EN. The closing box needs a non-sales ending, or a link to EN free tools such as an EN birth chart calculator if that ships in phase 1. Related links should point only to EN pages.",
+ "recommend_phase1": false,
+ "rationale": "Translation would be easy and safe: about 456 words of article text, no tool, no fetch, and one Turkish string in inline JS ('Hesabım', line 72). But the page has almost no value for an English visitor, so it should not use a phase-1 slot. (1) There is no tool. 'Astrocartography' is a high-demand, social-media-driven English topic, but the SERP is dominated by free interactive maps (astro-seek, astrocartography-focused apps and sites, TimePassages) and long explainers (Cafe Astrology, astrology.com, Astrology King, and magazines such as Vogue, Cosmopolitan and Allure that list every planet line). A thin, generic, somewhat repetitive explainer from a new EN domain (the sections 'Ne İşe Yarar' and 'Nasıl Kullanmalı' overlap) has almost no chance of ranking. (2) Every call to action on the page sells the Turkish-only paid astrocartography report (₺600). Once those are removed, an EN reader has nowhere to go: the site has no free astrocartography map, hangi-sehre-tasinmaliyim.html is also just an article, and the backend engine lib/astrokartografi.js has no public endpoint. (3) Nothing is Turkey-specific in the body, so the 'universal' box is ticked, but that alone is not enough. Better plan: put this in phase 2, paired with a new free client-side EN astrocartography map tool. The math in lib/astrokartografi.js lines 3-11 is deterministic (MC = α − GAST, IC = MC + 180°, ASC/DSC via cos H0 = −tanφ·tanδ) and astronomy-engine runs in the browser, so that tool would have unique value. Expand this article at the same time to 1,200+ words with meanings for each planet line (10 planets × ASC/DSC/MC/IC) and use it as the supporting explainer. If a cheap filler page is still wanted in phase 1, it would take under an hour, but expect little traffic."
+}

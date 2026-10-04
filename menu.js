@@ -12,6 +12,26 @@
    BURÇ YORUMLARI MENÜSÜ = BASİT AÇILIR: tıklayınca doğrudan iki seçenek
    görünür — Günlük ve Haftalık. Kategori/akordiyon yoktur. */
 (function(){
+  // ——— DİL: /en/ altındaki sayfalar İngilizce menü, İngilizce çerez onayı ve dil seçiciyle çalışır ———
+  var EN = /^\/en(\/|$)/.test(location.pathname);
+  // Türkçe sayfa → İngilizce karşılığı (yeni İngilizce sayfa eklenince tek satır ekle; ters eşleme otomatik)
+  var CEVIRI = {
+    "/": "/en/",
+    "/dogum-haritasi-hesaplama.html": "/en/birth-chart-calculator.html",
+    "/lilith-burcu-hesaplama.html": "/en/black-moon-lilith-calculator.html",
+    "/ay-takvimi.html": "/en/moon-calendar.html",
+    "/yasam-yolu.html": "/en/life-path-number-calculator.html",
+    "/uyum-testi.html": "/en/zodiac-compatibility-test.html",
+    "/gizlilik-kvkk.html": "/en/privacy.html"
+  };
+  function yolNormal(p){ return (p === "/index.html") ? "/" : ((p === "/en/index.html") ? "/en/" : p); }
+  function karsiliklar(){
+    var p = yolNormal(location.pathname), tr, en;
+    if(EN){ en = p; tr = "/"; for(var k in CEVIRI){ if(CEVIRI[k] === p){ tr = k; break; } } }
+    else { tr = p; en = CEVIRI[p] || "/en/"; }
+    return { tr: tr, en: en };
+  }
+
   // ——— Uygulama olarak ekleme (PWA): Android'in kurulum sinyalini erkenden yakala; davet pwa.js'te ———
   window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); window.__ayKurulum = e; try{ document.dispatchEvent(new Event("ay-kurulum")); }catch(x){} });
 
@@ -27,6 +47,11 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     window.gtag = gtag;
+    if(EN){
+      // AB/İngiltere ziyaretçileri: varsayılan "reddedildi"; çerez bandında "Accept" denirse açılır.
+      var onay = onayDurumu();
+      gtag("consent", "default", { analytics_storage: onay === "granted" ? "granted" : "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
+    }
     gtag("js", new Date());
     gtag("config", GA_ID);
     sonraYukle(function(){
@@ -52,7 +77,13 @@
 
   // ——— Çerez bilgilendirme bandı: bir kez gösterilir, "Tamam"a basınca hatırlanır ———
   var CEREZ_KEY = "ay_cerez_bilgi_v1";
-  function cerezGorulduMu(){ try{ return localStorage.getItem(CEREZ_KEY) === "1"; }catch(e){ return false; } }
+  var ONAY_KEY = "ay_cerez_onay_v1"; // yalnızca İngilizce sayfalar: "granted" | "denied"
+  function onayDurumu(){ try{ return localStorage.getItem(ONAY_KEY) || ""; }catch(e){ return ""; } }
+  function onayKaydet(v){
+    try{ localStorage.setItem(ONAY_KEY, v); localStorage.setItem(CEREZ_KEY, "1"); }catch(e){}
+    if(typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: v });
+  }
+  function cerezGorulduMu(){ try{ return EN ? !!localStorage.getItem(ONAY_KEY) : localStorage.getItem(CEREZ_KEY) === "1"; }catch(e){ return false; } }
   function cerezKapat(){ try{ localStorage.setItem(CEREZ_KEY, "1"); }catch(e){} }
 
   function cerezBandiGoster(){
@@ -63,7 +94,13 @@
       hazir.setAttribute("data-bagli","1");
       var hb = hazir.querySelector(".ay-cerez-kabul");
       if(hb) hb.addEventListener("click", function(){
-        cerezKapat();
+        if(EN) onayKaydet("granted"); else cerezKapat();
+        hazir.classList.remove("ac-in");
+        setTimeout(function(){ if(hazir.parentNode) hazir.parentNode.removeChild(hazir); }, 320);
+      });
+      var hr = hazir.querySelector(".ay-cerez-red");
+      if(hr) hr.addEventListener("click", function(){
+        onayKaydet("denied");
         hazir.classList.remove("ac-in");
         setTimeout(function(){ if(hazir.parentNode) hazir.parentNode.removeChild(hazir); }, 320);
       });
@@ -72,9 +109,16 @@
     var bar = document.createElement("div");
     bar.id = "ay-cerez";
     bar.setAttribute("role","note");
-    bar.setAttribute("aria-label","Çerez bilgilendirmesi");
-    bar.innerHTML =
-        '<div class="ay-cerez-in">'
+    bar.setAttribute("aria-label", EN ? "Cookie notice" : "Çerez bilgilendirmesi");
+    bar.innerHTML = EN
+      ? '<div class="ay-cerez-in">'
+      +   '<p class="ay-cerez-tx">With your permission, we use Google Analytics cookies to count visits anonymously and improve the site. See our <a href="/en/privacy.html">Privacy Policy</a>.</p>'
+      +   '<div class="ay-cerez-bt">'
+      +     '<button type="button" class="ay-cerez-red">Decline</button>'
+      +     '<button type="button" class="ay-cerez-kabul">Accept</button>'
+      +   '</div>'
+      + '</div>'
+      : '<div class="ay-cerez-in">'
       +   '<p class="ay-cerez-tx">Deneyimini iyileştirmek ve ziyaret istatistikleri için çerezler kullanıyoruz. Ayrıntılar için <a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a> metnimize göz atabilirsin.</p>'
       +   '<div class="ay-cerez-bt">'
       +     '<button type="button" class="ay-cerez-kabul">Tamam</button>'
@@ -82,11 +126,13 @@
       + '</div>';
     document.body.appendChild(bar);
     requestAnimationFrame(function(){ bar.classList.add("ac-in"); });
+    function kapatBar(){ bar.classList.remove("ac-in"); setTimeout(function(){ if(bar.parentNode) bar.parentNode.removeChild(bar); }, 320); }
     bar.querySelector(".ay-cerez-kabul").addEventListener("click", function(){
-      cerezKapat();
-      bar.classList.remove("ac-in");
-      setTimeout(function(){ if(bar.parentNode) bar.parentNode.removeChild(bar); }, 320);
+      if(EN) onayKaydet("granted"); else cerezKapat();
+      kapatBar();
     });
+    var red = bar.querySelector(".ay-cerez-red");
+    if(red) red.addEventListener("click", function(){ onayKaydet("denied"); kapatBar(); });
   }
 
   // GA herkese açık yüklenir; bant yalnızca bilgi amaçlı gösterilir.
@@ -166,6 +212,27 @@
     { href:"/yildiz-gunlugu.html", ad:"Yıldız Günlüğü" }
   ];
 
+  // ——— İNGİLİZCE MENÜ (/en/ sayfaları) — yalnızca İngilizcesi olan ücretsiz araçlar ———
+  var ARACLAR_EN = [
+    { href:"/en/birth-chart-calculator.html",          ad:"✦ Birth Chart Calculator",      alt:"Your free natal chart with houses & aspects" },
+    { href:"/en/black-moon-lilith-calculator.html",    ad:"✦ Black Moon Lilith Calculator", alt:"Your Lilith sign, degree and house" },
+    { href:"/en/moon-calendar.html",                   ad:"✦ Moon Calendar",               alt:"Today's moon phase, full & new moons" },
+    { href:"/en/life-path-number-calculator.html",     ad:"✦ Life Path Number",            alt:"Numerology from your birth date" },
+    { href:"/en/zodiac-compatibility-test.html",       ad:"✦ Zodiac Compatibility",        alt:"How well do your signs match?" }
+  ];
+
+  // ——— Dil seçici (sağ üst): dünya simgesi + etkin dil; menüde Türkçe / English ———
+  var GLOBE = '<svg class="am-globe" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M2.8 12h18.4M12 2.8c2.5 2.6 3.8 5.7 3.8 9.2s-1.3 6.6-3.8 9.2M12 2.8C9.5 5.4 8.2 8.5 8.2 12s1.3 6.6 3.8 9.2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
+  function dilHTML(){
+    var k = karsiliklar();
+    return '<div class="am-dropdown am-lang">'
+      + '<button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false" aria-label="'+(EN ? 'Language: English' : 'Dil: Türkçe')+'">'+GLOBE+(EN ? 'EN' : 'TR')+' <span class="am-caret">▾</span></button>'
+      + '<div class="am-drop-menu" role="menu">'
+      +   '<a href="'+k.tr+'" hreflang="tr" lang="tr" role="menuitem"'+(EN ? '' : ' aria-current="true"')+'>Türkçe</a>'
+      +   '<a href="'+k.en+'" hreflang="en" lang="en" role="menuitem"'+(EN ? ' aria-current="true"' : '')+'>English</a>'
+      + '</div></div>';
+  }
+
   var CSS = ''
   + '.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}'
   + '.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}'
@@ -196,6 +263,8 @@
   + '.am-sub{display:block;font-size:12px;color:#9a8fb8;margin-top:2px}'
   + '.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}'
   + '.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}'
+  + '.am-globe{display:block;opacity:.9}.am-lang .am-drop-menu{min-width:150px}.am-drop-menu a[aria-current="true"]{color:#e7cf95;background:rgba(217,185,106,.08)}'
+  + '.ay-cerez-red{background:none;border:1px solid #4a3f6b;color:#f0e6d2;font:inherit;font-size:13.5px;padding:8px 20px;border-radius:20px;cursor:pointer}.ay-cerez-red:hover{border-color:#d9b96a}'
   + '@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}'
   // Mobilde menü sayfanın ÜSTÜNE yüzer (düzeni itmez) ve menü çubuğunun altında TAM ORTADA açılır.
   // .am-dropdown static → menü .am-links'e göre konumlanır (ekran ortası), kenara taşmaz.
@@ -240,7 +309,8 @@
 
     // Asterna sağ-alt yardımcı balonu — tüm sayfalara buradan tek satırla yüklenir.
     // Sayfa çizildikten hemen sonra yüklenir (ilk görüntüyü geciktirmesin).
-    sonraYukle(function(){
+    // (Asterna ve uygulama daveti Türkçe çalışır; İngilizce sayfalarda yüklenmez.)
+    if(!EN) sonraYukle(function(){
       if(document.getElementById("asterna-widget-js")) return;
       var aw = document.createElement("script");
       aw.id = "asterna-widget-js"; aw.src = "/asterna-widget.js"; aw.async = true;
@@ -248,7 +318,7 @@
     }, 0, true);
 
     // Uygulama (PWA) desteği: sayfa tamamen yüklendikten 3 sn sonra — ilk görüntüyü ve hız puanını etkilemez.
-    sonraYukle(function(){
+    if(!EN) sonraYukle(function(){
       if(document.getElementById("ay-pwa-js")) return;
       var pw = document.createElement("script");
       pw.id = "ay-pwa-js"; pw.src = "/pwa.js"; pw.async = true;
@@ -289,8 +359,20 @@
         + '</div>'
       : '<a href="/giris.html">Giriş</a>';
 
-    var html = ''
-    + '<nav class="am-nav">'
+    var html = EN
+    ? '<nav class="am-nav">'
+    +   '<a class="am-brand" href="/en/">✦ ASTRO YUVAM</a>'
+    +   '<div class="am-links">'
+    +     '<div class="am-dropdown">'
+    +       '<button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Free Tools <span class="am-caret">▾</span></button>'
+    +       '<div class="am-drop-menu" role="menu">'+linkItemsHTML(ARACLAR_EN, simdi)+'</div>'
+    +     '</div>'
+    +     '<a href="/en/moon-calendar.html">Moon Calendar</a>'
+    +     '<a href="/en/birth-chart-calculator.html" class="am-cta">Birth Chart</a>'
+    +     dilHTML()
+    +   '</div>'
+    + '</nav>'
+    : '<nav class="am-nav">'
     +   '<a class="am-brand" href="/">✦ ASTRO YUVAM</a>'
     +   '<div class="am-links">'
     +     '<div class="am-dropdown">'
@@ -304,6 +386,7 @@
     +     linklerHTML
     +     hesapHTML
     +     '<a href="/#cards" class="am-cta">Raporlar</a>'
+    +     dilHTML()
     +   '</div>'
     + '</nav>';
 

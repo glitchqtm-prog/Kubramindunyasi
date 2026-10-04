@@ -1,0 +1,61 @@
+{
+ "page": "/home/user/kubramindunyasi/kader-matrisi-nedir.html",
+ "proposed_en_slug": "what-is-destiny-matrix.html",
+ "proposed_en_title": "What Is the Destiny Matrix? How the 22-Arcana Birth Date Chart Works",
+ "en_search_potential": "high",
+ "en_competition": "high",
+ "target_en_queries": [
+  "what is the destiny matrix",
+  "destiny matrix explained",
+  "matrix of destiny meaning",
+  "how to read a destiny matrix chart"
+ ],
+ "visible_word_count": 470,
+ "inline_js_turkish_string_count": 1,
+ "backend_calls": [
+  {
+   "endpoint": "(none on the page itself) - the page has no fetch() and no tool",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a",
+   "notes": "kader-matrisi-nedir.html is a static ~340-word blog article (lines 70-101). Its only inline scripts are the logged-in menu swap (line 68), the deferred loader that injects /menu.js (line 69), and the cookie-banner hide (line 103). Nothing on the page calls astro-rapor.onrender.com."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (indirect: menu.js line ~246 injects /asterna-widget.js, which calls it at asterna-widget.js:254)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (chat answer), mesaj (errors and rate-limit notices), kaynak",
+   "notes": "server.js:658. Canned answers come from asternaHazir() and AI answers from asternaCevap() in lib/asterna.js. Both are free-form Turkish prose, and the error strings are hard-coded Turkish, e.g. 'Raporunu analiz edebilmem için giriş yapman gerekiyor.' A dictionary cannot translate any of this. The EN page must not load the Asterna widget, or the backend needs an English mode."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (indirect, via asterna-widget.js:341, logged-in users only)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "list of the user's purchased (Turkish) report titles; error mesaj",
+   "notes": "server.js:643. This lists purchased Turkish PDF reports and is irrelevant to English visitors. Exclude it together with the widget."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (not a <script src> tag; injected dynamically by the inline loader at line 69)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Not as is. It holds the Turkish GRUPLAR menu (Keşfet / Burç Yorumları, ~984 Turkish characters), a Turkish cookie banner, GA4 setup, and it auto-loads asterna-widget.js and pwa.js. The EN pages need their own small EN menu (e.g. /en/menu.js) with the language switcher, GA, and EN cookie text, and without the Asterna and PWA loaders."
+  },
+  {
+   "src": "/asterna-widget.js (injected by menu.js)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It is a Turkish AI chat bubble backed by /api/asterna, which returns Turkish prose, and it also upsells Turkish reports."
+  },
+  {
+   "src": "/pwa.js (injected by menu.js after 3s)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No, at least for phase 1. It shows a Turkish 'Ana ekrana ekle' install prompt and adds a Turkish menu item."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "The article prose has no Turkey-specific content: no cities, no 81 provinces, no e-Devlet, and no time zone or DST logic. Things to adapt: (1) The upsell aside shows prices in TL (₺400 / ₺500, line 93). Remove it. (2) The cookie banner (line 102) links to /gizlilik-kvkk.html. KVKK is Turkish data-protection law, so the EN version needs a generic English privacy page (GDPR-style) or must link to one. (3) The date is written in Turkish style ('9 Ağustos 2026 · 6 dk okuma') and the kicker reads 'Yıldız Günlüğü'. Localize to 'August 9, 2026 · 6 min read' / 'Journal'. (4) The JSON-LD headline and description and the og/meta tags are Turkish. Rewrite them, set lang=\"en\", and add hreflang tr/en plus x-default and a canonical pointing to /en/. (5) The arcana names in the text ('Büyücü', 'Aptal') must become standard English tarot names (The Magician, The Fool). In this Ladini-style system The Fool is number 22, while in classic tarot it is 0. English readers will notice the difference, so explain it in one sentence. The source of truth for numbering is /home/user/astro-rapor-backend/lib/matrix.js ARCANA. (6) The Turkish word 'kader' ('fate') wordplay in line 85 ('Adında kader geçse de...') does not translate directly. Rephrase it as 'Despite the name, it is not fixed fate...'. Per the user, none of the copy should name the external reference site.",
+ "report_upsells": "Remove or replace all of the following. (a) The <!--AYBAG:oneri--> aside (line 93): two cards selling the paid Turkish PDFs /kader-matrisi-analizi.html ('24+ sayfa PDF · ₺400') and /kader-matrisi-uyum-analizi.html ('30+ sayfa PDF · ₺500'), plus a link to /fiyatlar.html. (b) The paragraph at line 87 directly promotes 'Astro Yuvam'ın Kader Matrisi raporu'. Rewrite it to point to a free tool or the arcana guide instead. (c) In the 'İlgili İçerikler' row (line 96): the link to /#cards ('Kişiye özel Kader Matrisi raporunu al') and the <!--AYBAG:ilgili--> links to /kader-matrisi-analizi.html and /kader-matrisi-uyum-analizi.html. The other related links (/numeroloji-nedir.html, /numerolojide-sayilarin-anlami.html, /arkanalar.html, /gunun-kartin.html) point to Turkish pages, so keep them only if EN versions exist. (d) In the top nav (line 67): the 'Raporlar' CTA to /#cards and the Giriş/Hesabım login, which lead to Turkish purchase and account flows. (e) The Asterna widget loaded via menu.js also upsells reports. Once all of this is stripped, the English page has no conversion target unless a free English Destiny Matrix calculator exists.",
+ "recommend_phase1": false,
+ "rationale": "Translating this page is cheap and safe, but on its own it is weak for phase 1. Pros: it is a static article of about 340 words of prose (about 470 visible words including nav, upsell and footer), with only one Turkish string in inline JS ('Hesabım', line 68). It makes no backend calls of its own and has no Turkey-specific logic. The topic is universal, and English demand for 'destiny matrix' is real and still trending since its TikTok spread in 2022-23. Cons: (1) The page exists mainly to funnel readers to the paid Turkish Kader Matrisi PDFs. Once the AYBAG aside, line 87, the /#cards links and the nav CTA are removed, it has no unique value and no destination. Its only free follow-up (/arkanalar.html) is Turkish. (2) It is thin, with some repetition (line 85 restates line 77). The English results for these queries are crowded by dedicated destiny-matrix calculator sites that pair a free chart generator with long 22-arcana guides, plus lifestyle-magazine explainers and Reddit threads. A 340-word explainer with no calculator is unlikely to rank. (3) Search intent for 'destiny matrix' is mostly 'calculate mine', and this page cannot do that. Better plan: the arithmetic already exists as pure, prose-free code in /home/user/astro-rapor-backend/lib/matrix.js (reduce22, personalMatrix, armNodes). It can be ported client-side as a free English Destiny Matrix calculator, with standard English tarot names and short keyword meanings replacing the Turkish ARCANA isik/golge strings. That would be a genuinely useful tool with no backend dependency. If that calculator is built, a translated and expanded (~1,000+ words) version of this article makes a good cheap companion page linking to it, but as a later or optional add-on, not a core phase-1 page. Note: the EN page must not load the Turkish menu.js chain (asterna-widget.js, pwa.js), and the cookie link to /gizlilik-kvkk.html needs an English privacy page."
+}

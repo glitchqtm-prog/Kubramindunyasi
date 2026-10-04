@@ -1,0 +1,64 @@
+{
+ "page": "haritada-evlilik-gostergeleri.html",
+ "proposed_en_slug": "marriage-indicators-birth-chart.html",
+ "proposed_en_title": "Marriage Indicators in Your Birth Chart: 7th House, Juno & Vertex Calculator",
+ "target_en_queries": [
+  "marriage indicators in birth chart",
+  "7th house calculator / descendant sign calculator",
+  "juno sign calculator",
+  "when will I get married astrology calculator"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 3770,
+ "inline_js_turkish_string_count": 210,
+ "backend_calls": [
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/harita (called from evlilik-hesap.js:54; handler at astro-rapor-backend/server.js:745-835)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "The page uses only gezegenler[].ad/burc/derece/ev/retro, yukselen, mc, evler (DSC = 7th cusp, which planets sit in the 7th) and ok. Sign names are shown by looking up the Turkish 'burc' in the local BN array. Planet names are shown from the Turkish 'ad' key. Degrees and house numbers are shown as numbers. On failure, j.mesaj or j.errors[] is shown word for word in .ev-msg (evlilik-hesap.js:55 and :182). Not shown: gezegenler[].yorum (Turkish prose from noktaYorumu), not, dogumBilgi, acilar, elementDengesi. cark is deleted on the client (line 56).",
+   "notes": "Turkish in the response: burc (sign names), ad (planet names such as 'Kuzey Ay Düğümü' and 'Chiron (yaklaşık)'), element, yorum and not (prose, but this page ignores them), dogumBilgi.tarih (fmtTarihTR) and dogumBilgi.yer (geocoded with language=tr, so country names come back in Turkish), the cark SVG title, and all error text. The 429 message also says 'Raporlar'a göz atabilirsin', which is an upsell. Every field the page displays is fixed vocabulary, so a TR->EN map in the EN page is enough (mcp-dil.js already has the sign and planet pairs to copy). The EN page must ignore mesaj/errors and show its own English messages based on HTTP status (400, 429, 500, or network failure). Gotchas: (1) The response already includes 'Juno' (Swiss Ephemeris, correct timezone) in gezegenler, but the page ignores it and recomputes Juno in the browser using a Turkish-timezone approximation (trOfset, evlilik-hesap.js:34). The EN page should use the server's Juno and drop juno-veri.js. (2) If geocoding fails, lib/geo.js:5 silently falls back to 'Ankara (varsayılan)' and the page never shows the resolved place. The EN page should show 'Calculated for: …' and warn when the place contains '(varsayılan)'. (3) The 60/day per-IP rate limit is shared with the TR site, and a cold start on the Render free tier can take 30-50 s. (4) The localStorage cache ay_natal_v1 is shared across pages on the same origin. That is harmless because only the mapping differs. No backend change is needed."
+  },
+  {
+   "endpoint": "GET https://geocoding-api.open-meteo.com/v1/search (place suggestions in shared /dogum-giris.js:242; language comes from <html lang>)",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "Place suggestion list: name, admin1, country",
+   "notes": "With <html lang=\"en\"> the results come back in English automatically. The surrounding UI strings in dogum-giris.js are hard-coded Turkish, though (see shared_scripts). Only relevant if the EN page keeps place autocomplete."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/evlilik-hesap.js (defer, line 524)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Yes, but as a fork (e.g. /en/marriage-indicators.js). Do not edit the TR file. About 210 user-facing strings: the T dictionary has 88 interpretation paragraphs (~1,400 words, the same text as the article sections, so translate once and reuse) plus yonetici and modern values; the arrays BN (12 signs), EL (4), AYL (12 months) and PG (13 planet names); and about 75 labels and sentence templates. Keep the Turkish keys internally (BN.indexOf is used to parse server sign names) and add display maps. Changes needed: ordinal helper (7th, 1st…) for template strings such as `yon + ', ' + BN + ' burcunda, ' + ev + '. evde'` and 'Güneş tutulması N. evinde'; replace trT() with en-US date formatting; take Juno from server gezegenler instead of trOfset+juno-veri; English error messages; remove the synastry button (line 149, /sinastri-uyum-analizi.html) and the /uyum-testi.html link (line 142); new share text and URL; placeholder 'Örn. İzmir' -> 'e.g. London, United Kingdom'; drop the Supabase member autofill ('Üye bilgilerin dolduruldu')."
+  },
+  {
+   "src": "/dogum-giris.js (defer, line 341)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Optional. It replaces native date/time inputs with typed Turkish GG.AA.YYYY / SS:DD fields and has Turkish validation messages, month and day names, the placeholder 'Şehir, Ülke — örn. İzmir, Türkiye' (line 269) and 'ilçesi · Türkiye' suggestions (line 291). Only the geocoding language follows <html lang>. Simplest option for EN: drop the data-dg attributes and use native date/time inputs. Keep place autocomplete only through a small EN fork or i18n table, since disambiguation matters given the silent Ankara fallback."
+  },
+  {
+   "src": "/menu.js (lazy-loaded by inline loader, line 347)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It builds the Turkish nav, which includes the 'Raporlar' (/#cards) CTA. The EN page needs its own English header with the language switcher."
+  },
+  {
+   "src": "/juno-veri.js (lazy-loaded by evlilik-hesap.js:180)",
+   "has_turkish_ui_strings": false,
+   "needed_for_en": "No. It is a base64 Juno table covering 1930-2031. Use the server-side Swiss Ephemeris Juno already in the /api/harita response."
+  },
+  {
+   "src": "/astronomy.browser.min.js (lazy-loaded by evlilik-hesap.js:152)",
+   "has_turkish_ui_strings": false,
+   "needed_for_en": "Yes. It computes Jupiter and Saturn transits over the 7th house and DSC and the eclipses on the 1st-7th axis for the next 6 years in the browser. This part has no time-zone dependence."
+  }
+ ],
+ "turkey_specific_content": "The topic itself is universal Western tropical astrology (Placidus houses). The Turkey-specific parts are technical and small, but one affects accuracy:\n(1) evlilik-hesap.js:34 trOfset() assumes Turkey's timezone history (UTC+2/+3 with Turkish DST) to build the Julian Day for the browser's Juno calculation (and Vertex obliquity, where the effect is negligible). A birth in New York or LA ends up 7-11 h off, which moves Juno by up to ~0.1-0.3° and occasionally puts it in the wrong sign or house near a cusp. Fix: use the server's 'Juno' entry, which is computed from the geocoded IANA timezone.\n(2) Inputs: dogum-giris.js uses Turkish DD.MM.YYYY typed fields and Turkish district (ilçe) suggestions. The placeholder 'Örn. İzmir' should become 'e.g. London, United Kingdom', with native inputs.\n(3) The backend geocoder runs with language=tr and silently falls back to Ankara. Show the resolved place to English users.\n(4) In the text: 'nüfus kaydındaki ya da hastane belgesindeki saati' (line 477 and the HowTo JSON-LD) should become 'birth certificate or hospital record'. The 'Halk arasında evlilik noktası' FAQ (line 499) frames a Turkish folk term; reframe it as 'Where is marriage in my birth chart?'. 'Solar harita' should become 'Solar Return chart'. Dates ('27 Eylül 2026', '24 dk okuma') need English formatting.\n(5) Chrome: the cookie banner links to Gizlilik & KVKK (Turkish law), so it needs a generic or GDPR privacy notice in English. The share text hard-codes the Turkish URL. The Supabase login and profile autofill ('Hesabım', 'Üye bilgilerin dolduruldu') should be dropped on EN.\n(6) Signs and planets appear in Turkish throughout, including the ascendant/DSC/ruler table at line 375.\nThere are no TL prices except in the upsell block, and no e-Devlet or 81-il content. Optional for an English audience: a short note that this is Western/tropical, not Vedic/sidereal, because most English 'marriage in birth chart' searchers are Vedic-oriented.",
+ "report_upsells": "These must all be removed or replaced on the EN page:\n(a) Nav CTA 'Raporlar' -> /#cards (line 345, also injected by menu.js).\n(b) The <!--AYBAG:oneri--> aside (line 518) selling 'Aşk Haritası 11+ sayfa PDF · ₺450' (/ask-haritasi-analizi.html) and 'İlişki Haritası 14+ sayfa PDF · ₺500' (/iliski-haritasi-analizi.html), plus the 'Tüm raporlar ve fiyatları' link to /fiyatlar.html.\n(c) The <!--AYBAG:ilgili--> links in the related row (line 519) to the same two paid reports.\n(d) The .cta-kutu (lines 509-513) 'İlişki uyumu analizini incele' -> /sinastri-uyum-analizi.html, which is a paid 18+ page synastry PDF (₺450/₺500).\n(e) The in-text link 'Solar Return analizine' -> /solar-return-analizi.html (line 475), a paid Solar Return report (₺250-400).\n(f) Inside the tool result (evlilik-hesap.js:149), the button 'İkimizin uyumunu analiz et →' -> /sinastri-uyum-analizi.html (paid).\n(g) The server's 429 message says 'Dilersen Raporlar'a göz atabilirsin'; replace it with an English client-side message.\nAlso re-point or remove the links to Turkish-only free pages: /uyum-testi.html (evlilik-hesap.js:142), /dogum-haritasi-hesaplama.html, /venus-mars-burcu.html, /juno-nedir.html, and the related row (dugun-tarihi-hesaplama, 2027-evlenecek-burclar, sinastri-nedir, astrolojide-evler). Link only to EN pages that exist.",
+ "translation_effort": "large",
+ "translation_risk": "medium",
+ "recommend_phase1": false,
+ "rationale": "Strengths: this is one of the site's best tools. One form returns the descendant sign, the 7th-house ruler with its sign and house, planets in the 7th, Venus, Juno, Vertex with a highlighted mini-wheel, and a dated 6-year timeline (Jupiter and Saturn entering the 7th, crossing the DSC, Jupiter on natal Venus, eclipses on the 1st-7th axis). Big Western sites offer these pieces separately (astro-seek, cafeastrology, Juno and Vertex calculators). Few combine them with timing, so the unique value is real. It can work fully in English without backend changes: /api/harita returns only fixed vocabulary that the page actually displays (sign and planet names, degrees, houses), all interpretation text lives in the JS T dictionary, and the server's Turkish prose (yorum, not) is ignored.\n\nWhy not phase 1:\n(1) Effort is the largest of any likely candidate. The article is ~3,740 words plus ~700 words of FAQ/HowTo JSON-LD, and the JS fork has ~210 strings, though its 88 interpretation paragraphs repeat the article text. Expect ~4,000+ unique words to translate.\n(2) The risk is medium, not low. The result sentences are built by concatenating Turkish grammar and need English ordinals and a rewrite. The Juno source must change, because the browser calculation assumes Turkish time zones and will occasionally be wrong for foreign births. Errors must be remapped because the server returns Turkish mesaj and errors[]. A paid synastry button is embedded in the result HTML. Place handling must change because of the silent Ankara fallback and Turkish-only autocomplete UI.\n(3) English demand for 'marriage in birth chart' / 'when will I get married astrology' is huge, but the SERPs are dominated by Vedic/sidereal sites (AstroTalk, AstroSage, Astroyogi, ClickAstro) and big Western publishers (cafeastrology, astrostyle, astro-seek, astrology.com). A new EN section on a Turkish-authority domain is unlikely to rank for the head terms. The realistic targets are mid-tail ('descendant sign calculator', 'juno sign calculator', '7th house ruler calculator'), which are also very competitive. Many searchers expect Navamsa/7th-lord Vedic methods and will bounce from a tropical/Placidus tool.\n(4) It depends on the Render backend (cold start, shared 60/day IP limit).\n\nRecommendation: make it the lead page of phase 2. Do it after phase 1 has built the shared EN pieces: an English sign/planet display map (copy from lib/mcp-dil.js), English date/place inputs or a dogum-giris i18n, English error handling for /api/harita, and the EN header and footer. Those pieces cut this port to mostly text work. If the team insists on one relationship tool in phase 1, ship a trimmed version (~1,800 words: tool, DSC table, 7th-house sign/ruler/planets, Juno and Vertex summaries, timing section, FAQ) using the server's Juno."
+}

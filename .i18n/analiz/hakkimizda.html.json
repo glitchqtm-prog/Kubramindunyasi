@@ -1,0 +1,60 @@
+{
+ "page": "hakkimizda.html",
+ "proposed_en_slug": "about.html",
+ "proposed_en_title": "About Astro Yuvam: How Our Free Astrology Calculators Work",
+ "en_search_potential": "low",
+ "en_competition": "low",
+ "target_en_queries": [
+  "astro yuvam",
+  "astro yuvam about",
+  "astro yuvam english"
+ ],
+ "visible_word_count": 809,
+ "inline_js_turkish_string_count": 1,
+ "backend_calls": [
+  {
+   "endpoint": "(none on the page itself) - page has no fetch(); inline scripts are only a session check (line 122), a lazy menu loader (line 123) and cookie-banner removal (line 169)",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "none",
+   "notes": "The page is static content. No direct backend dependency."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (indirect: menu.js line 246 injects /asterna-widget.js on every page; widget fetch at asterna-widget.js:254)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (chat answer), mesaj (errors / rate-limit), kalan",
+   "notes": "server.js:658. Canned answers (asternaHazir) and AI answers are free-form Turkish prose. The system prompt in lib/asterna.js:115 says 'ÜSLUP: Türkçe' and the assistant actively sells the 18 Turkish reports (lib/asterna.js:70). Error strings are Turkish too (server.js:668-673). It can't be translated on the client. EN pages must NOT load this widget."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (indirect via asterna-widget.js:341, logged-in members only)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "raporlar[] (title/type/date of the member's own purchased Turkish reports); 401 mesaj 'Raporlarını görmek için giriş yapmalısın.'",
+   "notes": "server.js:643. Only relevant to buyers of Turkish reports. Not needed on EN."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (not a <script src> tag: injected dynamically by the inline loader at hakkimizda.html:123)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Needed, but as an English variant (menu-en.js, or a language branch inside menu.js). It holds about 200 Turkish strings: the GRUPLAR menu groups (34 tool items with Turkish ad/alt labels, line ~109+), the 'Hesabım' account dropdown (line 287) and the cookie-banner text linking to /gizlilik-kvkk.html (line 77). It also starts GA4 (gaBaslat) and loads asterna-widget.js and pwa.js, so the EN variant must keep GA, skip Asterna and PWA, list only the EN tools, and add the TR/EN language switcher. The static nav HTML in the page (line 121: Keşfet, Burç Yorumları, Yıldız Günlüğü, Giriş, 'Raporlar' -> /#cards) and the cookie banner HTML (line 168) also need English versions."
+  },
+  {
+   "src": "/asterna-widget.js (loaded by menu.js:246)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It is a Turkish AI chat that pushes Turkish paid reports, and its backend /api/asterna answers only in Turkish. Exclude it on /en/."
+  },
+  {
+   "src": "/pwa.js (loaded by menu.js:254)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Optional, better skipped in phase 1. Its install prompt is in Turkish (line 62 'Astro Yuvam'ı ana ekranına ekle'), and manifest.json has lang 'tr' with Turkish shortcuts including '/#cards' Raporlar."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "Almost the whole page is Turkey- and sales-specific, so the EN page should be a rewrite, not a translation:\n- Positioning: 'Türkiye'ye yönelik Türkçe astroloji sitesi' (lines 129, 160); 'Dil ve kapsam: Tamamen Türkçe; Türkiye'deki 81 il…' (line 144).\n- Prices in TL everywhere: lines 129, 142, 158, 160, plus JSON-LD Offers priceCurrency 'TRY' (line 16).\n- Legal: KVKK Aydınlatma Metni and Mesafeli Satış Sözleşmesi (FAQ, line 160); the cookie banner links to the Turkish /gizlilik-kvkk.html (line 168).\n- Organization JSON-LD (line 16): areaServed 'TR', knowsLanguage 'tr', a Shopier store in sameAs, inLanguage 'tr-TR'.\n- Turkish date format 'Güncelleme: 28 Eylül 2026' (line 127) and informal 'sen' address throughout.\n\nHow to adapt for a global audience:\n1. Position /en/ as 'free astrology calculators in English'.\n2. Keep the universal, credible method paragraph (line 147): tropical zodiac, Placidus houses, high-precision ephemeris cross-checked with Swiss Ephemeris, Lahiri ayanamsa for Vedic. Mention only methods that EN tools actually use.\n3. Keep the principles (not fate, your data is yours) and the contact email.\n4. Say plainly that Instagram content is in Turkish.\n5. Add one neutral line such as 'Our in-depth personalised reports are currently available in Turkish only.' Do not link to them.\n6. Rewrite the JSON-LD: AboutPage with inLanguage 'en' and an Organization without hasOfferCatalog. knowsLanguage ['tr','en'], drop areaServed TR, drop Shopier.\n7. Drop the FAQ, or rewrite it as 3 short EN questions (What is this site? How are charts calculated? How do I contact you?) and update the FAQPage JSON-LD to match.\n8. EU visitors: menu.js loads GA4 for everyone in 'bilgilendirme modu' (inform-only, no consent). An English/EU audience raises GDPR consent questions, and EN needs at least an English privacy notice instead of the KVKK link.\n9. Pre-existing inconsistency to fix in the TR source too: line 133 says '30 ücretsiz araç', lines 129 and 160 and the meta say 32.\nThe page never mentions the third-party site the user asked to keep off the site. The rewrite must not add it either.",
+ "report_upsells": "No <!--AYBAG:oneri--> aside appears in the body, although the ay-bag-css styles are included in the head. The page itself is largely a sales overview. Remove or replace on EN:\n- Nav CTA 'Raporlar' -> /#cards (line 121): replace with a link to the EN free-tools hub.\n- Short-answer box (line 129): '18 çeşit kişiye özel PDF rapor (150–600 TL)… doğum haritası analizi 500 TL…20+ sayfalık PDF'.\n- Fact tiles (lines 131-136): '18 kişiye özel rapor türü' and '3 sayfa örnek PDF'. Replace with counts of EN tools and guides.\n- 'Bir bakışta' list (lines 138-145): Rapor çeşitleri, Fiyat with the /fiyatlar.html link (line 142), Teslimat, Şeffaflık; the Asterna mention (line 139).\n- 'Yorumu nasıl yazıyoruz?' (line 150): about AI-written Turkish report prose and Asterna. Drop it, or reduce it to one sentence on how EN tool texts are written.\n- Principle 'Sayfa sayıları alt sınırdır' (line 154): report-specific.\n- 'Raporlarımız' (line 158): a list of 18 links to Turkish sales pages with TL prices. Remove entirely.\n- FAQ (line 160): prices, payment, refunds, Mesafeli Satış.\n- Footer link 'Rapor fiyatları' /fiyatlar.html (line 166).\n- JSON-LD hasOfferCatalog with 18 TRY Offers (line 16): remove.\nKeep the free CTA 'Doğum haritanı ücretsiz çıkar' -> /dogum-haritasi-hesaplama.html (line 164), but point it at the EN birth-chart tool if one exists in phase 1, otherwise at the EN tools hub.",
+ "rationale": "This is the site's About/brand page (AboutPage + Organization + FAQPage JSON-LD). It is not a tool.\n\nWhy it is weak as a phase-1 SEO page:\n- Search demand: English searches for it are essentially navigational brand queries for 'Astro Yuvam', which has no English brand awareness. It will bring almost no organic traffic, so English search potential is low and so is competition (only the brand query).\n- Content: about 809 visible words, but roughly 70% is selling the 18 Turkish-only PDF reports with TL prices, KVKK/distance-sales references, Asterna and Turkey positioning. All of that must be dropped under the 'EN must not sell Turkish reports' rule.\n\nWhy it is still cheap and low-risk:\n- Translation risk is minimal: no tool logic, no fetch(), and only one Turkish string in inline JS ('Hesabım' in the session-check script, line 122).\n- The surrounding shell (menu.js, asterna-widget.js, pwa.js, cookie banner) is shared work every EN page needs anyway. Asterna must be excluded on EN because /api/asterna returns free-form Turkish AI prose that also pitches the Turkish reports.\n- The real job is a rewrite of roughly 300-400 words: method (tropical/Placidus, ephemeris cross-checked with Swiss Ephemeris), principles, contact, a 'reports currently Turkish only' note, and cleaned JSON-LD.\n\nRecommendation: do not spend one of the 6-9 phase-1 slots on it. Those slots should go to client-side tools with real English demand. Do ship a short, rewritten /en/about.html alongside phase 1 as a supporting page linked from the EN footer and language switcher. An English section with no English About/contact or privacy information looks thin and weak on trust (E-E-A-T). This page and an English privacy/cookie notice are infrastructure, not traffic pages.",
+ "recommend_phase1": false
+}

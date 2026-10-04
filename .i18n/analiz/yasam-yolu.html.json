@@ -1,0 +1,34 @@
+{
+ "page": "/home/user/kubramindunyasi/yasam-yolu.html",
+ "proposed_en_slug": "life-path-number-calculator.html",
+ "proposed_en_title": "Life Path Number Calculator (Free) with Master Numbers 11, 22 and 33",
+ "target_en_queries": [
+  "life path number calculator",
+  "how to calculate life path number",
+  "life path number meanings",
+  "master number 11 22 33 life path"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 620,
+ "inline_js_turkish_string_count": 67,
+ "backend_calls": [],
+ "shared_scripts": [
+  {
+   "src": "/dogum-giris.js (defer, line 130; acts on input[data-dg] at line 168)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It turns the native date input into a typed GG.AA.YYYY field. Its month and day names (AY/GUN arrays, lines 11-12) and its validation messages are hard-coded Turkish. LANG is read from <html lang> but only feeds the open-meteo geocoding language (line 242). On the EN page, drop the script and the data-dg attribute and keep the native <input type=date>. calis() already reads the ISO value, so nothing else changes."
+  },
+  {
+   "src": "/menu.js (injected dynamically by the inline loader at line 104)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Not as it stands. About 91 lines contain Turkish (Kesfet and Burc Yorumlari menus, links to Turkish pages, the cookie banner). It has no language support at all. It also wires the dropdowns and the cookie banner's dismiss button (CEREZ_KEY ay_cerez_bilgi_v1, lines 54-77). All EN pages need an English variant (menu-en.js, or a lang branch in menu.js) with English nav, a language switcher, no login or 'Raporlar' CTA, and an English cookie banner. This is shared infrastructure, not specific to this page."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "Almost nothing in the topic is Turkey-specific: life path numerology is universal and needs only a birth date, not a place or time. Items to adapt: (1) Example dates in Turkish format ('14 Agustos 1992', '2 Nisan 1985', 'Kasim = 11') become 'August 14, 1992', 'April 2, 1985' and 'November = 11'. (2) The cookie banner (line 346) links to 'Gizlilik & KVKK' (KVKK is Turkey's data-protection law). Replace it with an English cookie note and an English privacy page, GDPR-style. (3) The inline script at line 155 swaps the 'Giris' link for a Turkish 'Hesabim' account dropdown. Remove it, since there is no English account flow. (4) Every internal link points to Turkish pages: yasam-yolu-sayisi-nedir, isim-numerolojisi, bebek-ismi-numeroloji, dogum-haritasi-hesaplama, numeroloji-nedir, numerolojide-sayilarin-anlami, kader-matrisi-nedir. Link only to EN pages that exist in phase 1, or drop the links. (5) A non-Turkish bug to fix while porting: the year limit is hard-coded to 2025 (line 168 max=\"2025-12-31\", line 330 y>2025 plus its error message). It is already out of date in 2026, so compute it from new Date().getFullYear(). (6) Use hreflang tr/en pairs and canonical /en/life-path-number-calculator.html. Keep the brand name. Do not mention any third-party astrology site anywhere.",
+ "report_upsells": "Three paid-report upsells must be removed from the EN page: (a) the nav CTA <a href=\"/#cards\" class=\"am-cta\">Raporlar</a> in #astro-menu (line 154); (b) the #foot CTA <a class=\"cta\" href=\"/#cards\">Kaderinin tamamini gor — Kader Matrisi Raporu</a> (line 237); (c) the <!--AYBAG:oneri--> aside (line 242), which sells Kisisel Numeroloji PDF for ₺350 (/numeroloji-analizi.html) and Kader Matrisi PDF for ₺400 (/kader-matrisi-analizi.html), plus a link to /fiyatlar.html. The disclaimer at line 245 also contains upsell copy ('tam raporlara goz atabilirsin'), so rewrite it as a plain 'symbolic tradition, not prediction' disclaimer. JS pitfall: goster() runs $(\"#foot\").hidden = false (line 320). If #foot is deleted rather than emptied, this throws a TypeError and breaks the result display. Keep the #foot wrapper, which still holds the disclaimer, or remove that JS line. Replace the upsells with links to other free EN tools, or with nothing.",
+ "rationale": "The page is an entirely client-side calculator. It makes no fetch and no backend call, so the English output only needs translated strings: no backend changes and no dictionary layer. The Turkish UI in JS is contained. The ANLAM object (lines 251-300) holds 12 numbers (1-9, 11, 22, 33), each with 5 fields (tema, anahtar, yorum, isik, golge): 60 strings, about 430 words. On top of that are 5 step-template words at lines 317-319 ('Gun/Ay/Yil/Toplam', '(usta sayi — tek haneye indirgenmez)') and 2 error messages at lines 328 and 330. Static result labels are also Turkish: 'Usta Sayi', 'Isik Yani', 'Golge Yani', 'Nasil hesaplandi?'. Variable and function names (indir, hesapla, goster, calis) can stay as they are, so translating means swapping string literals only, and the risk of breaking the JS is very low. Static content is about 540 words (about 620 including nav, upsell and cookie banner): a how-to section with worked examples, a table of the 12 meanings, and a 4-question FAQ. Total translation is roughly 1,000 words. Demand: 'life path number calculator' and 'life path number' are among the largest numerology queries in English, so demand is high. Competition is very high. Numerology.com, astrology.com, worldnumerology.com and Cafe Astrology dominate, plus astro-seek's numerology tools and many magazine and calculator sites. A new /en/ section will not rank for the head term soon. A realistic angle: the page shows each calculation step and explains why sites disagree on master numbers (the three-part reduction keeps 11/22/33). That supports long-tail queries such as 'why is my life path number different', '11 or 2 life path' and 'life path number calculation steps'. Weakness: each meaning is only about 35 words plus light/shadow keywords, which is thin next to English competitors. Expanding each number to about 120-200 words would help, at medium effort. Monetisation on EN is nil: all upsells sell Turkish PDFs and must go. The page still works as a cheap, universal, zero-risk anchor for an EN numerology cluster. Recommendation: include it in phase 1. Effort is small, risk is low, nothing is Turkey-specific and the tool works fully in English. Expectations should be modest because of SERP competition. Do the port alongside the shared EN menu/cookie work, and fix the hard-coded 2025 year cap during the port.",
+ "recommend_phase1": true
+}

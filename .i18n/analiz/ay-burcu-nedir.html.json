@@ -1,0 +1,66 @@
+{
+ "page": "/home/user/kubramindunyasi/ay-burcu-nedir.html",
+ "proposed_en_slug": "what-is-a-moon-sign.html",
+ "proposed_en_title": "What Is a Moon Sign? Your Emotional Inner World Explained",
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "target_en_queries": [
+  "what is a moon sign",
+  "moon sign meaning",
+  "sun moon rising difference",
+  "do you need birth time for moon sign"
+ ],
+ "visible_word_count": 640,
+ "inline_js_turkish_string_count": 1,
+ "backend_calls": [
+  {
+   "endpoint": "(none on the page itself) - no fetch() in ay-burcu-nedir.html",
+   "returns_turkish_text": false,
+   "client_side_translation_feasible": true,
+   "fields_shown_to_user": "n/a",
+   "notes": "This is a static article: no form, no calculator, no fetch(). The only inline scripts are line 70 (auth check that swaps the 'Giriş' link for a 'Hesabım' dropdown), line 71 (lazy loader for /menu.js) and line 112 (hides the cookie banner)."
+  },
+  {
+   "endpoint": "POST https://astro-rapor.onrender.com/api/asterna (indirect: menu.js line 246 injects /asterna-widget.js, which calls it at line 254)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "cevap (chat reply), mesaj (error/limit messages)",
+   "notes": "Handler is at server.js:658. It returns free-form Turkish prose: an LLM persona that lib/asterna.js:115 tells to write in Turkish ('ÜSLUP: Türkçe...'), canned answers from asternaHazir() (e.g. lib/asterna.js:272), and hardcoded Turkish errors in server.js:672-680. A dictionary cannot translate this. Do not load the widget on EN pages."
+  },
+  {
+   "endpoint": "GET https://astro-rapor.onrender.com/api/raporlarim (indirect: asterna-widget.js line 341, logged-in users only)",
+   "returns_turkish_text": true,
+   "client_side_translation_feasible": false,
+   "fields_shown_to_user": "list of the user's purchased Turkish reports",
+   "notes": "server.js:643. It only matters for the paid Turkish reports, so it does not belong on EN pages."
+  }
+ ],
+ "shared_scripts": [
+  {
+   "src": "/menu.js (injected dynamically by the inline loader on line 71, not a <script src> tag)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Needs an EN variant. It renders the Turkish nav ('Keşfet', 'Burç Yorumları', tool names such as 'Lilith Burcu Hesaplama' and 'Düğün Tarihi Hesaplama', about 74 quoted Turkish strings), the Turkish cookie/KVKK banner, GA4 setup, and it also injects asterna-widget.js and pwa.js. EN needs either a menu-en.js or a language-aware menu.js that offers only the EN pages, adds the TR/EN switcher, keeps GA, and skips Asterna and PWA. The static fallback nav on line 69 ('Keşfet', 'Burç Yorumları', 'Yıldız Günlüğü', 'Giriş', 'Raporlar' -> /#cards) also has to be rewritten."
+  },
+  {
+   "src": "/asterna-widget.js (injected by menu.js:246)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It is a Turkish AI chatbot that sells the Turkish reports (about 65 lines contain Turkish), and its backend answers in Turkish prose."
+  },
+  {
+   "src": "/pwa.js (injected by menu.js:254)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No, at least for phase 1. The install prompt is in Turkish (about 15 Turkish lines) and manifest.json is Turkish-branded."
+  },
+  {
+   "src": "https://www.googletagmanager.com/gtag/js (injected by menu.js:35)",
+   "has_turkish_ui_strings": false,
+   "needed_for_en": "Optional. The same GA4 ID can be reused, ideally with a language dimension."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "turkey_specific_content": "The astrology itself is universal. There are no cities, no Turkish timezone or DST history, no e-Devlet and no Turkish names. What does need adapting: (1) ₺500 and ₺150 prices inside the upsell aside on line 102. These go away with the aside. (2) The cookie banner on line 111 links to /gizlilik-kvkk.html, Turkey's KVKK data-protection law. EN needs an English privacy/cookie notice written around GDPR in general terms. (3) The Turkish date '19 Eylül 2026' on line 75 and the Turkish kicker and tags 'Yıldız Günlüğü', 'Temeller' and 'Doğum Haritası' (lines 73-76). (4) JSON-LD on lines 14-15 has a Turkish headline, description and 3 FAQ Q&As, plus a Turkish canonical and og tags (lines 6-11). Add hreflang tr/en/x-default pairs. (5) Internal links point to Turkish-only pages: gunes-ay-yukselen.html, dogum-haritasi-nedir.html, yukselen-burc-nedir.html, bugun-gokyuzu.html, ay-takvimi.html and yildiz-gunlugu.html (lines 85, 89, 105, 109). Either link only to existing /en/ pages or drop the links. (6) The intimate Turkish 'sen' voice turns into English 'you' without trouble. No source content anywhere references the competitor site the user asked us never to name, and the EN copy must keep it that way.",
+ "report_upsells": "These must be removed on EN. (a) Line 97: the closing '.kapanis' box ends with an upsell link to /dogum-haritasi-analizi.html ('kişiye özel raporun'). Rewrite that sentence so it points to a free EN tool, for example an EN moon sign or birth chart calculator. (b) Line 102: the full <!--AYBAG:oneri--> aside with two paid PDF cards, 'Doğum Haritası Analizi' (₺500, /dogum-haritasi-analizi.html) and 'Lunar Return' (₺150, /lunar-return-analizi.html), plus a 'Tüm raporlar ve fiyatları' link to /fiyatlar.html. Delete it entirely. (c) Line 105: the <!--AYBAG:ilgili--> segment inside 'İlgili İçerikler' links to the same two paid reports. Remove those and keep only links to EN pages. (d) Line 69: the nav 'Raporlar' CTA points to /#cards, and the login/'Hesabım' logic on line 70 serves the Turkish report accounts. Drop both from the EN nav. (e) menu.js and asterna-widget.js, which promote the reports indirectly, are covered above. Also check that whatever script injects the AYBAG blocks site-wide skips the /en/ files.",
+ "recommend_phase1": false,
+ "rationale": "This is a short static explainer: about 505 words of article prose plus FAQ, about 640 visible words in total. It has no tool and no backend calls, and the only Turkish string in inline JS is 'Hesabım' on line 70. Translating it would therefore be trivial and low-risk; the real work is shared chrome (an EN menu without Asterna, PWA or report links, and an EN cookie notice). The trouble is SEO and unique value. 'Moon sign' is a large English topic, but the SERP is saturated by high-authority sites: cafeastrology, astrology.com, astro-seek, Co-Star/CHANI, Allure, Cosmopolitan, Refinery29, timeanddate-style calculators. Most of that demand is really 'what is my moon sign', which a calculator satisfies, not a 500-word definition. A generic explainer on a new EN subfolder with no English backlinks has little chance of ranking or bringing visitors, and since we cannot sell the Turkish reports, it would earn nothing on its own. Better plan: build a client-side EN Moon Sign Calculator for phase 1, reusing astronomy-engine, which already runs client-side on lilith-burcu-hesaplama.html, zaman-makinesi.html and others. Take the date, an optional time and a timezone/UTC offset, warn when the Moon changes sign that day, and output fixed English sign names plus a short English blurb per sign. This article's content (Sun/Moon/Rising difference, why birth time matters, FAQ) can serve as that calculator's explanatory section or as a phase-2 supporting article linked from it. Do not spend a phase-1 slot on it as a standalone page."
+}

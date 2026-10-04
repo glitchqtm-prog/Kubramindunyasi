@@ -1,0 +1,44 @@
+{
+ "page": "/home/user/kubramindunyasi/uyum-testi.html",
+ "proposed_en_slug": "zodiac-compatibility-test.html",
+ "proposed_en_title": "Zodiac Compatibility Test & 12-Sign Compatibility Chart (Free) | Astro Yuvam",
+ "target_en_queries": [
+  "zodiac compatibility test",
+  "zodiac compatibility calculator by birthday",
+  "zodiac sign compatibility chart",
+  "love compatibility test by date of birth"
+ ],
+ "en_search_potential": "high",
+ "en_competition": "very_high",
+ "visible_word_count": 640,
+ "inline_js_turkish_string_count": 56,
+ "backend_calls": [],
+ "shared_scripts": [
+  {
+   "src": "/dogum-giris.js",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. On this page it only turns the two <input type=date data-dg> fields (lines 133, 138) into Turkish DD.MM.YYYY text fields with Turkish month and day names and Turkish error messages (\"Tarihi gün.ay.yıl şeklinde yaz...\"). The page has no time or place input, so it does nothing else here. For EN, drop the script tag (line 94) and the data-dg attributes and use native date inputs; hesapla() already reads ISO YYYY-MM-DD values. Its LANG variable only changes the geocoding language, not the UI text."
+  },
+  {
+   "src": "/menu.js (lazy-injected by inline loader at line 119)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Needs an EN replacement. It builds the Turkish nav dropdowns (Keşfet, Burç Yorumları, Turkish page links and the /#cards 'Raporlar' CTA), and it also loads GA gtag (line ~24-35) and dismisses the cookie banner (ay_cerez_bilgi_v1, line ~54). EN needs either an EN-aware menu.js (lang switch, EN links, no Raporlar CTA) or a separate menu-en.js that still loads GA and handles the banner. The static nav at line 117 is also Turkish."
+  },
+  {
+   "src": "inline auth snippet (line 118)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "No. It swaps 'Giriş' for a 'Hesabım' dropdown when a Supabase token exists. Accounts and reports are Turkish-only, so drop it on EN."
+  },
+  {
+   "src": "inline cookie banner + script (lines 534-535)",
+   "has_turkish_ui_strings": true,
+   "needed_for_en": "Yes, translated. The text is Turkish and links to /gizlilik-kvkk.html (Turkish KVKK law). EN needs an English privacy notice and link. Keep the same localStorage key so one dismissal covers both languages."
+  }
+ ],
+ "translation_risk": "low",
+ "translation_effort": "small",
+ "recommend_phase1": true,
+ "turkey_specific_content": "The tool logic has no Turkey-specific content: no cities, no TL in the tool, no DST, no e-Devlet. It uses fixed tropical sun-sign cutoffs (burcBul, line 243), which work everywhere. What must be adapted:\n(1) Sign names, in the BURC array (lines 234-241) and in the static table (lines 175-186). Element names: ELAD (line 249) and the table's 'Ateş · Öncü' style notes, which become e.g. 'Fire · Cardinal'. The mcp-dil.js dictionary covers the sign names, but they are trivial to hardcode.\n(2) Percent format. Turkish puts % first: '%${v}' (line 315), '%'+v on the canvas (line 467), '%${skor}' in the share texts (lines 332, 519). Change to '${v}%'.\n(3) The 'Sen & O' (You & Him/Her) framing: labels 'Sen'/'O' (lines 131, 136), placeholders 'Adın'/'Onun adı', and the canvas footer (line 484). Use 'You' / 'Them' / 'Their name'.\n(4) The name hash uses toLocaleLowerCase('tr') (line 289). Harmless, but use toLowerCase() on EN. Note that the same names can then score differently in TR and EN (Turkish dotted/dotless I).\n(5) Date max='2025-12-31' (lines 133, 138) is already stale in 2026, a small bug in TR too. Raise it to the current year or remove it.\n(6) The share URL is hardcoded to '/uyum-testi.html' (line 336). Point it to '/en/zodiac-compatibility-test.html'. The card filename 'kozmik-uyum-karti.png' becomes 'cosmic-compatibility-card.png'.\n(7) The letter-spaced canvas label 'K O Z M İ K   U Y U M   K A R T I' (line 429). Respace the English text and keep it short enough for 1080px at 27px. The brand text 'A S T R O   Y U V A M' and 'astroyuvam.com' can stay.\n(8) About 70 internal links in the compatibility table, plus the related links (sinastri-nedir, venus-mars-burcu, burclar, gunes-ay-yukselen), point to Turkish pages. Point them to EN pages where they exist in the batch, otherwise remove the links and keep plain text.\n(9) The KVKK cookie notice (Turkish privacy law) becomes an English privacy notice.\n(10) Add hreflang tr/en/x-default, a canonical, and html lang='en'. The disclosure that the score includes a small name-based 'game factor' (line 168) should stay in English for honesty: the sub-scores Communication/Passion/Harmony/Trust are hash-derived (lines 302-305).",
+ "report_upsells": "Four upsell blocks must be removed or replaced on EN:\n(1) Line 203: <a class=\"cta\" href=\"/#cards\">Gerçek uyum analizi için Sinastri Raporu →</a>, inside the #foot block that appears after a result. Replace it with a link to a free EN page, such as a synastry explainer, the birth chart tool if it is in the batch, or the EN sign pages.\n(2) Line 208: the <!--AYBAG:oneri--> aside. It sells 'İlişki Haritası — Kompozit ve Davison' (/iliski-haritasi-analizi.html, 14+ page PDF, ₺500) and 'Sinastri (İlişki Uyumu)' (/sinastri-uyum-analizi.html, 18+ page PDF, ₺500), and links /fiyatlar.html ('Tüm raporlar ve fiyatları'). Remove it entirely, along with the now-unused #ay-bag-css styles (lines 76-93).\n(3) Line 117: the nav CTA <a href=\"/#cards\" class=\"am-cta\">Raporlar</a>. Do not show it on EN.\n(4) The 'Giriş'/'Hesabım' account links (lines 117-118). Drop them on EN.\nThe disclaimer paragraph (lines 209-212) has no upsell and can simply be translated.",
+ "rationale": "Pros:\n- Fully client-side, with zero fetch() or backend calls. The English tool output depends only on translating fixed strings in one inline script (lines 230-533).\n- About 56 user-facing Turkish strings: 12 sign names, 4 element names, 4 band phrases, 7 element-pair interpretations, 2 errors, 4 band labels, 8 sub-score labels (HTML and canvas), plus share, toast and canvas card texts. They are all simple values. Translators must leave the ASCII keys alone: el/mod values like 'ates', 'su-toprak', 'oncu', and the element-pair lookup keys.\n- dogum-giris.js can be dropped in favour of native date inputs, which removes the main JS-breakage risk.\n- The topic is universal, and 'zodiac compatibility' is among the highest-volume English astrology queries.\n- The shareable 1080x1920 'Cosmic Compatibility Card' canvas is a real differentiator for social and viral traffic, and it is language-agnostic apart from labels (kWrap handles any text length).\n- It gives other EN pages a fun, sticky place to link to.\n\nCons:\n- The English SERP for 'zodiac compatibility' / 'compatibility chart' is dominated by astrology.com, cafeastrology, astrostyle, horoscope.com, astro-seek, compatible-astrology.com, Allure/Cosmo and many love-calculator sites. They have 144 pair pages and far deeper content.\n- A sun-sign-only score with a name-hash 'nuance' is commodity, love-calculator-style content. A new /en/ folder on a Turkish domain is unlikely to rank for head terms soon, so expect long-tail and social traffic, not page-one rankings.\n- The 12-sign table's ~70 links point to Turkish sign pages, which need EN targets or removal.\n- menu.js (nav + GA + cookie banner) needs an EN counterpart. That is shared phase-1 work, not specific to this page.\n\nVerdict: include it in phase 1 as a low-cost, low-risk, fully working tool (roughly 1-2 hours to translate and adapt), but do not expect it to be an SEO driver on its own. To improve its chances:\n- Expand the English explanatory content (why fire+air works, cardinal/fixed/mutable dynamics, a short paragraph per element pairing).\n- Keep the honest 'for fun' disclosure.\n- Link to EN sign pages if they are in the batch.\n- Replace both paid-report CTAs with free EN tools."
+}
