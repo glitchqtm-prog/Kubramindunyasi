@@ -19,7 +19,7 @@
     { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Günlük Burç Yorumları", "short_name": "Günlük Yorum", "url": "/gunluk-burc-yorumlari.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Haftalık Burç Yorumları", "short_name": "Haftalık Yorum", "url": "/haftalik-burc-yorumlari.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
     { "name": "Kozmik Panelim", "short_name": "Panelim", "url": "/panelim.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
     { "name": "Doğum Haritası Hesaplama", "short_name": "Doğum Haritası", "url": "/dogum-haritasi-hesaplama.html?utm_source=uygulama", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
     { "name": "Raporlar", "short_name": "Raporlar", "url": "/?utm_source=uygulama#cards", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }

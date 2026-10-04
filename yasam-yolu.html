@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>✦ Yaşam Yolu Sayın — Astro Yuvam</title>
-<meta name="description" content="Doğum tarihinden Yaşam Yolu Sayını anında hesapla. Numerolojinin en temel sayısı — sana hangi temayı fısıldıyor? Ücretsiz ve anında.">
+<title>Yaşam Yolu Sayısı Hesaplama (Ücretsiz) — Usta Sayılar Dahil | Astro Yuvam</title>
+<meta name="description" content="Doğum tarihini gir, yaşam yolu sayını anında hesapla. Adım adım hesaplama örneği, 11-22-33 usta sayıları ve tüm yaşam yolu sayılarının anlamları tablosu.">
+<link rel="canonical" href="https://astroyuvam.com/yasam-yolu.html">
 <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
 <link rel="icon" href="/favicon-16x16.png" sizes="16x16">
 <style>
@@ -127,6 +128,26 @@
 .ay-kt .ay-ro{margin-top:0}
 </style>
 <script src="/dogum-giris.js" defer></script>
+<style id="ay-bilgi-css">
+.ay-bilgi{margin:40px 0 0;font-family:'Segoe UI',system-ui,sans-serif;color:var(--cream);line-height:1.75;font-size:15px;text-align:left}
+.ay-bilgi h2{font-family:Georgia,'Times New Roman',serif;color:var(--gold-soft);font-size:22px;line-height:1.35;margin:34px 0 10px;text-align:left}
+.ay-bilgi h3{font-size:16px;color:var(--gold);margin:20px 0 6px}
+.ay-bilgi p,.ay-bilgi li{color:#e6dff0}
+.ay-bilgi p{margin:0 0 12px}
+.ay-bilgi ol,.ay-bilgi ul{margin:0 0 14px;padding-left:22px}
+.ay-bilgi li{margin:0 0 6px}
+.ay-bilgi .tk{overflow-x:auto;margin:8px 0 16px;-webkit-overflow-scrolling:touch}
+.ay-bilgi table{width:100%;border-collapse:collapse;font-size:14px}
+.ay-bilgi th,.ay-bilgi td{border-bottom:1px solid var(--line);padding:8px 7px;text-align:left;vertical-align:top}
+.ay-bilgi th{color:var(--gold);font-weight:600;white-space:nowrap}
+.ay-bilgi td.ay-ad{white-space:nowrap}
+.ay-bilgi details{border:1px solid var(--line);border-radius:12px;padding:0 14px;margin:0 0 10px;background:rgba(255,255,255,.02)}
+.ay-bilgi summary{cursor:pointer;padding:12px 0;font-weight:600;color:var(--cream)}
+.ay-bilgi details p{margin:0 0 12px}
+.ay-bilgi .ilgili{margin-top:18px;font-size:14px}
+.ay-bilgi .ilgili a{display:inline-block;margin:4px 14px 4px 0}
+.ay-bilgi .not{font-size:13px;color:var(--muted)}
+</style>
 </head>
 <body>
 
@@ -136,7 +157,7 @@
 <div class="wrap">
   <header class="hero">
     <span class="star">✦</span>
-    <h1>Yaşam Yolu Sayın</h1>
+    <h1>Yaşam Yolu Sayısı Hesaplama</h1>
     <p class="sub">Numerolojinin en temel sayısı — doğum tarihin hangi temayı fısıldıyor?</p>
   </header>
 
@@ -164,6 +185,53 @@
       <div class="adim" id="adim"></div>
     </details>
   </div>
+
+<section class="ay-bilgi" aria-labelledby="yy-nasil">
+  <h2 id="yy-nasil">Yaşam Yolu Sayısı Nasıl Hesaplanır?</h2>
+  <p>Yaşam yolu sayısı, Pisagor numerolojisinde doğum tarihindeki rakamlardan elde edilen tek sayıdır ve kişinin genel yaşam temasını anlatan temel gösterge kabul edilir. Bu araç yaygın kullanılan <b>üç parça yöntemini</b> uygular: gün, ay ve yıl önce ayrı ayrı indirgenir, sonra toplanır.</p>
+  <ol>
+    <li><b>Gün:</b> rakamlarını topla ve tek haneye indir (11 ve 22 gibi usta sayılar korunur).</li>
+    <li><b>Ay:</b> aynı şekilde indir (Kasım = 11 olduğu için usta sayı olarak kalır).</li>
+    <li><b>Yıl:</b> dört rakamı topla, sonucu tek haneye inene kadar topla.</li>
+    <li><b>Toplam:</b> üç sonucu topla ve tek haneye indir. 11, 22 ya da 33'e ulaştıysan dur; usta sayılar indirgenmez.</li>
+  </ol>
+  <h3>Örnek: 14 Ağustos 1992</h3>
+  <p>Gün 14 → 1+4 = 5 · Ay 8 → 8 · Yıl 1992 → 1+9+9+2 = 21 → 2+1 = 3 · Toplam 5+8+3 = 16 → 1+6 = <b>7</b>. Bu tarihte doğan birinin yaşam yolu sayısı 7'dir.</p>
+  <h3>Usta sayı örneği: 2 Nisan 1985</h3>
+  <p>Gün 2 · Ay 4 · Yıl 1985 → 1+9+8+5 = 23 → 5 · Toplam 2+4+5 = <b>11</b>. 11 bir usta sayıdır; 1+1 = 2'ye indirgenmez.</p>
+  <p>Tüm rakamları tek seferde toplamak gibi farklı yöntemler tek haneli sonuçta hep aynı sayıya çıkar; fark yalnızca usta sayılarda görülebilir. Başka bir sitede 2 görürken burada 11 görüyorsan sebep budur.</p>
+
+  <h2 id="yy-anlam">Yaşam Yolu Sayılarının Anlamları</h2>
+  <div class="tk"><table>
+    <thead><tr><th>Sayı</th><th>Tema</th><th>Anahtar kelimeler</th></tr></thead>
+    <tbody>
+<tr><td><b>1</b></td><td>Öncü</td><td>Bağımsızlık · Liderlik · Başlangıçlar</td></tr>
+<tr><td><b>2</b></td><td>Uyumcu</td><td>İşbirliği · Denge · Duyarlılık</td></tr>
+<tr><td><b>3</b></td><td>Yaratıcı</td><td>İfade · Neşe · İletişim</td></tr>
+<tr><td><b>4</b></td><td>Kurucu</td><td>Düzen · Emek · Sağlamlık</td></tr>
+<tr><td><b>5</b></td><td>Özgür Ruh</td><td>Değişim · Macera · Merak</td></tr>
+<tr><td><b>6</b></td><td>Şefkatli</td><td>Sorumluluk · Sevgi · Aile</td></tr>
+<tr><td><b>7</b></td><td>Arayışçı</td><td>Bilgelik · İçe Bakış · Analiz</td></tr>
+<tr><td><b>8</b></td><td>İnşa Eden Güç</td><td>Hedef · Bolluk · Yönetim</td></tr>
+<tr><td><b>9</b></td><td>İnsancıl</td><td>Şefkat · Tamamlanma · İdealizm</td></tr>
+<tr><td><b>11</b></td><td>Usta Sezgi (usta sayı)</td><td>İlham · Farkındalık · Ruhsal Hassasiyet</td></tr>
+<tr><td><b>22</b></td><td>Usta Kurucu (usta sayı)</td><td>Büyük Vizyon · Somuta Dökme · Yapı</td></tr>
+<tr><td><b>33</b></td><td>Usta Öğretmen (usta sayı)</td><td>Şefkatli Rehberlik · Hizmet · İyileştirme</td></tr>
+    </tbody>
+  </table></div>
+  <p>Her sayının ışık ve gölge yanlarını, ilişki ve kariyer eğilimlerini <a href="/yasam-yolu-sayisi-nedir.html">Yaşam Yolu Sayısı Nedir?</a> rehberinde ayrıntılı anlattık.</p>
+
+  <h2 id="yy-sss">Sık Sorulan Sorular</h2>
+  <details><summary>Usta sayı nedir?</summary><p>11, 22 ve 33 numerolojide “usta sayı” olarak anılır ve tek haneye indirgenmez. Bazı numerologlar bunları iki katmanlı okur: 11/2, 22/4, 33/6. Yani 11 taşıyan biri 2'nin temalarını da içinde barındırır.</p></details>
+  <details><summary>Doğum saati gerekir mi?</summary><p>Hayır. Yaşam yolu sayısı yalnızca doğum tarihinden hesaplanır. Doğum saati ve yeri astrolojide, yani doğum haritasında gerekir; onu <a href="/dogum-haritasi-hesaplama.html">ücretsiz doğum haritası hesaplama</a> aracıyla görebilirsin.</p></details>
+  <details><summary>Yaşam yolu sayısı zamanla değişir mi?</summary><p>Hayır, doğum tarihine bağlı olduğu için ömür boyu sabittir. Her yıl değişen sayı “kişisel yıl sayısı”dır; doğum günü ve ayının içinde bulunulan yılla toplanmasıyla bulunur.</p></details>
+  <details><summary>İsmimin sayısıyla farkı ne?</summary><p>Yaşam yolu tarihten, ifade (kader) sayısı ise isimdeki harflerden hesaplanır. İsminin sayılarını <a href="/isim-numerolojisi.html">isim numerolojisi</a> sayfasında bulabilirsin; bebek adı düşünüyorsan <a href="/bebek-ismi-numeroloji.html">bebek ismi numerolojisi</a> rehberine bak.</p></details>
+  <div class="ilgili">
+    <a href="/numeroloji-nedir.html">Numeroloji nedir?</a>
+    <a href="/numerolojide-sayilarin-anlami.html">Numerolojide sayıların anlamı</a>
+    <a href="/kader-matrisi-nedir.html">Kader matrisi nedir?</a>
+  </div>
+</section>
 
   <div class="foot" id="foot" hidden>
     <a class="cta" href="/#cards">Kaderinin tamamını gör — Kader Matrisi Raporu →</a>

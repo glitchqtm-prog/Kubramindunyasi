@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://astroyuvam.com/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -43,55 +43,25 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://astroyuvam.com/gokyuzu.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/yildizlara-sor.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://astroyuvam.com/yasam-yolu.html</loc>
-    <lastmod>2026-08-09</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://astroyuvam.com/hangi-burcsun.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/isim-titresimi.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/ruya-sembolu.html</loc>
-    <lastmod>2026-08-09</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://astroyuvam.com/ay-takvimi.html</loc>
-    <lastmod>2026-08-09</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://astroyuvam.com/burclar.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkanalar.html</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -103,32 +73,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://astroyuvam.com/gunun-kartin.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/kozmik-nabiz.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/astro-ikizin.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/zaman-makinesi.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://astroyuvam.com/uyum-testi.html</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -223,138 +169,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://astroyuvam.com/arkana-1-buyucu.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-2-bas-rahibe.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-3-imparatorice.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-4-imparator.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-5-aziz.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-6-asiklar.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-7-savas-arabasi.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-8-adalet.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-9-ermis.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-10-kader-carki.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-11-guc.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-12-asilan-adam.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-13-olum.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-14-denge.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-15-seytan.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-16-kule.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-17-yildiz.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-18-ay.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-19-gunes.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-20-mahkeme.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-21-dunya.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/arkana-22-aptal.html</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://astroyuvam.com/astroloji-bilimsel-mi.html</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -433,87 +247,9 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://astroyuvam.com/haftalik-burc-yorumlari.html</loc>
     <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/koc.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/boga.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/ikizler.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/yengec.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/aslan.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/basak.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/terazi.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/akrep.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/yay.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/oglak.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/kova.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://astroyuvam.com/gunluk-burc-yorumlari/balik.html</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -624,7 +360,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  <!-- Ürün / rapor sayfaları -->
   <url>
     <loc>https://astroyuvam.com/astrokartografi-analizi.html</loc>
     <lastmod>2026-09-28</lastmod>

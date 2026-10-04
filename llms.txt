@@ -47,7 +47,6 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 - [Bugün Gökyüzü: Günlük Gezegen Konumları](https://astroyuvam.com/bugun-gokyuzu.html): Her gün güncellenen gezegen dereceleri, retrolar, Yeni Ay–Dolunay ve tutulma takvimi.
 - [Şu An Gökyüzü](https://astroyuvam.com/gokyuzu.html): Gezegenler şu an nerede, bugünün gökyüzü ne anlatıyor.
 - [Ay Takvimi](https://astroyuvam.com/ay-takvimi.html): Bugünün ay evresi, aydınlanma oranı ve evreye özel niyet.
-- [Günlük Burç Yorumları](https://astroyuvam.com/gunluk-burc-yorumlari.html): 12 burç için her gün, gerçek gökyüzüne dayalı yorum.
 - [Haftalık Burç Yorumları](https://astroyuvam.com/haftalik-burc-yorumlari.html): 12 burç için haftanın genel gidişatı.
 - [2027 Burç Yorumları](https://astroyuvam.com/2027-burc-yorumlari.html): 12 burç için yıl boyu aşk, kariyer ve para rehberi.
 - [Yaşam Yolu Sayısı Hesaplama](https://astroyuvam.com/yasam-yolu.html): Doğum tarihinden yaşam yolu sayın; usta sayılar korunur.

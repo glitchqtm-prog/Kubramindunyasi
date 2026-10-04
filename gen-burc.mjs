@@ -2,8 +2,10 @@
 /* Astro Yuvam — Günlük & Haftalık Burç Yorumu Üreticisi
    GitHub Actions içinde her sabah çalışır:
    1) Gerçek gökyüzünü hesaplar (Ay burcu, Güneş mevsimi, Ay evresi) — astronomy-engine.
-   2) Anthropic API'ye 12 burç için TR yorum ürettirir (günlük her gün; haftalık haftada bir).
-   3) Sonuçları statik HTML sayfalara döker (gunluk-/haftalik-burc-yorumlari klasörleri + hub'lar).
+   2) Anthropic API'ye 12 burç için TR haftalık yorum ürettirir (haftada bir; ISO hafta değişince).
+   3) Sonuçları statik HTML sayfalara döker (haftalik-burc-yorumlari klasörü + hub).
+   NOT (Ekim 2026): Günlük burç yorumları SEO kararıyla kaldırıldı; eski günlük adresler
+   haftalık sayfalara yönlenir. Şablonlardaki "gunluk" dalları yalnızca geriye dönük duruyor.
    Tasarım: sitenin lacivert-altın şablonuyla birebir. Üretim başarısız olursa HİÇBİR dosya
    yazılmaz (mevcut iyi sayfalar korunur) ve süreç hata koduyla biter.
 
@@ -195,8 +197,8 @@ function kisiselBolum(tur){
       <div class="kisisel-bas">✦ Sana Özel ${tur==="gunluk"?"Günlük":"Haftalık"} Yorum</div>
       <p class="kisisel-alt">Doğum tarihini gir, ${turAd} enerjiyi <b>genel burç yorumuna değil, senin haritana</b> göre oku. Üyelere özel — giriş yaptığında bilgilerin hazır gelir.</p>
       <form class="kisisel-form" id="ky-form">
-        <label class="ky-alan">Doğum tarihi<input type="date" id="ky-date" required></label>
-        <label class="ky-alan">Doğum saati <span>(isteğe bağlı)</span><input type="time" id="ky-time"></label>
+        <label class="ky-alan">Doğum tarihi<input type="date" id="ky-date" data-dg min="1900-01-01" max="2030-12-31" required></label>
+        <label class="ky-alan">Doğum saati <span>(isteğe bağlı)</span><input type="time" id="ky-time" data-dg></label>
         <button type="submit" class="ky-btn" id="ky-btn">Giriş yap ✦</button>
       </form>
       <div class="kisisel-not" id="ky-not"></div>
@@ -627,9 +629,9 @@ function renderSign(tur, b, y, ctx){
   </div>
   <div class="ilgili">
     <div class="b">İlgili İçerikler</div>
-    <div class="satir"><a href="/${b.slug}-burcu.html">${b.ad} burcu özellikleri</a><a href="/${digerTur}/${b.slug}.html">${digerAd}</a><a href="/yukselen-burc-nedir.html">Yükselen burç nedir?</a></div>
+    <div class="satir"><a href="/${b.slug}-burcu.html">${b.ad} burcu özellikleri</a>${gunluk?`<a href="/${digerTur}/${b.slug}.html">${digerAd}</a>`:`<a href="/2027-burc-yorumlari.html">2027 burç yorumları</a>`}<a href="/yukselen-burc-nedir.html">Yükselen burç nedir?</a></div>
   </div>
-  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; öz-farkındalık ve rehberlik amaçlıdır. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
+  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; eğlence ve öz-farkındalık amaçlıdır, kesin kehanet değildir. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
   <a class="geri" href="/${yol}.html">← Tüm ${gunluk?"günlük":"haftalık"} burç yorumları</a>
 </article>
 ${HIZ_CEREZ_BANT}
@@ -662,7 +664,7 @@ function renderHub(tur, yorumlar, ctx){
     ${haftaDalga(ctx.haftaVals, ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"])}
     <p class="dalga-not">Haftanın genel enerji akışı — altın nokta en canlı, soluk nokta en sakin gün. Sembolik bir pusuladır.</p>
   </section>`;
-  return `${head(title, desc, canonical, null)}
+  return `${head(title, desc, canonical, null).replace("</head>", '<script src="/dogum-giris.js" defer></script>\n</head>')}
 <div class="wrap genis">
   <header class="hero">
     <div class="star">✦</div>
@@ -677,12 +679,12 @@ function renderHub(tur, yorumlar, ctx){
   <div class="grid">
 ${kartlar}
   </div>
-  <div class="alt-link"><a href="/${digerYol}.html">→ ${gunluk?"Haftalık":"Günlük"} burç yorumlarına da göz at</a></div>
+  <div class="alt-link">${gunluk?`<a href="/${digerYol}.html">→ Haftalık burç yorumlarına da göz at</a>`:`<a href="/2027-burc-yorumlari.html">→ 2027 burç yorumlarına da göz at</a>`}</div>
   <div class="cta-kutu">
     <h3>Genel yorumun ötesine geç — kendi haritan ne diyor?</h3>
     <a class="cta" href="/#cards">Kişiye özel doğum haritası raporunu keşfet →</a>
   </div>
-  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; öz-farkındalık ve rehberlik amaçlıdır. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
+  <p class="disclaimer">${gunluk?"Günlük":"Haftalık"} burç yorumları güneş burcuna dayalı genel yorumlardır; eğlence ve öz-farkındalık amaçlıdır, kesin kehanet değildir. Kişiye özel bir bakış için doğum haritan gerekir. Kararlar her zaman senindir.</p>
 </div>
 ${HIZ_CEREZ_BANT}
 </body>
@@ -733,16 +735,7 @@ function sitemapLastmodGuncelle(urlYollari, iso){
   ctx.mevsim = mevsimBilgisi(now);
   const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi, mevsim: ctx.mevsim, tarihUzun: ctx.tarihTR };
 
-  mkdirSync("gunluk-burc-yorumlari", {recursive:true});
   mkdirSync("haftalik-burc-yorumlari", {recursive:true});
-
-  // --- GÜNLÜK: her gün üret ---
-  console.log("Günlük yorumlar üretiliyor... ("+ctx.gokKisa+")");
-  const gunlukY = await yorumUretRetry("gunluk", sky);
-  // önce hepsini render et (bellekte), sonra yaz
-  const gunlukDosyalar = [];
-  BURCLAR.forEach((b,i)=> gunlukDosyalar.push([`gunluk-burc-yorumlari/${b.slug}.html`, renderSign("gunluk", b, gunlukY[i], ctx)]));
-  gunlukDosyalar.push(["gunluk-burc-yorumlari.html", renderHub("gunluk", gunlukY, ctx)]);
 
   // --- HAFTALIK: haftada bir (ISO hafta değişince) ya da eksikse ---
   const hafta = isoHafta(now);
@@ -761,13 +754,13 @@ function sitemapLastmodGuncelle(urlYollari, iso){
   }
 
   // --- Hepsi hazır: şimdi yaz (kısmi hata riski geçti) ---
-  for(const [yol,icerik] of [...gunlukDosyalar, ...haftalikDosyalar]) yaz(yol, icerik);
-  console.log(`Tamam. ${gunlukDosyalar.length} günlük + ${haftalikDosyalar.length} haftalık dosya yazıldı.`);
+  if(!haftalikDosyalar.length){ console.log("Yazılacak dosya yok."); return; }
+  for(const [yol,icerik] of haftalikDosyalar) yaz(yol, icerik);
+  console.log(`Tamam. ${haftalikDosyalar.length} haftalık dosya yazıldı.`);
 
   // --- sitemap.xml lastmod tarihlerini üretilen sayfalar için bugüne çek ---
   try {
-    const smYollari = ["gunluk-burc-yorumlari.html", ...BURCLAR.map(b=>`gunluk-burc-yorumlari/${b.slug}.html`)];
-    if(haftalikDosyalar.length){ smYollari.push("haftalik-burc-yorumlari.html", ...BURCLAR.map(b=>`haftalik-burc-yorumlari/${b.slug}.html`)); }
+    const smYollari = ["haftalik-burc-yorumlari.html", ...BURCLAR.map(b=>`haftalik-burc-yorumlari/${b.slug}.html`)];
     sitemapLastmodGuncelle(smYollari, iso);
   } catch(e){ console.error("sitemap güncellemesi atlandı:", e.message); }
 })().catch(e=>{ console.error("ÜRETİM HATASI:", e.message); process.exit(1); });

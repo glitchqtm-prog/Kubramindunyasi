@@ -156,9 +156,8 @@
     ]}
   ];
 
-  // ——— BURÇ YORUMLARI açılır menüsü (basit — iki doğrudan seçenek) ———
+  // ——— BURÇ YORUMLARI açılır menüsü (basit — doğrudan seçenekler; günlük yorumlar Ekim 2026'da kaldırıldı) ———
   var BURC = [
-    { href:"/gunluk-burc-yorumlari.html",   ad:"✦ Günlük Burç Yorumları",   alt:"12 burç için bugünün enerjisi" },
     { href:"/haftalik-burc-yorumlari.html", ad:"✦ Haftalık Burç Yorumları", alt:"Bu haftanın genel gidişatı" },
     { href:"/2027-burc-yorumlari.html",     ad:"✦ 2027 Burç Yorumları",     alt:"12 burç için yıl boyu rehber" }
   ];
