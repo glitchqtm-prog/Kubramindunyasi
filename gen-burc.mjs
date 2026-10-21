@@ -397,14 +397,30 @@ function gokVerisiBlok(b, veri){
 }
 
 /* ---------- Anthropic çağrısı ---------- */
-async function apiCagri(sys, user){
-  const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(240000) : undefined; // 4 dk güvenlik ağı
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+let DUSUNME_KAPALI = true; // bazı modeller 'düşünme' jetonlarını da max_tokens'a sayar; kapalı gönderilir, API reddederse otomatik vazgeçilir
+async function apiCagri(sys, user, maxTok=20000){
+  const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(600000) : undefined; // 10 dk güvenlik ağı
+  const govde = { model:MODEL, max_tokens:maxTok, system:sys, messages:[{role:"user",content:user}] };
+  if(DUSUNME_KAPALI) govde.thinking = { type:"disabled" };
+  let res = await fetch("https://api.anthropic.com/v1/messages", {
     method:"POST",
     headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
-    body: JSON.stringify({ model:MODEL, max_tokens:16000, system:sys, messages:[{role:"user",content:user}] }),
+    body: JSON.stringify(govde),
     signal: gsignal
   });
+  if(!res.ok && res.status===400 && DUSUNME_KAPALI){
+    const t = (await res.text()).toLowerCase();
+    if(t.includes("thinking")){
+      console.error("  API 'thinking' parametresini kabul etmedi; parametresiz devam ediliyor.");
+      DUSUNME_KAPALI = false; delete govde.thinking;
+      res = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{ "content-type":"application/json", "x-api-key":API_KEY, "anthropic-version":"2023-06-01" },
+        body: JSON.stringify(govde),
+        signal: gsignal
+      });
+    } else { throw new Error(`API 400: ${t.slice(0,300)}`); }
+  }
   if(!res.ok){ throw new Error(`API ${res.status}: ${(await res.text()).slice(0,300)}`); }
   const data = await res.json();
   if(data.stop_reason==="max_tokens") throw new Error("Yanıt max_tokens'e takıldı (çıktı çok uzun)");
@@ -415,12 +431,13 @@ async function apiCagri(sys, user){
   const ham = metin.slice(bas, son+1).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"");
   return JSON.parse(ham);
 }
-// Her grup için otomatik tekrar: tek bir aksama tüm işi çökertmesin, kendi kendini onarsın
+// Her grup için otomatik tekrar: tek bir aksama tüm işi çökertmesin, kendi kendini onarsın.
+// Çıktı sınırına takılırsa her denemede izin verilen uzunluk artırılır (20k → 28k → 32k).
 async function apiCagriTekrarli(sys, user, deneme=3){
-  let sonHata;
+  let sonHata, mt=20000;
   for(let i=0;i<deneme;i++){
-    try { return await apiCagri(sys, user); }
-    catch(e){ sonHata=e; console.error(`  grup denemesi ${i+1}/${deneme} başarısız: ${e.message}`); await new Promise(r=>setTimeout(r,2500)); }
+    try { return await apiCagri(sys, user, mt); }
+    catch(e){ sonHata=e; console.error(`  grup denemesi ${i+1}/${deneme} başarısız: ${e.message}`); if(/max_tokens/.test(e.message)) mt=Math.min(32000, mt+8000); await new Promise(r=>setTimeout(r,2500)); }
   }
   throw sonHata;
 }
