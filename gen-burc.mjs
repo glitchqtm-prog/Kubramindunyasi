@@ -272,6 +272,130 @@ function mevsimBilgisi(d){
 /* ---------- HTML kaçış ---------- */
 function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
+/* ---------- Burca özel haftalık gökyüzü verisi (GERÇEK astronomik hesap) ----------
+   Her burç için: yönetici gezegenin konumu/evi/retro durumu, o gezegenin bu haftaki açıları,
+   Ay'ın o burcun hangi evinden hangi günlerde geçtiği, burcun kendi içindeki gezegenler ve
+   gezegenlerin toplandığı ev. Hepsi astronomy-engine ile hesaplanır; yapay zekâ bu verileri YAZAR,
+   uydurmaz. Böylece 12 sayfa birbirinden gerçekten farklı olur. */
+const GEZEGENLER = [["Güneş","Sun"],["Ay","Moon"],["Merkür","Mercury"],["Venüs","Venus"],["Mars","Mars"],["Jüpiter","Jupiter"],["Satürn","Saturn"],["Uranüs","Uranus"],["Neptün","Neptune"],["Plüton","Pluto"]];
+const YONETICI = { koc:"Mars", boga:"Venüs", ikizler:"Merkür", yengec:"Ay", aslan:"Güneş", basak:"Merkür", terazi:"Venüs", akrep:"Mars", yay:"Jüpiter", oglak:"Satürn", kova:"Satürn", balik:"Jüpiter" };
+const CAGDAS_YONETICI = { akrep:"Plüton", kova:"Uranüs", balik:"Neptün" };
+const EV_KISA = ["kimlik ve yeni başlangıçlar","para ve öz-değer","iletişim ve günlük konuşmalar","ev, aile ve kökler","aşk ve yaratıcılık","iş rutini ve sağlık","ilişkiler ve ortaklıklar","derin bağlar ve dönüşüm","ufku genişletmek ve öğrenmek","kariyer ve hedefler","arkadaşlar ve gelecek planları","dinlenme ve iç dünya"];
+const ACILAR = [
+  {a:0,   ad:"kavuşum",       ton:"güçlü bir birleşme enerjisi"},
+  {a:60,  ad:"altmışlık açı", ton:"destekleyici bir fırsat"},
+  {a:90,  ad:"kare açı",      ton:"gerilimli ama harekete geçiren bir enerji"},
+  {a:120, ad:"üçgen açı",     ton:"akışkan bir uyum"},
+  {a:180, ad:"karşıt açı",    ton:"denge kurmayı gerektiren bir yüzleşme"},
+];
+const GUN_KISA = ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
+const GUN_TAM  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
+
+// Jeosentrik ekliptik boylam (aberasyonlu). DİKKAT: EclipticLongitude helyosentriktir, burada KULLANILMAZ.
+function geoLon(adEn, date){ const v=A.GeoVector(A.Body[adEn], date, true); return ((A.Ecliptic(v).elon%360)+360)%360; }
+function acFark(a,b){ const d=Math.abs(a-b)%360; return d>180?360-d:d; }
+function derece(l){ const x=((l%360)+360)%360%30; const d=Math.floor(x); const m=Math.floor((x-d)*60); return `${d}°${String(m).padStart(2,"0")}'`; }
+
+// Haftanın (Pzt 00:00 → Pzt 00:00, İstanbul) 6 saatlik örnekleri: 29 nokta (0..28)
+function haftaGokVerisi(now){
+  const gun = (now.getDay()+6)%7; // Pzt=0
+  const pzt = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()-gun) - 3*3600000; // İstanbul gece yarısı → UTC
+  const N = 28, lon = {};
+  const T = []; for(let k=0;k<=N;k++) T.push(new Date(pzt + k*6*3600000));
+  for(const [ad,en] of GEZEGENLER) lon[ad] = T.map(t=>geoLon(en,t));
+  return { N, lon };
+}
+
+function burcGokVerisi(i, hv){
+  const b = BURCLAR[i], { lon, N } = hv, M = 14; // M: perşembe öğle (haftanın ortası)
+  const sgn   = (ad,k)=>Math.floor(lon[ad][k]/30)%12;
+  const retro = (ad,k)=>{ if(ad==="Güneş"||ad==="Ay") return false; const d=((lon[ad][k+1]-lon[ad][k-1]+540)%360)-180; return d<0; };
+  const ev    = (burcIdx)=>((burcIdx-i)%12+12)%12+1;               // bu burcun solar evi
+  const olayGun = (k)=>Math.max(0,Math.min(6,Math.floor(((k-0.5)*6)/24))); // örnek k'den önceki aralıkta olan olayın günü (0=Pzt)
+  const satirlar = [];
+
+  // 1) Yönetici gezegen (ve çağdaş yönetici)
+  const gezSatir = (ad)=>{
+    const s0=sgn(ad,1), sM=sgn(ad,M), s1=sgn(ad,N-1), r0=retro(ad,1), r1=retro(ad,N-1), rM=retro(ad,M);
+    let t = `${ad} hafta ortasında ${BURC_ADLARI[sM]} burcunda ${derece(lon[ad][M])}${rM?" (retro hareketinde)":""}; senin ${ev(sM)}. evinde (${EV_KISA[ev(sM)-1]}).`;
+    if(ad!=="Ay"){
+      if(s0!==s1){ for(let k=2;k<=N-1;k++){ if(sgn(ad,k)!==s0){ t += ` ${GUN_TAM[olayGun(k)]} günü ${BURC_ADLARI[sgn(ad,k)]} burcuna geçiyor.`; break; } } }
+      if(r0!==r1){ for(let k=2;k<=N-2;k++){ if(retro(ad,k)!==r0){ t += ` ${GUN_TAM[olayGun(k)]} civarında ${r1?"retro harekete başlıyor":"ileri harekete dönüyor"}.`; break; } } }
+    }
+    return { t, ad, sM, rM };
+  };
+  const yon = YONETICI[b.slug];
+  const y = gezSatir(yon);
+  satirlar.push({ et:`Yönetici gezegenin (${yon})`, tx:y.t.replace(new RegExp("^"+yon+" "), "") });
+  if(CAGDAS_YONETICI[b.slug]){
+    const c = gezSatir(CAGDAS_YONETICI[b.slug]);
+    satirlar.push({ et:`Çağdaş yönetici (${c.ad})`, tx:c.t.replace(new RegExp("^"+c.ad+" "), "") });
+  }
+
+  // 2) Yönetici gezegenin bu haftaki açıları (Ay yalnızca Ay yönetici ise hesaba girer)
+  const adaylar = GEZEGENLER.map(x=>x[0]).filter(x=>x!==yon && (yon==="Ay" || x!=="Ay"));
+  const acilar = [];
+  for(const x of adaylar){
+    let best=null;
+    for(const ac of ACILAR){
+      let mn=999, kmn=0;
+      for(let k=0;k<=N;k++){ const o=Math.abs(acFark(lon[yon][k],lon[x][k])-ac.a); if(o<mn){ mn=o; kmn=k; } }
+      const ortaOrb = Math.abs(acFark(lon[yon][M],lon[x][M])-ac.a);
+      if(!best || mn<best.mn) best={ ac, mn, kmn, ortaOrb };
+    }
+    const hizli = (yon==="Ay"||x==="Ay");
+    const tam = best.mn <= (hizli?1.6:1.0);
+    if(tam || best.ortaOrb<=3.0) acilar.push({ x, ...best, tam });
+  }
+  acilar.sort((p,q)=>p.mn-q.mn);
+  const secili = acilar.slice(0,3);
+  if(secili.length){
+    satirlar.push({ et:"Bu haftaki açıları", tx: secili.map(a=>`${yon} – ${a.x}: ${a.ac.ad} (${a.ac.ton})${a.tam?`, tam isabet ${GUN_TAM[Math.min(6,Math.floor(a.kmn*6/24))]} günü`:", hafta boyunca etkin"}`).join("; ")+"." });
+  } else {
+    satirlar.push({ et:"Bu haftaki açıları", tx:`${yon} bu hafta belirgin bir ana açı yapmıyor; sakin ve kendi hızında akan bir hafta.` });
+  }
+
+  // 3) Ay'ın bu burcun evlerinden geçişi
+  const seg=[]; let onceki=-1;
+  for(let k=0;k<N;k++){ const s=sgn("Ay",k); if(s!==onceki){ seg.push({ ev:ev(s), gun: k===0?0:olayGun(k) }); onceki=s; } }
+  if(seg.length){
+    const parcalar = seg.map((p,j)=> j===0 ? `haftaya senin ${p.ev}. evinde (${EV_KISA[p.ev-1]}) başlıyor` : `${GUN_TAM[p.gun]} günü ${p.ev}. eve (${EV_KISA[p.ev-1]}) geçiyor`);
+    satirlar.push({ et:"Ay'ın yolu", tx:`Ay ${parcalar.join("; ")}.` });
+  }
+
+  // 4) Burcun içindeki gezegenler
+  const burcta = GEZEGENLER.map(x=>x[0]).filter(x=>x!=="Ay" && sgn(x,M)===i).map(x=>`${x} ${derece(lon[x][M])}${retro(x,M)?" (retro)":""}`);
+  satirlar.push({ et:`${b.ad} burcunda bu hafta`, tx: burcta.length ? burcta.join(", ")+"." : "Bu hafta burcunda gezegen bulunmuyor; öne çıkan etkiler diğer evlerden geliyor." });
+
+  // 5) Gezegenlerin en çok toplandığı ev
+  const sayim = {}; for(const x of GEZEGENLER.map(g=>g[0]).filter(g=>g!=="Ay")){ const e=ev(sgn(x,M)); (sayim[e]=sayim[e]||[]).push(x); }
+  const en = Object.entries(sayim).sort((p,q)=>q[1].length-p[1].length || p[0]-q[0])[0];
+  if(en && en[1].length>=2){
+    satirlar.push({ et:"Yoğunlaşan alan", tx:`Gezegenler bu hafta en çok senin ${en[0]}. evinde toplanıyor (${EV_KISA[en[0]-1]}): ${en[1].join(", ")}.` });
+  }
+
+  const metin = satirlar.map(s=>`${s.et} → ${s.tx}`).join(" || ");
+  return { satirlar, metin, meta:{ gez:yon, gezBurc:BURC_ADLARI[y.sM], gezEv:ev(y.sM), gezRetro:y.rM } };
+}
+// Yorum, o burcun yönetici gezegenine gerçekten değiniyor mu?
+function yoneticiDeginiyor(it, veri){
+  if(!veri) return true;
+  const txt = [it.genel,it.ask,it.is,it.saglik,it.oneCikan].join(" ");
+  const ad = veri.meta.gez;
+  if(ad==="Ay") return /(^|[^A-Za-zÇĞİÖŞÜçğıöşü])Ay([^A-Za-zÇĞİÖŞÜçğıöşü]|$)/.test(txt);
+  return txt.includes(ad);
+}
+// Sayfada görünen "burca özel gökyüzü verisi" bloğu
+function gokVerisiBlok(b, veri){
+  if(!veri) return "";
+  const li = veri.satirlar.map(s=>`<li><b>${esc(s.et)}:</b> ${esc(s.tx)}</li>`).join("");
+  return `<section class="gv">
+    <div class="gv-b">✦ ${esc(b.ad)} Burcuna Özel Gökyüzü — Bu Haftanın Gerçek Hesabı</div>
+    <ul class="gv-liste">${li}</ul>
+    <p class="gv-not">Yönetici gezegen, burcunun sembolik kaptanıdır; bu hafta nerede ve nasıl durduğu burcunun havasını belirler. Konumlar astronomik hesapla bulunur ve her hafta yenilenir; evler ${esc(b.ad)} burcunu 1. ev sayan solar ev sistemine göredir.</p>
+  </section>`;
+}
+
 /* ---------- Anthropic çağrısı ---------- */
 async function apiCagri(sys, user){
   const gsignal = (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? AbortSignal.timeout(240000) : undefined; // 4 dk güvenlik ağı
@@ -331,7 +455,9 @@ SOMUTLUK (ÇOK ÖNEMLİ — yorumun ruhu budur): Yorumlar asla havada ve genel g
 
 GERÇEK GÖKYÜZÜ: ${sky.gokKisa} Bu enerjiyi yorumlara doğal biçimde yansıt. Her burç için ayrıca "öne çıkan yaşam alanı (solar ev)" bilgisini vereceğim; o alanı yorumun merkezine al ve somut örnekleri oradan türet. Her burcu kendi doğasına göre belirgin biçimde farklılaştır; hiçbiri bir diğerine benzemesin.
 
-NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel sayısı"} ${sayi} — teması: ${SAYI_TEMA[sayi]}. Bu sayısal ton HERKES için aynıdır (kişiye ya da burca özel değildir), o yüzden onu bütün burçların yorumuna genel bir atmosfer olarak HAFİFÇE yansıt. Metinde "numeroloji" ya da rakamı teknik biçimde anmana gerek yok; sadece o enerjiyi (örneğin ${sayi} sayısında ${SAYI_TEMA[sayi].split(",")[0]}) sezdir.
+${(!gunluk && sky.burcVeri) ? `BURCA ÖZEL VERİ (ÇOK ÖNEMLİ — 12 yorumu birbirinden gerçekten ayıran şey budur): Her burç için 'BURCA ÖZEL GÖKYÜZÜ VERİSİ' veriyorum; bunlar gerçek astronomik hesaptır. O burcun yorumunu bu verilerle farklılaştır: yönetici gezegenin durumunu (hangi burçta, senin kaçıncı evinde, retro ya da ileri, hangi açıyı yapıyor) ve Ay'ın o burcun hangi evinden hangi günlerde geçtiğini yorumun içinde somut olarak an. 'genel', 'ask', 'is' ve 'oneCikan' bölümlerinin HER BİRİNDE bu verilerden en az birine doğal biçimde değin; 'ritim' günlerini Ay'ın ev geçişlerine ve açıların tam isabet günlerine uydur. Yönetici gezegenin adını (örneğin Satürn, Venüs) yorumda mutlaka an. Verilmeyen hiçbir gezegen konumu, açı, ev ya da gün UYDURMA. Teknik terimleri sade Türkçeyle açıkla ('kare açı' yerine 'gerilimli bir açı', 'karşıt açı' yerine 'denge isteyen bir yüzleşme' gibi); okuyanı sayılarla boğma, derece vermene gerek yok.
+
+` : ""}NUMEROLOJİ: ${gunluk?"Bugünün evrensel gün sayısı":"Bu ayın evrensel sayısı"} ${sayi} — teması: ${SAYI_TEMA[sayi]}. Bu sayısal ton HERKES için aynıdır (kişiye ya da burca özel değildir), o yüzden onu bütün burçların yorumuna genel bir atmosfer olarak HAFİFÇE yansıt. Metinde "numeroloji" ya da rakamı teknik biçimde anmana gerek yok; sadece o enerjiyi (örneğin ${sayi} sayısında ${SAYI_TEMA[sayi].split(",")[0]}) sezdir.
 
 GÜNCEL TARİH VE MEVSİM: Bugün ${sky.tarihUzun}; mevsim ${sky.mevsim.ad}. ${sky.mevsim.not} Yorumlardaki somut sahneleri ve önerileri bu mevsime ve içinde bulunduğumuz döneme uydur — mevsimle çelişen bir örnek verme (örneğin yaz ortasında kışlık, kışın yazlık öneri kurma). Mevsimin havasını doğal biçimde sezdir.
 
@@ -366,7 +492,8 @@ ${ortak}`;
     const dilim = BURCLAR.slice(start, start+BATCH);
     const siraliBurclar = dilim.map((b,j)=>{
       const i = start+j, f = evTema(i, cisimIdx);
-      return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}`;
+      const gv = (!gunluk && sky.burcVeri) ? `\n   BURCA ÖZEL GÖKYÜZÜ VERİSİ (gerçek hesap): ${sky.burcVeri[i].metin}` : "";
+      return `${i}: ${b.ad} (${b.doga}) — ${gunluk?"bugün":"bu hafta"} öne çıkan yaşam alanı: ${f.no}. ev, yani ${f.tema}${gv}`;
     }).join("\n");
     const user = `${kapsam} için aşağıdaki ${dilim.length} burcun her birine ${zaman} yorumunu yaz. SADECE geçerli bir JSON dizisi döndür; başka hiçbir metin, markdown ya da açıklama ekleme.
 Sıra ve indeksler tam olarak şöyle olmalı; her burcun öne çıkan yaşam alanı belirtilmiştir:
@@ -377,15 +504,24 @@ Uzunluk ve içerik:
 ${uzunluk}
 Türkçe yaz, olumlu ve güçlendirici ol, kusursuz imlaya dikkat et. Tam ${dilim.length} öğe döndür (yukarıdaki sırayla).`;
 
-    const arr = await apiCagriTekrarli(sys, user);
-    if(!Array.isArray(arr)||arr.length!==dilim.length) throw new Error(`${dilim.length} öğe bekleniyordu, gelen: `+(Array.isArray(arr)?arr.length:typeof arr));
-    for(let j=0;j<dilim.length;j++){
-      const it = arr[j];
-      for(const k of alanListe){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); }
-      if(it.denemeler.split("|").map(x=>x.trim()).filter(Boolean).length<3) throw new Error("denemeler 3 bölüm olmalı");
-      if(!gunluk && it.ritim.split("|").map(x=>x.trim()).filter(Boolean).length<6) throw new Error("ritim en az 6 bölüm olmalı");
-      sonuc[start+j] = it;
+    let arr;
+    for(let deneme=1; ; deneme++){
+      arr = await apiCagriTekrarli(sys, user);
+      if(!Array.isArray(arr)||arr.length!==dilim.length) throw new Error(`${dilim.length} öğe bekleniyordu, gelen: `+(Array.isArray(arr)?arr.length:typeof arr));
+      for(let j=0;j<dilim.length;j++){
+        const it = arr[j];
+        for(const k of alanListe){ if(!it||typeof it[k]!=="string"||!it[k].trim()) throw new Error("Eksik alan: "+k); }
+        if(it.denemeler.split("|").map(x=>x.trim()).filter(Boolean).length<3) throw new Error("denemeler 3 bölüm olmalı");
+        if(!gunluk && it.ritim.split("|").map(x=>x.trim()).filter(Boolean).length<6) throw new Error("ritim en az 6 bölüm olmalı");
+      }
+      // Haftalık: yorum, o burcun yönetici gezegenine değinmeli (veri gerçekten kullanılsın). En fazla 3 deneme; olmazsa üretimi çökertmeden devam.
+      if(gunluk || !sky.burcVeri) break;
+      const eksik = dilim.filter((b,j)=>!yoneticiDeginiyor(arr[j], sky.burcVeri[start+j]));
+      if(!eksik.length) break;
+      console.warn(`  ${eksik.map(b=>b.ad).join(", ")}: yönetici gezegene değinilmedi (deneme ${deneme}/3)`);
+      if(deneme>=3) break;
     }
+    for(let j=0;j<dilim.length;j++) sonuc[start+j] = arr[j];
   }
   return sonuc;
 }
@@ -515,6 +651,14 @@ const CSS = `
   .serit-liste{display:flex;flex-direction:column;gap:7px;margin-top:14px}
   .serit-satir{display:flex;gap:12px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:9px 14px}
   .serit-satir.vurgu{border-color:var(--gold);background:rgba(217,185,106,.08)}
+  /* Burca özel gökyüzü verisi */
+  .gv{margin:18px 0 0;background:rgba(217,185,106,.05);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .gv-b{font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .gv-liste{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+  .gv-liste li{font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;line-height:1.6;color:#efe7f6;padding-left:14px;position:relative}
+  .gv-liste li:before{content:"✦";position:absolute;left:0;color:var(--gold);font-size:9px;top:6px}
+  .gv-liste b{color:var(--gold-soft);font-weight:600}
+  .gv-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:#9a8fb8;margin:12px 0 0;line-height:1.55}
   .serit-gun{flex:none;width:88px;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--gold-soft)}
   .serit-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;color:#efe7f6;line-height:1.5}
   @media(max-width:480px){.serit-satir{flex-direction:column;gap:2px}.serit-gun{width:auto}}`;
@@ -563,9 +707,12 @@ function renderSign(tur, b, y, ctx){
   const title = gunluk
     ? `${b.ad} Burcu Günlük Yorum — ${ctx.tarihKisa} | Astro Yuvam`
     : `${b.ad} Burcu Haftalık Yorum — ${ctx.haftaAralik} | Astro Yuvam`;
+  const gv = (!gunluk && ctx.burcVeri) ? ctx.burcVeri[BURCLAR.indexOf(b)] : null;
   const desc = gunluk
     ? `${b.ad} burcu ${ctx.tarihKisa} günlük yorumu: bugünün aşk, iş ve genel enerjisi. Dürüst ve öz-farkındalık odaklı ${b.ad} burcu yorumu.`
-    : `${b.ad} burcu haftalık yorumu (${ctx.haftaAralik}): bu haftanın aşk, iş ve genel enerjisi. Dürüst ve öz-farkındalık odaklı ${b.ad} burcu haftalık yorumu.`;
+    : (gv
+      ? `${b.ad} burcu haftalık yorumu (${ctx.haftaAralik}): yönetici gezegenin ${gv.meta.gez} ${gv.meta.gezBurc} burcunda${gv.meta.gezRetro?" (retro)":""}, senin ${gv.meta.gezEv}. evinde. Aşk, iş ve sağlık yorumu, Ay'ın haftalık yolu.`
+      : `${b.ad} burcu haftalık yorumu (${ctx.haftaAralik}): bu haftanın aşk, iş ve genel enerjisi. Dürüst ve öz-farkındalık odaklı ${b.ad} burcu haftalık yorumu.`);
   const canonical = `https://astroyuvam.com/${yol}/${b.slug}.html`;
   const jsonld = JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":title.replace(" | Astro Yuvam",""),"description":desc,"datePublished":ctx.iso,"dateModified":ctx.iso,"author":{"@type":"Organization","name":"Astro Yuvam"},"publisher":{"@type":"Organization","name":"Astro Yuvam"},"mainEntityOfPage":canonical});
   const metaSat = gunluk ? `${ctx.tarihTR} · ${b.aralik}` : `${ctx.haftaAralik} · ${b.aralik}`;
@@ -595,6 +742,7 @@ function renderSign(tur, b, y, ctx){
     <div class="ozet-satir">🎯 <b>Öne çıkan alanın:</b> ${odak.no}. ev — ${esc(odak.tema)}</div>
     <div class="ozet-satir">🔢 <b>${gunluk?"Günün":"Ayın"} sayısı ${sayi}:</b> ${esc(SAYI_TEMA[sayi])}</div>
   </div>
+  ${gokVerisiBlok(b, gv)}
   <div style="max-width:440px;margin:18px auto 0">
     <div class="dalga-b" style="text-align:center">✦ ${b.ad} İçin ${gunluk?"Bugünün":"Bu Haftanın"} Enerjisi</div>
     ${enerjiBarlar(enerjiHesap(BURCLAR.indexOf(b), ctx.ayIdx, ctx.iso))}
@@ -733,7 +881,13 @@ function sitemapLastmodGuncelle(urlYollari, iso){
   ctx.renk = gununRengi(ctx.gunSayi);
   ctx.haftaVals = haftaVals(iso);
   ctx.mevsim = mevsimBilgisi(now);
-  const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi, mevsim: ctx.mevsim, tarihUzun: ctx.tarihTR };
+  // Burca özel haftalık gökyüzü verisi; hesap bir nedenle başarısız olursa üretim eski yolla (verisiz) sürer
+  try {
+    const hv = haftaGokVerisi(now);
+    ctx.burcVeri = BURCLAR.map((_,i)=>burcGokVerisi(i, hv));
+    console.log("Burca özel gökyüzü verisi hazır:", ctx.burcVeri.map((v,i)=>`${BURCLAR[i].ad}→${v.meta.gez} ${v.meta.gezBurc} ${v.meta.gezEv}.ev`).join(" | "));
+  } catch(e){ ctx.burcVeri = null; console.error("Burca özel veri hesaplanamadı, verisiz devam:", e.message); }
+  const sky = { ayB, gunB, evre, ayIdx: ctx.ayIdx, gunIdx: ctx.gunIdx, gokKisa: ctx.gokKisa, gunSayi: ctx.gunSayi, aySayi: ctx.aySayi, mevsim: ctx.mevsim, tarihUzun: ctx.tarihTR, burcVeri: ctx.burcVeri };
 
   mkdirSync("haftalik-burc-yorumlari", {recursive:true});
 
