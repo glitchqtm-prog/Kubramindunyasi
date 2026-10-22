@@ -302,14 +302,63 @@
       <div>
         <label for="evsis">Ev Sistemi</label>
         <select id="evsis">
-          <option value="placidus" selected>Placidus (en yaygın · önerilen)</option>
-          <option value="koch">Koch</option>
-          <option value="esit">Eşit Ev</option>
-          <option value="tam">Tam Burç (Whole Sign)</option>
+          <optgroup label="Açılara dayalı (dörtlü)">
+            <option value="placidus" selected>Placidus (en yaygın · önerilen)</option>
+            <option value="koch">Koch</option>
+            <option value="porphyry">Porphyry</option>
+            <option value="regiomontanus">Regiomontanus</option>
+            <option value="campanus">Campanus</option>
+            <option value="alcabitius">Alcabitius</option>
+            <option value="topocentrik">Topocentrik (Polich-Page)</option>
+          </optgroup>
+          <optgroup label="Eşit bölen">
+            <option value="esit">Eşit Ev</option>
+            <option value="tam">Tam Burç (Whole Sign)</option>
+            <option value="vehlow">Vehlow (Eşit)</option>
+            <option value="esitmc">Eşit (MC'den)</option>
+          </optgroup>
+          <optgroup label="Eksen / özel sistemler">
+            <option value="meridyen">Meridyen (Axial)</option>
+            <option value="morinus">Morinus</option>
+            <option value="sripati">Sripati</option>
+          </optgroup>
         </select>
-        <div class="hint">Emin değilsen Placidus'ta bırak. Harita çıktıktan sonra da tek dokunuşla değiştirebilirsin. <a href="#ev-sistemleri">Ev sistemi nedir?</a></div>
+        <div class="hint">Emin değilsen Placidus'ta bırak — en yaygın sistemdir. 14 ev sistemini de harita çıktıktan sonra tek dokunuşla karşılaştırabilirsin. <a href="#ev-sistemleri">Ev sistemi nedir?</a></div>
       </div>
     </div>
+
+    <details class="ek-kutu" id="hesapsec"><summary>✦ Gelişmiş hesaplama seçenekleri (zodyak · düğüm · Lilith)</summary>
+      <div class="hs-sec-govde">
+        <div class="row">
+          <div>
+            <label for="zodyak">Zodyak</label>
+            <select id="zodyak">
+              <option value="tropikal" selected>Tropikal (Batı astrolojisi · önerilen)</option>
+              <option value="lahiri">Sideral — Lahiri (Vedik)</option>
+              <option value="fagan">Sideral — Fagan-Bradley</option>
+              <option value="raman">Sideral — Raman</option>
+              <option value="kp">Sideral — Krishnamurti (KP)</option>
+              <option value="drakonik">Drakonik (ruh haritası)</option>
+            </select>
+          </div>
+          <div>
+            <label for="dugum">Ay Düğümü</label>
+            <select id="dugum">
+              <option value="gercek" selected>Gerçek Düğüm (önerilen)</option>
+              <option value="ortalama">Ortalama Düğüm</option>
+            </select>
+          </div>
+          <div>
+            <label for="lilith">Lilith (Kara Ay)</label>
+            <select id="lilith">
+              <option value="ortalama" selected>Ortalama Lilith (önerilen)</option>
+              <option value="gercek">Gerçek / Salınımlı Lilith</option>
+            </select>
+          </div>
+        </div>
+        <div class="hint">Çoğu kişi için varsayılanlar (Tropikal · Gerçek Düğüm · Ortalama Lilith) doğrudur. Vedik astroloji için Sideral (Lahiri) + Tam Burç ev sistemini seçebilirsin. Değiştirince “Haritamı Çıkar”a tekrar bas.</div>
+      </div>
+    </details>
 
     <details class="ek-kutu" id="eksecim"><summary>✦ Ek noktalar ve sabit yıldızlar</summary></details>
 
@@ -331,8 +380,13 @@
     <div class="note" id="note" style="display:none"></div>
 
     <section class="hs-blok">
-      <div class="hs-bas"><h2>Doğum Haritası Çarkın</h2><span class="hs-dugmeler"><button type="button" class="hs-mini" id="buyut">🔍 Büyüt</button><button type="button" class="hs-mini" id="indir">⬇ Çarkı indir (PNG)</button></span></div>
-      <p class="hs-alt">Bir gezegene dokun: o gezegenin tüm açıları çarkta öne çıkar ve aşağıda ne anlama geldiği açılır. Filtrelerle yalnızca istediğin açıları gösterebilirsin.</p>
+      <div class="hs-bas"><h2>Doğum Haritası Çarkın</h2><span class="hs-dugmeler"><button type="button" class="hs-mini" id="buyut">🔍 Büyüt</button><button type="button" class="hs-mini" id="indir">⬇ İndir (PNG)</button></span></div>
+      <div class="hs-filtre" id="gorunum" role="group" aria-label="Çark biçimi">
+        <button type="button" data-g="dairesel" class="on">Dairesel çark</button>
+        <button type="button" data-g="aci">Açı tablosu</button>
+        <button type="button" data-g="hint">Hint çarkı</button>
+      </div>
+      <p class="hs-alt" id="gorunum-alt">Bir gezegene dokun: o gezegenin tüm açıları çarkta öne çıkar ve aşağıda ne anlama geldiği açılır. Filtrelerle yalnızca istediğin açıları gösterebilirsin.</p>
       <div class="hs-filtre" id="filtre">
         <button type="button" data-f="hepsi" class="on">Tüm açılar</button>
         <button type="button" data-f="uyumlu">Uyumlu (△ ✶)</button>
@@ -344,8 +398,18 @@
         <div class="hs-filtre" id="evsecim" role="group" aria-label="Ev sistemi">
           <button type="button" data-ev="placidus" class="on">Placidus</button>
           <button type="button" data-ev="koch">Koch</button>
+          <button type="button" data-ev="porphyry">Porphyry</button>
+          <button type="button" data-ev="regiomontanus">Regiomontanus</button>
+          <button type="button" data-ev="campanus">Campanus</button>
+          <button type="button" data-ev="alcabitius">Alcabitius</button>
+          <button type="button" data-ev="topocentrik">Topocentrik</button>
           <button type="button" data-ev="esit">Eşit Ev</button>
           <button type="button" data-ev="tam">Tam Burç</button>
+          <button type="button" data-ev="vehlow">Vehlow</button>
+          <button type="button" data-ev="esitmc">Eşit (MC)</button>
+          <button type="button" data-ev="meridyen">Meridyen</button>
+          <button type="button" data-ev="morinus">Morinus</button>
+          <button type="button" data-ev="sripati">Sripati</button>
         </div>
       </div>
       <div class="hs-evfark" id="evfark" hidden></div>
@@ -436,9 +500,37 @@
   </div>
 
   <h2 id="ev-sistemleri">Ev Sistemleri: Hangisini Seçmeliyim?</h2>
-  <p>Doğum haritasındaki 12 ev, hayatının 12 alanını anlatır: kimlik, para, iletişim, aile, aşk, iş, ilişkiler ve diğerleri. Gezegenlerin burçları ve aralarındaki açılar her sistemde <b>aynıdır</b>; ev sistemi yalnızca gökyüzünün bu 12 alana <b>nasıl bölüneceğini</b> belirler. Bu yüzden aynı gezegen bir sistemde 6. evde, başka bir sistemde 7. evde görünebilir. Aşağıdaki küçük çarklar aynı haritanın dört sistemde nasıl bölündüğünü gösteriyor; harita çıktıktan sonra çarkın üstündeki düğmelerle kendi haritanda da karşılaştırabilirsin.</p>
+  <p>Doğum haritasındaki 12 ev, hayatının 12 alanını anlatır: kimlik, para, iletişim, aile, aşk, iş, ilişkiler ve diğerleri. Gezegenlerin burçları ve aralarındaki açılar her sistemde <b>aynıdır</b>; ev sistemi yalnızca gökyüzünün bu 12 alana <b>nasıl bölüneceğini</b> belirler. Bu yüzden aynı gezegen bir sistemde 6. evde, başka bir sistemde 7. evde görünebilir. Ücretsiz aracımız <b>14 farklı ev sistemini</b> destekler; harita çıktıktan sonra çarkın üstündeki düğmelerle her birini kendi haritanda tek dokunuşla karşılaştırabilir, hangi gezegenin ev değiştirdiğini görebilirsin. Aşağıdaki küçük çarklar en çok kullanılan dört sistemin aynı haritayı nasıl böldüğünü gösteriyor.</p>
   <div class="ev-kartlar"><div class="ev-kart"><svg viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="42" fill="rgba(217,185,106,.07)" stroke="#d9b96a" stroke-width="1.2"/><circle cx="46" cy="46" r="33" fill="none" stroke="#6b5fa0" stroke-width=".8"/><circle cx="46" cy="46" r="12" fill="none" stroke="#6b5fa0" stroke-width=".8"/><line x1="33.1" y1="76.4" x2="29.6" y2="84.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="50.0" y1="78.8" x2="51.1" y2="87.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="65.9" y1="72.4" x2="71.3" y2="79.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="76.4" y1="58.9" x2="84.7" y2="62.4" stroke="#6b5fa0" stroke-width=".7"/><line x1="78.8" y1="42.0" x2="87.7" y2="40.9" stroke="#6b5fa0" stroke-width=".7"/><line x1="72.4" y1="26.1" x2="79.5" y2="20.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="58.9" y1="15.6" x2="62.4" y2="7.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="42.0" y1="13.2" x2="40.9" y2="4.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="26.1" y1="19.6" x2="20.7" y2="12.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="15.6" y1="33.1" x2="7.3" y2="29.6" stroke="#6b5fa0" stroke-width=".7"/><line x1="13.2" y1="50.0" x2="4.3" y2="51.1" stroke="#6b5fa0" stroke-width=".7"/><line x1="19.6" y1="65.9" x2="12.5" y2="71.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="34.0" y1="46.0" x2="13.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/><line x1="37.1" y1="54.1" x2="21.6" y2="68.3" stroke="#b8afce" stroke-width="0.8"/><line x1="44.3" y1="57.9" x2="41.2" y2="78.7" stroke="#b8afce" stroke-width="0.8"/><line x1="50.4" y1="57.2" x2="58.1" y2="76.7" stroke="#e7cf95" stroke-width="1.8"/><line x1="54.5" y1="54.5" x2="69.3" y2="69.3" stroke="#b8afce" stroke-width="0.8"/><line x1="57.0" y1="50.8" x2="76.2" y2="59.2" stroke="#b8afce" stroke-width="0.8"/><line x1="58.0" y1="46.0" x2="79.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/><line x1="54.9" y1="37.9" x2="70.4" y2="23.7" stroke="#b8afce" stroke-width="0.8"/><line x1="47.7" y1="34.1" x2="50.8" y2="13.3" stroke="#b8afce" stroke-width="0.8"/><line x1="41.6" y1="34.8" x2="33.9" y2="15.3" stroke="#e7cf95" stroke-width="1.8"/><line x1="37.5" y1="37.5" x2="22.7" y2="22.7" stroke="#b8afce" stroke-width="0.8"/><line x1="35.0" y1="41.2" x2="15.8" y2="32.8" stroke="#b8afce" stroke-width="0.8"/><line x1="34.0" y1="46.0" x2="1.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/></svg><h3>Placidus</h3><p>Bugün en yaygın sistem; profesyonel astrologların ve çoğu programın varsayılanı. Evler, gökyüzünün gün içindeki dönüşüne göre zaman üzerinden bölünür; bu yüzden evler farklı büyüklüktedir.</p><small>Bazı haritalarda bir burçta iki ev başlar, bir burçta hiç başlamaz (kuşatılmış burç). Bu, hesabın doğal sonucudur. Astro Yuvam raporları Placidus kullanır.</small></div><div class="ev-kart"><svg viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="42" fill="rgba(217,185,106,.07)" stroke="#d9b96a" stroke-width="1.2"/><circle cx="46" cy="46" r="33" fill="none" stroke="#6b5fa0" stroke-width=".8"/><circle cx="46" cy="46" r="12" fill="none" stroke="#6b5fa0" stroke-width=".8"/><line x1="33.1" y1="76.4" x2="29.6" y2="84.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="50.0" y1="78.8" x2="51.1" y2="87.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="65.9" y1="72.4" x2="71.3" y2="79.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="76.4" y1="58.9" x2="84.7" y2="62.4" stroke="#6b5fa0" stroke-width=".7"/><line x1="78.8" y1="42.0" x2="87.7" y2="40.9" stroke="#6b5fa0" stroke-width=".7"/><line x1="72.4" y1="26.1" x2="79.5" y2="20.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="58.9" y1="15.6" x2="62.4" y2="7.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="42.0" y1="13.2" x2="40.9" y2="4.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="26.1" y1="19.6" x2="20.7" y2="12.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="15.6" y1="33.1" x2="7.3" y2="29.6" stroke="#6b5fa0" stroke-width=".7"/><line x1="13.2" y1="50.0" x2="4.3" y2="51.1" stroke="#6b5fa0" stroke-width=".7"/><line x1="19.6" y1="65.9" x2="12.5" y2="71.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="34.0" y1="46.0" x2="13.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/><line x1="35.9" y1="52.5" x2="18.2" y2="63.8" stroke="#b8afce" stroke-width="0.8"/><line x1="42.5" y1="57.5" x2="36.3" y2="77.5" stroke="#b8afce" stroke-width="0.8"/><line x1="50.4" y1="57.2" x2="58.1" y2="76.7" stroke="#e7cf95" stroke-width="1.8"/><line x1="54.1" y1="54.9" x2="68.3" y2="70.4" stroke="#b8afce" stroke-width="0.8"/><line x1="56.8" y1="51.2" x2="75.8" y2="60.2" stroke="#b8afce" stroke-width="0.8"/><line x1="58.0" y1="46.0" x2="79.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/><line x1="56.1" y1="39.5" x2="73.8" y2="28.2" stroke="#b8afce" stroke-width="0.8"/><line x1="49.5" y1="34.5" x2="55.7" y2="14.5" stroke="#b8afce" stroke-width="0.8"/><line x1="41.6" y1="34.8" x2="33.9" y2="15.3" stroke="#e7cf95" stroke-width="1.8"/><line x1="37.9" y1="37.1" x2="23.7" y2="21.6" stroke="#b8afce" stroke-width="0.8"/><line x1="35.2" y1="40.8" x2="16.2" y2="31.8" stroke="#b8afce" stroke-width="0.8"/><line x1="34.0" y1="46.0" x2="1.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/></svg><h3>Koch</h3><p>Placidus'a en yakın ikinci dörtlü sistem; “doğum yeri” sistemi olarak da bilinir. Yükselen ve MC aynıdır, aradaki evler biraz farklı bölünür.</p><small>Özellikle Almanya ve Orta Avrupa'da yaygındır; öngörü çalışmalarında tercih eden astrologlar vardır.</small></div><div class="ev-kart"><svg viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="42" fill="rgba(217,185,106,.07)" stroke="#d9b96a" stroke-width="1.2"/><circle cx="46" cy="46" r="33" fill="none" stroke="#6b5fa0" stroke-width=".8"/><circle cx="46" cy="46" r="12" fill="none" stroke="#6b5fa0" stroke-width=".8"/><line x1="33.1" y1="76.4" x2="29.6" y2="84.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="50.0" y1="78.8" x2="51.1" y2="87.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="65.9" y1="72.4" x2="71.3" y2="79.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="76.4" y1="58.9" x2="84.7" y2="62.4" stroke="#6b5fa0" stroke-width=".7"/><line x1="78.8" y1="42.0" x2="87.7" y2="40.9" stroke="#6b5fa0" stroke-width=".7"/><line x1="72.4" y1="26.1" x2="79.5" y2="20.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="58.9" y1="15.6" x2="62.4" y2="7.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="42.0" y1="13.2" x2="40.9" y2="4.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="26.1" y1="19.6" x2="20.7" y2="12.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="15.6" y1="33.1" x2="7.3" y2="29.6" stroke="#6b5fa0" stroke-width=".7"/><line x1="13.2" y1="50.0" x2="4.3" y2="51.1" stroke="#6b5fa0" stroke-width=".7"/><line x1="19.6" y1="65.9" x2="12.5" y2="71.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="34.0" y1="46.0" x2="13.0" y2="46.0" stroke="#b8afce" stroke-width="0.8"/><line x1="35.6" y1="52.0" x2="17.4" y2="62.5" stroke="#b8afce" stroke-width="0.8"/><line x1="40.0" y1="56.4" x2="29.5" y2="74.6" stroke="#b8afce" stroke-width="0.8"/><line x1="46.0" y1="58.0" x2="46.0" y2="79.0" stroke="#b8afce" stroke-width="0.8"/><line x1="52.0" y1="56.4" x2="62.5" y2="74.6" stroke="#b8afce" stroke-width="0.8"/><line x1="56.4" y1="52.0" x2="74.6" y2="62.5" stroke="#b8afce" stroke-width="0.8"/><line x1="58.0" y1="46.0" x2="79.0" y2="46.0" stroke="#b8afce" stroke-width="0.8"/><line x1="56.4" y1="40.0" x2="74.6" y2="29.5" stroke="#b8afce" stroke-width="0.8"/><line x1="52.0" y1="35.6" x2="62.5" y2="17.4" stroke="#b8afce" stroke-width="0.8"/><line x1="46.0" y1="34.0" x2="46.0" y2="13.0" stroke="#b8afce" stroke-width="0.8"/><line x1="40.0" y1="35.6" x2="29.5" y2="17.4" stroke="#b8afce" stroke-width="0.8"/><line x1="35.6" y1="40.0" x2="17.4" y2="29.5" stroke="#b8afce" stroke-width="0.8"/><line x1="34.0" y1="46.0" x2="1.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/></svg><h3>Eşit Ev</h3><p>Yükselen dereceden başlar ve her ev tam 30°'dir. Hesabı en sade sistemdir; her burçta bir ev ucu bulunur.</p><small>MC (tepe noktası) çoğu zaman 10. evin başında değil, 9. ya da 10. evin içindedir. Kuzey enlemlerinde Placidus'un çok büyük ya da çok küçük evler verdiği durumlarda tercih edilir.</small></div><div class="ev-kart"><svg viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="42" fill="rgba(217,185,106,.07)" stroke="#d9b96a" stroke-width="1.2"/><circle cx="46" cy="46" r="33" fill="none" stroke="#6b5fa0" stroke-width=".8"/><circle cx="46" cy="46" r="12" fill="none" stroke="#6b5fa0" stroke-width=".8"/><line x1="33.1" y1="76.4" x2="29.6" y2="84.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="50.0" y1="78.8" x2="51.1" y2="87.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="65.9" y1="72.4" x2="71.3" y2="79.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="76.4" y1="58.9" x2="84.7" y2="62.4" stroke="#6b5fa0" stroke-width=".7"/><line x1="78.8" y1="42.0" x2="87.7" y2="40.9" stroke="#6b5fa0" stroke-width=".7"/><line x1="72.4" y1="26.1" x2="79.5" y2="20.7" stroke="#6b5fa0" stroke-width=".7"/><line x1="58.9" y1="15.6" x2="62.4" y2="7.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="42.0" y1="13.2" x2="40.9" y2="4.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="26.1" y1="19.6" x2="20.7" y2="12.5" stroke="#6b5fa0" stroke-width=".7"/><line x1="15.6" y1="33.1" x2="7.3" y2="29.6" stroke="#6b5fa0" stroke-width=".7"/><line x1="13.2" y1="50.0" x2="4.3" y2="51.1" stroke="#6b5fa0" stroke-width=".7"/><line x1="19.6" y1="65.9" x2="12.5" y2="71.3" stroke="#6b5fa0" stroke-width=".7"/><line x1="35.0" y1="41.3" x2="15.6" y2="33.1" stroke="#b8afce" stroke-width="0.8"/><line x1="34.1" y1="47.5" x2="13.2" y2="50.0" stroke="#b8afce" stroke-width="0.8"/><line x1="36.4" y1="53.2" x2="19.6" y2="65.9" stroke="#b8afce" stroke-width="0.8"/><line x1="41.3" y1="57.0" x2="33.1" y2="76.4" stroke="#b8afce" stroke-width="0.8"/><line x1="47.5" y1="57.9" x2="50.0" y2="78.8" stroke="#b8afce" stroke-width="0.8"/><line x1="53.2" y1="55.6" x2="65.9" y2="72.4" stroke="#b8afce" stroke-width="0.8"/><line x1="57.0" y1="50.7" x2="76.4" y2="58.9" stroke="#b8afce" stroke-width="0.8"/><line x1="57.9" y1="44.5" x2="78.8" y2="42.0" stroke="#b8afce" stroke-width="0.8"/><line x1="55.6" y1="38.8" x2="72.4" y2="26.1" stroke="#b8afce" stroke-width="0.8"/><line x1="50.7" y1="35.0" x2="58.9" y2="15.6" stroke="#b8afce" stroke-width="0.8"/><line x1="44.5" y1="34.1" x2="42.0" y2="13.2" stroke="#b8afce" stroke-width="0.8"/><line x1="38.8" y1="36.4" x2="26.1" y2="19.6" stroke="#b8afce" stroke-width="0.8"/><line x1="34.0" y1="46.0" x2="1.0" y2="46.0" stroke="#e7cf95" stroke-width="1.8"/></svg><h3>Tam Burç (Whole Sign)</h3><p>Yükselenin bulunduğu burcun tamamı 1. ev, sonraki burç 2. ev olur; her burç tam bir evdir. Astrolojinin en eski ev sistemidir.</p><small>Helenistik ve Vedik astrolojide temel yöntemdir; bugün geleneksel astroloji yapanlar arasında yeniden çok popüler. Yükselen ve MC evlerin içinde ayrıca işaretlenir. <a href="/vedik-harita-analizi.html">Vedik Harita raporumuz</a> da bu sistemi kullanır.</small></div></div>
   <p class="hint">Hangisi “doğru”? Hepsi köklü astroloji gelenekleridir ve hepsi aynı gökyüzünü farklı bir bakış açısıyla bölümler. Yeni başlıyorsan Placidus ile başla; kendini en çok hangisinde tanıdığını görmek için sistemleri kendi haritanda karşılaştırmak çok öğreticidir.</p>
+
+  <h3>Araçtaki 14 ev sistemi</h3>
+  <p>Çoğu Türkçe sitede yalnızca bir–iki sistem bulunur. Astro Yuvam, profesyonel astroloji yazılımlarındaki başlıca sistemlerin hepsini sunar ve her birini yüksek hassasiyetle hesaplar:</p>
+  <div class="ev-liste">
+    <p><b>Açılara dayalı (dörtlü) sistemler</b> — Yükselen ve Tepe Noktası'nı (MC) köşe kabul edip aradaki evleri böler; evler eşit büyüklükte olmayabilir.</p>
+    <ul>
+      <li><b>Placidus</b> — Bugün en yaygın sistem; gökyüzünün gün içindeki dönüşünü zamana göre böler. Varsayılan ve raporlarımızın kullandığı sistem.</li>
+      <li><b>Koch</b> — “Doğum yeri” sistemi; Placidus'a en yakın alternatif, özellikle Orta Avrupa'da yaygın.</li>
+      <li><b>Porphyry</b> — Yükselen–MC arasını üçe bölen en eski dörtlü sistem; sade ve anlaşılırdır.</li>
+      <li><b>Regiomontanus</b> — Gök ekvatorunu eşit bölen, Orta Çağ ve geleneksel astrolojinin temel sistemi.</li>
+      <li><b>Campanus</b> — Gökyüzünü doğu–batı düzleminde (başucu çemberi) eşit bölen klasik sistem.</li>
+      <li><b>Alcabitius</b> — Yükselen'in günlük yayını bölen, Orta Çağ'da çok kullanılmış sistem.</li>
+      <li><b>Topocentrik (Polich-Page)</b> — 20. yüzyılda geliştirilen, sonuçları Placidus'a çok yakın modern sistem.</li>
+    </ul>
+    <p><b>Eşit bölen sistemler</b> — Her ev tam 30°'dir; kuşatılmış burç oluşmaz.</p>
+    <ul>
+      <li><b>Eşit Ev</b> — Yükselen dereceden başlar, her evi 30° yapar. MC çoğu zaman 10. evin içinde kalır.</li>
+      <li><b>Tam Burç (Whole Sign)</b> — Yükselen'in burcu tamamen 1. evdir; her burç bir ev. Helenistik ve Vedik geleneğin temel yöntemi.</li>
+      <li><b>Vehlow</b> — Eşit Ev'in bir çeşidi; Yükselen, 1. evin tam ortasına denk gelir.</li>
+      <li><b>Eşit (MC'den)</b> — Evleri Tepe Noktası'ndan (MC) başlayarak 30°'lik dilimlere böler.</li>
+    </ul>
+    <p><b>Eksen ve özel sistemler</b></p>
+    <ul>
+      <li><b>Meridyen (Axial)</b> — Gök ekvatorunu MC'den itibaren eşit böler; gök bilimsel temelli bir sistem.</li>
+      <li><b>Morinus</b> — Ekvator temelli, Yükselen'i ev köşesi saymayan 17. yüzyıl sistemi.</li>
+      <li><b>Sripati</b> — Porphyry'nin ev ortalarını köşe alan, Hint astrolojisinde kullanılan sistem.</li>
+    </ul>
+  </div>
 
   
 
@@ -465,7 +557,7 @@
       <p>Astro Yuvam'da kişiye özel doğum haritası analizi 500 TL'dir: tek seferlik ödenir, 20+ sayfalık PDF olarak e-postana gelir; 9 ana bölüm, 51 alt başlık ve 12 evin tek tek yorumunu içerir. Satın almadan önce 3 sayfalık örneğini <a href="/dogum-haritasi-analizi.html">rapor sayfasında</a> görebilirsin. Diğer 17 raporun fiyatları <a href="/fiyatlar.html">Fiyatlar</a> sayfasında.</p>
     </details>
     <details><summary>Hangi ev sistemini seçmeliyim?</summary>
-      <p>Emin değilsen Placidus'u seç: en yaygın sistemdir ve raporlarımız da onu kullanır. Tam Burç en eski ve en sade sistemdir, her burç bir evdir; Eşit Ev yükselenden başlayıp her evi 30° yapar; Koch ise Placidus'a en yakın alternatiftir. Harita çıktıktan sonra çarkın üstündeki düğmelerle sistemleri tek dokunuşla karşılaştırabilir, hangi gezegenin ev değiştirdiğini görebilirsin.</p>
+      <p>Emin değilsen Placidus'u seç: en yaygın sistemdir ve raporlarımız da onu kullanır. Tam Burç en eski ve en sade sistemdir, her burç bir evdir; Eşit Ev yükselenden başlayıp her evi 30° yapar; Koch ise Placidus'a en yakın alternatiftir. Aracımızda ayrıca Porphyry, Regiomontanus, Campanus, Alcabitius, Topocentrik, Vehlow, Eşit (MC'den), Meridyen, Morinus ve Sripati sistemleri de var — toplam 14 sistem. Harita çıktıktan sonra çarkın üstündeki düğmelerle hepsini tek dokunuşla karşılaştırabilir, hangi gezegenin ev değiştirdiğini görebilirsin.</p>
     </details>
     <details><summary>Ev sistemini değiştirince neden bazı gezegenlerin evi değişiyor?</summary>
       <p>Çünkü ev sistemleri gökyüzünü 12 alana farklı biçimde böler. Gezegenin burcu, derecesi ve açıları hiç değişmez; değişen yalnızca hangi hayat alanında (evde) çalıştığıdır. Ev sınırına yakın duran gezegenler sistemden sisteme ev değiştirebilir; birçok astrolog bu gezegenleri iki evin temasını birlikte taşıyan noktalar olarak okur.</p>
@@ -577,7 +669,7 @@
   }
   function kusatmaNotu(data){
     var k=$("kusatma"); if(!k) return;
-    var sis=String(data.evSistemi||""); if(!data.evler || !/Placidus|Koch/.test(sis)){ k.hidden=true; return; }
+    var sis=String(data.evSistemi||""); if(!data.evler){ k.hidden=true; return; }
     var say={}; data.evler.forEach(function(e){ say[e.burc]=(say[e.burc]||0)+1; });
     var yok=BURCLAR.filter(function(b){ return !say[b]; }), iki=BURCLAR.filter(function(b){ return say[b]>1; });
     if(!yok.length){ k.hidden=true; return; }
@@ -736,7 +828,7 @@
     L.push("Bu, Astro Yuvam'da (astroyuvam.com) Swiss Ephemeris ile doğrulanarak hesaplanmış doğum haritam. Lütfen bunu hatırla ve astroloji sorularımda gezegen konumlarını yeniden tahmin etmek yerine bu değerleri kullan.");
     L.push("");
     L.push("Doğum: "+(d.isim?d.isim+" · ":"")+(d.tarih||"")+(d.saat?" · saat "+d.saat:" · saat bilinmiyor (12:00 varsayıldı)")+(yer?" · "+yer:""));
-    L.push("Zodyak: tropikal · Ev sistemi: "+(data.evSistemi||"Placidus"));
+    L.push("Zodyak: "+(data.zodyak||"Tropikal")+(data.ayanamsa?" (ayanamsa "+data.ayanamsa.toFixed(2)+"°)":"")+" · Ev sistemi: "+(data.evSistemi||"Placidus")+(data.dugumTipi?" · "+data.dugumTipi+" Düğüm":"")+(data.lilithTipi?" · "+data.lilithTipi+" Lilith":""));
     if(data.yukselen) L.push("Yükselen: "+data.yukselen.burc+" "+dm(data.yukselen.derece)+(data.mc?" · MC: "+data.mc.burc+" "+dm(data.mc.derece):""));
     L.push("");
     L.push("Gezegenler ve noktalar:");
@@ -800,8 +892,11 @@
   function ciz(data, sessiz){
     VERI=data; ekHazirla(data);
     var d=data.dogumBilgi||{}, yer=String(d.yer||"").replace("Türkiye Cumhuriyeti","Türkiye");
-    $("ozet").textContent=(d.isim?d.isim+" — ":"")+(d.tarih||"")+(d.saat?(" • "+d.saat):" • saat yok")+(yer?(" • "+yer):"");
+    $("ozet").textContent=(d.isim?d.isim+" — ":"")+(d.tarih||"")+(d.saat?(" • "+d.saat):" • saat yok")+(yer?(" • "+yer):"")+((data.zodyakKod&&data.zodyakKod!=="tropikal")?(" • "+data.zodyak):"");
+    SON_CIZIMLER={ dairesel:data.cark||"", aci:data.aciTablosu||"", hint:data.hintCark||"" }; AKTIF_GORUNUM="dairesel";
+    var gb=$("gorunum").querySelectorAll("button"); for(var gi=0;gi<gb.length;gi++) gb[gi].classList.toggle("on", gb[gi].getAttribute("data-g")==="dairesel");
     var box=$("cark"); box.innerHTML=data.cark||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt"; ["filtre","acifiltre"].forEach(function(k){ var bs=$(k).querySelectorAll("button"); for(var i=0;i<bs.length;i++) bs[i].classList.toggle("on", i===0); }); $("detay").hidden=true; $("acidetay").hidden=true;
+    gorunumGorunurluk();
     var ps=box.querySelectorAll(".cw-p"); for(var i=0;i<ps.length;i++) ps[i].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); });
     bigPoints(data); kusatmaNotu(data); tabloDoldur(data.tumNoktalar); ekBolum(data); yildizBolum(data); if(window.AYEK&&AYEK.haritaHazir) AYEK.haritaHazir(true); aciFiltre="hepsi"; aciHepsi=false; acilarDoldur(); izgaraKur(); denge(); oneCikanlar(); yzKur(data);
     var note=$("note"); if(data.not){ note.textContent=data.not; goster(note); } else { gizle(note); note.textContent=""; }
@@ -814,8 +909,28 @@
   $("indir").addEventListener("click", indir);
   $("buyut").addEventListener("click", function(){ var c=$("cark"), b=c.classList.toggle("buyuk"); this.textContent=b?"🔍 Küçült":"🔍 Büyüt"; });
 
+  // —— Çark biçimi: Dairesel · Açı tablosu · Hint çarkı (hepsi yanıtta geldi, yeniden istek yok) ——
+  var SON_CIZIMLER={dairesel:"",aci:"",hint:""}, AKTIF_GORUNUM="dairesel";
+  function gorunumGorunurluk(){
+    var dai=AKTIF_GORUNUM==="dairesel";
+    ["filtre","evsisbar"].forEach(function(id){ var e=$(id); if(e) e.style.display=dai?"":"none"; });
+    var alt=$("gorunum-alt"); if(alt) alt.textContent = dai
+      ? "Bir gezegene dokun: o gezegenin tüm açıları çarkta öne çıkar ve aşağıda ne anlama geldiği açılır."
+      : (AKTIF_GORUNUM==="aci" ? "Gezegenler arası açıların tablosu: her hücrede iki gezegenin açısı ve orbu (sapması) yazar."
+        : "Güney Hindistan stili çark: burçlar sabit kutulardadır, gezegenler kendi burcunun kutusunda derecesiyle gösterilir. Lagna = Yükselen.");
+  }
+  function gorunumUygula(v){
+    if(!SON_CIZIMLER[v] && v!=="dairesel") return;
+    AKTIF_GORUNUM=v;
+    var gb=$("gorunum").querySelectorAll("button"); for(var i=0;i<gb.length;i++) gb[i].classList.toggle("on", gb[i].getAttribute("data-g")===v);
+    var box=$("cark"); box.innerHTML=SON_CIZIMLER[v]||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt";
+    if(v==="dairesel"){ var ps=box.querySelectorAll(".cw-p"); for(var j=0;j<ps.length;j++) ps[j].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); }); }
+    gorunumGorunurluk();
+  }
+  $("gorunum").addEventListener("click", function(e){ var b=e.target.closest("button"); if(b) gorunumUygula(b.getAttribute("data-g")); });
+
   // —— Ev sistemi: sonuç ekranında tek dokunuşla değiştir, önceki sistemle farkı göster ——
-  var EV_AD = { placidus:"Placidus", koch:"Koch", esit:"Eşit Ev", tam:"Tam Burç" };
+  var EV_AD = { placidus:"Placidus", koch:"Koch", esit:"Eşit Ev", tam:"Tam Burç", porphyry:"Porphyry", regiomontanus:"Regiomontanus", campanus:"Campanus", alcabitius:"Alcabitius", topocentrik:"Topocentrik", morinus:"Morinus", meridyen:"Meridyen", vehlow:"Vehlow", esitmc:"Eşit (MC)", sripati:"Sripati" };
   var SON_GOVDE = null, EV_ONBELLEK = {}, AKTIF_EV = "placidus";
   function evDugmeleri(ev){ var bs=$("evsecim").querySelectorAll("button"); for(var i=0;i<bs.length;i++) bs[i].classList.toggle("on", bs[i].getAttribute("data-ev")===ev); }
   function evFark(onceki, yeni, evA, evB){
@@ -852,6 +967,9 @@
     var st=(saat.value||"").slice(0,5);
     if(!saatyok.checked && st){ body.birthTime=st; }
     if(window.AYEK){ var ekSec=AYEK.secili(); if(ekSec.length) body.ekler=ekSec; if(AYEK.yildiz()) body.yildizlar=true; }
+    var zod=($("zodyak")&&$("zodyak").value)||"tropikal"; if(zod!=="tropikal") body.zodyak=zod;
+    var dgm=($("dugum")&&$("dugum").value)||"gercek"; if(dgm!=="gercek") body.dugum=dgm;
+    var lil=($("lilith")&&$("lilith").value)||"ortalama"; if(lil!=="ortalama") body.lilith=lil;
     var ev=$("evsis").value||"placidus"; SON_GOVDE={}; for(var k in body) SON_GOVDE[k]=body[k]; EV_ONBELLEK={}; body.evSistemi=ev;
     var btn=$("git"); btn.disabled=true; goster($("loading"));
     if($("loading").scrollIntoView) $("loading").scrollIntoView({behavior:"smooth",block:"center"});
