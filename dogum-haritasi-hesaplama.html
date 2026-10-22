@@ -157,6 +157,7 @@
   .summary{color:var(--muted);font-size:.95rem;margin-bottom:6px}
   .chartbox{background:#fff;border-radius:16px;padding:8px;margin:14px 0;overflow:hidden}
   .chartbox svg{display:block;width:100%;height:auto}
+  .chartbox.sanat{background:transparent;padding:0}
   .bigpoints{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
   .bigpoints .pill{flex:1 1 140px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .bigpoints .pill b{display:block;color:var(--gold);font-size:1.15rem}
@@ -1023,10 +1024,10 @@
     dial:"90° Kadran (Uranyen astroloji): her gezegen boylamının 90'a göre kalanına yerleşir; sert açıdaki (kavuşum, kare, karşıt) gezegenler yan yana toplanır.",
     imza:"Kozmik İmzan: haritandaki gezegenler ve Yükselen/MC arasındaki her açı bir iplik olarak örülür. Renk açının türünü, kalınlık açının ne kadar tam olduğunu gösterir. Herkesin deseni farklıdır.",
     element:"Element Çiçeğin: 12 yaprak = 12 burç. Yaprak ne kadar uzunsa o burçta o kadar çok gezegen var (Güneş, Ay ve Yükselen daha ağır sayılır). Renk elementi gösterir: ateş, toprak, hava, su.",
-    venus:"Venüs Çiçeği: doğduğun andan itibaren 8 yıl boyunca Venüs'ün Dünya'dan görünen gerçek yolu. Venüs, 8 yılda Dünya ile tam 5 kez buluştuğu için beş yapraklı bir çiçek çizer.",
-    merkur:"Merkür Çiçeği: doğduğun andan itibaren 7 yıl boyunca Merkür'ün Dünya'dan görünen gerçek yolu. Her ilmek, Merkür'ün geri gidiyormuş gibi göründüğü (retro) bir dönemdir.",
-    mars:"Mars Çiçeği: doğduğun andan itibaren 15 yıl boyunca Mars'ın Dünya'dan görünen gerçek yolu. Her ilmek bir Mars retrosudur; 15 yılda yedi kollu bir yıldız oluşur.",
-    jupiter:"Jüpiter Çiçeği: doğduğun andan itibaren 12 yıl boyunca Jüpiter'in Dünya'dan görünen gerçek yolu; 11 ilmek, 11 Jüpiter retrosudur."
+    venus:"Venüs Çiçeği: doğduğun andan itibaren 8 yıl boyunca Venüs'ün Dünya'ya göre izlediği gerçek yol. Venüs, 8 yılda Dünya ile tam 5 kez buluştuğu için beş yapraklı bir çiçek çizer.",
+    merkur:"Merkür Çiçeği: doğduğun andan itibaren 7 yıl boyunca Merkür'ün Dünya'ya göre izlediği gerçek yol. Her ilmek, Merkür'ün geri gidiyormuş gibi göründüğü (retro) bir dönemdir; 7 yılda yaklaşık 22 tane olur.",
+    mars:"Mars Çiçeği: doğduğun andan itibaren 15 yıl boyunca Mars'ın Dünya'ya göre izlediği gerçek yol. Her ilmek bir Mars retrosudur; 15 yılda yaklaşık yedi kollu bir yıldız oluşur.",
+    jupiter:"Jüpiter Çiçeği: doğduğun andan itibaren 12 yıl boyunca Jüpiter'in Dünya'ya göre izlediği gerçek yol. Yaklaşık 11 ilmek oluşur; her ilmek bir Jüpiter retrosudur."
   };
   var SANAT_AD={imza:"kozmik-imza",element:"element-cicegi",venus:"venus-cicegi",merkur:"merkur-cicegi",mars:"mars-cicegi",jupiter:"jupiter-cicegi"};
   function gorunumGorunurluk(){
@@ -1039,7 +1040,7 @@
     AKTIF_GORUNUM=v;
     var gb=document.querySelectorAll("#gorunum button, #gorunum2 button"); for(var i=0;i<gb.length;i++) gb[i].classList.toggle("on", gb[i].getAttribute("data-g")===v);
     var oy=$("oynat"); if(oy) oy.style.display = SANAT_ANAHTAR.indexOf(v)>=0 ? "" : "none";
-    var box=$("cark"); box.innerHTML=SON_CIZIMLER[v]||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt";
+    var box=$("cark"); box.innerHTML=SON_CIZIMLER[v]||""; box.className="chartbox"+(SANAT_ANAHTAR.indexOf(v)>=0?" sanat":""); $("buyut").textContent="🔍 Büyüt";
     if(v==="dairesel"){ var ps=box.querySelectorAll(".cw-p"); for(var j=0;j<ps.length;j++) ps[j].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); }); }
     gorunumGorunurluk();
   }
