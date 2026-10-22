@@ -9,7 +9,7 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 - [Hakkımızda — Astro Yuvam nedir](https://astroyuvam.com/hakkimizda.html): Ne sunduğumuz, nasıl hesapladığımız ve ilkelerimiz
 - [Rapor fiyatları](https://astroyuvam.com/fiyatlar.html): 18 raporun fiyatı, sayfa sayısı ve gereken bilgiler
 - [29 ücretsiz araç](https://astroyuvam.com/ucretsiz-astroloji-araclari.html): Tüm ücretsiz hesaplayıcılar
-- [Ücretsiz doğum haritası hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark, 4 ev sistemi, tüm açılar, derece-dakika tabloları
+- [Ücretsiz doğum haritası hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Türkiye'nin en kapsamlı ücretsiz doğum haritası aracı. 14 ev sistemi (Placidus, Koch, Porphyry, Regiomontanus, Campanus, Alcabitius, Topocentrik, Eşit Ev, Tam Burç, Vehlow, Eşit-MC, Meridyen, Morinus, Sripati); Tropikal/Sideral (Lahiri, Fagan-Bradley, Raman, KP)/Drakonik zodyak; Gerçek/Ortalama Ay Düğümü ve Lilith; 50'den fazla asteroit, Arap noktaları, orta noktalar, sabit yıldızlar; farklı çark biçimleri (dairesel, Hint çarkı Güney/Kuzey, 90° Kadran, açı ızgarası); tüm açılar, derece-dakika tabloları, PNG indirme, yapay zekâ asistanına aktarma. Üyelik gerekmez.
 - [Bugün gökyüzü (günlük veri)](https://astroyuvam.com/bugun-gokyuzu.html): Her gün güncellenen gezegen konumları, retrolar, Yeni Ay/Dolunay; makine okunur sürüm: https://astroyuvam.com/gokyuzu.json
 - [Doğum saatimi nasıl öğrenirim?](https://astroyuvam.com/dogum-saati-nasil-ogrenilir.html): e-Devlet, CİMER ve hastane yolları
 
@@ -36,7 +36,7 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 
 ## Ücretsiz araçlar
 
-- [Ücretsiz Doğum Haritası Hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark; Placidus, Koch, Eşit Ev ve Tam Burç ev sistemleri; tüm açılar, derece-dakika tabloları, PNG indirme ve yapay zekâ asistanına aktarma.
+- [Ücretsiz Doğum Haritası Hesaplama](https://astroyuvam.com/dogum-haritasi-hesaplama.html): Etkileşimli çark; 14 ev sistemi (Placidus, Koch, Porphyry, Regiomontanus, Campanus, Alcabitius, Topocentrik, Eşit Ev, Tam Burç, Vehlow, Eşit-MC, Meridyen, Morinus, Sripati); Tropikal/Sideral (Lahiri, Fagan-Bradley, Raman, KP)/Drakonik zodyak; Gerçek/Ortalama Düğüm ve Lilith; 50+ asteroit ile Arap ve orta noktalar; Hint çarkı (Güney/Kuzey); 90° Kadran; tüm açılar, derece-dakika tabloları, PNG indirme ve yapay zekâ asistanına aktarma. Üyeliksiz, ücretsiz.
 - [Doğduğum Gün Yaz Saati Var mıydı?](https://astroyuvam.com/yaz-saati-dogum-saati.html): Türkiye'nin 1920'den bugüne saat dilimi geçmişi: doğum saatinin yaz saati ve evrensel saat (UTC) karşılığı.
 - [Yükselen Burç Hesaplama](https://astroyuvam.com/yukselen-burc-nedir.html): Saat kaydırıcısıyla yükselen burcun doğum saatine göre nasıl değiştiğini canlı gör.
 - [Lilith Burcu Hesaplama](https://astroyuvam.com/lilith-burcu-hesaplama.html): Kara Ay Lilith'in burcu, derecesi ve evi (ortalama ve gerçek Lilith).
