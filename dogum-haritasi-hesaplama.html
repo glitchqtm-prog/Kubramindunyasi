@@ -54,7 +54,7 @@
     {
       "@type": "Question",
       "name": "Haritayı farklı çark biçimlerinde görebilir miyim?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Evet. Klasik dairesel çarkın yanında Hint çarkı (Güney ve Kuzey Hindistan stili), 90° Kadran (Uranyen astroloji) ve gezegenler arası tüm açıları gösteren açı ızgarası vardır. Çarkı tek dokunuşla değiştirebilir ve PNG olarak indirebilirsin." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Evet. Klasik dairesel çarkın yanında Hint çarkı (Güney ve Kuzey Hindistan stili), 90° Kadran (Uranyen astroloji) vardır. Bunların yanında Kozmik İmza (açı iplikleriyle örülmüş kişiye özel desen), Element Çiçeği ve hareketli Venüs, Merkür, Mars, Jüpiter Çiçekleri gibi hareketli gökyüzü sanatı çarkları da vardır. Çarkı tek dokunuşla değiştirebilir ve PNG olarak indirebilirsin." }
     },
     {
       "@type": "Question",
@@ -105,7 +105,8 @@
     "Arap noktaları (lotlar): Şans, Ruh, Eros, Zorunluluk, Cesaret, Zafer, Nemesis",
     "Orta noktalar (midpoints): Güneş/Ay, Venüs/Mars, AC/MC",
     "Vertex, Anti-Vertex, Doğu Noktası, Şans Noktası ve sabit yıldız kavuşumları",
-    "Farklı çark biçimleri: klasik dairesel çark, Hint çarkı (Güney ve Kuzey), 90° Kadran (Uranyen), açı ızgarası",
+    "Farklı çark biçimleri: klasik dairesel çark, Hint çarkı (Güney ve Kuzey), 90° Kadran (Uranyen)",
+    "Hareketli gökyüzü sanatı çarkları: Kozmik İmza, Element Çiçeği, Venüs/Merkür/Mars/Jüpiter Çiçekleri (doğum anından başlayan gerçek gezegen yolları)",
     "Tüm gezegen açıları, derece-dakika tabloları ve element/nitelik dengesi",
     "Çarkı PNG olarak indirme",
     "Haritayı yapay zekâ asistanına aktarma",
@@ -349,7 +350,7 @@
       </div>
       <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px">
         <h3 style="color:var(--gold-soft);font-size:1rem;margin:.1em 0 .4em">Farklı çark biçimleri</h3>
-        <p style="color:var(--muted);font-size:.9rem;margin:0;line-height:1.5">Klasik dairesel çark, Hint çarkı (Güney &amp; Kuzey), 90° Kadran (Uranyen) ve açı ızgarası. Çarkı PNG olarak indir.</p>
+        <p style="color:var(--muted);font-size:.9rem;margin:0;line-height:1.5">Klasik dairesel çark, Hint çarkı (Güney &amp; Kuzey), 90° Kadran ve hareketli sanat çarkları: Kozmik İmza, Element Çiçeği, Venüs/Merkür/Mars/Jüpiter Çiçekleri. Hepsini PNG olarak indir.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px">
         <h3 style="color:var(--gold-soft);font-size:1rem;margin:.1em 0 .4em">Ücretsiz, üyeliksiz, yapay zekâ uyumlu</h3>
@@ -465,12 +466,20 @@
     <div class="note" id="note" style="display:none"></div>
 
     <section class="hs-blok">
-      <div class="hs-bas"><h2>Doğum Haritası Çarkın</h2><span class="hs-dugmeler"><button type="button" class="hs-mini" id="buyut">🔍 Büyüt</button><button type="button" class="hs-mini" id="indir">⬇ İndir (PNG)</button></span></div>
+      <div class="hs-bas"><h2>Doğum Haritası Çarkın</h2><span class="hs-dugmeler"><button type="button" class="hs-mini" id="oynat" style="display:none">↻ Yeniden oynat</button><button type="button" class="hs-mini" id="buyut">🔍 Büyüt</button><button type="button" class="hs-mini" id="indir">⬇ İndir (PNG)</button></span></div>
       <div class="hs-filtre" id="gorunum" role="group" aria-label="Çark biçimi">
         <button type="button" data-g="dairesel" class="on">Dairesel çark</button>
         <button type="button" data-g="guney">Hint çarkı — Güney</button>
         <button type="button" data-g="kuzey">Hint çarkı — Kuzey</button>
         <button type="button" data-g="dial">90° Kadran</button>
+      </div>
+      <div class="hs-filtre" id="gorunum2" role="group" aria-label="Gökyüzü sanatı çarkları">
+        <button type="button" data-g="imza">✨ Kozmik İmzan</button>
+        <button type="button" data-g="element">🌸 Element Çiçeğin</button>
+        <button type="button" data-g="venus">♀ Venüs Çiçeği</button>
+        <button type="button" data-g="merkur">☿ Merkür Çiçeği</button>
+        <button type="button" data-g="mars">♂ Mars Çiçeği</button>
+        <button type="button" data-g="jupiter">♃ Jüpiter Çiçeği</button>
       </div>
       <p class="hs-alt" id="gorunum-alt">Bir gezegene dokun: o gezegenin tüm açıları çarkta öne çıkar ve aşağıda ne anlama geldiği açılır. Filtrelerle yalnızca istediğin açıları gösterebilirsin.</p>
       <div class="hs-filtre" id="filtre">
@@ -656,7 +665,7 @@
       <p>"Ek noktalar ve sabit yıldızlar" bölümünden 70'ten fazla nokta seçebilirsin: 50'den fazla asteroit (Eros, Psyche, Sappho, Juno, Ceres, Pallas, Vesta ve daha fazlası), Arap noktaları/lotlar (Şans, Ruh, Eros, Zorunluluk, Cesaret, Zafer, Nemesis), orta noktalar (Güneş/Ay, Venüs/Mars, AC/MC), Vertex, Doğu Noktası ve sabit yıldız kavuşumları. Her birinin yanında Türkçe anlamı yazar; seçtiklerin çarkına ve tablolarına eklenir.</p>
     </details>
     <details><summary>Haritayı farklı çark biçimlerinde görebilir miyim?</summary>
-      <p>Evet. Çarkın üstündeki düğmelerle klasik dairesel çark, Hint çarkı (Güney ve Kuzey Hindistan stili), 90° Kadran (Uranyen astroloji) ve açı ızgarası arasında geçebilirsin. Hangi biçimde olursa olsun çarkı PNG olarak indirebilirsin.</p>
+      <p>Evet. Çarkın üstündeki düğmelerle klasik dairesel çark, Hint çarkı (Güney ve Kuzey Hindistan stili), 90° Kadran (Uranyen astroloji) arasında geçebilirsin. Bir de hareketli gökyüzü sanatı çarkları var: Kozmik İmzan (haritandaki açıların iplikleri), Element Çiçeğin ve doğduğun andan başlayan Venüs, Merkür, Mars, Jüpiter Çiçekleri (gezegenlerin Dünya'dan görünen gerçek yolları). Hangi biçimde olursa olsun çarkı PNG olarak indirebilirsin.</p>
     </details>
     <details><summary>Bu harita ne kadar hassas?</summary>
       <p>Harita gerçek astronomik konumlardan hesaplanır (Placidus ev sistemi, yüksek hassasiyetli efemeris). Doğum saatini ne kadar doğru girersen yükselen ve evler de o kadar hassas olur. Yorumlar ise bu konumları binlerce yıllık astroloji geleneğiyle anlamlandırır.</p>
@@ -911,9 +920,9 @@
 
   function indir(){
     var svg=$("cark").querySelector("svg"); if(!svg) return;
-    var xml=new XMLSerializer().serializeToString(svg), vb=svg.viewBox.baseVal, W=vb.width*2, H=vb.height*2;
+    var kl=svg.cloneNode(true); kl.setAttribute("class",((kl.getAttribute("class")||"")+" ka-statik").trim()); var xml=new XMLSerializer().serializeToString(kl), vb=svg.viewBox.baseVal, W=vb.width*2, H=vb.height*2;
     var img=new Image(); img.onload=function(){ var c=document.createElement("canvas"); c.width=W; c.height=H; var x=c.getContext("2d"); x.fillStyle="#fff"; x.fillRect(0,0,W,H); x.drawImage(img,0,0,W,H);
-      var a=document.createElement("a"); a.download="dogum-haritasi-astroyuvam.png"; a.href=c.toDataURL("image/png"); document.body.appendChild(a); a.click(); a.remove(); };
+      var a=document.createElement("a"); a.download=(SANAT_AD[AKTIF_GORUNUM]||"dogum-haritasi")+"-astroyuvam.png"; a.href=c.toDataURL("image/png"); document.body.appendChild(a); a.click(); a.remove(); };
     img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);
   }
 
@@ -989,8 +998,8 @@
     VERI=data; ekHazirla(data);
     var d=data.dogumBilgi||{}, yer=String(d.yer||"").replace("Türkiye Cumhuriyeti","Türkiye");
     $("ozet").textContent=(d.isim?d.isim+" — ":"")+(d.tarih||"")+(d.saat?(" • "+d.saat):" • saat yok")+(yer?(" • "+yer):"")+((data.zodyakKod&&data.zodyakKod!=="tropikal")?(" • "+data.zodyak):"");
-    SON_CIZIMLER={ dairesel:data.cark||"", guney:data.hintGuney||"", kuzey:data.hintKuzey||"", dial:data.dial||"" }; AKTIF_GORUNUM="dairesel";
-    var gb=$("gorunum").querySelectorAll("button"); for(var gi=0;gi<gb.length;gi++) gb[gi].classList.toggle("on", gb[gi].getAttribute("data-g")==="dairesel");
+    SON_CIZIMLER=Object.assign({ dairesel:data.cark||"", guney:data.hintGuney||"", kuzey:data.hintKuzey||"", dial:data.dial||"" }, data.sanat||{}); AKTIF_GORUNUM="dairesel";
+    var gb=document.querySelectorAll("#gorunum button, #gorunum2 button"); for(var gi=0;gi<gb.length;gi++) gb[gi].classList.toggle("on", gb[gi].getAttribute("data-g")==="dairesel"); if($("oynat")) $("oynat").style.display="none";
     var box=$("cark"); box.innerHTML=data.cark||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt"; ["filtre","acifiltre"].forEach(function(k){ var bs=$(k).querySelectorAll("button"); for(var i=0;i<bs.length;i++) bs[i].classList.toggle("on", i===0); }); $("detay").hidden=true; $("acidetay").hidden=true;
     gorunumGorunurluk();
     var ps=box.querySelectorAll(".cw-p"); for(var i=0;i<ps.length;i++) ps[i].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); });
@@ -1006,13 +1015,20 @@
   $("buyut").addEventListener("click", function(){ var c=$("cark"), b=c.classList.toggle("buyuk"); this.textContent=b?"🔍 Küçült":"🔍 Büyüt"; });
 
   // —— Çark biçimi: Dairesel · Açı tablosu · Hint çarkı (hepsi yanıtta geldi, yeniden istek yok) ——
-  var SON_CIZIMLER={dairesel:"",guney:"",kuzey:"",dial:""}, AKTIF_GORUNUM="dairesel";
+  var SON_CIZIMLER={dairesel:"",guney:"",kuzey:"",dial:""}, AKTIF_GORUNUM="dairesel", SANAT_ANAHTAR=["imza","element","venus","merkur","mars","jupiter"];
   var GORUNUM_ALT={
     dairesel:"Bir gezegene dokun: o gezegenin tüm açıları çarkta öne çıkar ve aşağıda ne anlama geldiği açılır.",
     guney:"Güney Hindistan stili: burçlar sabit kutulardadır, gezegenler kendi burcunun kutusunda derecesiyle gösterilir. Lagna = Yükselen.",
     kuzey:"Kuzey Hindistan stili (elmas): evler sabittir, 1. ev (Lagna) üstte. Her evdeki sayı o evin burcunu (1=Koç … 12=Balık) gösterir.",
-    dial:"90° Kadran (Uranyen astroloji): her gezegen boylamının 90'a göre kalanına yerleşir; sert açıdaki (kavuşum, kare, karşıt) gezegenler yan yana toplanır."
+    dial:"90° Kadran (Uranyen astroloji): her gezegen boylamının 90'a göre kalanına yerleşir; sert açıdaki (kavuşum, kare, karşıt) gezegenler yan yana toplanır.",
+    imza:"Kozmik İmzan: haritandaki gezegenler ve Yükselen/MC arasındaki her açı bir iplik olarak örülür. Renk açının türünü, kalınlık açının ne kadar tam olduğunu gösterir. Herkesin deseni farklıdır.",
+    element:"Element Çiçeğin: 12 yaprak = 12 burç. Yaprak ne kadar uzunsa o burçta o kadar çok gezegen var (Güneş, Ay ve Yükselen daha ağır sayılır). Renk elementi gösterir: ateş, toprak, hava, su.",
+    venus:"Venüs Çiçeği: doğduğun andan itibaren 8 yıl boyunca Venüs'ün Dünya'dan görünen gerçek yolu. Venüs, 8 yılda Dünya ile tam 5 kez buluştuğu için beş yapraklı bir çiçek çizer.",
+    merkur:"Merkür Çiçeği: doğduğun andan itibaren 7 yıl boyunca Merkür'ün Dünya'dan görünen gerçek yolu. Her ilmek, Merkür'ün geri gidiyormuş gibi göründüğü (retro) bir dönemdir.",
+    mars:"Mars Çiçeği: doğduğun andan itibaren 15 yıl boyunca Mars'ın Dünya'dan görünen gerçek yolu. Her ilmek bir Mars retrosudur; 15 yılda yedi kollu bir yıldız oluşur.",
+    jupiter:"Jüpiter Çiçeği: doğduğun andan itibaren 12 yıl boyunca Jüpiter'in Dünya'dan görünen gerçek yolu; 11 ilmek, 11 Jüpiter retrosudur."
   };
+  var SANAT_AD={imza:"kozmik-imza",element:"element-cicegi",venus:"venus-cicegi",merkur:"merkur-cicegi",mars:"mars-cicegi",jupiter:"jupiter-cicegi"};
   function gorunumGorunurluk(){
     var dai=AKTIF_GORUNUM==="dairesel";
     ["filtre","evsisbar"].forEach(function(id){ var e=$(id); if(e) e.style.display=dai?"":"none"; });
@@ -1021,12 +1037,15 @@
   function gorunumUygula(v){
     if(!SON_CIZIMLER[v] && v!=="dairesel") return;
     AKTIF_GORUNUM=v;
-    var gb=$("gorunum").querySelectorAll("button"); for(var i=0;i<gb.length;i++) gb[i].classList.toggle("on", gb[i].getAttribute("data-g")===v);
+    var gb=document.querySelectorAll("#gorunum button, #gorunum2 button"); for(var i=0;i<gb.length;i++) gb[i].classList.toggle("on", gb[i].getAttribute("data-g")===v);
+    var oy=$("oynat"); if(oy) oy.style.display = SANAT_ANAHTAR.indexOf(v)>=0 ? "" : "none";
     var box=$("cark"); box.innerHTML=SON_CIZIMLER[v]||""; box.className="chartbox"; $("buyut").textContent="🔍 Büyüt";
     if(v==="dairesel"){ var ps=box.querySelectorAll(".cw-p"); for(var j=0;j<ps.length;j++) ps[j].addEventListener("click", function(){ gezegenDetay(this.getAttribute("data-ad")); }); }
     gorunumGorunurluk();
   }
   $("gorunum").addEventListener("click", function(e){ var b=e.target.closest("button"); if(b) gorunumUygula(b.getAttribute("data-g")); });
+  $("gorunum2").addEventListener("click", function(e){ var b=e.target.closest("button"); if(b) gorunumUygula(b.getAttribute("data-g")); });
+  $("oynat").addEventListener("click", function(){ var box=$("cark"); if(SON_CIZIMLER[AKTIF_GORUNUM]){ box.innerHTML=""; void box.offsetWidth; box.innerHTML=SON_CIZIMLER[AKTIF_GORUNUM]; } });
 
   // —— Ev sistemi: sonuç ekranında tek dokunuşla değiştir, önceki sistemle farkı göster ——
   var EV_AD = { placidus:"Placidus", koch:"Koch", esit:"Eşit Ev", tam:"Tam Burç", porphyry:"Porphyry", regiomontanus:"Regiomontanus", campanus:"Campanus", alcabitius:"Alcabitius", topocentrik:"Topocentrik", morinus:"Morinus", meridyen:"Meridyen", vehlow:"Vehlow", esitmc:"Eşit (MC)", sripati:"Sripati" };
