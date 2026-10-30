@@ -125,6 +125,7 @@
       { href:"/dugun-tarihi-hesaplama.html", ad:"✦ Düğün Tarihi Hesaplama", alt:"Nikah, nişan ve düğün için en uygun gün" },
       { href:"/haritada-evlilik-gostergeleri.html", ad:"✦ Evlilik Göstergelerim", alt:"7. ev, Juno ve Vertex hesaplama" },
       { href:"/lilith-burcu-hesaplama.html", ad:"✦ Lilith Burcu Hesaplama", alt:"Kara Ay Lilith hangi burçta, hangi evde?" },
+      { href:"/hicri-dogum-gunu-hesaplama.html", ad:"✦ Ay Takvimindeki Doğum Günüm", alt:"Doğduğun gün hicri takvimde kaçıncı gündü?" },
       { href:"/yaz-saati-dogum-saati.html", ad:"✦ Doğduğum Gün Yaz Saati", alt:"Doğum saatinin UTC karşılığı"  }
     ]},
     { baslik:"Sor & Yorumla", items:[
