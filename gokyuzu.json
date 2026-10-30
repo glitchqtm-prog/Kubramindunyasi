@@ -1,15 +1,15 @@
 {
  "kaynak": "Astro Yuvam — https://astroyuvam.com/bugun-gokyuzu.html",
- "guncelleme": "2026-10-29T00:38:47.794Z",
- "tarih": "2026-10-29",
+ "guncelleme": "2026-10-30T00:39:25.621Z",
+ "tarih": "2026-10-30",
  "saatDilimi": "Europe/Istanbul (UTC+3)",
  "not": "Konumlar Türkiye saatiyle 12:00 içindir. Tropikal zodyak, geosentrik görünür konum.",
  "gezegenler": [
   {
    "ad": "Güneş",
    "burc": "Akrep",
-   "derece": "5°57′",
-   "boylam": 215.954,
+   "derece": "6°57′",
+   "boylam": 216.952,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Yay",
@@ -18,20 +18,20 @@
   },
   {
    "ad": "Ay",
-   "burc": "İkizler",
-   "derece": "19°35′",
-   "boylam": 79.589,
+   "burc": "Yengeç",
+   "derece": "4°11′",
+   "boylam": 94.186,
    "retro": false,
    "sonrakiBurc": {
-    "burc": "Yengeç",
-    "zaman": "2026-10-30T02:05:37.500Z"
+    "burc": "Aslan",
+    "zaman": "2026-11-01T04:18:45.000Z"
    }
   },
   {
    "ad": "Merkür",
    "burc": "Akrep",
-   "derece": "19°07′",
-   "boylam": 229.121,
+   "derece": "18°18′",
+   "boylam": 228.297,
    "retro": true,
    "sonrakiBurc": {
     "burc": "Yay",
@@ -41,8 +41,8 @@
   {
    "ad": "Venüs",
    "burc": "Terazi",
-   "derece": "27°38′",
-   "boylam": 207.635,
+   "derece": "27°05′",
+   "boylam": 207.085,
    "retro": true,
    "sonrakiBurc": {
     "burc": "Akrep",
@@ -52,8 +52,8 @@
   {
    "ad": "Mars",
    "burc": "Aslan",
-   "derece": "17°17′",
-   "boylam": 137.288,
+   "derece": "17°48′",
+   "boylam": 137.799,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Başak",
@@ -63,8 +63,8 @@
   {
    "ad": "Jüpiter",
    "burc": "Aslan",
-   "derece": "24°00′",
-   "boylam": 143.996,
+   "derece": "24°07′",
+   "boylam": 144.122,
    "retro": false,
    "sonrakiBurc": {
     "burc": "Başak",
@@ -74,8 +74,8 @@
   {
    "ad": "Satürn",
    "burc": "Koç",
-   "derece": "9°27′",
-   "boylam": 9.452,
+   "derece": "9°23′",
+   "boylam": 9.387,
    "retro": true,
    "sonrakiBurc": {
     "burc": "Boğa",
@@ -85,16 +85,16 @@
   {
    "ad": "Uranüs",
    "burc": "İkizler",
-   "derece": "4°46′",
-   "boylam": 64.77,
+   "derece": "4°44′",
+   "boylam": 64.734,
    "retro": true,
    "sonrakiBurc": null
   },
   {
    "ad": "Neptün",
    "burc": "Koç",
-   "derece": "2°09′",
-   "boylam": 2.143,
+   "derece": "2°07′",
+   "boylam": 2.122,
    "retro": true,
    "sonrakiBurc": null
   },
@@ -102,21 +102,26 @@
    "ad": "Plüton",
    "burc": "Kova",
    "derece": "3°07′",
-   "boylam": 303.11,
+   "boylam": 303.116,
    "retro": false,
    "sonrakiBurc": null
   }
  ],
  "kuzeyAyDugumu": {
   "burc": "Kova",
-  "derece": "26°13′",
+  "derece": "26°09′",
   "tip": "ortalama"
  },
  "ay": {
-  "burc": "İkizler",
+  "burc": "Yengeç",
   "evre": "Şişkin Ay (küçülen)",
-  "aydinlanmaYuzde": 86,
-  "bugunkuGecisler": []
+  "aydinlanmaYuzde": 77,
+  "bugunkuGecisler": [
+   {
+    "burc": "Yengeç",
+    "zaman": "2026-10-30T02:05:37.500Z"
+   }
+  ]
  },
  "retrolar": [
   {
