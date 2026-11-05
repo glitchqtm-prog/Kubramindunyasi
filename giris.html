@@ -309,7 +309,9 @@
     if(m.indexOf("invalid email") !== -1 || m.indexOf("unable to validate email") !== -1) return "E-posta adresi geçersiz görünüyor.";
     if(m.indexOf("rate limit") !== -1 || m.indexOf("too many") !== -1) return "Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.";
     if(m.indexOf("for security purposes") !== -1) return "Kısa süre önce denedin. Birkaç saniye bekleyip tekrar dene.";
-    if(m.indexOf("same") !== -1 && m.indexOf("password") !== -1) return "Yeni şifre eskisiyle aynı olamaz.";
+    if(m.indexOf("same_password") !== -1 || m.indexOf("different from the old") !== -1 || (m.indexOf("same") !== -1 && m.indexOf("password") !== -1)) return "Bu şifre şu anki şifrenle aynı. Güvenliğin için lütfen farklı bir şifre belirle.";
+    if(m.indexOf("weak_password") !== -1 || m.indexOf("weak") !== -1 && m.indexOf("password") !== -1) return "Bu şifre çok kolay tahmin edilebilir. Harf, rakam ve işaret karışık, daha güçlü bir şifre dene.";
+    if(m.indexOf("session missing") !== -1 || m.indexOf("session_not_found") !== -1 || m.indexOf("otp_expired") !== -1 || m.indexOf("expired") !== -1) return "Şifre yenileme bağlantının süresi dolmuş. \"Şifremi unuttum\" ile yeni bir bağlantı isteyebilirsin.";
     return "Bir şeyler ters gitti. Lütfen tekrar dene.";
   }
   function tekrarGonderBagla(){
@@ -366,7 +368,7 @@
     $("yenileBtn").disabled = true;
     var r = await sb.auth.updateUser({ password: p });
     $("yenileBtn").disabled = false;
-    if(r.error){ showMsg($("yenileMsg"), turkceHata(r.error.message), "error"); return; }
+    if(r.error){ showMsg($("yenileMsg"), turkceHata((r.error.code || "") + " " + (r.error.message || "")), "error"); return; }
     showMsg($("yenileMsg"), "Şifren güncellendi ✓ Seni paneline götürüyoruz…", "ok");
     setTimeout(function(){ location.href = "/panelim.html"; }, 1400);
   });
