@@ -250,11 +250,16 @@
     bekliyor = true; gonderBtn.disabled = true;
     var y = yaziyorGoster();
 
-    (raporId && !raporToken ? oturumAl().then(function (o) { if (o) raporToken = o.token; }) : Promise.resolve())
+    // Genel sohbette de giriş yapmış üyenin jetonu gönderilir; sunucu yalnızca doğrulayıp kurucu hesabını tanır.
+    // Giriş izi yoksa (çoğu ziyaretçi) hiçbir kütüphane yüklenmez, ek istek atılmaz.
+    var genelToken = "";
+    (raporId && !raporToken ? oturumAl().then(function (o) { if (o) raporToken = o.token; })
+      : (!raporId && girisIziVar() ? oturumAl().then(function (o) { if (o) genelToken = o.token; }) : Promise.resolve()))
     .then(function () { return fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(raporId ? { mesajlar: gidecek(), raporId: raporId, token: raporToken } : { mesajlar: gidecek() })
+      body: JSON.stringify(raporId ? { mesajlar: gidecek(), raporId: raporId, token: raporToken }
+        : (genelToken ? { mesajlar: gidecek(), token: genelToken } : { mesajlar: gidecek() }))
     }); })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
       .then(function (data) {
@@ -295,6 +300,16 @@
       document.head.appendChild(s);
     });
     return supabaseHazir;
+  }
+  // Tarayıcıda Supabase oturum izi var mı? (kütüphane yüklemeden, yalnızca localStorage'a bakar)
+  function girisIziVar() {
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && /^sb-.*-auth-token$/.test(k)) return true;
+      }
+    } catch (e) {}
+    return false;
   }
   function oturumAl() {
     return supabaseYukle().then(function (sup) {
