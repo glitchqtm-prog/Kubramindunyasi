@@ -788,6 +788,7 @@ function renderSign(tur, b, y, ctx){
     <a href="/${yol}.html">Tüm burçlar</a>
     <a href="/${yol}/${sonraki.slug}.html">${sonraki.ad} →</a>
   </div>
+  <div id="uyeKilit"></div><script src="/uye-kilit.js" defer></script>
   <div class="cta-kutu">
     <h3>Genel yorumun ötesi: kendi haritan ne diyor?</h3>
     <a class="cta" href="/#cards">Kişiye özel doğum haritası raporunu keşfet →</a>
