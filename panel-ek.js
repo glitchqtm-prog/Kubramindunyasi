@@ -385,7 +385,15 @@
     var k = $("peMail"); if (!k || !C.sb || !C.kullanici) return;
     var m = C.kullanici.user_metadata || {}, acik = m.weekly_mail === true;
     k.innerHTML = '<div class="pe-mail"><div><b>📬 Her pazartesi haftanı e-postayla gönderelim mi?</b><span>Haftanın gün gün özeti, haritana göre. İstediğin an buradan ya da e-postadaki bağlantıdan kapatabilirsin.</span></div><label class="pe-anahtar"><input type="checkbox" id="peMailA"' + (acik ? " checked" : "") + ' aria-label="Pazartesi e-postası"><i></i></label></div><div class="not" id="peMailN"></div>';
+    var yAcik = m.news_mail === true;
+    k.innerHTML += '<div class="pe-mail"><div><b>✦ Yeniliklerden haberdar olmak ister misin?</b><span>Sitemize yeni bir özellik ya da rapor geldiğinde ara sıra kısa bir e-posta gönderelim. İstediğin an buradan ya da e-postadaki bağlantıdan kapatabilirsin.</span></div><label class="pe-anahtar"><input type="checkbox" id="peYeniA"' + (yAcik ? " checked" : "") + ' aria-label="Yenilik e-postaları"><i></i></label></div><div class="not" id="peYeniN"></div>';
     k.classList.remove("gizli");
+    $("peYeniA").onchange = function(){ var v = this.checked, el = this; $("peYeniN").textContent = "Kaydediliyor…";
+      C.sb.auth.updateUser({ data: { news_mail: v, news_mail_onay: v ? new Date().toISOString() : null } }).then(function(r){
+        if (r && r.error){ el.checked = !v; $("peYeniN").textContent = "Kaydedilemedi, tekrar dener misin?"; return; }
+        $("peYeniN").textContent = v ? "Tamam ✦ Yeni bir şey olduğunda ilk sen duyacaksın." : "Kapatıldı. Yenilik e-postası gelmeyecek.";
+        if (window.gtag) gtag("event", v ? "yenilik_mail_ac" : "yenilik_mail_kapat");
+      }); };
     $("peMailA").onchange = function(){ var v = this.checked, el = this; $("peMailN").textContent = "Kaydediliyor…";
       C.sb.auth.updateUser({ data: { weekly_mail: v, weekly_mail_onay: v ? new Date().toISOString() : null } }).then(function(r){
         if (r && r.error){ el.checked = !v; $("peMailN").textContent = "Kaydedilemedi, tekrar dener misin?"; return; }
