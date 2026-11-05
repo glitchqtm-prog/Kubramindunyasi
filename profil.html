@@ -197,8 +197,19 @@
             <label for="birthPlace">Doğum Yeri</label>
             <input type="text" id="birthPlace" data-yer placeholder="Örn. Adana, Türkiye">
           </div>
+          <div class="field-group">
+            <label for="yasam">Günlerin genelde nasıl geçiyor? <span style="opacity:.7">(isteğe bağlı)</span></label>
+            <select id="yasam">
+              <option value="">Belirtmek istemiyorum</option>
+              <option value="calisiyor">Çalışıyorum</option>
+              <option value="okuyor">Okuyorum</option>
+              <option value="evde">Evdeyim, ev ve ailemle ilgileniyorum</option>
+              <option value="emekli">Emekliyim</option>
+              <option value="arayista">İş arıyorum</option>
+            </select>
+          </div>
           <div class="birth-note">
-            Bu bilgiler senin kendine özel günlük ve haftalık yorumların için kullanılacak.
+            Bu bilgiler senin kendine özel günlük ve haftalık yorumların için kullanılacak. Günlerinin nasıl geçtiğini söylersen pazartesi e-postandaki notlar buna göre yazılır.
           </div>
           <button type="submit" class="submit" id="saveBtn">Kaydet</button>
         </form>
@@ -317,6 +328,7 @@
     birthDateEl.value = m.birth_date || "";
     birthTimeEl.value = m.birth_time || "";
     birthPlaceEl.value = m.birth_place || "";
+    var ys = document.getElementById("yasam"); if (ys) ys.value = m.yasam || "";
   }
 
   profileForm.addEventListener("submit", async function(e){
@@ -328,7 +340,8 @@
         full_name: nameEl.value.trim(),
         birth_date: birthDateEl.value || "",
         birth_time: birthTimeEl.value || "",
-        birth_place: birthPlaceEl.value.trim()
+        birth_place: birthPlaceEl.value.trim(),
+        yasam: (document.getElementById("yasam") || {}).value || ""
       }});
       if(res.error){ setMsg(msg, "Kaydedilemedi. Lütfen tekrar dene.", "error"); }
       else{ setMsg(msg, "Bilgilerin kaydedildi ✓", "ok"); }
