@@ -486,6 +486,22 @@ function kartCiz(ctx, data, ad, dateStr){
   ctx.fillText("astroyuvam.com", cx, H-96);
 }
 
+
+/* ✦ Arkana Albümü: üye girişliyse bugünün kartı albüme yazılır (günde bir kart; ilk çekilen kalır) */
+function albumeEkle(kartNo, gun){
+  var kutu = document.getElementById("album-not");
+  if(!kutu){ kutu = document.createElement("p"); kutu.id = "album-not"; kutu.style.cssText = "text-align:center;font-size:14px;color:#e7cf95;margin:14px auto 0;max-width:520px"; var cb = document.getElementById("c-back"); cb.parentNode.insertBefore(kutu, cb.nextSibling); }
+  var t = null, uid = null;
+  try{ for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k && /^sb-.*-auth-token$/.test(k)){ var o=JSON.parse(localStorage.getItem(k)||"{}"), s=o.currentSession||o; if(s.access_token && (!s.expires_at || s.expires_at*1000 > Date.now())){ t=s.access_token; uid=s.user && s.user.id; } break; } } }catch(e){}
+  if(!t || !uid){ kutu.innerHTML = '🃏 <a href="/giris.html?geri=%2Fgunun-kartin.html" style="color:#e7cf95">Ücretsiz üye ol</a>, çektiğin kartlar Arkana Albümünde biriksin; 22 kartın hepsini toplamaya çalış.'; return; }
+  var U = "https://htyywgmgbmzhrqtgihqd.supabase.co/rest/v1/arkana_albumu", H = { apikey: "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM", Authorization: "Bearer " + t, "Content-Type": "application/json" };
+  fetch(U + "?on_conflict=user_id,gun", { method: "POST", headers: Object.assign({ Prefer: "resolution=ignore-duplicates,return=minimal" }, H), body: JSON.stringify({ user_id: uid, gun: gun, kart: kartNo }) })
+    .then(function(){ return fetch(U + "?select=kart&limit=2000", { headers: H }); })
+    .then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(L){ var n = {}; (L||[]).forEach(function(x){ n[x.kart] = 1; }); var c = Object.keys(n).length;
+      kutu.innerHTML = c ? '🃏 Albümüne eklendi: <b>' + c + ' / 22</b> kart topladın. <a href="/panelim.html#aaBolum" style="color:#e7cf95">Albümüme bak →</a>' : ""; })
+    .catch(function(){ kutu.textContent = ""; });
+}
 /* ================= DOM AKIŞI ================= */
 (function(){
   const $ = id => document.getElementById(id);
@@ -514,6 +530,7 @@ function kartCiz(ctx, data, ad, dateStr){
     $("c-golge").textContent = k.golge;
     $("c-key").textContent = sonData.anahtar;
     $("c-back").textContent = ad + ", bu kart bugün senin. Yarın çark yeniden dönecek — yeni bir kart seni bekliyor. 🌙";
+    albumeEkle(k.n, bugun);
 
     $("form-panel").style.display = "none";
     const rev = $("reveal");

@@ -93,6 +93,11 @@
       ".ad-o p{margin:0;font-size:13.5px;color:#e2d9ee}.ad-o p b{color:var(--gold-soft)}" +
       ".ad-dag{display:flex;height:12px;border-radius:7px;overflow:hidden;margin-top:12px;background:#2a2342}" +
       ".ad-dag i{display:block;height:100%}" +
+      ".ty{margin-top:14px;background:radial-gradient(ellipse at 50% 0%,rgba(169,156,240,.14),transparent 60%),linear-gradient(180deg,rgba(28,22,50,.85),rgba(16,12,28,.9));border:1px solid var(--line);border-radius:20px;padding:18px}" +
+      ".ty h3{font-family:Georgia,serif;font-weight:600;font-size:20px;margin:0 0 4px;color:var(--gold-soft)}.ty p{margin:0;font-size:13.5px;color:var(--muted)}" +
+      ".ty svg{width:100%;height:auto;display:block;margin:10px 0 6px}" +
+      ".ty-ilerle{font-size:13.5px;color:var(--muted)}.ty-ilerle b{font-family:Georgia,serif;font-size:22px;color:var(--gold-soft)}.ty-ilerle span{color:#e2d9ee}" +
+      ".ty-arac{display:flex;gap:8px;flex-wrap:wrap}.ty-arac input{flex:1;min-width:180px;background:#120e1e;color:var(--cream);border:1px solid rgba(217,185,106,.4);border-radius:12px;padding:10px 12px;font:14px 'Segoe UI',system-ui,sans-serif}" +
       "@media (prefers-reduced-motion:reduce){.ad-hal button{transition:none}}";
     document.head.appendChild(s);
   }
@@ -207,6 +212,77 @@
       return '<i style="width:' + (say[x.id] / KAYIT.length * 100).toFixed(2) + '%;background:' + x.r + '" title="' + esc(x.ad) + ": " + say[x.id] + ' gün"></i>'; }).join("") + '</div>';
   }
 
+
+  /* ---------- Yıldızdan Takımyıldıza: her kayıt kişisel takımyıldızında bir yıldız yakar ---------- */
+  var TY_N = 30;
+  function rastgele(tohum) { var h = 2166136261; for (var i = 0; i < tohum.length; i++) { h ^= tohum.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    return function () { h += 0x6D2B79F5; var t = h; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  /* Takımyıldız şekli: üyeye (ve kaçıncı takımyıldız olduğuna) özel, haritasındaki Güneş-Ay-Yükselen derecelerinden tohumlanır */
+  function sekil(no) {
+    var nk = C.N.noktalar || {}, t = (C.kullanici.id || "") + "|" + no + "|" + ["Güneş", "Ay", "Yükselen"].map(function (k) { return nk[k] ? Math.floor(nk[k].lon) : "-"; }).join(",");
+    var R = rastgele(t), P = [], W = 560, H = 300, den = 0;
+    while (P.length < TY_N && den < 4000) { den++; var x = 30 + R() * (W - 60), y = 26 + R() * (H - 52), ok = true;
+      for (var i = 0; i < P.length; i++) { var dx = P[i].x - x, dy = P[i].y - y; if (dx * dx + dy * dy < 46 * 46) { ok = false; break; } }
+      if (ok) P.push({ x: x, y: y, r: 1.6 + R() * 2.2 }); }
+    // en kısa bağlantı ağacı (çizgiler) + o ağaçta gezinme sırası (yıldızlar bu sırayla yanar)
+    var ic = [0], E = [], dis = P.map(function (_, i) { return i; }).slice(1);
+    while (dis.length) { var en = null; ic.forEach(function (a) { dis.forEach(function (b) { var d = Math.hypot(P[a].x - P[b].x, P[a].y - P[b].y); if (!en || d < en.d) en = { a: a, b: b, d: d }; }); });
+      E.push([en.a, en.b]); ic.push(en.b); dis.splice(dis.indexOf(en.b), 1); }
+    return { P: P, E: E, sira: ic };
+  }
+  function tyAdlar() { var m = (C.kullanici && C.kullanici.user_metadata) || {}; return Array.isArray(m.takimyildiz) ? m.takimyildiz : []; }
+  function tySVG(S, yanan, tam) {
+    var yanik = {}; S.sira.slice(0, yanan).forEach(function (i) { yanik[i] = 1; });
+    var h = '<svg viewBox="0 0 560 300" role="img" aria-label="Kişisel takımyıldızın: ' + yanan + ' yıldız yandı"><defs><radialGradient id="tyP"><stop offset="0%" stop-color="#fff6d8"/><stop offset="45%" stop-color="#f1d58e" stop-opacity=".9"/><stop offset="100%" stop-color="#d9b96a" stop-opacity="0"/></radialGradient></defs>';
+    S.E.forEach(function (e) { var a = S.P[e[0]], b = S.P[e[1]], on = yanik[e[0]] && yanik[e[1]];
+      h += '<line x1="' + a.x.toFixed(1) + '" y1="' + a.y.toFixed(1) + '" x2="' + b.x.toFixed(1) + '" y2="' + b.y.toFixed(1) + '" stroke="' + (on ? "rgba(231,207,149,.75)" : "rgba(154,143,184,.14)") + '" stroke-width="' + (on ? 1.3 : 1) + '"' + (on ? "" : ' stroke-dasharray="2 4"') + '/>'; });
+    S.P.forEach(function (p, i) { var on = yanik[i], son = on && S.sira[yanan - 1] === i && !tam;
+      if (on) h += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + (p.r * 4.2).toFixed(1) + '" fill="url(#tyP)" opacity=".55"/>';
+      h += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + (on ? p.r + .6 : 1.6).toFixed(1) + '" fill="' + (on ? "#fff4cf" : "rgba(154,143,184,.45)") + '"' + (son ? ' stroke="#d9b96a" stroke-width="2"' : "") + '/>'; });
+    return h + '</svg>';
+  }
+  function takimyildiz() {
+    var n = KAYIT.length, no = Math.floor(n / TY_N), yanan = n % TY_N, adlar = tyAdlar();
+    var gecmisTam = no > 0 && yanan === 0;            // tam 30, 60… kayıtta: az önce tamamlanan takımyıldızı göster
+    var gNo = gecmisTam ? no - 1 : no, S = sekil(gNo), gYanan = gecmisTam ? TY_N : yanan, adi = adlar[gNo] || "";
+    var baslik = gecmisTam ? (adi ? "“" + esc(adi) + "” tamamlandı ✦" : "Takımyıldızın tamamlandı ✦") : (no ? (no + 1) + ". takımyıldızın doğuyor" : "Takımyıldızın doğuyor");
+    var alt = gecmisTam ? (adi ? "Paylaşılabilir kartını oluştur, sonra bir sonraki takımyıldızına başla." : "30 gün boyunca kendine yazdın. Şimdi ona bir ad ver.") : "Ay Defterine yazdığın her gün, haritandan doğan bu takımyıldızda bir yıldız yakar. Gün atlarsan kaybolmaz; sadece biraz daha bekler.";
+    var arac = gecmisTam ? '<div class="ty-arac">' + (adi ? "" : '<input id="tyAd" maxlength="32" placeholder="Takımyıldızına bir ad ver" aria-label="Takımyıldız adı"><button class="btn" type="button" id="tyKaydet">Adını koy</button>') +
+      '<button class="btn' + (adi ? "" : " ghost") + '" type="button" id="tyKart">📤 Kartını oluştur</button></div>' : '<div class="ty-ilerle"><b>' + gYanan + '</b> / ' + TY_N + ' yıldız' + (adlar.length ? ' · <span>Önceki: ' + adlar.slice(-3).map(esc).join(", ") + '</span>' : "") + '</div>';
+    return '<div class="ty"><div class="ty-b"><div><h3>' + baslik + '</h3><p>' + alt + '</p></div></div>' + tySVG(S, gYanan, gecmisTam) + arac + '<div class="ad-durum" id="tyDurum"></div></div>';
+  }
+  function tyBagla() {
+    var n = KAYIT.length, no = Math.floor(n / TY_N);
+    if ($("tyKaydet")) $("tyKaydet").onclick = function () {
+      var ad = $("tyAd").value.trim(); if (!ad) { $("tyAd").focus(); return; }
+      var adlar = tyAdlar().slice(); adlar[no - 1] = ad.slice(0, 32); this.disabled = true; $("tyDurum").textContent = "Kaydediliyor…";
+      C.sb.auth.updateUser({ data: { takimyildiz: adlar } }).then(function (r) {
+        if (r && r.error) { $("tyDurum").textContent = "Kaydedilemedi, tekrar dener misin?"; return; }
+        C.kullanici.user_metadata = Object.assign({}, C.kullanici.user_metadata, { takimyildiz: adlar }); ciz();
+        if (window.gtag) gtag("event", "takimyildiz_ad");
+      });
+    };
+    if ($("tyKart")) $("tyKart").onclick = tyKart;
+  }
+  function tyKart() {
+    var no = Math.floor(KAYIT.length / TY_N) - 1, S = sekil(no), ad = tyAdlar()[no] || "İsimsiz takımyıldızım", W = 1080, H = 1350;
+    var c = document.createElement("canvas"); c.width = W; c.height = H; var x = c.getContext("2d");
+    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#241c3d"); g.addColorStop(1, "#0c0914"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+    for (var i = 0; i < 220; i++) { x.globalAlpha = .12 + (i % 6) * .06; x.fillStyle = "#f0e6d2"; x.beginPath(); x.arc((i * 397) % W, (i * 733) % H, i % 9 ? 1 : 1.8, 0, 7); x.fill(); }
+    x.globalAlpha = 1; x.textAlign = "center"; x.fillStyle = "#d9b96a"; x.font = "600 28px 'Segoe UI',sans-serif"; x.fillText("✦  ASTRO YUVAM  ✦", W / 2, 110);
+    x.fillStyle = "#f0e6d2"; x.font = "600 78px Georgia,serif"; x.fillText(ad, W / 2, 230);
+    x.fillStyle = "#9a8fb8"; x.font = "34px 'Segoe UI',sans-serif"; x.fillText("30 günde kendi gökyüzümde yaktığım takımyıldız", W / 2, 295);
+    var ox = 60, oy = 400, k = (W - 120) / 560;
+    S.E.forEach(function (e) { var a = S.P[e[0]], b = S.P[e[1]]; x.strokeStyle = "rgba(231,207,149,.7)"; x.lineWidth = 3; x.beginPath(); x.moveTo(ox + a.x * k, oy + a.y * k); x.lineTo(ox + b.x * k, oy + b.y * k); x.stroke(); });
+    S.P.forEach(function (p) { var px = ox + p.x * k, py = oy + p.y * k, rg = x.createRadialGradient(px, py, 0, px, py, p.r * 14);
+      rg.addColorStop(0, "rgba(255,246,216,.9)"); rg.addColorStop(1, "rgba(217,185,106,0)"); x.fillStyle = rg; x.beginPath(); x.arc(px, py, p.r * 14, 0, 7); x.fill();
+      x.fillStyle = "#fff4cf"; x.beginPath(); x.arc(px, py, p.r * 2.4, 0, 7); x.fill(); });
+    x.fillStyle = "#d9b96a"; x.font = "600 36px 'Segoe UI',sans-serif"; x.fillText("Sen de kendi takımyıldızını yak → astroyuvam.com", W / 2, 1250);
+    c.toBlob(function (blob) { if (!blob) return; var f = null; try { f = new File([blob], "takimyildizim.png", { type: "image/png" }); } catch (e) {}
+      if (f && navigator.canShare && navigator.canShare({ files: [f] })) navigator.share({ files: [f], title: ad }).catch(function () {});
+      else { var a = document.createElement("a"), u = (window.URL || window.webkitURL).createObjectURL(blob); a.href = u; a.download = "takimyildizim.png"; document.body.appendChild(a); a.click(); setTimeout(function () { a.remove(); }, 1500); }
+      if (window.gtag) gtag("event", "takimyildiz_kart"); }, "image/png");
+  }
   var secGun = null; // bugün mü dün mü kaydediliyor
   function ciz() {
     var k = $("adBolum"); if (!k) return;
@@ -232,7 +308,7 @@
       oru = O.length ? '<div class="ad-oruntu">' + O.map(function (o) { return '<div class="ad-o" style="border-left-color:' + (o.t === "zor" ? "var(--pembe)" : "var(--yesil)") + '"><small>' + esc(o.k) + '</small><b>' + esc(o.b) + '</b><p>' + o.p + '</p></div>'; }).join("") + '</div>'
         : '<div class="bos" style="margin-top:14px">Henüz belirgin bir örüntü yok; hâllerin Ay\'ın konumundan bağımsız dengeli görünüyor. Kayıt ekledikçe bu bölüm kendini yeniler.</div>'; }
     k.innerHTML = '<div class="bolum-b"><h2>Ay Defteri</h2><span>Her gün hâlini işaretle; Ay\'ın senin üzerindeki etkisini kendi kayıtlarından gör</span></div>' +
-      '<div class="ad-kap">' + sol + sag + '</div>' + oru;
+      '<div class="ad-kap">' + sol + sag + '</div>' + oru + takimyildiz();
     k.classList.remove("gizli");
     bagla();
   }
@@ -270,6 +346,7 @@
     $("adNot").onkeydown = function (e) { if (e.key === "Enter") { e.preventDefault(); $("adNotB").click(); } };
     if ($("adDun")) $("adDun").onclick = function () { secGun = dunK(); ciz(); };
     if ($("adGeri")) $("adGeri").onclick = function () { secGun = null; ciz(); };
+    tyBagla();
   }
 
   window.AYDefter = {

@@ -214,6 +214,8 @@
 
     <section class="bolum gizli" id="adBolum" aria-label="Ay Defteri"></section>
 
+    <section class="bolum gizli" id="zkBolum" aria-label="Kozmik Zaman Kapsülü"></section>
+
     <section class="bolum" aria-label="Bu hafta gün gün">
       <div class="bolum-b"><h2>Bu hafta gün gün</h2><span>Ay her 2-3 günde bir evini değiştirir; hangi gün ne için daha uygun, buradan bak</span></div>
       <div class="enler" id="enler"></div>
@@ -252,6 +254,8 @@
       <div class="cark-kutu"><div id="cark"></div><div><div class="ucbuyuk" id="ucbuyuk"></div><div class="tablo-kap"><table class="tablo" id="gTablo"></table></div></div></div>
       <div class="lejant"><span><i style="background:#f0e6d2"></i>Doğum haritan</span><span><i style="background:#d9b96a"></i>Bugünkü gökyüzü</span></div>
     </section>
+
+    <section class="bolum gizli" id="aaBolum" aria-label="Arkana Albümüm"></section>
 
     <section class="bolum">
       <div class="bolum-b"><h2>Senin için</h2></div>
@@ -559,7 +563,8 @@
       $("saatUyari").classList.toggle("gizli", N.saat);
       seri(); bugun(N, prof); acilar(N); takvim(N); hafta(N, prof); cark(N); askHaritam(prof);
       var ctx = { N: N, prof: prof, A: A, lon: lon, evBul: evBul, hazirla: hazirla, EVS: EVS, GUNET: GUNET, sb: sb, kullanici: kullanici, api: API.replace("/api/harita", "") };
-      if (window.AYDefter) window.AYDefter.baslat(ctx); else { var ad = document.createElement("script"); ad.src = "/ay-defteri.js?v=2"; ad.onload = function(){ window.AYDefter && window.AYDefter.baslat(ctx); }; document.head.appendChild(ad); }
+      [["AYDefter", "/ay-defteri.js?v=3"], ["AYKapsul", "/zaman-kapsulu.js?v=1"], ["AYAlbum", "/arkana-albumu.js?v=1"]].forEach(function(m){
+        if (window[m[0]]) window[m[0]].baslat(ctx); else { var sc = document.createElement("script"); sc.src = m[1]; sc.onload = function(){ window[m[0]] && window[m[0]].baslat(ctx); }; document.head.appendChild(sc); } });
       if (window.AYPanelEk) window.AYPanelEk.baslat(ctx); else { var pe = document.createElement("script"); pe.src = "/panel-ek.js?v=2"; pe.onload = function(){ window.AYPanelEk && window.AYPanelEk.baslat(ctx); }; document.head.appendChild(pe); }
       goster("panel");
       if (window.gtag) gtag("event", "panel_acildi");
