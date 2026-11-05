@@ -559,7 +559,7 @@
       $("saatUyari").classList.toggle("gizli", N.saat);
       seri(); bugun(N, prof); acilar(N); takvim(N); hafta(N, prof); cark(N); askHaritam(prof);
       var ctx = { N: N, prof: prof, A: A, lon: lon, evBul: evBul, hazirla: hazirla, EVS: EVS, GUNET: GUNET, sb: sb, kullanici: kullanici, api: API.replace("/api/harita", "") };
-      if (window.AYDefter) window.AYDefter.baslat(ctx); else { var ad = document.createElement("script"); ad.src = "/ay-defteri.js?v=1"; ad.onload = function(){ window.AYDefter && window.AYDefter.baslat(ctx); }; document.head.appendChild(ad); }
+      if (window.AYDefter) window.AYDefter.baslat(ctx); else { var ad = document.createElement("script"); ad.src = "/ay-defteri.js?v=2"; ad.onload = function(){ window.AYDefter && window.AYDefter.baslat(ctx); }; document.head.appendChild(ad); }
       if (window.AYPanelEk) window.AYPanelEk.baslat(ctx); else { var pe = document.createElement("script"); pe.src = "/panel-ek.js?v=2"; pe.onload = function(){ window.AYPanelEk && window.AYPanelEk.baslat(ctx); }; document.head.appendChild(pe); }
       goster("panel");
       if (window.gtag) gtag("event", "panel_acildi");

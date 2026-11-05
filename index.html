@@ -199,6 +199,13 @@
   </div>
 </section>
 
+<section class="section-block" id="burc-nabzi">
+  <h2>Burçların Nabzı</h2>
+  <p class="sub">Her gün tek soru: bugün nasılsın? Burcunu ve hâlini seç, 12 burcun bugün nasıl hissettiğini canlı gör.</p>
+  <div id="burcNabzi" style="min-height:380px"></div>
+  <script>(function(){var y=0;function l(){if(y)return;y=1;var s=document.createElement("script");s.src="/burc-nabzi.js?v=1";s.defer=true;document.body.appendChild(s);}var e=document.getElementById("burcNabzi");if("IntersectionObserver" in window){var o=new IntersectionObserver(function(x){if(x[0].isIntersecting){o.disconnect();l();}},{rootMargin:"400px"});o.observe(e);}else l();})();</script>
+</section>
+
 <section class="section-block" id="daily-promo">
   <style>
     .uye-vitrin{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;background:radial-gradient(ellipse at 15% 0%,rgba(124,108,240,.16),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(217,185,106,.12),transparent 55%),var(--ay-panel);border:1px solid rgba(217,185,106,.35);border-radius:24px;padding:30px}
