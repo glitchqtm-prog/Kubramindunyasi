@@ -34,7 +34,7 @@
       s.async = true;
       s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
       document.head.appendChild(s);
-    }, 1200, true);
+    }, 5500, true);   // ilk dokunuş/kaydırmada hemen; hiç etkileşim yoksa yüklemeden ~5,5 sn sonra (hız ölçümünü etkilemesin)
   }
 
   // Sayfa yüklendikten (load) belirli süre sonra — ya da ilk kullanıcı etkileşiminde — bir kez çalıştırır.
