@@ -451,8 +451,6 @@ genderBox.querySelectorAll("button").forEach(b => b.onclick = () => {
 const $ = id => document.getElementById(id).value.trim();
 const statusEl = document.getElementById("status");
 const btn = document.getElementById("btn");
-const TEST_MODU = new URLSearchParams(location.search).get("test") === "1";
-if (TEST_MODU){ statusEl.insertAdjacentHTML("beforebegin", "<label style='margin-top:22px'>Test anahtarı (yalnızca site sahibi)</label><input id='testAnahtar' type='password' autocomplete='off' placeholder='Render’daki TEST_KEY'>"); btn.textContent = "TEST RAPORUNU ÜRET →"; }
 
 btn.onclick = async () => {
   if (!document.getElementById("consent").checked) {
@@ -528,17 +526,6 @@ btn.onclick = async () => {
     body.sesli = true; body.sesKanali = { tur, adres };
   }
 
-  // ✦ SAHİP TESTİ (?test=1): ödeme yok; aynı form, aynı cevaplar test kapısına gider. Anahtar yanlışsa sunucu reddeder.
-  if (TEST_MODU){
-    const anahtar = (document.getElementById("testAnahtar").value || "").trim();
-    if (!anahtar) return hata("Test anahtarını yaz.");
-    const q = new URLSearchParams({ key: anahtar, type: body.type, name: body.name || "", email: body.email || "", birthDate: body.birthDate || "", birthTime: body.birthTime || "", birthPlace: body.birthPlace || "", relationship: body.relationship || "", gender: body.gender || "" });
-    if (body.gf) q.set("gf", JSON.stringify(body.gf));
-    const adres = API + "/api/test-uret?" + q.toString();
-    if (adres.length > 14000) return hata("Cevaplar test bağlantısı için çok uzun; birkaç cevabı kısaltıp tekrar dene.");
-    statusEl.className = "status ok"; statusEl.textContent = "Test isteği gönderiliyor…";
-    window.location.href = adres; return;
-  }
   btn.disabled = true; btn.textContent = "GÖNDERİLİYOR…";
   statusEl.className = "status info";
   statusEl.innerHTML = "<span class='dot'></span>Bilgilerin gönderiliyor, lütfen bekle…<br><span style='font-size:12.5px;opacity:.85'>Bu işlem birkaç saniye sürebilir. Birazdan güvenli ödeme sayfasına yönlendirileceksin.</span>";
