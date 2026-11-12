@@ -48,6 +48,15 @@
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
 <script src="/dogum-giris.js" defer></script>
 <script src="/pusula-ayar.js"></script>
+<meta name="description" content="Astro Yuvam rapor siparişi: doğum bilgilerini gir, güvenli ödemeni yap, kişiye özel raporun PDF olarak e-postana gelsin.">
+<link rel="canonical" href="https://astroyuvam.com/order.html">
+<meta property="og:title" content="Sipariş — Astro Yuvam">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://astroyuvam.com/order.html">
+<meta property="og:site_name" content="Astro Yuvam">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:description" content="Astro Yuvam rapor siparişi: doğum bilgilerini gir, güvenli ödemeni yap, kişiye özel raporun PDF olarak e-postana gelsin.">
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png">
 </head>
 <body>
 <header><a href="/" class="logo">✦ Astro Yuvam</a></header>
@@ -394,7 +403,7 @@ if (Y) {
       return h; };
     kutu.innerHTML = "<div style='margin-top:26px;padding:14px;background:#0f0b1a;border:1px solid var(--gold2);border-radius:10px;font-size:13px;line-height:1.65;color:var(--ink)'>" +
       "<strong style='color:var(--gold)'>Seni tanımadan plan yapmıyoruz.</strong> Haritan bütçeni, şehrini, vaktini bilmez. Aşağıdaki kısa sorular planın gerçekten senin hayatına oturması için. " +
-      "<span style='color:var(--muted)'>Nasıl yazdığın önemli değil; aklına geldiği gibi, kısa ya da uzun yaz. Yalnızca raporunu hazırlamak için kullanılır.</span></div>" +
+      "<span style='color:var(--muted)'>Nasıl yazdığın önemli değil; aklına geldiği gibi, kısa ya da uzun yaz. Yalnızca raporunu hazırlamak için kullanılır.</span><br><span style='color:var(--gold)'>⏳ Teslim:</span> yoğunluğa bağlı olarak " + (Y.pusula === "butun" ? "72" : "48") + " saat içinde, PDF olarak e-postana.</div>" +
       F.zorunlu.map(k => alanHTML(k, true)).join("") + F.istege.map(k => alanHTML(k, false)).join("");
   }
 }
