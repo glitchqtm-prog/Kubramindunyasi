@@ -47,6 +47,7 @@
 </style>
 <link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
 <script src="/dogum-giris.js" defer></script>
+<script src="/pusula-ayar.js"></script>
 </head>
 <body>
 <header><a href="/" class="logo">✦ Astro Yuvam</a></header>
@@ -152,6 +153,9 @@
   <label id="relLabel">İlişki Durumun *</label>
   <div class="genders" id="relBox" style="flex-wrap:wrap"></div>
 
+  <!-- ✦ PUSULA SERİSİ: gerçeklik formu (sorular rapora göre aşağıdaki betikte kurulur) -->
+  <div id="pusulaBox" style="display:none"></div>
+
   <fieldset id="partnerBox">
     <legend>Partner Bilgileri</legend>
     <label>Partner Ad Soyad *</label>
@@ -203,24 +207,29 @@
 const API = "https://astro-rapor.onrender.com";
 
 const REPORTS = {
-  natal:        { name: "Haritanı Tanı Raporu",       price: 500 },
-  cocuk:        { name: "Çocuğunu Tanı Raporu",        price: 500 },
-  solar_return: { name: "Solar Return Raporu",        price: 250 },
-  lunar_return: { name: "Lunar Return Raporu",        price: 150 },
-  sinastri:     { name: "Sinastri Raporu",            price: 500 },
-  matrix:       { name: "Kader Matrisi Raporu",       price: 400 },
-  matrix_uyum:  { name: "Kader Matrisi Uyum Raporu",  price: 500 },
-  transit:      { name: "Transit Raporu",             price: 300 },
-  horary:       { name: "Soru Astrolojisi (Horary) Raporu", price: 450 },
-  astrokartografi: { name: "Astrokartografi — Dünyada Senin Yerin", price: 600 },
-  secim:        { name: "Seçim Astrolojisi — En Uygun Tarih", price: 600 },
-  iliski_haritasi: { name: "İlişki Haritası (Kompozit + Davison)", price: 500 },
-  kariyer:      { name: "Kariyer ve Meslek Haritası", price: 450 },
-  ask:          { name: "Aşk Haritası", price: 450 },
-  vedik:        { name: "Vedik Doğum Haritası", price: 450 },
-  progresyon:   { name: "Progresyon — Ruhsal Olgunlaşma Haritası", price: 400 },
-  karmik:       { name: "Karmik Harita", price: 400 },
-  numeroloji:   { name: "Kişisel Numeroloji Raporu", price: 350 }
+  natal:        { name: "Haritanı Tanı Raporu",       price: 750 },
+  cocuk:        { name: "Çocuğunu Tanı Raporu",        price: 750 },
+  solar_return: { name: "Solar Return Raporu",        price: 400 },
+  lunar_return: { name: "Lunar Return Raporu",        price: 300 },
+  sinastri:     { name: "Sinastri Raporu",            price: 750 },
+  matrix:       { name: "Kader Matrisi Raporu",       price: 600 },
+  matrix_uyum:  { name: "Kader Matrisi Uyum Raporu",  price: 750 },
+  transit:      { name: "Transit Raporu",             price: 450 },
+  horary:       { name: "Soru Astrolojisi (Horary) Raporu", price: 675 },
+  astrokartografi: { name: "Astrokartografi — Dünyada Senin Yerin", price: 900 },
+  secim:        { name: "Seçim Astrolojisi — En Uygun Tarih", price: 900 },
+  iliski_haritasi: { name: "İlişki Haritası (Kompozit + Davison)", price: 750 },
+  kariyer:      { name: "Kariyer ve Meslek Haritası", price: 675 },
+  ask:          { name: "Aşk Haritası", price: 675 },
+  vedik:        { name: "Vedik Doğum Haritası", price: 675 },
+  progresyon:   { name: "Progresyon — Ruhsal Olgunlaşma Haritası", price: 600 },
+  karmik:       { name: "Karmik Harita", price: 600 },
+  numeroloji:   { name: "Kişisel Numeroloji Raporu", price: 525 },
+  pusula_is:     { name: "İş Pusulası — Yapılacak İş ve Adım Adım Planı", price: 3000 },
+  pusula_ask:    { name: "Aşk Pusulası — İlişki Yol Planı", price: 3000 },
+  pusula_para:   { name: "Para Pusulası — Kazanç ve Birikim Planı", price: 3000 },
+  pusula_beceri: { name: "Yetenek Pusulası — Beceri ve Öğrenme Planı", price: 3000 },
+  pusula_yasam:  { name: "Yaşam Pusulası — Günlük Düzen ve Yaşam Alanı Planı", price: 3000 }
 };
 // ✦ Yeni raporların form ayarları: saat zorunlu mu, ilişki/cinsiyet sorulur mu, özel kutu
 const YENI = {
@@ -232,7 +241,40 @@ const YENI = {
   karmik:          { saat:true },
   vedik:           { saat:true },
   secim:           { saat:true, kutu:"secimBox", secim:true },
-  numeroloji:      { kutu:"numBox", sadeceTarih:true }
+  numeroloji:      { kutu:"numBox", sadeceTarih:true },
+  pusula_is:       { saat:true, kutu:"pusulaBox", pusula:"is" },
+  pusula_ask:      { saat:true, kutu:"pusulaBox", pusula:"ask", iliski:"tekli", cinsiyet:true },
+  pusula_para:     { saat:true, kutu:"pusulaBox", pusula:"para" },
+  pusula_beceri:   { saat:true, kutu:"pusulaBox", pusula:"beceri" },
+  pusula_yasam:    { saat:true, kutu:"pusulaBox", pusula:"yasam" }
+};
+// ✦ PUSULA: gerçeklik formu — anahtarlar sunucudaki lib/pusula.js → GF_ALANLAR ile AYNI
+const PUSULA_ALAN = {
+  sehir:      { soru:"Şu an yaşadığın şehir", tip:"kisa", yer:"örn: İzmir" },
+  durum:      { soru:"Şu anki durumun", sec:["Çalışıyorum (maaşlı)","Kendi işimi yapıyorum","Öğrenciyim","İş arıyorum","Çalışmıyorum / ev hayatı","Emekliyim"] },
+  isEgitim:   { soru:"Şu an ne iş yapıyorsun, ne okudun?", tip:"uzun", yer:"Kısaca anlat: mesleğin, kaç yıldır yaptığın, okuduğun bölüm…" },
+  saat:       { soru:"Buna haftada ne kadar vakit ayırabilirsin?", sec:["5 saatten az","5–10 saat","10–20 saat","20 saatten fazla"] },
+  butce:      { soru:"Başlangıç için ayırabileceğin para", sec:["Hiç ayıramam","5.000 TL'ye kadar","5.000–25.000 TL","25.000–100.000 TL","100.000 TL üstü"] },
+  eldekiler:  { soru:"Elinde ne var?", tip:"uzun", yer:"Bildiğin işler, becerilerin, bilgisayar / araç / ekipman, sana destek olabilecek çevren…" },
+  istemedigi: { soru:"Kesinlikle yapmak istemediğin ya da yapamayacağın şeyler", tip:"uzun", yer:"örn: kameraya çıkmak istemem, şehir değiştiremem, hafta sonu çalışamam…" },
+  hedef:      { soru:"Bir yıl sonra bu konuda ne değişmiş olsun istersin?", tip:"uzun", yer:"İçinden geldiği gibi yaz." },
+  askDurum:   { soru:"İlişkilerde seni en çok ne zorluyor, şu an durum ne?", tip:"uzun", yer:"İçinden geldiği gibi anlat; ne kadar açık yazarsan plan o kadar sana göre olur." },
+  askIstek:   { soru:"Nasıl bir ilişki istiyorsun?", tip:"uzun", yer:"Hayalindeki ilişkiyi birkaç cümleyle anlat." },
+  gelir:      { soru:"Gelir düzenin", sec:["Düzenli maaşım var","Gelirim düzensiz","Şu an gelirim yok"] },
+  paraSorun:  { soru:"Paran en çok nereye gidiyor, seni en çok ne zorluyor?", tip:"uzun", yer:"örn: ay sonunu getiremiyorum, biriktiremiyorum, borç ödüyorum, ne kazansam harcıyorum…" },
+  birikim:    { soru:"Birikim durumun", sec:["Hiç birikimim yok","Biraz var","Düzenli biriktiriyorum"] },
+  kimle:      { soru:"Kiminle yaşıyorsun?", sec:["Yalnız","Ailemle","Eşimle / partnerimle","Ev arkadaşımla","Çocuklarımla"] },
+  gunluk:     { soru:"Bir günün nasıl geçiyor?", tip:"uzun", yer:"Kaçta kalkıyorsun, iş / okul düzenin nasıl, akşamların nasıl geçiyor…" },
+  yoran:      { soru:"Seni en çok yoran, değiştirmek istediğin şey", tip:"uzun", yer:"İçinden geldiği gibi yaz." },
+  tasinma:    { soru:"Taşınmayı ya da şehir değiştirmeyi düşünüyor musun? Nereye?", tip:"kisa", yer:"Düşünmüyorsan boş bırak" },
+  ekNot:      { soru:"Eklemek istediğin başka bir şey", tip:"uzun", yer:"Bilmemizi istediğin her şey." }
+};
+const PUSULA_FORM = {
+  is:     { zorunlu:["sehir","durum","isEgitim","saat","butce","eldekiler","hedef"], istege:["istemedigi","ekNot"] },
+  ask:    { zorunlu:["sehir","askDurum","hedef"], istege:["askIstek","istemedigi","ekNot"] },
+  para:   { zorunlu:["sehir","durum","gelir","paraSorun","hedef"], istege:["birikim","isEgitim","istemedigi","ekNot"] },
+  beceri: { zorunlu:["sehir","durum","isEgitim","saat","butce","hedef"], istege:["eldekiler","istemedigi","ekNot"] },
+  yasam:  { zorunlu:["sehir","kimle","gunluk","yoran","hedef"], istege:["durum","tasinma","istemedigi","ekNot"] }
 };
 const type = new URLSearchParams(location.search).get("type") || "natal";
 const info = REPORTS[type] || REPORTS.natal;
@@ -240,6 +282,13 @@ const Y = YENI[type] || null;
 document.getElementById("reportName").textContent = info.name;
 const fiyatYaz = f => { document.getElementById("price").innerHTML = "&#8378;" + f + " <span style='font-size:16px;color:var(--muted)'>tek seferlik</span>"; };
 fiyatYaz(info.price);
+// ✦ PUSULA: tanıtım dönemi fiyatı (pusula-ayar.js). Shopier'deki fiyat esastır; burada aynısı gösterilir.
+if (Y && Y.pusula && window.AY_PUSULA) {
+  const A = window.AY_PUSULA;
+  if (A.tanitimda()) document.getElementById("price").innerHTML = "&#8378;" + A.tanitim + " <s style='font-size:20px;color:var(--muted)'>&#8378;" + A.liste + "</s>" +
+    "<div style='font-size:13px;color:var(--gold);margin-top:6px'>Tanıtım fiyatı" + (A.bitis ? " · " + A.bitisYazi() + "'e kadar" : " · ilk ay") + " — sonrasında &#8378;" + A.liste + "</div>";
+  else fiyatYaz(A.liste);
+}
 
 // ✦ SESLİ seçenek — sunucu bu rapor için açıksa göster; kapalıysa form hiç değişmez
 let teslimSekli = "pdf", sesliFiyat = null;
@@ -328,7 +377,21 @@ if (Y) {
     kutu.onchange = dogumAlanlari; dogumAlanlari();
   }
   if (type === "numeroloji"){ const ad = document.getElementById("name"), da = document.getElementById("dogumAdi"); ad.addEventListener("input", () => { if (!da.dataset.el) da.value = ad.value; }); da.addEventListener("input", () => { da.dataset.el = "1"; }); }
-  const badge = document.querySelector(".badge"); if (badge) badge.textContent = "✦ YENİ RAPOR ✦";
+  const badge = document.querySelector(".badge"); if (badge) badge.textContent = Y.pusula ? "✦ PUSULA SERİSİ ✦" : "✦ YENİ RAPOR ✦";
+  if (Y.pusula){
+    // ✦ PUSULA: gerçeklik formunu kur (zorunlu alanlar yıldızlı; isteğe bağlılar altta)
+    const F = PUSULA_FORM[Y.pusula], kutu = document.getElementById("pusulaBox");
+    const es = t => String(t).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+    const alanHTML = (k, zor) => { const a = PUSULA_ALAN[k]; let h = "<label>" + es(a.soru) + (zor ? " *" : " (isteğe bağlı)") + "</label>";
+      if (a.sec) h += "<select id='gf_" + k + "'><option value=''>Seç…</option>" + a.sec.map(o => "<option>" + es(o) + "</option>").join("") + "</select>";
+      else if (a.tip === "kisa") h += "<input id='gf_" + k + "' maxlength='80' placeholder=\"" + es(a.yer || "") + "\">";
+      else h += "<textarea id='gf_" + k + "' rows='3' maxlength='" + (k === "askDurum" || k === "paraSorun" || k === "gunluk" || k === "ekNot" ? 800 : 600) + "' placeholder=\"" + es(a.yer || "") + "\"></textarea>";
+      return h; };
+    kutu.innerHTML = "<div style='margin-top:26px;padding:14px;background:#0f0b1a;border:1px solid var(--gold2);border-radius:10px;font-size:13px;line-height:1.65;color:var(--ink)'>" +
+      "<strong style='color:var(--gold)'>Seni tanımadan plan yapmıyoruz.</strong> Haritan bütçeni, şehrini, vaktini bilmez. Aşağıdaki kısa sorular planın gerçekten senin hayatına oturması için. " +
+      "<span style='color:var(--muted)'>Nasıl yazdığın önemli değil; aklına geldiği gibi, kısa ya da uzun yaz. Yalnızca raporunu hazırlamak için kullanılır.</span></div>" +
+      F.zorunlu.map(k => alanHTML(k, true)).join("") + F.istege.map(k => alanHTML(k, false)).join("");
+  }
 }
 
 // ÇOCUK raporu: muhatap ebeveyndir; ilişki durumu anlamsız olduğu için hiç sorulmaz.
@@ -417,6 +480,15 @@ btn.onclick = async () => {
       if ($("sSaatBas") && $("sSaatBit")){ body.gunSaatBas = $("sSaatBas"); body.gunSaatBit = $("sSaatBit"); }
     }
     if (type === "numeroloji"){ body.dogumAdi = $("dogumAdi") || $("name"); }
+    if (Y.pusula){
+      const F = PUSULA_FORM[Y.pusula], gf = {};
+      for (const k of F.zorunlu.concat(F.istege)){ const v = $("gf_" + k); if (v) gf[k] = v; }
+      for (const k of F.zorunlu) if (!gf[k] || (!PUSULA_ALAN[k].sec && gf[k].length < 2)){
+        document.getElementById("gf_" + k).focus();
+        return hata("Lütfen şu soruyu yanıtla: " + PUSULA_ALAN[k].soru);
+      }
+      body.gf = gf;
+    }
   } else if (isHorary) {
     const soru = document.getElementById("hSoru").value.trim();
     if (!soru || soru.length < 5) {
@@ -448,6 +520,7 @@ btn.onclick = async () => {
       method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
     });
     const data = await res.json();
+    if (!res.ok && Y && Y.pusula && (data.errors || []).indexOf("Geçersiz rapor tipi.") >= 0) throw new Error("Bu rapor çok yakında satışa açılıyor. Kısa süre sonra tekrar dene.");
     if (!res.ok) throw new Error((data.errors || [data.error || "Bilinmeyen hata"]).join(" "));
     statusEl.className = "status ok";
     statusEl.innerHTML = "✦ Bilgilerin alındı — güvenli ödeme sayfasına yönlendiriliyorsun…<br><span style='font-size:12.5px;opacity:.85'>Ödeme ekranında da <strong>aynı e-posta adresini</strong> kullan. " + (body.sesli ? "Ödeme onaylanınca haritana bakılıp ses kaydın hazırlanacak." : "Ödeme onaylanınca raporun sana özel hazırlanıp e-postana gönderilecek.") + "</span>";

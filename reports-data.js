@@ -4,7 +4,7 @@ const REPORTS = [
     page: "dogum-haritasi-analizi.html",
     title: "Haritanı Tanı Raporu",
     short: "Doğum haritanı bütüncül ele alan, ilişkiler, kariyer ve yeteneklerine dair 20+ sayfalık kapsamlı analiz.",
-    price: 500,
+    price: 750,
     needsTwoPeople: false,
   },
   {
@@ -12,7 +12,7 @@ const REPORTS = [
     page: "cocugunu-tani-analizi.html",
     title: "Çocuğunu Tanı Raporu",
     short: "Çocuğun doğum haritasını yaşına göre yorumlayan; öğrenme stilini, güçlü yanlarını, duygusal ihtiyaçlarını, sosyal gelişimini ve yeteneklerini ele alan, sonunda ebeveyne özel uygulama rehberi sunan 14+ sayfalık gelişim ve eğitim raporu.",
-    price: 500,
+    price: 750,
     needsTwoPeople: false,
   },
   {
@@ -20,7 +20,7 @@ const REPORTS = [
     page: "solar-return-analizi.html",
     title: "Solar Return Raporu",
     short: "Güneş'in natal pozisyonuna döndüğü an için çıkarılan, kişisel yeni yılını temsil eden 14+ sayfalık rapor.",
-    price: 250,
+    price: 400,
     needsTwoPeople: false,
   },
   {
@@ -28,7 +28,7 @@ const REPORTS = [
     page: "lunar-return-analizi.html",
     title: "Lunar Return Raporu",
     short: "Ay'ın natal pozisyonuna döndüğü an için çıkarılan, aylık duygusal döngünü anlatan 12+ sayfalık rapor.",
-    price: 150,
+    price: 300,
     needsTwoPeople: false,
   },
   {
@@ -36,7 +36,7 @@ const REPORTS = [
     page: "sinastri-uyum-analizi.html",
     title: "Sinastri Raporu",
     short: "İki kişinin doğum haritaları arasındaki etkileşimi analiz eden 18+ sayfalık ilişki uyum raporu.",
-    price: 500,
+    price: 750,
     needsTwoPeople: true,
   },
   {
@@ -44,7 +44,7 @@ const REPORTS = [
     page: "kader-matrisi-analizi.html",
     title: "Kader Matrisi Raporu",
     short: "Doğum tarihinden hesaplanan 22 Arkana (Ladini yöntemi) oktagramıyla karakterini; karmik kuyruğunu, aşk, para ve yetenek hat kombinasyonlarını, çakralarını, yaşam blokajlarını ve yaş dönemlerini tek tek çözen 24+ sayfalık numeroloji raporu.",
-    price: 400,
+    price: 600,
     needsTwoPeople: false,
   },
   {
@@ -52,7 +52,7 @@ const REPORTS = [
     page: "kader-matrisi-uyum-analizi.html",
     title: "Kader Matrisi Uyum Raporu",
     short: "İki kişinin oktagramlarının birleşiminden doğan ortak enerjileri; her iki tarafın hat kombinasyonlarını, bağlanma dinamiklerini, ilişki–para–karmik bağ blokajlarını ve ilişkinin karmik misyonunu derinlemesine analiz eden 30+ sayfalık uyum raporu.",
-    price: 500,
+    price: 750,
     needsTwoPeople: true,
   },
   {
@@ -60,7 +60,7 @@ const REPORTS = [
     page: "transit-analizi.html",
     title: "Transit Raporu",
     short: "Ev geçişleri, açılar ve ev yöneticilikleriyle önümüzdeki 12 ayı tarih tarih yorumlayan 11+ sayfalık öngörü raporu.",
-    price: 300,
+    price: 450,
     needsTwoPeople: false,
   },
   {
@@ -68,7 +68,7 @@ const REPORTS = [
     page: "soru-astrolojisi-analizi.html",
     title: "Soru Astrolojisi (Horary) Raporu",
     short: "Aklındaki tek bir somut soruya, tam o soruyu sorduğun anın gökyüzünden yanıt arayan kadim bir yöntem. Doğum bilgisi gerekmez — yalnızca net bir soru yeterli. Kayıp bir eşyanın yeri, bir işin olup olmayacağı, iki seçenek arasındaki tercih ya da bir konunun nasıl gelişeceği gibi merak ettiğini; kişiye özel, akıcı ve dürüst bir okumayla yanıtlayan 3-4 sayfalık soru raporu. Kesin kehanet değildir; gökyüzü net konuşmadığında bunu da dürüstçe söyleriz.",
-    price: 450,
+    price: 675,
     needsTwoPeople: false,
   },
   {
@@ -76,7 +76,7 @@ const REPORTS = [
     page: "astrokartografi-analizi.html",
     title: "Astrokartografi — Dünyada Senin Yerin",
     short: "Doğduğun anın gökyüzünü dünya haritasına yayar: 40 gezegen hattını dünya ve Türkiye–Avrupa haritalarında gösterir; 81 il ve 170 dünya şehrini gerçek km mesafesiyle tarar. Aşk, kariyer, para ve huzur için sana en iyi gelen şehirleri, dikkat etmen gereken yerleri ve aklındaki şehirlerin sana ne getireceğini net olarak söyler. Doğum saati gerekir. 13+ sayfalık PDF rapor.",
-    price: 600,
+    price: 900,
     needsTwoPeople: false,
   },
   {
@@ -84,7 +84,7 @@ const REPORTS = [
     page: "kariyer-haritasi-analizi.html",
     title: "Kariyer ve Meslek Haritası",
     short: "Doğum haritandaki kariyer göstergelerinden sana en uygun 3 meslek alanını somut meslek örnekleriyle çıkarır; çalışma tarzını, para kazanma yolunu ve kariyer süper gücünü anlatır. Önümüzdeki 24 ayın fırsat ve dikkat dönemlerini gerçek gezegen hareketlerinden tarih tarih verir. 14+ sayfalık PDF rapor.",
-    price: 450,
+    price: 675,
     needsTwoPeople: false,
   },
   {
@@ -92,7 +92,7 @@ const REPORTS = [
     page: "ask-haritasi-analizi.html",
     title: "Aşk Haritası",
     short: "Nasıl sevdiğini, kime çekildiğini ve seni mutlu edecek partner tipini anlatır; karşılaşma ihtimalinin en yüksek olduğu ortamı söyler. Önümüzdeki 24 ayda aşk kapılarının açıldığı dönemleri tarihleriyle verir. İlişki durumuna göre (bekâr, ilişkide, evli) anlatım değişir. 11+ sayfalık PDF rapor.",
-    price: 450,
+    price: 675,
     needsTwoPeople: false,
   },
   {
@@ -100,7 +100,7 @@ const REPORTS = [
     page: "iliski-haritasi-analizi.html",
     title: "İlişki Haritası — Kompozit ve Davison",
     short: "Sinastri iki kişiyi karşılaştırır; bu rapor ise ilişkinin kendisini okur. Kompozit ve Davison haritalarıyla ilişkinizin özünü, en güçlü yanını, en büyük sınavını ve birlikte büyüdüğünüz yönü anlatır; önümüzdeki 15 ayın güçlü ve dikkat gerektiren dönemlerini tarihleriyle verir. 14+ sayfalık PDF rapor.",
-    price: 500,
+    price: 750,
     needsTwoPeople: true,
   },
   {
@@ -108,7 +108,7 @@ const REPORTS = [
     page: "progresyon-analizi.html",
     title: "Progresyon — Ruhsal Olgunlaşma Haritası",
     short: "Doğum haritan tohumsa, progresyon onun bugün hangi evrede olduğunu gösterir. Hayat döngündeki yerini, progres Ay'ın önümüzdeki 3 yıllık duygusal takvimini, kimliğinin olgunlaştığı büyük eşikleri ve yaklaşan dönüm noktalarını tarihleriyle anlatır. 12+ sayfalık PDF rapor.",
-    price: 400,
+    price: 600,
     needsTwoPeople: false,
   },
   {
@@ -116,7 +116,7 @@ const REPORTS = [
     page: "secim-astrolojisi-analizi.html",
     title: "Seçim Astrolojisi — En Uygun Tarih ve Saat",
     short: "Nikâh, nişan, açılış, sözleşme, taşınma, lansman gibi önemli bir işin için verdiğin tarih aralığındaki her günü 10 dakikalık adımlarla tarar; Ay'ın boşta olduğu, retro ve tutulma gibi sakıncalı anları eler ve sana en uygun gün ile saat penceresini net olarak verir. İki alternatif ve kaçınman gereken günler de raporda. 9+ sayfalık PDF rapor.",
-    price: 600,
+    price: 900,
     needsTwoPeople: false,
   },
   {
@@ -124,7 +124,7 @@ const REPORTS = [
     page: "karmik-harita-analizi.html",
     title: "Karmik Harita — Ruhunun Yolculuğu",
     short: "Ay Düğümleri, Satürn, Chiron ve 12. ev üzerinden bu hayattaki ruh görevini, geçmişten getirdiğin armağanları ve hayatının ana dersini anlatır. Düğüm dönüşleri, Satürn ve Chiron dönüşleri gibi karmik eşiklerini yaşlarıyla birlikte bir yaşam çizgisinde gösterir. 13+ sayfalık PDF rapor.",
-    price: 400,
+    price: 600,
     needsTwoPeople: false,
   },
   {
@@ -132,7 +132,7 @@ const REPORTS = [
     page: "vedik-harita-analizi.html",
     title: "Vedik Doğum Haritası (Jyotiṣa)",
     short: "Hint astrolojisine göre yıldız zodyakıyla çıkarılan haritan: Vedik yükselenin (Lagna), Ay burcun ve doğum nakşatran; Kuzey Hint çizimiyle Rasi ve Navamşa haritaları, yogaların, Mangal doşa ve Sade Sati durumun. Hayatının gezegen dönemlerini (daşa) gerçek tarihleriyle ve şu an hangi dönemde olduğunu net olarak verir. 12+ sayfalık PDF rapor.",
-    price: 450,
+    price: 675,
     needsTwoPeople: false,
   },
   {
@@ -140,7 +140,7 @@ const REPORTS = [
     page: "numeroloji-analizi.html",
     title: "Kişisel Numeroloji Raporu",
     short: "Doğumdaki tam adından ve doğum tarihinden Pisagor numerolojisinin tüm sayıları: Yaşam Yolu, İfade, Ruh Güdüsü, Kişilik, Olgunluk; karmik borçlar ve eksik sayılar, doğum tarihi ızgaran, hayatının 4 zirvesi ve sınavı, bu yılın ve önümüzdeki 12 ayın kişisel sayıları. 13+ sayfalık PDF rapor.",
-    price: 350,
+    price: 525,
     needsTwoPeople: false,
   },
 ];

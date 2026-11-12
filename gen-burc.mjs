@@ -845,12 +845,6 @@ function renderHub(tur, yorumlar, ctx){
   <div class="grid">
 ${kartlar}
   </div>
-  <section class="nabiz" id="burc-nabzi" style="margin-top:30px">
-    <h2 style="text-align:center;margin:0 0 6px">Burçların Nabzı</h2>
-    <p class="sub" style="text-align:center;margin:0 0 16px">Burcunun yorumunu okudun; peki sen bugün gerçekten nasılsın? Oyunu ver, 12 burcun bugün nasıl hissettiğini canlı gör.</p>
-    <div id="burcNabzi" style="min-height:380px"></div>
-    <script>(function(){var y=0;function l(){if(y)return;y=1;var s=document.createElement("script");s.src="/burc-nabzi.js?v=1";s.defer=true;document.body.appendChild(s);}var e=document.getElementById("burcNabzi");if("IntersectionObserver" in window){var o=new IntersectionObserver(function(x){if(x[0].isIntersecting){o.disconnect();l();}},{rootMargin:"400px"});o.observe(e);}else l();})();</script>
-  </section>
   <div class="alt-link">${gunluk?`<a href="/${digerYol}.html">→ Haftalık burç yorumlarına da göz at</a>`:`<a href="/2027-burc-yorumlari.html">→ 2027 burç yorumlarına da göz at</a>`}</div>
   <div class="cta-kutu">
     <h3>Genel yorumun ötesine geç — kendi haritan ne diyor?</h3>

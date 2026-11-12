@@ -318,7 +318,6 @@
     var g = C.N && C.N.noktalar && C.N.noktalar["Güneş"]; if (!g) return;
     var burc = Math.floor(norm(g.lon) / 30);
     function gonder() { if (window.AYNabiz) window.AYNabiz.oyVer(burc, hal).then(function () {
-      var d = $("adDurum"); if (d && d.innerHTML.indexOf("nabz") < 0) d.innerHTML += ' <a href="/#burc-nabzi" style="color:var(--gold-soft);text-decoration:underline">Burçların nabzına da eklendi, bugün ' + ["Koçlar","Boğalar","İkizler","Yengeçler","Aslanlar","Başaklar","Teraziler","Akrepler","Yaylar","Oğlaklar","Kovalar","Balıklar"][burc] + ' nasıl? →</a>';
     }).catch(function () {}); }
     if (window.AYNabiz) gonder(); else { var s = document.createElement("script"); s.src = "/burc-nabzi.js?v=1"; s.onload = gonder; document.head.appendChild(s); }
   }
