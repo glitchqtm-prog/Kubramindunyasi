@@ -229,7 +229,8 @@ const REPORTS = {
   pusula_ask:    { name: "Aşk Pusulası — İlişki Yol Planı", price: 3000 },
   pusula_para:   { name: "Para Pusulası — Kazanç ve Birikim Planı", price: 3000 },
   pusula_beceri: { name: "Yetenek Pusulası — Beceri ve Öğrenme Planı", price: 3000 },
-  pusula_yasam:  { name: "Yaşam Pusulası — Günlük Düzen ve Yaşam Alanı Planı", price: 3000 }
+  pusula_yasam:  { name: "Yaşam Pusulası — Günlük Düzen ve Yaşam Alanı Planı", price: 3000 },
+  pusula_butun:  { name: "Altın Pusula — Hayatının Bütün Yol Planı", price: 10000 }
 };
 // ✦ Yeni raporların form ayarları: saat zorunlu mu, ilişki/cinsiyet sorulur mu, özel kutu
 const YENI = {
@@ -246,7 +247,8 @@ const YENI = {
   pusula_ask:      { saat:true, kutu:"pusulaBox", pusula:"ask", iliski:"tekli", cinsiyet:true },
   pusula_para:     { saat:true, kutu:"pusulaBox", pusula:"para" },
   pusula_beceri:   { saat:true, kutu:"pusulaBox", pusula:"beceri" },
-  pusula_yasam:    { saat:true, kutu:"pusulaBox", pusula:"yasam" }
+  pusula_yasam:    { saat:true, kutu:"pusulaBox", pusula:"yasam" },
+  pusula_butun:    { saat:true, kutu:"pusulaBox", pusula:"butun", iliski:"tekli", cinsiyet:true }
 };
 // ✦ PUSULA: gerçeklik formu — anahtarlar sunucudaki lib/pusula.js → GF_ALANLAR ile AYNI
 const PUSULA_ALAN = {
@@ -274,7 +276,8 @@ const PUSULA_FORM = {
   ask:    { zorunlu:["sehir","askDurum","hedef"], istege:["askIstek","istemedigi","ekNot"] },
   para:   { zorunlu:["sehir","durum","gelir","paraSorun","hedef"], istege:["birikim","isEgitim","istemedigi","ekNot"] },
   beceri: { zorunlu:["sehir","durum","isEgitim","saat","butce","hedef"], istege:["eldekiler","istemedigi","ekNot"] },
-  yasam:  { zorunlu:["sehir","kimle","gunluk","yoran","hedef"], istege:["durum","tasinma","istemedigi","ekNot"] }
+  yasam:  { zorunlu:["sehir","kimle","gunluk","yoran","hedef"], istege:["durum","tasinma","istemedigi","ekNot"] },
+  butun:  { zorunlu:["sehir","durum","isEgitim","saat","butce","eldekiler","gelir","paraSorun","askDurum","kimle","gunluk","yoran","hedef"], istege:["askIstek","birikim","tasinma","istemedigi","ekNot"] }
 };
 const type = new URLSearchParams(location.search).get("type") || "natal";
 const info = REPORTS[type] || REPORTS.natal;
@@ -284,10 +287,10 @@ const fiyatYaz = f => { document.getElementById("price").innerHTML = "&#8378;" +
 fiyatYaz(info.price);
 // ✦ PUSULA: tanıtım dönemi fiyatı (pusula-ayar.js). Shopier'deki fiyat esastır; burada aynısı gösterilir.
 if (Y && Y.pusula && window.AY_PUSULA) {
-  const A = window.AY_PUSULA;
-  if (A.tanitimda()) document.getElementById("price").innerHTML = "&#8378;" + A.tanitim + " <s style='font-size:20px;color:var(--muted)'>&#8378;" + A.liste + "</s>" +
-    "<div style='font-size:13px;color:var(--gold);margin-top:6px'>Tanıtım fiyatı" + (A.bitis ? " · " + A.bitisYazi() + "'e kadar" : " · ilk ay") + " — sonrasında &#8378;" + A.liste + "</div>";
-  else fiyatYaz(A.liste);
+  const A = window.AY_PUSULA, U = A.bul(Y.pusula);
+  if (A.tanitimda()) document.getElementById("price").innerHTML = "&#8378;" + A.bin(U.tanitim) + " <s style='font-size:20px;color:var(--muted)'>&#8378;" + A.bin(U.liste) + "</s>" +
+    "<div style='font-size:13px;color:var(--gold);margin-top:6px'>Tanıtım fiyatı" + (A.bitis ? " · " + A.bitisYazi() + "'a kadar" : " · ilk ay") + " — sonrasında &#8378;" + A.bin(U.liste) + "</div>";
+  else fiyatYaz(U.liste);
 }
 
 // ✦ SESLİ seçenek — sunucu bu rapor için açıksa göster; kapalıysa form hiç değişmez
@@ -377,7 +380,7 @@ if (Y) {
     kutu.onchange = dogumAlanlari; dogumAlanlari();
   }
   if (type === "numeroloji"){ const ad = document.getElementById("name"), da = document.getElementById("dogumAdi"); ad.addEventListener("input", () => { if (!da.dataset.el) da.value = ad.value; }); da.addEventListener("input", () => { da.dataset.el = "1"; }); }
-  const badge = document.querySelector(".badge"); if (badge) badge.textContent = Y.pusula ? "✦ PUSULA SERİSİ ✦" : "✦ YENİ RAPOR ✦";
+  const badge = document.querySelector(".badge"); if (badge) badge.textContent = Y.pusula === "butun" ? "✦ ALTIN PUSULA ✦" : Y.pusula ? "✦ PUSULA SERİSİ ✦" : "✦ YENİ RAPOR ✦";
   if (Y.pusula){
     // ✦ PUSULA: gerçeklik formunu kur (zorunlu alanlar yıldızlı; isteğe bağlılar altta)
     const F = PUSULA_FORM[Y.pusula], kutu = document.getElementById("pusulaBox");
