@@ -65,7 +65,7 @@ Raporlar yazılı PDF'tir (birebir görüşme değildir): hesaplama efemeris mot
 - [Doğum Haritası Çarkı Nasıl Okunur?](https://astroyuvam.com/dogum-haritasi-carki.html): Çarkın katmanlarını tıklayarak öğren.
 - [Retrograd Animasyonu](https://astroyuvam.com/retrograd-nedir.html): Gezegenlerin neden geri gidiyormuş gibi göründüğünü animasyonla gör.
 - [12 Burç Profili](https://astroyuvam.com/burclar.html): Her burcun karakteri, elementi, aşkı ve kariyeri.
-- [22 Majör Arkana Profili](https://astroyuvam.com/arkanalar.html): Kader Matrisi arkanalarının ışık ve gölge yanları.
+- [22 Arkana ve Anlamları, Arkana Hesaplama](https://astroyuvam.com/arkanalar.html): 22 arkananın her birinin anlamı, ışık ve gölge yanı, aşkta ve işte nasıl çalıştığı; doğum tarihinden arkana hesaplama kuralı (22'den büyük sayının rakamları toplanır), örnek hesap ve hesaplayıcı.
 
 ## Hayat soruları (astroloji ve numerolojiyle cevaplar)
 
