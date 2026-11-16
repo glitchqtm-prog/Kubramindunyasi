@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Günün Sorusu · Her Gün 1 Ücretsiz Çocuğunu Tanı Raporu | Astro Yuvam</title>
+<meta name="description" content="Bu hafta her gün belirlenen saatte bir soru açılıyor. İlk doğru cevabı veren, Çocuğunu Tanı Raporu'nu ücretsiz kazanıyor. Katılım ücretsiz.">
+<link rel="canonical" href="https://astroyuvam.com/gunun-sorusu.html">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" href="/logo-512.png">
+<meta property="og:title" content="Günün Sorusu · Ücretsiz Çocuğunu Tanı Raporu">
+<meta property="og:description" content="Her gün 1 ücretsiz Çocuğunu Tanı Raporu. Günün sorusunu ilk doğru bilen kazanır.">
+<meta property="og:url" content="https://astroyuvam.com/gunun-sorusu.html">
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png">
+<meta property="og:locale" content="tr_TR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style id="am-kritik">.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}.am-links{display:flex;gap:18px;font-size:14px;align-items:center;white-space:nowrap}.am-links>a{color:#f0e6d2;opacity:.82;text-decoration:none}.am-dropdown{position:relative;display:inline-block}.am-drop-btn{background:none;border:none;color:#f0e6d2;opacity:.82;font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0}.am-caret{font-size:11px}.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:262px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;opacity:0;visibility:hidden;z-index:60}.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible}.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px}@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}.am-dropdown{position:static}.am-drop-menu{left:50%;right:auto;transform:translate(-50%,0);width:min(88vw,320px);min-width:0}}</style>
+<style>
+  :root{
+    --bg:#14101f; --panel:#1d1730; --field:#241d38;
+    --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2;
+    --muted:rgba(240,230,210,.62); --line:rgba(217,185,106,.22);
+    --ok:#9fd8a8; --err:#e7a17a; color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;color:var(--cream);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+    background:radial-gradient(1100px 620px at 50% -160px, rgba(217,185,106,.14), transparent 70%),radial-gradient(900px 500px at 85% 110%, rgba(120,90,180,.10), transparent 70%),var(--bg);}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:
+    radial-gradient(1.4px 1.4px at 20% 30%, rgba(240,230,210,.35), transparent),radial-gradient(1.2px 1.2px at 70% 20%, rgba(240,230,210,.28), transparent),
+    radial-gradient(1.3px 1.3px at 40% 75%, rgba(240,230,210,.22), transparent),radial-gradient(1.1px 1.1px at 88% 62%, rgba(240,230,210,.30), transparent),
+    radial-gradient(1.2px 1.2px at 12% 82%, rgba(240,230,210,.20), transparent);}
+  .wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:18px 16px 70px}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(32px,6vw,44px);margin:18px 0 6px;color:var(--gold-soft);text-align:center;line-height:1.1}
+  .lead{text-align:center;color:var(--muted);font-size:15px;line-height:1.6;margin:0 auto 22px;max-width:540px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px 24px;margin:0 0 18px;box-shadow:0 30px 70px -30px rgba(0,0,0,.7),0 0 60px -30px rgba(217,185,106,.28)}
+  .card h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:25px;color:var(--gold-soft);margin:0 0 12px}
+  .card p{font-size:15px;line-height:1.75;margin:0 0 12px}
+  .muted{color:var(--muted)}
+  .center{text-align:center}
+  .live{position:relative;overflow:hidden;text-align:center}
+  .live::after{content:"";position:absolute;top:-40px;right:-80px;width:220px;height:2px;background:linear-gradient(90deg,transparent,rgba(231,207,149,.9));transform:rotate(-28deg);opacity:0;animation:yildiz 6s ease-in-out infinite}
+  @keyframes yildiz{0%,70%{opacity:0;transform:translate(0,0) rotate(-28deg)}75%{opacity:1}100%{opacity:0;transform:translate(-520px,280px) rotate(-28deg)}}
+  @media (prefers-reduced-motion:reduce){.live::after{display:none}}
+  .etiket{display:inline-block;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:30px;padding:5px 12px;margin-bottom:12px}
+  .sayac{font-family:'Cormorant Garamond',Georgia,serif;font-size:48px;color:var(--gold-soft);letter-spacing:2px;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+  .soru{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;color:var(--cream);margin:8px 0 10px}
+  .ipucu{font-size:13.5px;color:var(--muted);margin:0 0 16px}
+  .ipucu a,.card a{color:var(--gold-soft)}
+  input,select{width:100%;background:var(--field);border:1px solid var(--line);color:var(--cream);border-radius:12px;padding:13px 14px;font:inherit;font-size:16px;margin:6px 0 12px}
+  input:focus,select:focus{outline:none;border-color:var(--gold)}
+  label{display:block;text-align:left;font-size:13.5px;color:var(--muted);margin-top:4px}
+  .btn{display:inline-block;width:100%;background:linear-gradient(120deg,#d9b96a,#c9a15a);color:#14101f;border:none;border-radius:30px;padding:14px 20px;font:inherit;font-weight:600;font-size:15.5px;cursor:pointer;text-decoration:none;text-align:center}
+  .btn[disabled]{opacity:.55;cursor:default}
+  .btn.ghost{background:none;color:var(--gold-soft);border:1px solid var(--line)}
+  .durum{margin-top:12px;font-size:14px;line-height:1.6;min-height:1px}
+  .durum.err{color:var(--err)} .durum.ok{color:var(--ok)}
+  .sonuc{font-size:15.5px;line-height:1.75}
+  .sonuc .big{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;color:var(--gold-soft);display:block;margin-bottom:6px}
+  .kutu{background:rgba(217,185,106,.07);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px;font-size:14.5px;line-height:1.65;text-align:left}
+  .ikili{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cins{display:flex;gap:10px;margin:6px 0 12px}
+  .cins button{flex:1;background:var(--field);border:1px solid var(--line);color:var(--cream);border-radius:12px;padding:12px;font:inherit;cursor:pointer}
+  .cins button.on{border-color:var(--gold);color:var(--gold-soft);background:rgba(217,185,106,.1)}
+  .onay{display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:13px;color:var(--muted);margin:4px 0 14px}
+  .onay input{width:auto;margin:3px 0 0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:10px 6px;border-bottom:1px solid rgba(217,185,106,.12);text-align:left;vertical-align:top}
+  th{color:var(--gold);font-weight:500;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+  tr.bugun td{color:var(--gold-soft)}
+  ol.kural{padding-left:20px;margin:0} ol.kural li{font-size:14.5px;line-height:1.7;margin-bottom:8px}
+  .gizli{display:none !important}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<div id="astro-menu"><nav class="am-nav"><a class="am-brand" href="/">✦ ASTRO YUVAM</a><div class="am-links"><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Burç Yorumları <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><a href="/yildiz-gunlugu.html">Yıldız Günlüğü</a><a href="/giris.html">Giriş</a><a href="/#cards" class="am-cta">Raporlar</a></div></nav></div>
+<script>(function(){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&/^sb-.*-auth-token$/.test(k)){var o=JSON.parse(localStorage.getItem(k)||"{}"),t=o.access_token||(o.currentSession&&o.currentSession.access_token),e=o.expires_at||(o.currentSession&&o.currentSession.expires_at);if(t&&(!e||e*1000>Date.now())){var g=document.querySelector('#astro-menu a[href="/giris.html"]');if(g)g.outerHTML='<div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Hesabım <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div>';}break;}}}catch(x){}})();</script>
+
+<div class="wrap">
+  <h1>🌠 Günün Sorusu</h1>
+  <p class="lead">Bu hafta her gün <strong>1 ücretsiz Çocuğunu Tanı Raporu</strong>. Günün sorusunu ilk doğru bilen kazanır.</p>
+
+  <!-- CANLI ALAN -->
+  <section class="card live" id="canli" aria-live="polite">
+    <div id="sYukleniyor" class="muted">Gökyüzüne bakılıyor…</div>
+
+    <div id="sGiris" class="gizli">
+      <span class="etiket">Katılım ücretsiz</span>
+      <p>Katılmak için üye girişi yapman gerekiyor. Üye değilsen birkaç saniyede ücretsiz üye olabilirsin.</p>
+      <p class="muted" style="font-size:13.5px">Adil bir yarışma için yeni açılan hesaplar <strong>24 saat sonra</strong> katılabilir.</p>
+      <a class="btn" href="/giris.html?geri=%2Fgunun-sorusu.html">Giriş yap / Ücretsiz üye ol</a>
+    </div>
+
+    <div id="sUygunDegil" class="gizli"><p id="uygunDegilMetin"></p></div>
+
+    <div id="sBekle" class="gizli">
+      <span class="etiket" id="bekleEtiket">Sıradaki soru</span>
+      <div class="sayac" id="bekleSayac">--:--:--</div>
+      <p class="muted" id="bekleSaat"></p>
+      <p class="muted" style="font-size:13.5px">Soru açılınca bu sayfa kendiliğinden güncellenir; sayfayı yenilemene gerek yok.</p>
+    </div>
+
+    <div id="sSoru" class="gizli">
+      <span class="etiket">Soru şu an açık</span>
+      <div class="soru" id="soruMetni"></div>
+      <p class="ipucu">İpucu: Cevabı sitemizdeki <a href="/gokyuzu.html" target="_blank" rel="noopener">canlı Gökyüzü sayfasında</a> bulabilirsin (Keşfet → Gökyüzü &amp; Ay → Gökyüzü).</p>
+      <input id="cevap" maxlength="40" placeholder="Cevabını yaz (ör. Koç)" autocomplete="off">
+      <button class="btn" id="cevapBtn">Cevabımı Gönder</button>
+      <p class="muted" style="font-size:13px;margin-top:10px">Her hesabın tek cevap hakkı var. Cevaplar <span id="soruKapanis"></span> kadar kabul edilir.</p>
+      <div class="durum" id="cevapDurum"></div>
+    </div>
+
+    <div id="sSonuc" class="gizli sonuc"></div>
+
+    <div id="sTeklif" class="gizli">
+      <span class="etiket">Gökyüzü bugün senden yana</span>
+      <div class="sonuc"><span class="big">🌠 Kazandın!</span>Ücretsiz Çocuğunu Tanı Raporun için çocuğunun bilgilerini gir.</div>
+      <div class="sayac" id="teklifSayac">10:00</div>
+      <p class="muted" style="font-size:13.5px;margin-top:0">Bu süre içinde siparişini oluşturmazsan hak sıradaki doğru cevaplayana geçer.</p>
+      <form id="odulForm" autocomplete="off" style="margin-top:8px">
+        <label for="cAd">Çocuğunun adı *</label>
+        <input id="cAd" maxlength="60" required>
+        <div class="ikili">
+          <div><label for="cTarih">Doğum tarihi *</label><input id="cTarih" type="date" required></div>
+          <div><label for="cSaat">Doğum saati (biliyorsan)</label><input id="cSaat" type="time"></div>
+        </div>
+        <label for="cYer">Doğum yeri (şehir) *</label>
+        <input id="cYer" maxlength="80" placeholder="ör. Adana veya Seyhan, Adana" required>
+        <label>Cinsiyet</label>
+        <div class="cins" id="cCins"><button type="button" class="on" data-g="Kız">Kız</button><button type="button" data-g="Erkek">Erkek</button></div>
+        <label class="onay"><input type="checkbox" id="cOnay"> <span>Bilgilerin yalnızca raporu hazırlamak için kullanılacağını kabul ediyorum (<a href="/gizlilik-kvkk.html" target="_blank" rel="noopener">KVKK</a>). Bu rapor 0–17 yaş arası çocuklar içindir.</span></label>
+        <button class="btn" id="odulBtn" type="submit">Ücretsiz Raporumu Oluştur</button>
+        <div class="durum" id="odulDurum"></div>
+      </form>
+      <p class="muted" style="font-size:13px;margin-top:12px">Rapor, üyelik e-posta adresine gönderilir.</p>
+    </div>
+
+    <div id="sIndirim" class="kutu gizli"></div>
+  </section>
+
+  <!-- TANITIM -->
+  <section class="card">
+    <h2>Bu hafta neden bu rapor?</h2>
+    <p>Bu hafta sizin için çok sevdiğim bir raporu seçtim.</p>
+    <p>Çocuğunu Tanı Raporu'nda bir anne ya da babanın en çok merak ettiği sorulara doğum haritası üzerinden bakıyorum: çocuğunuz nasıl öğreniyor, neye merak duyuyor, kendini nerede güvende hissediyor, sınırlar ona nasıl ulaşıyor, öğretmeniyle ve arkadaşlarıyla nasıl bağ kuruyor. Her raporu çocuğun yaşına göre ayrı ayrı ele alıyorum; 4 yaşındaki bir çocukla 14 yaşındaki bir gencin ihtiyaçları aynı değil, bu yüzden yorumlarım da aynı olmuyor. Sonunda size, ebeveyn olarak gündelik hayatta uygulayabileceğiniz somut bir rehber bırakıyorum.</p>
+    <p>Çocuğunu biraz daha iyi tanıyan her ebeveynin, ona biraz daha doğru yerden yaklaşabildiğine inanıyorum. Bu yüzden bu hafta bu raporu hediye ediyorum.</p>
+    <p class="muted" style="font-size:14px">Raporun ayrıntıları için: <a href="/cocugunu-tani-analizi.html">Çocuğunu Tanı Raporu</a></p>
+  </section>
+
+  <!-- TAKVİM -->
+  <section class="card">
+    <h2>Haftanın soru saatleri</h2>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Gün</th><th>Saat</th><th>Durum</th></tr></thead>
+        <tbody id="takvim">
+          <tr><td>16 Kasım Pazartesi</td><td>23:00</td><td>—</td></tr>
+          <tr><td>17 Kasım Salı</td><td>13:00</td><td>—</td></tr>
+          <tr><td>18 Kasım Çarşamba</td><td>21:00</td><td>—</td></tr>
+          <tr><td>19 Kasım Perşembe</td><td>18:30</td><td>—</td></tr>
+          <tr><td>20 Kasım Cuma</td><td>12:00</td><td>—</td></tr>
+          <tr><td>21 Kasım Cumartesi</td><td>15:00</td><td>—</td></tr>
+          <tr><td>22 Kasım Pazar</td><td>20:00</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:12px">Tüm saatler Türkiye saatidir.</p>
+  </section>
+
+  <!-- KOŞULLAR -->
+  <section class="card" id="kosullar">
+    <h2>Etkinlik Koşulları</h2>
+    <ol class="kural">
+      <li><strong>Etkinlik:</strong> 16–22 Kasım 2026 tarihleri arasında her gün, yukarıdaki tabloda ilan edilen saatte bir soru açılır. Her gün <strong>1 adet ücretsiz Çocuğunu Tanı Raporu</strong> verilir (haftada toplam 7 rapor).</li>
+      <li><strong>Kazanan nasıl belirlenir:</strong> Soruya <strong>ilk doğru cevabı veren</strong> katılımcı kazanır. Çekiliş ya da kura yapılmaz. Sıralama, cevabın sunucumuza ulaştığı ana göre yapılır.</li>
+      <li><strong>Cevap süresi:</strong> Cevaplar soru açıldıktan sonra 30 dakika boyunca kabul edilir. Doğru cevap, süre bitince bu sayfada açıklanır.</li>
+      <li><strong>Sorular:</strong> Her sorunun tek bir doğru cevabı vardır ve cevap sitemizdeki canlı Gökyüzü sayfasından bulunabilir. Cevap, sorunun açıldığı andaki gerçek gökyüzüne göre belirlenir. Cevap süresi içinde gezegen burç değiştirirse iki burç da doğru kabul edilir.</li>
+      <li><strong>Kimler katılabilir:</strong> E-posta adresi onaylanmış ve en az 24 saat önce açılmış bir Astro Yuvam üyeliği olan 18 yaşından büyük herkes. Katılım ücretsizdir, hiçbir satın alma şartı yoktur.</li>
+      <li><strong>Cevap hakkı:</strong> Her hesabın her soruya <strong>tek cevap hakkı</strong> vardır. Cevap bir burç adı olarak yazılmalıdır. Yazılan metin bir burç adı olarak anlaşılamazsa hak harcanmaz ve yeniden yazılması istenir.</li>
+      <li><strong>Ödülü almak:</strong> Kazanan, çocuğunun bilgilerini girip siparişini <strong>10 dakika içinde</strong> oluşturur. Rapor 0–17 yaş arası çocuklar içindir; bu yaş aralığı dışındaki bilgilerle sipariş oluşturulamaz. Rapor, üyelik e-posta adresine gönderilir.</li>
+      <li><strong>Hakkın devri:</strong> Kazanan 10 dakika içinde siparişini oluşturmazsa hak, sıradaki doğru cevaplayana geçer. Hakkın geçtiği kişiye e-posta ve sitede bildirim gider. Bu kişinin 10 dakikası, sayfayı üye girişi açıkken açtığı anda başlar. Sayfa 60 dakika içinde açılmazsa hak bir sonrakine geçer. Devir, bir sonraki günün sorusu açılana kadar sürer (son gün için 24 saat).</li>
+      <li><strong>Haftalık sınır:</strong> Bir hesap bu hafta en fazla <strong>1 ücretsiz rapor</strong> kazanabilir. Kazanan hesap sonraki günlerin sorularına katılamaz.</li>
+      <li><strong>İndirim:</strong> Ana ödülü almayan, o günün ilk 20 doğru cevabına Çocuğunu Tanı Raporu'nda %30 indirim tanımlanır (750 ₺ yerine 525 ₺). İndirim hesaba bağlıdır, devredilemez, hafta boyunca hesap başına bir kez verilir ve 7 gün geçerlidir. İndirim hakkı olan kişi ana ödülü kazanırsa indirimi iptal olur.</li>
+      <li><strong>Kazananlar:</strong> Kazananlar, adlarının yalnızca baş harfleri gösterilerek bu sayfada ilan edilir.</li>
+      <li><strong>Adil kullanım:</strong> Birden çok hesap açarak, otomatik araçlarla ya da sistemi kötüye kullanarak katılım tespit edilirse ilgili kazanım iptal edilir.</li>
+      <li><strong>Teslim:</strong> Ücretsiz rapor, ücretli siparişlerle aynı özenle hazırlanır ve yoğunluğa bağlı olarak 24 saat içinde e-postayla gönderilir.</li>
+      <li><strong>Kişisel veriler:</strong> Girilen bilgiler yalnızca raporu hazırlamak ve etkinliği yürütmek için kullanılır (<a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a>). Sorularınız için: astroyuvam@gmail.com</li>
+    </ol>
+  </section>
+</div>
+<footer>© 2026 Astro Yuvam</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>(function(){var o=false,E=["pointerdown","keydown","touchstart"];function y(){if(o)return;o=true;E.forEach(function(e){removeEventListener(e,y,true)});var m=document.createElement("script");m.src="/menu.js";document.body.appendChild(m);}E.forEach(function(e){addEventListener(e,y,{capture:true,passive:true})});try{var p=new PerformanceObserver(function(l){l.getEntries().forEach(function(x){if(x.name==="first-contentful-paint"){p.disconnect();setTimeout(y,0)}})});p.observe({type:"paint",buffered:true})}catch(e){}setTimeout(y,1500)})();</script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL = "https://htyywgmgbmzhrqtgihqd.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_S1Bm79ihKGNyjY7R7yIwfQ_U4K6JJYM";
+  var API = "https://astro-rapor.onrender.com/api/gunun-sorusu";
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var $ = function(id){ return document.getElementById(id); };
+  var token = null, D = null, fark = 0, sayacT = null, yenileT = null, gorulduGonderildi = {}, sonGorunum = "";
+  var DURUMLAR = ["sYukleniyor","sGiris","sUygunDegil","sBekle","sSoru","sSonuc","sTeklif"];
+  function goster(id){ DURUMLAR.forEach(function(x){ $(x).classList.toggle("gizli", x !== id); }); }
+  function esc(t){ return String(t == null ? "" : t).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function simdi(){ return Date.now() + fark; }
+  function sure(ms){ ms = Math.max(0, ms); var s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor(s%3600/60), sn = s%60;
+    function p(n){ return (n<10?"0":"") + n; } return (h ? p(h) + ":" : "") + p(m) + ":" + p(sn); }
+  function trZaman(iso, opt){ return new Date(iso).toLocaleString("tr-TR", Object.assign({ timeZone:"Europe/Istanbul" }, opt)); }
+  function gunAdi(iso){ return trZaman(iso, { day:"numeric", month:"long", weekday:"long" }); }
+  function saat(iso){ return trZaman(iso, { hour:"2-digit", minute:"2-digit" }); }
+
+  async function tokenAl(){
+    try{ var s = await sb.auth.getSession(); token = s && s.data && s.data.session ? s.data.session.access_token : null; }catch(e){ token = null; }
+  }
+  async function getir(){
+    var h = token ? { Authorization: "Bearer " + token } : {};
+    var r = await fetch(API + "/durum", { headers: h, cache: "no-store" });
+    if(!r.ok) throw new Error("durum");
+    D = await r.json();
+    fark = new Date(D.sunucuZamani).getTime() - Date.now();
+  }
+  function post(yol, govde){
+    return fetch(API + "/" + yol, { method:"POST", headers:{ "Content-Type":"application/json", Authorization:"Bearer " + token }, body: JSON.stringify(govde || {}) })
+      .then(function(r){ return r.json().then(function(j){ j._ok = r.ok; return j; }); });
+  }
+
+  function takvimCiz(){
+    var tb = $("takvim"); if(!D) return;
+    tb.innerHTML = D.takvim.filter(function(g){ return !g.test; }).map(function(g){
+      var d;
+      if(g.durum === "yakinda") d = "Yakında";
+      else if(g.durum === "acik") d = "<strong>Soru şu an açık</strong>";
+      else {
+        d = g.odul === "kazanildi" ? "Kazanan: " + esc(g.kazanan) : g.odul === "bekliyor" ? "Kazanan rapor hakkını kullanıyor…" : "Bu gün ödül verilemedi";
+        if(g.dogruCevap) d += "<br><span class='muted' style='font-size:12.5px'>" + esc(g.soru) + " → " + esc(g.dogruCevap) + "</span>";
+      }
+      return "<tr class='" + (g.durum === "acik" ? "bugun" : "") + "'><td>" + esc(gunAdi(g.acilis)) + "</td><td>" + esc(saat(g.acilis)) + "</td><td>" + d + "</td></tr>";
+    }).join("");
+  }
+
+  function indirimCiz(){
+    var k = $("sIndirim"), i = D && D.ben && D.ben.indirim;
+    if(!i){ k.classList.add("gizli"); return; }
+    k.classList.remove("gizli");
+    k.innerHTML = "🎁 <strong>İndirimin hesabına tanımlı:</strong> Çocuğunu Tanı Raporu <s>" + D.etkinlik.normalFiyat + " ₺</s> <strong>" + i.fiyat + " ₺</strong>. Son kullanım: " + esc(trZaman(i.sonTarih, { day:"numeric", month:"long", hour:"2-digit", minute:"2-digit" })) + "." +
+      (i.satista ? "<div style='margin-top:12px'><a class='btn' href='/order.html?type=cocuk&indirim=1'>İndirimli Sipariş Ver</a></div><div class='muted' style='font-size:12.5px;margin-top:8px'>Sipariş sayfasında indirimli fiyat görünür ve ödeme ekranında da bu tutarı ödersin.</div>"
+                 : "<div class='muted' style='font-size:13px;margin-top:8px'>İndirimli sipariş çok kısa süre içinde açılacak; hakkın saklı.</div>");
+  }
+
+  function aktifCevabim(){
+    if(!D || !D.ben) return null;
+    var aktifId = D.aktif && D.aktif.id;
+    var c = D.ben.cevaplar || [];
+    if(aktifId){ for(var i=0;i<c.length;i++) if(c[i].gun === aktifId) return c[i]; return null; }
+    // aktif soru yoksa: son 24 saat içindeki, sonucu hâlâ süren cevap
+    var son = null;
+    c.forEach(function(x){ var g = D.takvim.filter(function(t){ return t.id === x.gun; })[0];
+      if(g && simdi() - new Date(g.acilis).getTime() < 26*3600e3 && (!son || g.acilis > son._acilis)){ son = Object.assign({ _acilis: g.acilis }, x); } });
+    return son;
+  }
+
+  function ciz(){
+    if(!D){ return; }
+    takvimCiz(); indirimCiz();
+    var ben = D.ben;
+    if(ben && ben.teklif){
+      if(!ben.teklif.goruldu && !gorulduGonderildi[ben.teklif.gun]){
+        gorulduGonderildi[ben.teklif.gun] = true;
+        post("gordum").then(function(){ yenile(); });
+      }
+      goster("sTeklif"); return;
+    }
+    if(!token || !ben){ goster(D.aktif || D.sonraki ? "sGiris" : "sSonuc"); if(!D.aktif && !D.sonraki) sonucBitti(); return; }
+    if(ben.kazandi){ $("sSonuc").innerHTML = "<span class='big'>🎉 Bu haftanın kazananlarındansın!</span>Ücretsiz Çocuğunu Tanı Raporun hazırlanıyor ve üyelik e-postana gönderilecek. Diğer günlerin hakları başka ebeveynlerin 🌙"; goster("sSonuc"); return; }
+    if(!ben.uygun){
+      var m = ben.sebep === "onay" ? "Katılmak için önce e-posta adresini onaylaman gerekiyor. Onay e-postası gelen kutuna (ya da spam klasörüne) gönderildi."
+            : "Adil bir yarışma için yeni hesaplar 24 saat sonra katılabiliyor. Hesabın <strong>" + esc(trZaman(ben.acilisAt, { day:"numeric", month:"long", hour:"2-digit", minute:"2-digit" })) + "</strong> itibarıyla katılabilir.";
+      $("uygunDegilMetin").innerHTML = m; goster("sUygunDegil"); return;
+    }
+    var c = aktifCevabim();
+    if(D.aktif && !c){
+      $("soruMetni").textContent = D.aktif.soru;
+      $("soruKapanis").textContent = saat(D.aktif.kapanis) + "'e";
+      if(sonGorunum !== "soru:" + D.aktif.id){ $("cevapDurum").textContent = ""; $("cevapDurum").className = "durum"; }
+      sonGorunum = "soru:" + D.aktif.id;
+      goster("sSoru"); return;
+    }
+    if(c){ sonucCiz(c); return; }
+    if(D.sonraki){ goster("sBekle"); return; }
+    sonucBitti();
+  }
+  function sonucBitti(){ $("sSonuc").innerHTML = "<span class='big'>Etkinlik sona erdi</span>Katılan herkese teşekkür ederim 🌙 Kazananları aşağıdaki tabloda görebilirsin."; goster("sSonuc"); }
+  function sonucCiz(c){
+    var h;
+    if(!c.dogru){
+      h = "<span class='big'>Bu sefer olmadı 🌙</span>Doğru cevap, cevap süresi bitince aşağıdaki tabloda açıklanacak." + (D.sonraki ? " Bir sonraki soru " + esc(gunAdi(D.sonraki.acilis)) + " " + esc(saat(D.sonraki.acilis)) + "'de." : "");
+    } else if(c.hakGecti){
+      h = "<span class='big'>Süren doldu</span>Ödül süresi içinde oluşturulmadığı için hak sıradaki doğru cevaplayana geçti. Katıldığın için teşekkürler 🌙";
+    } else if(c.odul === "kazanildi" || c.odul === "bitti"){
+      h = "<span class='big'>✅ Doğru cevap!</span>" + c.sira + ". sıradaydın. Bugünün ödülü sahibini buldu." + (c.indirim ? " İndirimin hesabına tanımlandı." : "");
+    } else {
+      h = "<span class='big'>✅ Doğru cevap! " + c.sira + ". sıradasın.</span>" + (c.indirim ? "İndirimin hesabına tanımlandı.<br>" : "");
+      var s = c.siraDurumu;
+      if(s){
+        var sonraki = c.sira === s.adaySira + 1;
+        h += (s.adayGordu ? "Bugünün kazananının raporu oluşturmak için <strong id='siraSayac' data-son='" + esc(s.adaySonAt) + "'></strong> kaldı."
+                          : "Hak şu an " + s.adaySira + ". sıradaki kişide; sayfayı açması için <strong id='siraSayac' data-son='" + esc(s.adaySonAt) + "'></strong> var.")
+          + (sonraki ? " Süre dolarsa hak sana geçer." : " Süre dolarsa hak sırayla devredilir; sıra sana gelirse sana hemen e-posta ile haber vereceğim.");
+      } else h += "Sonuç birazdan netleşecek.";
+    }
+    $("sSonuc").innerHTML = h; goster("sSonuc");
+  }
+
+  function sayacTik(){
+    if(!D) return;
+    var n = simdi();
+    if(D.sonraki){
+      var a = new Date(D.sonraki.acilis).getTime();
+      $("bekleSayac").textContent = sure(a - n);
+      $("bekleSaat").textContent = gunAdi(D.sonraki.acilis) + ", saat " + saat(D.sonraki.acilis) + " (Türkiye saati)";
+      $("bekleEtiket").textContent = D.sonraki.test ? "Test sorusu" : "Sıradaki soru";
+      if(a - n <= 0) yenile();
+    }
+    if(D.aktif && new Date(D.aktif.kapanis).getTime() - n <= 0) yenile();
+    if(D.ben && D.ben.teklif){
+      var son = new Date(D.ben.teklif.sonAt).getTime();
+      $("teklifSayac").textContent = sure(son - n);
+      if(son - n <= 0) yenile();
+    }
+    var ss = $("siraSayac"); if(ss){ var t = new Date(ss.getAttribute("data-son")).getTime(); ss.textContent = sure(t - n); if(t - n <= -2000) yenile(); }
+  }
+
+  var yenileniyor = false;
+  async function yenile(){
+    if(yenileniyor) return; yenileniyor = true;
+    try{ await getir(); ciz(); }catch(e){} finally{ yenileniyor = false; }
+  }
+
+  $("cevapBtn").addEventListener("click", async function(){
+    var v = $("cevap").value.trim(), d = $("cevapDurum");
+    if(!v){ d.className = "durum err"; d.textContent = "Cevabını yaz."; return; }
+    this.disabled = true; d.className = "durum"; d.textContent = "Gönderiliyor…";
+    try{
+      var r = await post("cevap", { gun: D.aktif.id, cevap: v });
+      if(!r._ok){ d.className = "durum err"; d.textContent = r.hata || "Bir sorun oldu."; this.disabled = false; if(!r.hakHarcanmadi) yenile(); return; }
+      await yenile();
+    }catch(e){ d.className = "durum err"; d.textContent = "Bağlantı sorunu, lütfen tekrar dene."; }
+    this.disabled = false;
+  });
+  $("cevap").addEventListener("keydown", function(e){ if(e.key === "Enter") $("cevapBtn").click(); });
+
+  var cins = "Kız";
+  $("cCins").addEventListener("click", function(e){ var b = e.target.closest("button"); if(!b) return;
+    [].forEach.call(this.querySelectorAll("button"), function(x){ x.classList.toggle("on", x === b); }); cins = b.getAttribute("data-g"); });
+  $("odulForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var d = $("odulDurum"), btn = $("odulBtn");
+    if(!$("cOnay").checked){ d.className = "durum err"; d.textContent = "Devam etmek için onay kutusunu işaretle."; return; }
+    var tarih = $("cTarih").value;
+    if(tarih){ var y = new Date(), t = new Date(tarih + "T12:00:00");
+      var yas = y.getFullYear() - t.getFullYear() - ((y.getMonth() < t.getMonth() || (y.getMonth() === t.getMonth() && y.getDate() < t.getDate())) ? 1 : 0);
+      if(yas > D.etkinlik.yasMax){ d.className = "durum err"; d.textContent = "Bu rapor 0–" + D.etkinlik.yasMax + " yaş arası çocuklar içindir. Lütfen çocuğunun bilgilerini gir."; return; } }
+    btn.disabled = true; d.className = "durum"; d.textContent = "Siparişin oluşturuluyor…";
+    try{
+      var r = await post("odul-al", { name: $("cAd").value.trim(), birthDate: tarih, birthTime: $("cSaat").value, birthPlace: $("cYer").value.trim(), gender: cins });
+      if(!r._ok){ d.className = "durum err"; d.textContent = r.hata || "Bir sorun oldu."; btn.disabled = false; yenile(); return; }
+      $("sSonuc").innerHTML = "<span class='big'>🎉 Tebrikler!</span>Ücretsiz Çocuğunu Tanı Raporun hazırlanmaya başladı. Hazır olduğunda <strong>" + esc(r.email) + "</strong> adresine PDF olarak gönderilecek (yoğunluğa bağlı olarak 24 saat içinde). Gelen kutunda göremezsen spam klasörüne de bak.";
+      goster("sSonuc"); D.ben.teklif = null;
+      setTimeout(yenile, 4000);
+    }catch(err){ d.className = "durum err"; d.textContent = "Bağlantı sorunu, lütfen hemen tekrar dene."; btn.disabled = false; }
+  });
+
+  (async function basla(){
+    await tokenAl();
+    try{ await getir(); ciz(); }
+    catch(e){ $("sYukleniyor").textContent = "Şu an bağlanılamadı. Birkaç saniye sonra sayfayı yenile."; setTimeout(function(){ yenile(); }, 8000); }
+    sayacT = setInterval(sayacTik, 500);
+    yenileT = setInterval(function(){ if(!document.hidden) yenile(); }, 15000);
+    document.addEventListener("visibilitychange", function(){ if(!document.hidden) yenile(); });
+    sb.auth.onAuthStateChange(function(_e, s){ var t = s ? s.access_token : null; if(t !== token){ token = t; yenile(); } });
+  })();
+})();
+</script>
+</body>
+</html>
