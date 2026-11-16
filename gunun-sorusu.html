@@ -122,14 +122,14 @@
       <div class="sayac" id="teklifSayac">10:00</div>
       <p class="muted" style="font-size:13.5px;margin-top:0">Bu süre içinde siparişini oluşturmazsan hak sıradaki doğru cevaplayana geçer.</p>
       <form id="odulForm" autocomplete="off" style="margin-top:8px">
-        <label for="cAd">Çocuğunun adı *</label>
-        <input id="cAd" maxlength="60" required>
+        <label for="cAd">Çocuğunun adı soyadı *</label>
+        <input id="cAd" maxlength="60" placeholder="ör. Elif Yılmaz" required>
         <div class="ikili">
-          <div><label for="cTarih">Doğum tarihi *</label><input id="cTarih" type="date" required></div>
-          <div><label for="cSaat">Doğum saati (biliyorsan)</label><input id="cSaat" type="time"></div>
+          <div><label for="cTarih">Doğum tarihi *</label><input id="cTarih" type="date" data-dg required></div>
+          <div><label for="cSaat">Doğum saati (biliyorsan)</label><input id="cSaat" type="time" data-dg></div>
         </div>
         <label for="cYer">Doğum yeri (şehir) *</label>
-        <input id="cYer" maxlength="80" placeholder="ör. Adana veya Seyhan, Adana" required>
+        <input id="cYer" data-yer maxlength="80" placeholder="Şehir yazmaya başla, listeden seç" required>
         <label>Cinsiyet</label>
         <div class="cins" id="cCins"><button type="button" class="on" data-g="Kız">Kız</button><button type="button" data-g="Erkek">Erkek</button></div>
         <label class="onay"><input type="checkbox" id="cOnay"> <span>Bilgilerin yalnızca raporu hazırlamak için kullanılacağını kabul ediyorum (<a href="/gizlilik-kvkk.html" target="_blank" rel="noopener">KVKK</a>). Bu rapor 0–17 yaş arası çocuklar içindir.</span></label>
@@ -194,6 +194,7 @@
 </div>
 <footer>© 2026 Astro Yuvam</footer>
 
+<script src="/dogum-giris.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>(function(){var o=false,E=["pointerdown","keydown","touchstart"];function y(){if(o)return;o=true;E.forEach(function(e){removeEventListener(e,y,true)});var m=document.createElement("script");m.src="/menu.js";document.body.appendChild(m);}E.forEach(function(e){addEventListener(e,y,{capture:true,passive:true})});try{var p=new PerformanceObserver(function(l){l.getEntries().forEach(function(x){if(x.name==="first-contentful-paint"){p.disconnect();setTimeout(y,0)}})});p.observe({type:"paint",buffered:true})}catch(e){}setTimeout(y,1500)})();</script>
 <script>

@@ -433,6 +433,9 @@ const REL_CIFT  = ["Yeni tanışıyoruz","Flört/İlişki","Nişanlı","Evli"];
 let relationship = "";
 const relBox = document.getElementById("relBox");
 if (isChild) {
+  // Çocuk raporu: ad alanı çocuğun adı soyadını ister
+  document.getElementById("name").previousElementSibling.textContent = "Çocuğun Adı Soyadı *";
+  document.getElementById("name").placeholder = "Raporu hazırlanacak çocuğun adı soyadı";
   // İlişki durumu alanını tamamen gizle
   document.getElementById("relLabel").style.display = "none";
   relBox.style.display = "none";
