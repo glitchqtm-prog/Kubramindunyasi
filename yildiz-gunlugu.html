@@ -46,6 +46,16 @@
   .post h2{color:var(--cream);font-size:20px;margin:0 0 6px}
   .post:hover h2{color:var(--gold-soft)}
   .post p{font-family:'Segoe UI',system-ui,sans-serif;font-size:14.5px;color:var(--muted);margin:0;line-height:1.6}
+  .kat-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 6px}
+  .kat-nav a{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:var(--cream);transition:background .15s,border-color .15s}
+  .kat-nav a:hover{background:rgba(217,185,106,.10);border-color:var(--gold)}
+  .kat-nav a span{color:var(--gold);font-size:12px;margin-left:4px}
+  .kat{scroll-margin-top:16px;margin-top:34px}
+  .kat-baslik{text-align:center;margin:0 0 4px}
+  .kat-acik{text-align:center;font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;color:var(--muted);margin:0 auto;max-width:520px;line-height:1.6}
+  .kat .liste{margin-top:16px}
+  .post h3{color:var(--cream);font-size:20px;margin:0 0 6px;font-weight:600;line-height:1.4}
+  .post:hover h3{color:var(--gold-soft)}
 </style>
 <style id="am-kritik">.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}.am-links{display:flex;gap:18px;font-size:14px;align-items:center;white-space:nowrap}.am-links>a{color:#f0e6d2;opacity:.82;text-decoration:none;transition:color .2s,opacity .2s}.am-links>a:hover{opacity:1;color:#e7cf95}.am-dropdown{position:relative;display:inline-block}.am-drop-btn{background:none;border:none;color:#f0e6d2;opacity:.82;font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .2s,opacity .2s}.am-drop-btn:hover,.am-drop-btn[aria-expanded="true"]{opacity:1;color:#e7cf95}.am-caret{font-size:11px;transition:transform .2s}.am-drop-btn[aria-expanded="true"] .am-caret{transform:rotate(180deg)}.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:262px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible;transform:translateY(0)}.am-cat + .am-cat{border-top:1px solid #2c2545;margin-top:2px}.am-cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;font:inherit;color:#d9b96a;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;opacity:.9;padding:12px 12px;text-align:left;border-radius:8px;transition:background .15s,color .15s,opacity .15s}.am-cat-btn:hover{opacity:1;color:#e7cf95;background:rgba(217,185,106,.06)}.am-cat-caret{font-size:10px;opacity:.75;transition:transform .22s}.am-cat.open>.am-cat-btn{color:#e7cf95;opacity:1}.am-cat.open>.am-cat-btn .am-cat-caret{transform:rotate(180deg)}.am-cat-items{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}.am-cat.open>.am-cat-items{grid-template-rows:1fr}.am-cat-inner{overflow:hidden;min-height:0}.am-drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:#f0e6d2;font-size:14.5px;text-decoration:none;transition:background .15s}.am-drop-menu a:hover{background:rgba(217,185,106,.10);color:#e7cf95}.am-drop-menu a[aria-current="page"]{color:#e7cf95;background:rgba(217,185,106,.08)}.am-sub{display:block;font-size:12px;color:#9a8fb8;margin-top:2px}.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}.am-dropdown{position:static}.am-drop-menu{left:50%;right:auto;transform:translate(-50%,-6px);width:min(88vw,320px);min-width:0}.am-dropdown.open .am-drop-menu{transform:translate(-50%,0)}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}</style>
 <style id="ay-cerez-kritik">#ay-cerez{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1b1530;border-top:1px solid #332a4d;box-shadow:0 -12px 34px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .32s ease;font-family:"Segoe UI",system-ui,sans-serif}#ay-cerez.ac-in{transform:translateY(0)}.ay-cerez-in{max-width:980px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.ay-cerez-tx{margin:0;color:#f0e6d2;opacity:.9;font-size:13.5px;line-height:1.55;flex:1;min-width:230px}.ay-cerez-tx a{color:#e7cf95;text-decoration:underline}.ay-cerez-bt{display:flex;gap:10px;flex-shrink:0}.ay-cerez-kabul{background:linear-gradient(180deg,#e7cf95,#d9b96a);border:none;color:#1a1428;font:inherit;font-weight:bold;font-size:13.5px;padding:9px 26px;border-radius:20px;cursor:pointer;transition:filter .2s}.ay-cerez-kabul:hover{filter:brightness(1.06)}@media (max-width:600px){.ay-cerez-in{padding:12px 16px}.ay-cerez-bt{width:100%}.ay-cerez-kabul{flex:1}}@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}#ay-cerez.ac-in{animation:ayCerezGir .32s ease}@keyframes ayCerezGir{from{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){#ay-cerez.ac-in{animation:none}}</style>
@@ -57,6 +67,7 @@
 <meta property="og:locale" content="tr_TR">
 <meta property="og:description" content="Yıldız Günlüğü: astroloji, numeroloji ve gökyüzü üzerine dürüst, öğretici ve öz-farkındalık odaklı yazılar. Merkür retrosu, ay döngüsü, yükselen burç ve daha fazlası.">
 <meta property="og:image" content="https://astroyuvam.com/logo-512.png">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Yıldız Günlüğü", "url": "https://astroyuvam.com/yildiz-gunlugu.html", "inLanguage": "tr", "publisher": {"@type": "Organization", "name": "Astro Yuvam", "url": "https://astroyuvam.com/"}, "mainEntity": {"@type": "ItemList", "numberOfItems": 46, "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://astroyuvam.com/ruzname-nedir.html", "name": "Rûznâme Nedir? Osmanlı'da Uğurlu ve Uğursuz Günler, Eşref Saat ve Ay'ın 28 Konağı"}, {"@type": "ListItem", "position": 2, "url": "https://astroyuvam.com/2027-burc-yorumlari.html", "name": "2027 Burç Yorumları: 12 Burç İçin Yıllık Rehber"}, {"@type": "ListItem", "position": 3, "url": "https://astroyuvam.com/2027-sansli-burclar.html", "name": "2027 Şanslı Burçlar: Yılın En Şanslı Burçları ve Şans Takvimi"}, {"@type": "ListItem", "position": 4, "url": "https://astroyuvam.com/astroloji-nedir.html", "name": "Astroloji Nedir? Baştan Sona Kapsamlı Rehber"}, {"@type": "ListItem", "position": 5, "url": "https://astroyuvam.com/dogum-haritasi-nedir.html", "name": "Doğum Haritası Nedir ve Nasıl Okunur?"}, {"@type": "ListItem", "position": 6, "url": "https://astroyuvam.com/yukselen-burc-nedir.html", "name": "Yükselen Burç Nedir ve Nasıl Hesaplanır?"}, {"@type": "ListItem", "position": 7, "url": "https://astroyuvam.com/acilar-aspektler.html", "name": "Açılar (Aspektler) Nedir?"}, {"@type": "ListItem", "position": 8, "url": "https://astroyuvam.com/astrolojide-evler.html", "name": "Astrolojide Evler Nedir? 12 Evin Anlamı"}, {"@type": "ListItem", "position": 9, "url": "https://astroyuvam.com/dogum-haritasi-carki.html", "name": "Doğum Haritası Çarkı Nasıl Okunur?"}, {"@type": "ListItem", "position": 10, "url": "https://astroyuvam.com/ay-burcu-nedir.html", "name": "Ay Burcu Nedir? Duygusal İç Dünyanın Haritası"}, {"@type": "ListItem", "position": 11, "url": "https://astroyuvam.com/osmanli-astrolojisi-nedir.html", "name": "Osmanlı Astrolojisi (İlm-i Nücûm) Nedir? Osmanlıca Gezegen İsimleri"}, {"@type": "ListItem", "position": 12, "url": "https://astroyuvam.com/dogum-haritasinda-kardesler.html", "name": "Doğum Haritasında Kardeşler: 3. Ev Ne Anlatır?"}, {"@type": "ListItem", "position": 13, "url": "https://astroyuvam.com/gunes-ay-yukselen.html", "name": "Güneş, Ay ve Yükselen Burç: Üçlü Kimliğin Ne Anlatır?"}, {"@type": "ListItem", "position": 14, "url": "https://astroyuvam.com/astroloji-bilimsel-mi.html", "name": "Astroloji Bilimsel mi? Astronomiyle Ortak Kökler ve Tarihi"}, {"@type": "ListItem", "position": 15, "url": "https://astroyuvam.com/bugun-gokyuzu.html", "name": "Bugün Gökyüzü: Gezegenler Hangi Burçta?"}, {"@type": "ListItem", "position": 16, "url": "https://astroyuvam.com/retrograd-nedir.html", "name": "Retrograd Nedir? Gezegenler Neden Geri Gidiyormuş Gibi Görünür?"}, {"@type": "ListItem", "position": 17, "url": "https://astroyuvam.com/saturn-astrolojide.html", "name": "Satürn Astrolojide Ne Anlama Gelir? Disiplin ve Olgunluk"}, {"@type": "ListItem", "position": 18, "url": "https://astroyuvam.com/jupiter-astrolojide.html", "name": "Jüpiter Astrolojide Ne Anlama Gelir? Şans ve Büyüme"}, {"@type": "ListItem", "position": 19, "url": "https://astroyuvam.com/astrokartografi-nedir.html", "name": "Astrokartografi Nedir? Gezegenlerin Dünya Haritası"}, {"@type": "ListItem", "position": 20, "url": "https://astroyuvam.com/pluton-astrolojide.html", "name": "Plüton Astrolojide Ne Anlama Gelir? Dönüşüm ve Güç"}, {"@type": "ListItem", "position": 21, "url": "https://astroyuvam.com/merkur-retrosu-nedir.html", "name": "Merkür Retrosu Nedir ve Gerçekten Ne Anlama Gelir?"}, {"@type": "ListItem", "position": 22, "url": "https://astroyuvam.com/dolunay-yeni-ay-ay-dongusu.html", "name": "Dolunay ve Yeni Ay Ne Anlama Gelir? Ay Döngüsü Rehberi"}, {"@type": "ListItem", "position": 23, "url": "https://astroyuvam.com/dolunay-rituelleri.html", "name": "Dolunay Ritüelleri: Niyet, Şükran ve Bırakma"}, {"@type": "ListItem", "position": 24, "url": "https://astroyuvam.com/arkanalar.html", "name": "22 Arkana ve Anlamları: Doğum Tarihinle Kendi Arkanalarını Hesapla"}, {"@type": "ListItem", "position": 25, "url": "https://astroyuvam.com/bebek-ismi-numeroloji.html", "name": "Bebeğime Hangi İsmi Koymalıyım? Numerolojiye Göre İsim Seçimi"}, {"@type": "ListItem", "position": 26, "url": "https://astroyuvam.com/numeroloji-nedir.html", "name": "Numeroloji Nedir ve Nasıl Hesaplanır?"}, {"@type": "ListItem", "position": 27, "url": "https://astroyuvam.com/numerolojide-sayilarin-anlami.html", "name": "Numerolojide Sayıların Anlamı: 1-9 ve Usta Sayılar"}, {"@type": "ListItem", "position": 28, "url": "https://astroyuvam.com/major-minor-arkana-nedir.html", "name": "Majör ve Minör Arkana Nedir? Tarot ile Astrolojinin Ortak Dili"}, {"@type": "ListItem", "position": 29, "url": "https://astroyuvam.com/isim-numerolojisi.html", "name": "İsim Numerolojisi: İsminin Sayısal Anlamı Nedir?"}, {"@type": "ListItem", "position": 30, "url": "https://astroyuvam.com/kader-matrisi-nedir.html", "name": "Kader Matrisi Nedir? Doğum Tarihinden Kişilik ve Kader Haritası"}, {"@type": "ListItem", "position": 31, "url": "https://astroyuvam.com/yasam-yolu-sayisi-nedir.html", "name": "Yaşam Yolu Sayısı Nedir ve Nasıl Hesaplanır?"}, {"@type": "ListItem", "position": 32, "url": "https://astroyuvam.com/neden-hep-ayni-tip-insana-asik-oluyorum.html", "name": "Neden Hep Aynı Tip İnsana Âşık Oluyorum?"}, {"@type": "ListItem", "position": 33, "url": "https://astroyuvam.com/nikah-tarihi-nasil-secilir.html", "name": "Nikâh İçin En Uygun Tarih Nasıl Seçilir? 2026–2028 Retro ve Tutulma Takvimi"}, {"@type": "ListItem", "position": 34, "url": "https://astroyuvam.com/haritada-evlilik-gostergeleri.html", "name": "Haritada Evlilik Göstergeleri: 7. Ev, Juno ve Vertex Hesaplama"}, {"@type": "ListItem", "position": 35, "url": "https://astroyuvam.com/2027-evlenecek-burclar.html", "name": "2027'de Evlenecek Burçlar ve Astrolojiye Göre Düğün Tarihleri"}, {"@type": "ListItem", "position": 36, "url": "https://astroyuvam.com/venus-mars-burcu.html", "name": "Venüs ve Mars Burcu: Aşk ve Tutkunun Haritası"}, {"@type": "ListItem", "position": 37, "url": "https://astroyuvam.com/juno-nedir.html", "name": "Juno Nedir? Astrolojide Evlilik ve Bağlılık"}, {"@type": "ListItem", "position": 38, "url": "https://astroyuvam.com/sinastri-nedir.html", "name": "Sinastri Nedir? İki Kişinin Astrolojik Uyumu Nasıl Bakılır?"}, {"@type": "ListItem", "position": 39, "url": "https://astroyuvam.com/hicri-dogum-gunu-hesaplama.html", "name": "Doğduğun Gün Ay Takviminde Kaçıncı Gündü? Hicri Doğum Günü Hesaplama"}, {"@type": "ListItem", "position": 40, "url": "https://astroyuvam.com/yaz-saati-dogum-saati.html", "name": "Doğduğum Gün Yaz Saati Var mıydı? Türkiye Yaz Saati Tarihleri"}, {"@type": "ListItem", "position": 41, "url": "https://astroyuvam.com/dogum-saati-nasil-ogrenilir.html", "name": "Doğum Saatimi Nasıl Öğrenirim? e-Devlet, CİMER ve Hastane Yolları"}, {"@type": "ListItem", "position": 42, "url": "https://astroyuvam.com/cocugum-nasil-ogrenir.html", "name": "Çocuğum Nasıl Öğrenir? Doğum Haritasına Göre Öğrenme Stili"}, {"@type": "ListItem", "position": 43, "url": "https://astroyuvam.com/is-teklifini-kabul-etmeli-miyim.html", "name": "Bu İş Teklifini Kabul Etmeli miyim? Soru Astrolojisi ile Net Cevap"}, {"@type": "ListItem", "position": 44, "url": "https://astroyuvam.com/hangi-meslegi-secmeliyim.html", "name": "Hangi Mesleği Seçmeliyim? Doğum Haritasına Göre Meslek"}, {"@type": "ListItem", "position": 45, "url": "https://astroyuvam.com/hangi-sehre-tasinmaliyim.html", "name": "Hangi Şehre Taşınmalıyım? Astrokartografi ile Sana En İyi Gelen Yerler"}, {"@type": "ListItem", "position": 46, "url": "https://astroyuvam.com/lilith-burcu-hesaplama.html", "name": "Lilith Burcu Hesaplama: Kara Ay Lilith Hangi Burçta, Hangi Evde?"}]}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Astro Yuvam", "item": "https://astroyuvam.com/"}, {"@type": "ListItem", "position": 2, "name": "Yıldız Günlüğü", "item": "https://astroyuvam.com/yildiz-gunlugu.html"}]}]</script>
 </head>
 <body>
 <div id="astro-menu"><nav class="am-nav"><a class="am-brand" href="/">✦ ASTRO YUVAM</a><div class="am-links"><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Burç Yorumları <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><a href="/yildiz-gunlugu.html">Yıldız Günlüğü</a><a href="/giris.html">Giriş</a><a href="/#cards" class="am-cta">Raporlar</a></div></nav></div>
@@ -68,238 +79,273 @@
     <h1>Yıldız Günlüğü</h1>
     <p class="sub">Astroloji, numeroloji ve gökyüzü üzerine dürüst, öğretici ve öz-farkındalık odaklı yazılar.</p>
   </header>
-  <div class="liste">
-    <a class="post" href="/arkanalar.html">
-      <div class="pm">12 Kasım 2026 · 18 dk okuma · Kader Matrisi, Arkana</div>
-      <h2>22 Arkana ve Anlamları: Doğum Tarihinle Kendi Arkanalarını Hesapla</h2>
-      <p>22 arkananın her birinin anlamı, ışık ve gölge yanı, aşkta ve işte nasıl çalıştığı. Hesaplayıcıya doğum tarihini gir, beş ana arkananı gör.</p>
-    </a>
-    <a class="post" href="/hicri-dogum-gunu-hesaplama.html">
-      <div class="pm">30 Ekim 2026 · 35 dk okuma · Araç, Hicri Takvim, Rûznâme</div>
-      <h2>Doğduğun Gün Ay Takviminde Kaçıncı Gündü? Hicri Doğum Günü Hesaplama</h2>
-      <p>Hicri doğum tarihin, gün batımı kuralı, o geceki Ay evresi ve Ay'ın konağı; eski bir rûznâmede doğduğun gün için yazılan söz ve Türkçesi.</p>
-    </a>
+  <nav class="kat-nav" aria-label="Kategoriler">
+    <a href="#burclar">Burçlar & Doğum Haritası <span>14</span></a>
+    <a href="#gezegenler">Gezegenler & Ay <span>9</span></a>
+    <a href="#numeroloji">Numeroloji & Arkana <span>8</span></a>
+    <a href="#ask-iliski">Aşk & İlişki <span>7</span></a>
+    <a href="#hesaplamalar">Hesaplamalar <span>8</span></a>
+  </nav>
+  <section class="kat" id="burclar">
+    <h2 class="kat-baslik">Burçlar & Doğum Haritası</h2>
+    <p class="kat-acik">Burç, yükselen, Ay burcu, evler, açılar ve doğum haritasını okumanın temelleri.</p>
+    <div class="liste">
     <a class="post" href="/ruzname-nedir.html">
       <div class="pm">30 Ekim 2026 · 26 dk okuma · Rûznâme, Osmanlı, Eşref Saat</div>
-      <h2>Rûznâme Nedir? Osmanlı'da Uğurlu ve Uğursuz Günler, Eşref Saat ve Ay'ın 28 Konağı</h2>
+      <h3>Rûznâme Nedir? Osmanlı'da Uğurlu ve Uğursuz Günler, Eşref Saat ve Ay'ın 28 Konağı</h3>
       <p>Sa'd ve nahs günler, gezegen saatleri, ezânî saat, müneccimbaşı; bu ayın rûznâme takvimi ve Ay'ın şu an hangi konakta olduğu.</p>
-    </a>
-    <a class="post" href="/yaz-saati-dogum-saati.html">
-      <div class="pm">29 Eylül 2026 · Araç, Doğum Saati, Yaz Saati</div>
-      <h2>Doğduğum Gün Yaz Saati Var mıydı? Türkiye Yaz Saati Tarihleri</h2>
-      <p>Doğum saatinin o günkü saat dilimini ve evrensel saat karşılığını anında gör; 1940–2016 Türkiye yaz saati tablosu.</p>
-    </a>
-    <a class="post" href="/dogum-saati-nasil-ogrenilir.html">
-      <div class="pm">29 Eylül 2026 · Doğum Saati, e-Devlet, CİMER</div>
-      <h2>Doğum Saatimi Nasıl Öğrenirim? e-Devlet, CİMER ve Hastane Yolları</h2>
-      <p>Doğum saatini bulmanın beş yolu, CİMER başvurusu adım adım ve saat bulunamazsa haritanın nasıl okunacağı.</p>
-    </a>
-    <a class="post" href="/bugun-gokyuzu.html">
-      <div class="pm">29 Eylül 2026 · Günlük Gökyüzü, Retro, Dolunay</div>
-      <h2>Bugün Gökyüzü: Gezegenler Hangi Burçta?</h2>
-      <p>Her gün güncellenen gezegen dereceleri, retro takvimi, Yeni Ay–Dolunay tarihleri ve tutulmalar.</p>
-    </a>
-    <a class="post" href="/cocugum-nasil-ogrenir.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Çocuk, Merkür</div>
-      <h2>Çocuğum Nasıl Öğrenir? Doğum Haritasına Göre Öğrenme Stili</h2>
-      <p>Merkür, Ay ve 3. ev çocuğunun öğrenme biçimini nasıl anlatır; dört element için ebeveyne pratik öneriler.</p>
-    </a>
-    <a class="post" href="/is-teklifini-kabul-etmeli-miyim.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Horary, Kariyer</div>
-      <h2>Bu İş Teklifini Kabul Etmeli miyim? Soru Astrolojisi ile Net Cevap</h2>
-      <p>Horary'nin karar sorularına nasıl baktığı, iyi soru nasıl sorulur ve iş teklifi için örnek sorular.</p>
-    </a>
-    <a class="post" href="/bebek-ismi-numeroloji.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Numeroloji, İsim</div>
-      <h2>Bebeğime Hangi İsmi Koymalıyım? Numerolojiye Göre İsim Seçimi</h2>
-      <p>Aday isimleri yan yana karşılaştıran hesaplayıcı: İfade, Ruh Güdüsü ve Kişilik sayıları.</p>
-    </a>
-    <a class="post" href="/neden-hep-ayni-tip-insana-asik-oluyorum.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Aşk, Venüs</div>
-      <h2>Neden Hep Aynı Tip İnsana Âşık Oluyorum?</h2>
-      <p>Venüs, Mars, Ay ve 7. ev aşk döngünü nasıl anlatır; 12 Venüs burcu için çekildiğin tip ve döngüyü kırmanın yolu.</p>
-    </a>
-    <a class="post" href="/hangi-meslegi-secmeliyim.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Kariyer, MC</div>
-      <h2>Hangi Mesleği Seçmeliyim? Doğum Haritasına Göre Meslek</h2>
-      <p>MC, 10. ev, 6. ev ve 2. evle meslek eğilimlerin; 12 MC burcu için etkileşimli rehber.</p>
-    </a>
-    <a class="post" href="/nikah-tarihi-nasil-secilir.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Nikâh, Seçim Astrolojisi</div>
-      <h2>Nikâh İçin En Uygun Tarih Nasıl Seçilir? 2026–2028 Retro ve Tutulma Takvimi</h2>
-      <p>Seçim astrolojisinin adımları, kaçınılacak tarihler tablosu ve aklındaki tarihi anında kontrol eden araç.</p>
-    </a>
-    <a class="post" href="/hangi-sehre-tasinmaliyim.html">
-      <div class="pm">29 Eylül 2026 · Hayat Soruları, Astrokartografi, Taşınma</div>
-      <h2>Hangi Şehre Taşınmalıyım? Astrokartografi ile Sana En İyi Gelen Yerler</h2>
-      <p>Aşk, kariyer, para ve huzur için hangi gezegen hatları destekler, hangileri dikkat ister; etkileşimli rehber.</p>
-    </a>
-    <a class="post" href="/lilith-burcu-hesaplama.html">
-      <div class="pm">27 Eylül 2026 · 26 dk okuma · Lilith, Kara Ay, Hesaplama</div>
-      <h2>Lilith Burcu Hesaplama: Kara Ay Lilith Hangi Burçta, Hangi Evde?</h2>
-      <p>Ortalama ve gerçek Lilith'in burcu, derecesi ve evi; 12 burçta ve 12 evde Lilith, doğum yılına göre Lilith tablosu ve kişisel Lilith dönüşlerin.</p>
-    </a>
-    <a class="post" href="/haritada-evlilik-gostergeleri.html">
-      <div class="pm">27 Eylül 2026 · 24 dk okuma · Aşk, Evlilik, Hesaplama</div>
-      <h2>Haritada Evlilik Göstergeleri: 7. Ev, Juno ve Vertex Hesaplama</h2>
-      <p>Evlilik evin, 7. ev yöneticin, Venüs, Juno ve Vertex'in tek seferde hesaplanır; önümüzdeki altı yılın ilişki pencereleri listelenir.</p>
     </a>
     <a class="post" href="/2027-burc-yorumlari.html">
       <div class="pm">27 Eylül 2026 · 38 dk okuma · 2027, Yıllık Burç Yorumları, Tutulmalar</div>
-      <h2>2027 Burç Yorumları: 12 Burç İçin Yıllık Rehber</h2>
+      <h3>2027 Burç Yorumları: 12 Burç İçin Yıllık Rehber</h3>
       <p>12 burç için aşk, kariyer, para ve sağlık. Canlı gezegen çarkı, 2027 tutulmaları ve retro tarihleri, şehrine göre 2 Ağustos tutulması saatleri.</p>
     </a>
     <a class="post" href="/2027-sansli-burclar.html">
       <div class="pm">27 Eylül 2026 · 17 dk okuma · 2027, Jüpiter, Şans</div>
-      <h2>2027 Şanslı Burçlar: Yılın En Şanslı Burçları ve Şans Takvimi</h2>
+      <h3>2027 Şanslı Burçlar: Yılın En Şanslı Burçları ve Şans Takvimi</h3>
       <p>1'den 12'ye sıralama, aşkta ve parada şanslı burçlar ve burcuna özel aylık şans grafiği.</p>
-    </a>
-    <a class="post" href="/2027-evlenecek-burclar.html">
-      <div class="pm">27 Eylül 2026 · 19 dk okuma · 2027, Aşk, Evlilik, Düğün Tarihleri</div>
-      <h2>2027'de Evlenecek Burçlar ve Astrolojiye Göre Düğün Tarihleri</h2>
-      <p>12 burç için evlilik göstergeleri, renkli 2027 düğün takvimi ve seçtiğin tarihi kontrol eden araç.</p>
     </a>
     <a class="post" href="/astroloji-nedir.html">
       <div class="pm">23 Eylül 2026 · 14 dk okuma · Temeller, Astroloji 101, Kapsamlı Rehber</div>
-      <h2>Astroloji Nedir? Baştan Sona Kapsamlı Rehber</h2>
+      <h3>Astroloji Nedir? Baştan Sona Kapsamlı Rehber</h3>
       <p>Astroloji nasıl çalışır, neyi anlatır? Burçlar, gezegenler, evler, açılar ve doğum haritası — animasyonlu zodyak çarkı, diyagramlar ve örneklerle sıfırdan anlatan kapsamlı bir başlangıç rehberi.</p>
     </a>
     <a class="post" href="/dogum-haritasi-nedir.html">
       <div class="pm">24 Eylül 2026 · 11 dk okuma · Temeller, Doğum Haritası, Etkileşimli</div>
-      <h2>Doğum Haritası Nedir ve Nasıl Okunur?</h2>
+      <h3>Doğum Haritası Nedir ve Nasıl Okunur?</h3>
       <p>Haritanın dört katmanını (burçlar/evler/gezegenler/açılar) tek tek açıp kapatabileceğin etkileşimli bir çark, hangi bilgilerin gerektiği ve okuma sırasıyla yenilenmiş kapsamlı rehber.</p>
-    </a>
-    <a class="post" href="/retrograd-nedir.html">
-      <div class="pm">24 Eylül 2026 · 9 dk okuma · Temeller, Gökyüzü, Etkileşimli</div>
-      <h2>Retrograd Nedir? Gezegenler Neden Geri Gidiyormuş Gibi Görünür?</h2>
-      <p>Dünya ve Mars'ın yörüngesiyle retrograd ilmeğini canlandıran etkileşimli bir animasyon, "yanılsama" açıklaması, Merkür retrosu ve retrograd dönemde ne yapmalı.</p>
     </a>
     <a class="post" href="/yukselen-burc-nedir.html">
       <div class="pm">24 Eylül 2026 · 9 dk okuma · Temeller, Yükselen, Etkileşimli</div>
-      <h2>Yükselen Burç Nedir ve Nasıl Hesaplanır?</h2>
+      <h3>Yükselen Burç Nedir ve Nasıl Hesaplanır?</h3>
       <p>Doğum saati kaydırıcısıyla yükselenin neden ~2 saatte bir değiştiğini gösteren etkileşimli çark, Güneş-Ay-yükselen farkı ve 12 yükselenin kısa karakteriyle yenilenmiş rehber.</p>
     </a>
     <a class="post" href="/acilar-aspektler.html">
       <div class="pm">24 Eylül 2026 · 9 dk okuma · Temeller, Açılar, Etkileşimli</div>
-      <h2>Açılar (Aspektler) Nedir?</h2>
+      <h3>Açılar (Aspektler) Nedir?</h3>
       <p>Kavuşum, altmışlık, kare, üçgen ve karşıt açıları çember üzerinde canlı gösteren etkileşimli bir açı gezgini, yumuşak-sert açılar ve orb kavramıyla yenilenmiş rehber.</p>
     </a>
     <a class="post" href="/astrolojide-evler.html">
       <div class="pm">24 Eylül 2026 · 12 dk okuma · Temeller, Evler, Etkileşimli</div>
-      <h2>Astrolojide Evler Nedir? 12 Evin Anlamı</h2>
+      <h3>Astrolojide Evler Nedir? 12 Evin Anlamı</h3>
       <p>12 evi tıklayarak keşfedebileceğin etkileşimli bir çark, her evin (8. ev, 10. ev…) detaylı anlamı, köşe-ardıl-gerileyen ev sınıfları ve ev sistemleriyle yenilenmiş kapsamlı rehber.</p>
     </a>
     <a class="post" href="/dogum-haritasi-carki.html">
       <div class="pm">23 Eylül 2026 · 10 dk okuma · Temeller, Doğum Haritası, Etkileşimli</div>
-      <h2>Doğum Haritası Çarkı Nasıl Okunur?</h2>
+      <h3>Doğum Haritası Çarkı Nasıl Okunur?</h3>
       <p>Doğum haritası çarkı nedir, katmanları neler ve nasıl okunur? 12 evi tıklayarak keşfedebileceğin etkileşimli bir çark, örnek gezegenler, açılar ve okuma sırasıyla adım adım.</p>
-    </a>
-    <a class="post" href="/numeroloji-nedir.html">
-      <div class="pm">23 Eylül 2026 · 11 dk okuma · Numeroloji, Temeller, Kapsamlı Rehber</div>
-      <h2>Numeroloji Nedir ve Nasıl Hesaplanır?</h2>
-      <p>Numeroloji nasıl çalışır, sayılar neyi anlatır? Yaşam yolu, isim ve kişilik sayıları, Pisagor ile Kildani sistemleri ve hesaplama — profil haritası ve örneklerle başlangıç rehberi.</p>
-    </a>
-    <a class="post" href="/numerolojide-sayilarin-anlami.html">
-      <div class="pm">23 Eylül 2026 · 12 dk okuma · Numeroloji, Sayılar, Kapsamlı Rehber</div>
-      <h2>Numerolojide Sayıların Anlamı: 1-9 ve Usta Sayılar</h2>
-      <p>1'den 9'a her sayının ışığı ve gölgesi, 11-22-33 usta sayıları ve yaşam yolu sayını hesaplama — renkli sayı kartları, indirgeme diyagramı ve tablolarla kapsamlı rehber.</p>
-    </a>
-    <a class="post" href="/major-minor-arkana-nedir.html">
-      <div class="pm">19 Eylül 2026 · 8 dk okuma · Tarot, Arkana, Astroloji</div>
-      <h2>Majör ve Minör Arkana Nedir? Tarot ile Astrolojinin Ortak Dili</h2>
-      <p>Tarot ve astroloji uzaktan iki ayrı dünya gibi görünür; oysa aynı sembolik alfabeyi paylaşırlar. Kartların gezegenlerle ve burçlarla nasıl konuştuğunu keşfet.</p>
-    </a>
-    <a class="post" href="/saturn-astrolojide.html">
-      <div class="pm">19 Eylül 2026 · 6 dk okuma · Gezegenler, Olgunluk</div>
-      <h2>Satürn Astrolojide Ne Anlama Gelir? Disiplin ve Olgunluk</h2>
-      <p>Satürn ilk bakışta katı bir öğretmen gibi görünür; ama verdiği dersleri öğrenene en kalıcı armağanları sunan gezegendir.</p>
-    </a>
-    <a class="post" href="/jupiter-astrolojide.html">
-      <div class="pm">19 Eylül 2026 · 6 dk okuma · Gezegenler, Büyüme</div>
-      <h2>Jüpiter Astrolojide Ne Anlama Gelir? Şans ve Büyüme</h2>
-      <p>Satürn emek isterse, Jüpiter kapıları açar. Astrolojide büyümenin, şansın ve genişlemenin gezegenidir.</p>
     </a>
     <a class="post" href="/ay-burcu-nedir.html">
       <div class="pm">19 Eylül 2026 · 5 dk okuma · Temeller, Doğum Haritası</div>
-      <h2>Ay Burcu Nedir? Duygusal İç Dünyanın Haritası</h2>
+      <h3>Ay Burcu Nedir? Duygusal İç Dünyanın Haritası</h3>
       <p>Güneş burcun kim olduğunu anlatır; Ay burcun ise ne hissettiğini. İçinde taşıdığın o sessiz duygu dünyasının adı, Ay burcundur.</p>
-    </a>
-    <a class="post" href="/venus-mars-burcu.html">
-      <div class="pm">19 Eylül 2026 · 6 dk okuma · İlişkiler, Doğum Haritası</div>
-      <h2>Venüs ve Mars Burcu: Aşk ve Tutkunun Haritası</h2>
-      <p>Güneş burcun kim olduğunu anlatır; ama aşkta nasıl sevdiğin Venüs'te, neyi arzuladığın Mars'ta gizlidir.</p>
     </a>
     <a class="post" href="/osmanli-astrolojisi-nedir.html">
       <div class="pm">22 Ağustos 2026 · 6 dk okuma · Tarih &amp; Kültür, İlm-i Nücûm</div>
-      <h2>Osmanlı Astrolojisi (İlm-i Nücûm) Nedir? Osmanlıca Gezegen İsimleri</h2>
+      <h3>Osmanlı Astrolojisi (İlm-i Nücûm) Nedir? Osmanlıca Gezegen İsimleri</h3>
       <p>Merkür'e Utârid, Venüs'e Zühre denen bir çağ… Osmanlı sarayının yıldız dilini, gezegen isimlerini ve müneccimbaşının eşref saatini keşfet.</p>
     </a>
     <a class="post" href="/dogum-haritasinda-kardesler.html">
       <div class="pm">15 Ağustos 2026 · 6 dk okuma · Doğum Haritası, Evler</div>
-      <h2>Doğum Haritasında Kardeşler: 3. Ev Ne Anlatır?</h2>
+      <h3>Doğum Haritasında Kardeşler: 3. Ev Ne Anlatır?</h3>
       <p>Kardeş ilişkilerin, konuşma tarzın ve yakın çevren doğum haritanda tek bir alanda buluşur: üçüncü ev.</p>
-    </a>
-    <a class="post" href="/astrokartografi-nedir.html">
-      <div class="pm">15 Ağustos 2026 · 6 dk okuma · Astrokartografi, İleri Astroloji</div>
-      <h2>Astrokartografi Nedir? Gezegenlerin Dünya Haritası</h2>
-      <p>Doğduğun an gökyüzü sabittir; ama o gökyüzünü dünyanın farklı yerlerine taşıdığında öne çıkan enerjiler değişir. Astrokartografi tam da bunu haritalar.</p>
-    </a>
-    <a class="post" href="/juno-nedir.html">
-      <div class="pm">15 Ağustos 2026 · 5 dk okuma · İlişkiler, Asteroitler</div>
-      <h2>Juno Nedir? Astrolojide Evlilik ve Bağlılık</h2>
-      <p>Venüs neyi sevdiğini anlatır; Juno ise kime bağlanıp kalmak istediğini. Astrolojide uzun soluklu birlikteliğin ve sadakatin sembolüdür.</p>
-    </a>
-    <a class="post" href="/pluton-astrolojide.html">
-      <div class="pm">15 Ağustos 2026 · 6 dk okuma · Gezegenler, Dönüşüm</div>
-      <h2>Plüton Astrolojide Ne Anlama Gelir? Dönüşüm ve Güç</h2>
-      <p>Plüton yavaş hareket eder ama derinden dönüştürür. Astrolojide yıkıp yeniden kurmanın, gücün ve saklı olanın sembolüdür.</p>
-    </a>
-    <a class="post" href="/sinastri-nedir.html">
-      <div class="pm">13 Ağustos 2026 · 6 dk okuma · İlişkiler, Uyum</div>
-      <h2>Sinastri Nedir? İki Kişinin Astrolojik Uyumu Nasıl Bakılır?</h2>
-      <p>"Biz uyumlu muyuz?" sorusunun astrolojideki karşılığı sinastridir. İki doğum haritasını birlikte okumak, iki güneş burcunu yan yana koymaktan çok daha derindir.</p>
     </a>
     <a class="post" href="/gunes-ay-yukselen.html">
       <div class="pm">13 Ağustos 2026 · 6 dk okuma · Temeller, Doğum Haritası</div>
-      <h2>Güneş, Ay ve Yükselen Burç: Üçlü Kimliğin Ne Anlatır?</h2>
+      <h3>Güneş, Ay ve Yükselen Burç: Üçlü Kimliğin Ne Anlatır?</h3>
       <p>"Burcum ne?" sorusunun tek cevabı yoktur. Aslında üç burcun vardır; gerçek karakterin bu üçlünün birlikte söylediği şeyde saklıdır.</p>
-    </a>
-    <a class="post" href="/isim-numerolojisi.html">
-      <div class="pm">13 Ağustos 2026 · 6 dk okuma · Numeroloji, Sayılar</div>
-      <h2>İsim Numerolojisi: İsminin Sayısal Anlamı Nedir?</h2>
-      <p>Doğum tarihin bir sayı taşır; ama ismin de öyle. Harflerin sayıya nasıl çevrildiğini ve isim sayısının ne anlattığını açıklıyoruz.</p>
     </a>
     <a class="post" href="/astroloji-bilimsel-mi.html">
       <div class="pm">27 Eylül 2026 · 16 dk okuma · Temeller, Astroloji Tarihi</div>
-      <h2>Astroloji Bilimsel mi? Astronomiyle Ortak Kökler ve Tarihi</h2>
+      <h3>Astroloji Bilimsel mi? Astronomiyle Ortak Kökler ve Tarihi</h3>
       <p>Doğum haritası nasıl hesaplanır, astroloji ile astronomi nasıl aynı kökten doğdu, Kepler ve Jung astrolojiye nasıl baktı? İki etkileşimli araçla.</p>
     </a>
-    <a class="post" href="/kader-matrisi-nedir.html">
-      <div class="pm">9 Ağustos 2026 · 6 dk okuma · Kader Matrisi, Numeroloji</div>
-      <h2>Kader Matrisi Nedir? Doğum Tarihinden Kişilik ve Kader Haritası</h2>
-      <p>Kader Matrisi (Matrix of Destiny), doğum tarihinden 22 arkana enerjisiyle çıkarılan sembolik bir kişilik ve yaşam haritasıdır. Nasıl çalışır, ne anlatır?</p>
+    </div>
+  </section>
+  <section class="kat" id="gezegenler">
+    <h2 class="kat-baslik">Gezegenler & Ay</h2>
+    <p class="kat-acik">Retrolar, gezegenlerin anlamı, Ay döngüsü ve bugünün gökyüzü.</p>
+    <div class="liste">
+    <a class="post" href="/bugun-gokyuzu.html">
+      <div class="pm">29 Eylül 2026 · Günlük Gökyüzü, Retro, Dolunay</div>
+      <h3>Bugün Gökyüzü: Gezegenler Hangi Burçta?</h3>
+      <p>Her gün güncellenen gezegen dereceleri, retro takvimi, Yeni Ay–Dolunay tarihleri ve tutulmalar.</p>
+    </a>
+    <a class="post" href="/retrograd-nedir.html">
+      <div class="pm">24 Eylül 2026 · 9 dk okuma · Temeller, Gökyüzü, Etkileşimli</div>
+      <h3>Retrograd Nedir? Gezegenler Neden Geri Gidiyormuş Gibi Görünür?</h3>
+      <p>Dünya ve Mars'ın yörüngesiyle retrograd ilmeğini canlandıran etkileşimli bir animasyon, "yanılsama" açıklaması, Merkür retrosu ve retrograd dönemde ne yapmalı.</p>
+    </a>
+    <a class="post" href="/saturn-astrolojide.html">
+      <div class="pm">19 Eylül 2026 · 6 dk okuma · Gezegenler, Olgunluk</div>
+      <h3>Satürn Astrolojide Ne Anlama Gelir? Disiplin ve Olgunluk</h3>
+      <p>Satürn ilk bakışta katı bir öğretmen gibi görünür; ama verdiği dersleri öğrenene en kalıcı armağanları sunan gezegendir.</p>
+    </a>
+    <a class="post" href="/jupiter-astrolojide.html">
+      <div class="pm">19 Eylül 2026 · 6 dk okuma · Gezegenler, Büyüme</div>
+      <h3>Jüpiter Astrolojide Ne Anlama Gelir? Şans ve Büyüme</h3>
+      <p>Satürn emek isterse, Jüpiter kapıları açar. Astrolojide büyümenin, şansın ve genişlemenin gezegenidir.</p>
+    </a>
+    <a class="post" href="/astrokartografi-nedir.html">
+      <div class="pm">15 Ağustos 2026 · 6 dk okuma · Astrokartografi, İleri Astroloji</div>
+      <h3>Astrokartografi Nedir? Gezegenlerin Dünya Haritası</h3>
+      <p>Doğduğun an gökyüzü sabittir; ama o gökyüzünü dünyanın farklı yerlerine taşıdığında öne çıkan enerjiler değişir. Astrokartografi tam da bunu haritalar.</p>
+    </a>
+    <a class="post" href="/pluton-astrolojide.html">
+      <div class="pm">15 Ağustos 2026 · 6 dk okuma · Gezegenler, Dönüşüm</div>
+      <h3>Plüton Astrolojide Ne Anlama Gelir? Dönüşüm ve Güç</h3>
+      <p>Plüton yavaş hareket eder ama derinden dönüştürür. Astrolojide yıkıp yeniden kurmanın, gücün ve saklı olanın sembolüdür.</p>
     </a>
     <a class="post" href="/merkur-retrosu-nedir.html">
       <div class="pm">8 Ağustos 2026 · 4 dk okuma · Gezegenler, Retro</div>
-      <h2>Merkür Retrosu Nedir ve Gerçekten Ne Anlama Gelir?</h2>
+      <h3>Merkür Retrosu Nedir ve Gerçekten Ne Anlama Gelir?</h3>
       <p>Merkür retrosu panik yapmayı gerektirir mi? Astronomik gerçeği, astrolojik geleneği ve dürüst bir bakışı bir arada ele alıyoruz.</p>
     </a>
     <a class="post" href="/dolunay-yeni-ay-ay-dongusu.html">
       <div class="pm">7 Ağustos 2026 · 5 dk okuma · Ay, Döngüler</div>
-      <h2>Dolunay ve Yeni Ay Ne Anlama Gelir? Ay Döngüsü Rehberi</h2>
+      <h3>Dolunay ve Yeni Ay Ne Anlama Gelir? Ay Döngüsü Rehberi</h3>
       <p>Ay'ın 29,5 günlük döngüsü, en eski takvimlerden biridir. Yeni Ay, Dolunay ve aradaki evrelerin sembolik anlamlarını keşfet.</p>
-    </a>
-    <a class="post" href="/yasam-yolu-sayisi-nedir.html">
-      <div class="pm">5 Ağustos 2026 · 5 dk okuma · Numeroloji, Sayılar</div>
-      <h2>Yaşam Yolu Sayısı Nedir ve Nasıl Hesaplanır?</h2>
-      <p>Numerolojinin en temel sayısı olan Yaşam Yolu Sayısı, doğum tarihinden hesaplanır ve karakterinin ana temasını anlatır. Hesaplama adımlarıyla açıklıyoruz.</p>
     </a>
     <a class="post" href="/dolunay-rituelleri.html">
       <div class="pm">4 Ağustos 2026 · 4 dk okuma · Ay, Ritüel</div>
-      <h2>Dolunay Ritüelleri: Niyet, Şükran ve Bırakma</h2>
+      <h3>Dolunay Ritüelleri: Niyet, Şükran ve Bırakma</h3>
       <p>Dolunay, ay döngüsünün doruk noktasıdır. Bu dönemde yapılan sembolik ritüeller; kutlama, şükran ve bırakma niyetine eşlik eder. Dürüst bir rehber.</p>
     </a>
-  </div>
+    </div>
+  </section>
+  <section class="kat" id="numeroloji">
+    <h2 class="kat-baslik">Numeroloji & Arkana</h2>
+    <p class="kat-acik">Yaşam yolu, isim sayısı, sayıların anlamı, kader matrisi ve 22 arkana.</p>
+    <div class="liste">
+    <a class="post" href="/arkanalar.html">
+      <div class="pm">12 Kasım 2026 · 18 dk okuma · Kader Matrisi, Arkana</div>
+      <h3>22 Arkana ve Anlamları: Doğum Tarihinle Kendi Arkanalarını Hesapla</h3>
+      <p>22 arkananın her birinin anlamı, ışık ve gölge yanı, aşkta ve işte nasıl çalıştığı. Hesaplayıcıya doğum tarihini gir, beş ana arkananı gör.</p>
+    </a>
+    <a class="post" href="/bebek-ismi-numeroloji.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Numeroloji, İsim</div>
+      <h3>Bebeğime Hangi İsmi Koymalıyım? Numerolojiye Göre İsim Seçimi</h3>
+      <p>Aday isimleri yan yana karşılaştıran hesaplayıcı: İfade, Ruh Güdüsü ve Kişilik sayıları.</p>
+    </a>
+    <a class="post" href="/numeroloji-nedir.html">
+      <div class="pm">23 Eylül 2026 · 11 dk okuma · Numeroloji, Temeller, Kapsamlı Rehber</div>
+      <h3>Numeroloji Nedir ve Nasıl Hesaplanır?</h3>
+      <p>Numeroloji nasıl çalışır, sayılar neyi anlatır? Yaşam yolu, isim ve kişilik sayıları, Pisagor ile Kildani sistemleri ve hesaplama — profil haritası ve örneklerle başlangıç rehberi.</p>
+    </a>
+    <a class="post" href="/numerolojide-sayilarin-anlami.html">
+      <div class="pm">23 Eylül 2026 · 12 dk okuma · Numeroloji, Sayılar, Kapsamlı Rehber</div>
+      <h3>Numerolojide Sayıların Anlamı: 1-9 ve Usta Sayılar</h3>
+      <p>1'den 9'a her sayının ışığı ve gölgesi, 11-22-33 usta sayıları ve yaşam yolu sayını hesaplama — renkli sayı kartları, indirgeme diyagramı ve tablolarla kapsamlı rehber.</p>
+    </a>
+    <a class="post" href="/major-minor-arkana-nedir.html">
+      <div class="pm">19 Eylül 2026 · 8 dk okuma · Tarot, Arkana, Astroloji</div>
+      <h3>Majör ve Minör Arkana Nedir? Tarot ile Astrolojinin Ortak Dili</h3>
+      <p>Tarot ve astroloji uzaktan iki ayrı dünya gibi görünür; oysa aynı sembolik alfabeyi paylaşırlar. Kartların gezegenlerle ve burçlarla nasıl konuştuğunu keşfet.</p>
+    </a>
+    <a class="post" href="/isim-numerolojisi.html">
+      <div class="pm">13 Ağustos 2026 · 6 dk okuma · Numeroloji, Sayılar</div>
+      <h3>İsim Numerolojisi: İsminin Sayısal Anlamı Nedir?</h3>
+      <p>Doğum tarihin bir sayı taşır; ama ismin de öyle. Harflerin sayıya nasıl çevrildiğini ve isim sayısının ne anlattığını açıklıyoruz.</p>
+    </a>
+    <a class="post" href="/kader-matrisi-nedir.html">
+      <div class="pm">9 Ağustos 2026 · 6 dk okuma · Kader Matrisi, Numeroloji</div>
+      <h3>Kader Matrisi Nedir? Doğum Tarihinden Kişilik ve Kader Haritası</h3>
+      <p>Kader Matrisi (Matrix of Destiny), doğum tarihinden 22 arkana enerjisiyle çıkarılan sembolik bir kişilik ve yaşam haritasıdır. Nasıl çalışır, ne anlatır?</p>
+    </a>
+    <a class="post" href="/yasam-yolu-sayisi-nedir.html">
+      <div class="pm">5 Ağustos 2026 · 5 dk okuma · Numeroloji, Sayılar</div>
+      <h3>Yaşam Yolu Sayısı Nedir ve Nasıl Hesaplanır?</h3>
+      <p>Numerolojinin en temel sayısı olan Yaşam Yolu Sayısı, doğum tarihinden hesaplanır ve karakterinin ana temasını anlatır. Hesaplama adımlarıyla açıklıyoruz.</p>
+    </a>
+    </div>
+  </section>
+  <section class="kat" id="ask-iliski">
+    <h2 class="kat-baslik">Aşk & İlişki</h2>
+    <p class="kat-acik">Uyum, Venüs ve Mars, evlilik göstergeleri, nikâh tarihi ve ilişki kalıpları.</p>
+    <div class="liste">
+    <a class="post" href="/neden-hep-ayni-tip-insana-asik-oluyorum.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Aşk, Venüs</div>
+      <h3>Neden Hep Aynı Tip İnsana Âşık Oluyorum?</h3>
+      <p>Venüs, Mars, Ay ve 7. ev aşk döngünü nasıl anlatır; 12 Venüs burcu için çekildiğin tip ve döngüyü kırmanın yolu.</p>
+    </a>
+    <a class="post" href="/nikah-tarihi-nasil-secilir.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Nikâh, Seçim Astrolojisi</div>
+      <h3>Nikâh İçin En Uygun Tarih Nasıl Seçilir? 2026–2028 Retro ve Tutulma Takvimi</h3>
+      <p>Seçim astrolojisinin adımları, kaçınılacak tarihler tablosu ve aklındaki tarihi anında kontrol eden araç.</p>
+    </a>
+    <a class="post" href="/haritada-evlilik-gostergeleri.html">
+      <div class="pm">27 Eylül 2026 · 24 dk okuma · Aşk, Evlilik, Hesaplama</div>
+      <h3>Haritada Evlilik Göstergeleri: 7. Ev, Juno ve Vertex Hesaplama</h3>
+      <p>Evlilik evin, 7. ev yöneticin, Venüs, Juno ve Vertex'in tek seferde hesaplanır; önümüzdeki altı yılın ilişki pencereleri listelenir.</p>
+    </a>
+    <a class="post" href="/2027-evlenecek-burclar.html">
+      <div class="pm">27 Eylül 2026 · 19 dk okuma · 2027, Aşk, Evlilik, Düğün Tarihleri</div>
+      <h3>2027'de Evlenecek Burçlar ve Astrolojiye Göre Düğün Tarihleri</h3>
+      <p>12 burç için evlilik göstergeleri, renkli 2027 düğün takvimi ve seçtiğin tarihi kontrol eden araç.</p>
+    </a>
+    <a class="post" href="/venus-mars-burcu.html">
+      <div class="pm">19 Eylül 2026 · 6 dk okuma · İlişkiler, Doğum Haritası</div>
+      <h3>Venüs ve Mars Burcu: Aşk ve Tutkunun Haritası</h3>
+      <p>Güneş burcun kim olduğunu anlatır; ama aşkta nasıl sevdiğin Venüs'te, neyi arzuladığın Mars'ta gizlidir.</p>
+    </a>
+    <a class="post" href="/juno-nedir.html">
+      <div class="pm">15 Ağustos 2026 · 5 dk okuma · İlişkiler, Asteroitler</div>
+      <h3>Juno Nedir? Astrolojide Evlilik ve Bağlılık</h3>
+      <p>Venüs neyi sevdiğini anlatır; Juno ise kime bağlanıp kalmak istediğini. Astrolojide uzun soluklu birlikteliğin ve sadakatin sembolüdür.</p>
+    </a>
+    <a class="post" href="/sinastri-nedir.html">
+      <div class="pm">13 Ağustos 2026 · 6 dk okuma · İlişkiler, Uyum</div>
+      <h3>Sinastri Nedir? İki Kişinin Astrolojik Uyumu Nasıl Bakılır?</h3>
+      <p>"Biz uyumlu muyuz?" sorusunun astrolojideki karşılığı sinastridir. İki doğum haritasını birlikte okumak, iki güneş burcunu yan yana koymaktan çok daha derindir.</p>
+    </a>
+    </div>
+  </section>
+  <section class="kat" id="hesaplamalar">
+    <h2 class="kat-baslik">Hesaplamalar</h2>
+    <p class="kat-acik">Doğum saati, yaz saati, Hicri doğum günü, Lilith ve hayat kararları için hesaplamalı rehberler.</p>
+    <div class="liste">
+    <a class="post" href="/hicri-dogum-gunu-hesaplama.html">
+      <div class="pm">30 Ekim 2026 · 35 dk okuma · Araç, Hicri Takvim, Rûznâme</div>
+      <h3>Doğduğun Gün Ay Takviminde Kaçıncı Gündü? Hicri Doğum Günü Hesaplama</h3>
+      <p>Hicri doğum tarihin, gün batımı kuralı, o geceki Ay evresi ve Ay'ın konağı; eski bir rûznâmede doğduğun gün için yazılan söz ve Türkçesi.</p>
+    </a>
+    <a class="post" href="/yaz-saati-dogum-saati.html">
+      <div class="pm">29 Eylül 2026 · Araç, Doğum Saati, Yaz Saati</div>
+      <h3>Doğduğum Gün Yaz Saati Var mıydı? Türkiye Yaz Saati Tarihleri</h3>
+      <p>Doğum saatinin o günkü saat dilimini ve evrensel saat karşılığını anında gör; 1940–2016 Türkiye yaz saati tablosu.</p>
+    </a>
+    <a class="post" href="/dogum-saati-nasil-ogrenilir.html">
+      <div class="pm">29 Eylül 2026 · Doğum Saati, e-Devlet, CİMER</div>
+      <h3>Doğum Saatimi Nasıl Öğrenirim? e-Devlet, CİMER ve Hastane Yolları</h3>
+      <p>Doğum saatini bulmanın beş yolu, CİMER başvurusu adım adım ve saat bulunamazsa haritanın nasıl okunacağı.</p>
+    </a>
+    <a class="post" href="/cocugum-nasil-ogrenir.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Çocuk, Merkür</div>
+      <h3>Çocuğum Nasıl Öğrenir? Doğum Haritasına Göre Öğrenme Stili</h3>
+      <p>Merkür, Ay ve 3. ev çocuğunun öğrenme biçimini nasıl anlatır; dört element için ebeveyne pratik öneriler.</p>
+    </a>
+    <a class="post" href="/is-teklifini-kabul-etmeli-miyim.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Horary, Kariyer</div>
+      <h3>Bu İş Teklifini Kabul Etmeli miyim? Soru Astrolojisi ile Net Cevap</h3>
+      <p>Horary'nin karar sorularına nasıl baktığı, iyi soru nasıl sorulur ve iş teklifi için örnek sorular.</p>
+    </a>
+    <a class="post" href="/hangi-meslegi-secmeliyim.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Kariyer, MC</div>
+      <h3>Hangi Mesleği Seçmeliyim? Doğum Haritasına Göre Meslek</h3>
+      <p>MC, 10. ev, 6. ev ve 2. evle meslek eğilimlerin; 12 MC burcu için etkileşimli rehber.</p>
+    </a>
+    <a class="post" href="/hangi-sehre-tasinmaliyim.html">
+      <div class="pm">29 Eylül 2026 · Hayat Soruları, Astrokartografi, Taşınma</div>
+      <h3>Hangi Şehre Taşınmalıyım? Astrokartografi ile Sana En İyi Gelen Yerler</h3>
+      <p>Aşk, kariyer, para ve huzur için hangi gezegen hatları destekler, hangileri dikkat ister; etkileşimli rehber.</p>
+    </a>
+    <a class="post" href="/lilith-burcu-hesaplama.html">
+      <div class="pm">27 Eylül 2026 · 26 dk okuma · Lilith, Kara Ay, Hesaplama</div>
+      <h3>Lilith Burcu Hesaplama: Kara Ay Lilith Hangi Burçta, Hangi Evde?</h3>
+      <p>Ortalama ve gerçek Lilith'in burcu, derecesi ve evi; 12 burçta ve 12 evde Lilith, doğum yılına göre Lilith tablosu ve kişisel Lilith dönüşlerin.</p>
+    </a>
+    </div>
+  </section>
   <p class="disclaimer">Astro Yuvam içerikleri öz-farkındalık ve rehberlik amaçlıdır; kesin kehanet niteliği taşımaz. Kararlar her zaman senindir.</p>
 </div>
 <div id="ay-cerez" class="ac-in" role="note" aria-label="Çerez bilgilendirmesi"><div class="ay-cerez-in"><p class="ay-cerez-tx">Deneyimini iyileştirmek ve ziyaret istatistikleri için çerezler kullanıyoruz. Ayrıntılar için <a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a> metnimize göz atabilirsin.</p><div class="ay-cerez-bt"><button type="button" class="ay-cerez-kabul">Tamam</button></div></div></div>

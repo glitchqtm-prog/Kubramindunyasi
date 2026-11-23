@@ -2,7 +2,9 @@ name: Haftalık Burç Yorumları
 
 on:
   schedule:
-    - cron: "37 3 * * *"      # her gün 03:37 UTC; yalnızca ISO hafta değişince yeni yorum üretir (aksi hâlde API çağrısı yapmaz)
+    - cron: "17 10 * * 0"     # Pazar 13:17 TR — gelecek haftanın yorumları (GitHub gecikse bile Pazartesi'den önce yayında)
+    - cron: "17 15 * * 0"     # Pazar 18:17 TR — ilk deneme gecikir/başarısız olursa ikinci şans
+    - cron: "37 3 * * *"      # her gün 03:37 UTC yedek; hafta zaten üretildiyse API çağrısı yapmadan atlar
   workflow_dispatch:          # "Run workflow" ile elle de tetiklenebilir
     inputs:
       force_weekly:

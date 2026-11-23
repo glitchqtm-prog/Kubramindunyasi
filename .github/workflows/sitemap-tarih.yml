@@ -1,0 +1,46 @@
+name: Site Haritası Tarihleri
+
+# Bir sayfa değiştiğinde sitemap.xml'deki <lastmod> tarihini o sayfanın gerçek değişiklik tarihine çeker.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.html"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sitemap-tarih
+  cancel-in-progress: false
+
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu al (tam geçmiş)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Tarihleri güncelle
+        run: node sitemap-tarih.mjs
+
+      - name: Değişiklikleri commit'le
+        run: |
+          git config user.name "astro-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Değişiklik yok."
+          else
+            git commit -m "Site haritası tarihleri gerçek değişiklik tarihlerine eşitlendi"
+            git pull --rebase
+            git push
+          fi

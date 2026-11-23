@@ -731,7 +731,7 @@ function renderSign(tur, b, y, ctx){
       ? `${b.ad} burcu haftalık yorumu (${ctx.haftaAralik}): yönetici gezegenin ${gv.meta.gez} ${gv.meta.gezBurc} burcunda${gv.meta.gezRetro?" (retro)":""}, senin ${gv.meta.gezEv}. evinde. Aşk, iş ve sağlık yorumu, Ay'ın haftalık yolu.`
       : `${b.ad} burcu haftalık yorumu (${ctx.haftaAralik}): bu haftanın aşk, iş ve genel enerjisi. Dürüst ve öz-farkındalık odaklı ${b.ad} burcu haftalık yorumu.`);
   const canonical = `https://astroyuvam.com/${yol}/${b.slug}.html`;
-  const jsonld = JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":title.replace(" | Astro Yuvam",""),"description":desc,"datePublished":ctx.iso,"dateModified":ctx.iso,"author":{"@type":"Organization","name":"Astro Yuvam"},"publisher":{"@type":"Organization","name":"Astro Yuvam"},"mainEntityOfPage":canonical});
+  const jsonld = JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":title.replace(" | Astro Yuvam",""),"description":desc,"datePublished":ctx.yayinIso||ctx.iso,"dateModified":ctx.yayinIso||ctx.iso,"author":{"@type":"Organization","name":"Astro Yuvam"},"publisher":{"@type":"Organization","name":"Astro Yuvam"},"mainEntityOfPage":canonical});
   const metaSat = gunluk ? `${ctx.tarihTR} · ${b.aralik}` : `${ctx.haftaAralik} · ${b.aralik}`;
   const oncekiIdx = (BURCLAR.indexOf(b)+11)%12, sonrakiIdx=(BURCLAR.indexOf(b)+1)%12;
   const onceki=BURCLAR[oncekiIdx], sonraki=BURCLAR[sonrakiIdx];
@@ -879,10 +879,20 @@ function sitemapLastmodGuncelle(urlYollari, iso){
 
 /* ---------- Ana akış ---------- */
 (async ()=>{
-  const now = istanbulNow();
+  // Yeni haftanın yorumları PAZAR akşamı hazırlanır: Pazar 12:00'den (İstanbul) sonra çalışan her tetikleme
+  // hedef olarak ertesi Pazartesi'yi alır; böylece sayfalar Pazartesi sabahı aramalar başlamadan yayında olur.
+  // (GitHub zamanlanmış görevleri saatlerce gecikebildiği için Pazartesi'ye bırakmak yorumu öğleden sonraya itiyordu.)
+  const gercekNow = istanbulNow();
+  let now = gercekNow;
+  if(gercekNow.getDay()===0 && gercekNow.getHours()>=12){
+    now = new Date(gercekNow); now.setDate(now.getDate()+1); now.setHours(9,0,0,0);
+    console.log("Pazar akşamı: gelecek haftanın yorumları hazırlanıyor (hedef "+isoTarih(now)+").");
+  }
   const iso = isoTarih(now);
+  const yayinIso = isoTarih(gercekNow); // datePublished / sitemap lastmod: gerçek yayın günü (gelecek tarih yazılmaz)
   const ctx = {
     iso,
+    yayinIso,
     tarihTR: tarihTR(now),
     tarihKisa: tarihKisa(now),
     haftaAralik: haftaAraligi(now),
@@ -933,6 +943,6 @@ function sitemapLastmodGuncelle(urlYollari, iso){
   // --- sitemap.xml lastmod tarihlerini üretilen sayfalar için bugüne çek ---
   try {
     const smYollari = ["haftalik-burc-yorumlari.html", ...BURCLAR.map(b=>`haftalik-burc-yorumlari/${b.slug}.html`)];
-    sitemapLastmodGuncelle(smYollari, iso);
+    sitemapLastmodGuncelle(smYollari, yayinIso);
   } catch(e){ console.error("sitemap güncellemesi atlandı:", e.message); }
 })().catch(e=>{ console.error("ÜRETİM HATASI:", e.message); process.exit(1); });
