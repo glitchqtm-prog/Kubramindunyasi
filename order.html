@@ -297,22 +297,6 @@ const Y = YENI[type] || null;
 document.getElementById("reportName").textContent = info.name;
 const fiyatYaz = f => { document.getElementById("price").innerHTML = "&#8378;" + f + " <span style='font-size:16px;color:var(--muted)'>tek seferlik</span>"; };
 fiyatYaz(info.price);
-// ✦ GÜNÜN SORUSU İNDİRİMİ: üyenin hesabına tanımlı indirim varsa (yalnızca Çocuğunu Tanı) fiyat ve ödeme indirimli olur.
-let GS_TOKEN = null;
-if (type === "cocuk") (function(){
-  let t = null;
-  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && /^sb-.*-auth-token$/.test(k)) { const o = JSON.parse(localStorage.getItem(k) || "{}"); const a = o.access_token || (o.currentSession && o.currentSession.access_token), e = o.expires_at || (o.currentSession && o.currentSession.expires_at); if (a && (!e || e * 1000 > Date.now())) t = a; } } } catch (x) {}
-  if (!t) { if (new URLSearchParams(location.search).get("indirim")) { const n = document.createElement("div"); n.className = "note"; n.style.cssText = "margin:-14px 0 18px;font-size:13px"; n.innerHTML = "İndirimini kullanmak için <a href='/giris.html?geri=%2Forder.html%3Ftype%3Dcocuk%26indirim%3D1' style='color:var(--gold)'>giriş yap</a>."; document.getElementById("price").after(n); } return; }
-  fetch("https://astro-rapor.onrender.com/api/gunun-sorusu/durum", { headers: { Authorization: "Bearer " + t }, cache: "no-store" })
-    .then(r => r.ok ? r.json() : null).then(d => {
-      const ind = d && d.ben && d.ben.indirim; if (!ind || !ind.satista) return;
-      GS_TOKEN = t;
-      document.getElementById("price").innerHTML = "&#8378;" + ind.fiyat + " <s style='font-size:20px;color:var(--muted)'>&#8378;" + d.etkinlik.normalFiyat + "</s>";
-      const n = document.createElement("div"); n.className = "note"; n.style.cssText = "margin:-14px 0 18px;font-size:13px;color:var(--gold)";
-      n.textContent = "🎁 Günün Sorusu indirimin uygulandı. Ödeme ekranında da " + ind.fiyat + " ₺ ödeyeceksin.";
-      document.getElementById("price").after(n);
-    }).catch(() => {});
-})();
 // ✦ PUSULA: tanıtım dönemi fiyatı (pusula-ayar.js). Shopier'deki fiyat esastır; burada aynısı gösterilir.
 if (Y && Y.pusula && window.AY_PUSULA) {
   const A = window.AY_PUSULA, U = A.bul(Y.pusula);
@@ -546,7 +530,6 @@ btn.onclick = async () => {
     body.sesli = true; body.sesKanali = { tur, adres };
   }
 
-  if (GS_TOKEN && type === "cocuk" && !body.sesli) body.gsIndirimToken = GS_TOKEN;
   btn.disabled = true; btn.textContent = "GÖNDERİLİYOR…";
   statusEl.className = "status info";
   statusEl.innerHTML = "<span class='dot'></span>Bilgilerin gönderiliyor, lütfen bekle…<br><span style='font-size:12.5px;opacity:.85'>Bu işlem birkaç saniye sürebilir. Birazdan güvenli ödeme sayfasına yönlendirileceksin.</span>";
