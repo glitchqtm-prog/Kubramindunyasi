@@ -1,0 +1,71 @@
+name: IndexNow Bildirimi
+
+# Değişen sayfaları IndexNow ile arama motorlarına (Bing, Yandex, Seznam, Naver vb.) anında bildirir.
+# Bing'e giden bildirim ChatGPT arama ve Copilot sonuçlarına da yansır.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.html"
+      - "sitemap.xml"
+      - "llms.txt"
+  workflow_dispatch:
+    inputs:
+      hepsi:
+        description: "Site haritasındaki TÜM adresleri gönder (evet/hayır)"
+        required: false
+        default: "hayır"
+
+permissions:
+  contents: read
+
+jobs:
+  bildir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu al
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitHub Pages yayınının bitmesini bekle
+        run: sleep 150
+
+      - name: Adresleri topla ve gönder
+        env:
+          ONCEKI: ${{ github.event.before }}
+          SONRAKI: ${{ github.sha }}
+          HEPSI: ${{ github.event.inputs.hepsi }}
+        run: |
+          python3 - <<'PY'
+          import os, re, json, subprocess, urllib.request
+          SITE = "https://astroyuvam.com"
+          KEY = "e961c5d994a5720d1338368b2e557152"
+          urls = set()
+          if os.environ.get("HEPSI") == "evet" or not os.environ.get("ONCEKI") or set(os.environ.get("ONCEKI","")) == {"0"}:
+              urls = set(re.findall(r"<loc>(.*?)</loc>", open("sitemap.xml", encoding="utf-8").read()))
+          else:
+              out = subprocess.run(["git", "diff", "--name-only", "--diff-filter=AM", os.environ["ONCEKI"], os.environ["SONRAKI"]],
+                                   capture_output=True, text=True).stdout.split()
+              for f in out:
+                  if f.endswith(".html") and "/" not in f and os.path.exists(f):
+                      t = open(f, encoding="utf-8", errors="ignore").read(6000)
+                      if re.search(r'name="robots"[^>]*noindex', t):
+                          continue
+                      urls.add(SITE + "/" if f == "index.html" else SITE + "/" + f)
+                  elif f in ("sitemap.xml", "llms.txt"):
+                      urls.add(SITE + "/" + f)
+          urls = sorted(urls)[:10000]
+          if not urls:
+              print("Gönderilecek adres yok."); raise SystemExit(0)
+          body = json.dumps({"host": "astroyuvam.com", "key": KEY,
+                             "keyLocation": SITE + "/" + KEY + ".txt", "urlList": urls}).encode()
+          req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body,
+                                       headers={"Content-Type": "application/json; charset=utf-8"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print("IndexNow cevabı:", r.status, "-", len(urls), "adres")
+          except urllib.error.HTTPError as e:
+              print("IndexNow hata:", e.code, e.read()[:300]); raise SystemExit(1)
+          for u in urls: print(" ", u)
+          PY

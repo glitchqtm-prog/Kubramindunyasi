@@ -152,7 +152,9 @@
     { baslik:"Hakkında", items:[
       { href:"/hakkimizda.html", ad:"✦ Astro Yuvam Nedir?", alt:"Nasıl hesaplıyoruz, nasıl yazıyoruz" },
       { href:"/fiyatlar.html", ad:"✦ Rapor Fiyatları", alt:"24 rapor, fiyat ve sayfa sayısı" },
-      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"33 araç, üyelik gerekmez" },
+      { href:"/ucretsiz-astroloji-araclari.html", ad:"✦ Tüm Ücretsiz Araçlar", alt:"34 araç, üyelik gerekmez" },
+      { href:"/astroloji-uygulamasi.html", ad:"✦ Astro Yuvam Uygulaması", alt:"Telefona ekle, ChatGPT'de kullan" },
+      { href:"/astroloji-sitesi-nasil-secilir.html", ad:"✦ Astroloji Sitesi Nasıl Seçilir?", alt:"9 ölçüt ve site karnesi" },
       { href:"/#nasil-calisir", ad:"✦ Nasıl Çalışır?", alt:"4 adımda kişisel raporun" },
       { href:"/#sss",           ad:"✦ Sıkça Sorulanlar", alt:"Merak edilenlerin cevabı" }
     ]}
