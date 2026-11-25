@@ -77,7 +77,7 @@
       </div>
       <div>
         <p class="eyb rv">Bugünün gökyüzü</p>
-        <h2 class="h2 rv">Gezegenler şu an <em>burada.</em></h2>
+        <h2 class="h2 rv">Gezegenler bugün <em>burada.</em></h2>
         <p class="lead rv">Raporlarımız da ücretsiz araçlarımız da aynı yerden başlar: gezegenlerin gerçek konumları. Bu çark her gün yeniden hesaplanır.</p>
         <ul class="gk-li rv" id="gkL" hidden></ul>
         <div class="gk-a rv">
@@ -402,7 +402,7 @@ function kart(r){
   var e=EK[r.id]||{},td=r.liste&&(!r.tanitimBitis||new Date()<=new Date(r.tanitimBitis+"T23:59:59+03:00"));
   var fy=tl(r.liste&&!td?r.liste:r.price),alt=td?"tanıtım fiyatı · sonra "+tl(r.liste)+" TL":"tek seferlik · e-postana gelir";
   var href=r.page||("order.html?type="+r.id),g=e.g?e.g.charAt(0).toLocaleLowerCase("tr")+e.g.slice(1):"";
-  return '<article class="rk">'+(ONERI[r.id]?'<span class="rk-o">'+ONERI[r.id]+"</span>":"")+"<h3>"+esc(r.title)+"</h3>"+(e.s?'<div class="rk-s">'+e.s+" sayfa · PDF</div>":'<div class="rk-s">Kişiye özel plan · PDF</div>')+"<p>"+(e.k||esc(r.short))+"</p><ul>"+(g?"<li>Gerekenler: "+g+"</li>":"")+(e.o?'<li><a href="'+e.o+'" target="_blank" rel="noopener">Ücretsiz 3 sayfalık örneği gör<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"> ('+esc(r.title)+")</span></a></li>":"")+'</ul><div class="rk-f"><div><b>'+fy+" TL</b><span>"+alt+'</span></div><a class="rk-b" href="'+href+'" aria-label="'+esc(r.title)+': incele ve sipariş ver">İncele <svg aria-hidden="true"><use href="#ok"/></svg></a></div></article>'
+  return '<article class="rk">'+(ONERI[r.id]?'<span class="rk-o">'+ONERI[r.id]+"</span>":"")+"<h3>"+esc(r.title)+"</h3>"+(e.s?'<div class="rk-s">'+e.s+" sayfa · PDF</div>":'<div class="rk-s">Kişiye özel plan · PDF</div>')+"<p>"+(e.k||esc(r.short))+"</p><ul>"+(g?"<li>Gerekenler: "+g+"</li>":"")+(e.o?'<li><a href="'+e.o+'" target="_blank" rel="noopener">Ücretsiz 3 sayfalık örneği gör<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"> ('+esc(r.title)+")</span></a></li>":"")+'</ul><div class="rk-f"><div><b>'+fy+" TL</b><span>"+alt+'</span></div><a class="rk-b" href="'+href+'" aria-label="İncele: '+esc(r.title)+'">İncele <svg aria-hidden="true"><use href="#ok"/></svg></a></div></article>'
 }
 function katGoster(k){
   rpAktif=k;var K=KAT[k],box=$("#rpCards"),kat=$("#rpKat");
