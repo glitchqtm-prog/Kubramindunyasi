@@ -182,3 +182,12 @@ body.u :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;bord
 .pn-ipucu a{color:var(--gold-soft)}
 @media (max-width:900px){.pn-hero{grid-template-columns:1fr;gap:22px;padding:22px 0 22px}.pn-iki{grid-template-columns:1fr}.u-panel .bolum-b span{text-align:left}}
 @media (max-width:600px){.u-panel .wrap{padding:4px 16px 100px}.pn-nav{margin:0 -16px 20px;padding:8px 16px}.pn-nav button{padding:10px 15px;font-size:14px}.u-panel .kart{padding:20px 18px;border-radius:20px}.u-panel .bolum{margin-top:36px}.u-panel .bolum-b h2{font-size:24px}.pn-uc span{padding:7px 13px 7px 10px}}
+
+/* ============ görseller ============ */
+.u-giris .aside{padding-top:0}
+.u-giris .sahne{position:relative;right:auto;top:auto;width:auto;height:330px;margin:0 -52px;background:linear-gradient(90deg,rgba(6,9,18,.9) 0,rgba(6,9,18,.45) 46%,rgba(6,9,18,0) 78%),linear-gradient(0deg,#080b17 0,rgba(8,11,23,0) 46%),url(ay-uye-giris.webp) 70% 86%/cover no-repeat}
+.u-giris .sahne>*{display:none}
+.u-giris .aside .kicker{position:relative;margin-top:-190px}
+.u-giris .aside h2,.u-giris .aside .lead,.u-giris .aside .kicker{max-width:440px;position:relative}
+@media (max-width:880px){.u-giris .sahne{display:block;height:230px;margin:0 -22px}.u-giris .aside .kicker{margin-top:-120px}}
+body.u-panel{background:linear-gradient(180deg,rgba(4,6,13,.25) 0,rgba(4,6,13,.6) 300px,#04060d 600px),url(ay-uye-ufuk.webp) top center/max(100%,1100px) auto no-repeat,#04060d}
