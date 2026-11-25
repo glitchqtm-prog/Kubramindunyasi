@@ -28,6 +28,10 @@ new_css = rd(SRC + "/style.css")
 new_css_min = re.sub(r"/\*.*?\*/", "", new_css, flags=re.S)
 new_css_min = re.sub(r"\s*\n\s*", "", new_css_min)
 new_css_min = re.sub(r"\s*([{};,>])\s*", r"\1", new_css_min).replace(";}", "}")
+# Başlık yazı tipi sayfanın içine gömülür: ilk çizimde hazır olur, sonradan yazı tipi değişimi (ve geç yerleşim işi) olmaz
+import base64 as _b64
+assert new_css_min.count("AYFONTVERI") == 1
+new_css_min = new_css_min.replace("AYFONTVERI", "data:font/woff2;base64," + _b64.b64encode(open(REPO + "/ay-fraunces.woff2", "rb").read()).decode())
 first = True
 def repl(m):
     global first
@@ -35,8 +39,7 @@ def repl(m):
         return m.group(0)
     if first:
         first = False
-        return ('<link rel="preload" as="font" type="font/woff2" href="ay-fraunces.woff2" crossorigin>\n'
-                '<script>(function(d){var c="js";try{if(localStorage.getItem("ay_cerez_bilgi_v1")!=="1")c+=" cz"}catch(e){c+=" cz"}d.className=c})(document.documentElement)</script>\n'
+        return ('<script>(function(d){var c="js";try{if(localStorage.getItem("ay_cerez_bilgi_v1")!=="1")c+=" cz"}catch(e){c+=" cz"}d.className=c})(document.documentElement)</script>\n'
                 "<style>" + new_css_min + "</style>\n")
     return ""
 head2 = re.sub(r"<style([^>]*)>.*?</style>\s*", repl, head, flags=re.S)
