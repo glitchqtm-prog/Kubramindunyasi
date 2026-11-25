@@ -40,9 +40,9 @@ em{font-style:normal;color:var(--gold2)}
 .cz .pin{--cz:96px}
 .pin::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 46% at 50% 44%,rgba(22,44,88,.5),transparent 70%)}
 .film{position:absolute;aspect-ratio:9/16;width:var(--fw);left:50%;top:calc(100vh - var(--low) - var(--cz) - .864*var(--fw));top:calc(100svh - var(--low) - var(--cz) - .864*var(--fw));transform:translate(-47%,calc(var(--p)*-46px))}
-.film::before{content:"";position:absolute;left:49.4%;top:48.6%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0,#f1c779 3.5%,rgba(226,160,74,.55) 8%,rgba(214,150,70,.14) 24%,transparent 58%);transition:opacity .8s}
+.film::before{content:"";position:absolute;left:49.4%;top:48.6%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0,#f1c779 3.5%,rgba(226,160,74,.55) 8%,rgba(214,150,70,.14) 24%,transparent 58%);transition:opacity .3s}
 .film.on::before{opacity:0}
-.film canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .8s}
+.film canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .3s}
 .film::after{content:"";position:absolute;inset:-1px;pointer-events:none;background:linear-gradient(90deg,#030a17,rgba(3,10,23,0) 6.5%,rgba(3,10,23,0) 88%,#030a17),linear-gradient(0deg,#04060d,rgba(4,6,13,0) 24%),linear-gradient(180deg,#030a17,rgba(3,10,23,0) 9%)}
 .film.on canvas{opacity:1}
 .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,6,13,.55) 0,transparent 20%,transparent 46%,rgba(4,6,13,.9) 80%)}

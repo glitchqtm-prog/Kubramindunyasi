@@ -35,7 +35,7 @@ if("IntersectionObserver" in W){var ro=new IntersectionObserver(function(es){es.
   if(RM)return;
   addEventListener("scroll",req,{passive:true});addEventListener("resize",function(){setup();req()});
   if(D.readyState==="complete")setTimeout(start,60);else addEventListener("load",function(){setTimeout(start,60)});
-  lateLoad(rest,2600);req();
+  if(!RM)get(0);lateLoad(rest,2600);req();
 })();
 
 /* ---- rapor kartları ve ortak menü: ilk çizimden sonra ---- */
