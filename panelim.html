@@ -635,7 +635,7 @@
     function hz(body, t){ var x = norm(lon(body, new Date(t.getTime() + G / 4)) - lon(body, new Date(t.getTime() - G / 4))); return x > 180 ? x - 360 : x; }
     PL.forEach(function(p){
       if (p[0] === "Güneş" || p[0] === "Ay") return; var simdi = hz(p[1], d) < 0, t = null;
-      for (var i = 1; i <= 200; i++) { var g = new Date(d.getTime() + i * G); if ((hz(p[1], g) < 0) !== simdi) { t = g; break; } }
+      for (var i = 1; i <= 200; i++) { var g = new Date(d.getTime() + i * G); if ((hz(p[1], g) < 0) !== simdi) { var x0 = new Date(g.getTime() - G), x1 = g; for (var j = 0; j < 12; j++) { var xm = new Date((x0.getTime() + x1.getTime()) / 2); if ((hz(p[1], xm) < 0) === simdi) x0 = xm; else x1 = xm; } t = x1; break; } }
       if (simdi) geri.push({ p: p, t: t, ev: evBul(N, lon(p[1], d)) });
       else if (t && ["Merkür","Venüs","Mars"].indexOf(p[0]) >= 0) sira.push({ p: p, t: t });
     });

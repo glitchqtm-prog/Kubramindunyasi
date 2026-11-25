@@ -141,6 +141,7 @@ body.u :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;bord
 .u-panel .gun-detay{background:var(--u-kart);border:1px solid var(--u-hair);border-left:2px solid var(--gold);border-radius:18px;padding:18px 20px}
 .u-panel .gun-detay h3{font-weight:400;font-size:21px}
 .u-panel .filtre button{border-color:var(--u-hair);background:none;border-radius:999px;padding:7px 14px}
+.u-panel .filtre button.on{background:linear-gradient(180deg,#ecd6a0,#d9b96a);color:#17120a;border-color:transparent;font-weight:650}
 .u-panel .zaman li{padding:11px 0}
 .u-panel .zaman b{font-family:var(--u-serif);font-weight:400;font-size:16.5px}
 .u-panel .zaman span{color:#cfc8d8}
