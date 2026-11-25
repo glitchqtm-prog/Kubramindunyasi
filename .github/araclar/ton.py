@@ -59,6 +59,7 @@ ASTERNA_EK = ('body #asterna-fab{width:58px;height:58px;background:radial-gradie
  'body #asterna-panel .ast-feragat{color:#8b8698;font-size:11px;margin-top:9px}'
  'body #asterna-panel .ast-rapor-oge{background:rgba(240,230,210,.04);border:1px solid rgba(240,230,210,.1);border-radius:14px}'
  '@media(max-width:480px){body #asterna-panel{left:8px;right:8px;width:auto;bottom:8px;height:min(82vh,640px);max-height:none;border-radius:22px}}'
+ 'body #ay-cerez ~ #asterna-fab{bottom:84px}body:has(#ay-cerez) #asterna-fab{bottom:84px}@media(max-width:700px){body #ay-cerez ~ #asterna-fab{bottom:108px}body:has(#ay-cerez) #asterna-fab{bottom:108px}}'
  '/*ay-asterna-2*/')
 
 CEREZ_EK = ('#ay-cerez{background:rgba(6,9,18,.97);border-top:1px solid rgba(217,185,106,.24);box-shadow:0 -18px 50px rgba(0,0,0,.5)}'
