@@ -525,6 +525,9 @@ onNear($("#gok"),function(){
   });
 })();
 
+/* ---- yalnız dal önizlemesinde: Asterna balonu göreli adresten yüklenir (canlıya alırken silinecek) ---- */
+if(/githack\.com$/.test(location.hostname))lateLoad(function(){var a=D.createElement("script");a.src="asterna-widget.js";D.body.appendChild(a)},1500);
+
 /* ---- kapanış filmi: yaklaşınca yüklenir ---- */
 (function(){var v=$("#kpV");if(!v||RM)return;if(navigator.connection&&navigator.connection.saveData)return;onNear(v,function(){v.src=v.getAttribute("data-src");v.addEventListener("playing",function(){v.classList.add("on")},{once:true});var p=v.play();if(p&&p.catch)p.catch(function(){});if("IntersectionObserver" in W){new IntersectionObserver(function(e){if(e[0].isIntersecting){var q=v.play();if(q&&q.catch)q.catch(function(){})}else v.pause()}).observe(v)}},"300px 0px")})();
 })();
