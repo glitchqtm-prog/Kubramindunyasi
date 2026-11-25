@@ -260,7 +260,9 @@ const json = {
 
 // —— Güvenlik kontrolleri: bir şey eksikse yazma ——
 if (konumlar.length !== 10 || lunasyon.length < 20 || !sayfa.includes("</html>")) { console.error("HATA: eksik veri, dosyalar yazılmadı."); process.exit(1); }
-writeFileSync("bugun-gokyuzu.html", sayfa);
+// Yazı sayfalarının ortak başlık/özet düzeni (diğer yazı sayfalarıyla aynı görünmesi için)
+const YAZI_EK = "h1{font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.16;letter-spacing:-.01em}.ozet{font-style:normal;color:#cfc8d8}.etiketler span{background:none;border-color:rgba(240,230,210,.14)}.cta-kutu{border-radius:22px;border-color:rgba(217,185,106,.26)}.ilgili a{border-radius:999px}/*ay-yazi-2*/";
+writeFileSync("bugun-gokyuzu.html", sayfa.includes("/*ay-yazi-2*/") ? sayfa : sayfa.replace("hr.ayrac{", YAZI_EK + "hr.ayrac{"));
 writeFileSync("gokyuzu.json", JSON.stringify(json, null, 1));
 if (existsSync("sitemap.xml")){
   const sm = readFileSync("sitemap.xml", "utf8");

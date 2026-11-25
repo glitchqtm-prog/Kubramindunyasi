@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Astro Yuvam — Ücretsiz Doğum Haritası Hesaplama & Kişiye Özel Astroloji Raporları</title>
+<meta name="description" content="Ücretsiz doğum haritası hesaplama, yükselen burç ve Lilith hesaplayıcıları, haftalık burç yorumları ve gerçek gezegen konumlarıyla hazırlanan kişiye özel astroloji, numeroloji ve kader matrisi raporları — Astro Yuvam.">
+<link rel="canonical" href="https://astroyuvam.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Astro Yuvam","alternateName":"AstroYuvam","url":"https://astroyuvam.com/","inLanguage":"tr-TR","publisher":{"@type":"Organization","name":"Astro Yuvam","logo":"https://astroyuvam.com/logo-512.png"}}</script>
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://astroyuvam.com/#org", "name": "Astro Yuvam", "alternateName": ["AstroYuvam", "astroyuvam.com"], "url": "https://astroyuvam.com/", "logo": "https://astroyuvam.com/logo-512.png", "image": "https://astroyuvam.com/logo-512.png", "description": "Türkiye'ye yönelik Türkçe astroloji ve numeroloji sitesi: gerçek gezegen konumlarıyla hesaplanan 24 çeşit kişiye özel PDF rapor (300 TL'den başlayan tek seferlik fiyatlarla; doğum haritası analizi 750 TL, 20+ sayfa) ve üyelik gerektirmeyen 34 ücretsiz astroloji aracı.", "email": "astroyuvam@gmail.com", "areaServed": "TR", "knowsLanguage": "tr", "sameAs": ["https://www.instagram.com/astroyuvam", "https://www.youtube.com/@astroyuvam", "https://www.tiktok.com/@astroyuvam", "https://www.threads.com/@astroyuvam", "https://x.com/AstroYuvam", "https://www.shopier.com/astroyuvam", "https://chatgpt.com/plugins/plugin_asdk_app_6ad8c6bedb848191b5e9c49e56d84e7e"]}</script>
+<style>:root{--bg:#0b0b14;--bg-elevated:#13131f;--ink:#f2efe9;--muted:#9a95ad;--gold:#c9a15a;--gold-soft:#e8d3a3;--violet:#6c5ce7;--violet-soft:#a29bfe;--rose:#d1467b;--line:rgba(255,255,255,0.08);--radius:14px;--serif:"Fraunces","Iowan Old Style",Georgia,serif;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}*{box-sizing:border-box;}body{margin:0;background:radial-gradient(circle at 50% -10%,#1c1a2e 0%,var(--bg) 55%);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}.hero{text-align:center;padding:56px 20px 20px;}.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,46px);margin:0 0 12px;}.hero h1 em{font-style:italic;color:var(--gold-soft);}.hero p{color:var(--muted);max-width:520px;margin:0 auto;font-size:15.5px;line-height:1.6;}.card{background:linear-gradient(180deg,var(--bg-elevated),#0f0f1a);border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px 22px;display:flex;flex-direction:column;gap:14px;transition:transform .25s ease,border-color .25s ease;}.card:hover{transform:translateY(-4px);border-color:rgba(201,161,90,0.4);}.card .kart-ikon{width:84px;height:84px;margin:0 auto;filter:drop-shadow(0 0 14px rgba(217,185,106,.22));transition:transform .3s ease}.card:hover .kart-ikon{transform:scale(1.06) rotate(-3deg)}.card .kart-ikon svg{width:100%;height:100%;display:block}.card .icon-orbit{width:74px;height:74px;margin:0 auto;position:relative;}.card .icon-orbit .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,0.14);}.card .icon-orbit .ring.in{inset:12px;border-color:var(--gold);opacity:.7;}.card .icon-orbit .core{position:absolute;inset:0;margin:auto;width:20px;height:20px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px rgba(201,161,90,.7);}.card h3{font-family:var(--serif);font-weight:600;font-size:19px;margin:0;text-align:center;}.card p{color:var(--muted);font-size:13.5px;line-height:1.55;margin:0;flex:1;}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:10px;padding:13px 18px;font-family:var(--sans);font-weight:600;font-size:14.5px;cursor:pointer;text-decoration:none;transition:filter .2s ease,transform .15s ease;}.btn:active{transform:scale(.98);}.btn-primary{background:linear-gradient(120deg,var(--violet),#5546d6);color:white;}.btn-primary:hover{filter:brightness(1.1);}.btn-block{width:100%;}footer{text-align:center;color:var(--muted);font-size:12px;padding:26px;}</style>
+<style id="am-kritik">.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}.am-links{display:flex;gap:18px;font-size:14px;align-items:center;white-space:nowrap}.am-links>a{color:#f0e6d2;opacity:.82;text-decoration:none;transition:color .2s,opacity .2s}.am-links>a:hover{opacity:1;color:#e7cf95}.am-dropdown{position:relative;display:inline-block}.am-drop-btn{background:none;border:none;color:#f0e6d2;opacity:.82;font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .2s,opacity .2s}.am-drop-btn:hover,.am-drop-btn[aria-expanded="true"]{opacity:1;color:#e7cf95}.am-caret{font-size:11px;transition:transform .2s}.am-drop-btn[aria-expanded="true"] .am-caret{transform:rotate(180deg)}.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:262px;background:#241c3d;border:1px solid #332a4d;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible;transform:translateY(0)}.am-cat + .am-cat{border-top:1px solid #2c2545;margin-top:2px}.am-cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;font:inherit;color:#d9b96a;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;opacity:.9;padding:12px 12px;text-align:left;border-radius:8px;transition:background .15s,color .15s,opacity .15s}.am-cat-btn:hover{opacity:1;color:#e7cf95;background:rgba(217,185,106,.06)}.am-cat-caret{font-size:10px;opacity:.75;transition:transform .22s}.am-cat.open>.am-cat-btn{color:#e7cf95;opacity:1}.am-cat.open>.am-cat-btn .am-cat-caret{transform:rotate(180deg)}.am-cat-items{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}.am-cat.open>.am-cat-items{grid-template-rows:1fr}.am-cat-inner{overflow:hidden;min-height:0}.am-drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:#f0e6d2;font-size:14.5px;text-decoration:none;transition:background .15s}.am-drop-menu a:hover{background:rgba(217,185,106,.10);color:#e7cf95}.am-drop-menu a[aria-current="page"]{color:#e7cf95;background:rgba(217,185,106,.08)}.am-sub{display:block;font-size:12px;color:#9a8fb8;margin-top:2px}.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #332a4d;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}.am-dropdown{position:static}.am-drop-menu{left:50%;right:auto;transform:translate(-50%,-6px);width:min(88vw,320px);min-width:0}.am-dropdown.open .am-drop-menu{transform:translate(-50%,0)}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}</style>
+<style>
+  /* Astro Yuvam — ek bölüm stilleri (mevcut style.css'i bozmadan) */
+  :root{
+    --ay-gold:#d9b96a; --ay-panel:#161022; --ay-line:#2a2140;
+    --ay-ink:#efe9dc; --ay-muted:#b9aecb; --ay-violet:#7c6cf0;
+  }
+  html{scroll-behavior:smooth}
+  .section-block{max-width:960px;margin:70px auto 0;padding:0 22px}
+  .fl-liste{list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:8px}
+  .fl-liste a{display:flex;justify-content:space-between;align-items:baseline;gap:10px;min-height:44px;padding:11px 14px;border:1px solid var(--ay-line);border-radius:12px;background:rgba(255,255,255,.02);font-size:14.5px;color:var(--ay-ink,#f0e6d2);text-decoration:none;transition:border-color .15s}
+  .fl-liste a:hover{border-color:var(--ay-gold)}
+  .fl-fy{white-space:nowrap;color:#b9aecb;font-size:13px}
+  .fl-fy b{color:var(--ay-gold)}
+  .fl-alt{text-align:center;margin:16px 0 0;font-size:14px;line-height:2.2}.fl-alt a{color:var(--ay-gold);padding:6px 2px}
+
+  .section-block h2{color:var(--ay-gold);font-size:26px;text-align:center;margin-bottom:8px}
+  .section-block .sub{color:var(--ay-muted);text-align:center;font-size:14.5px;margin-bottom:34px}
+  /* Nasıl çalışır adımları */
+  .steps{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+  .step{flex:1 1 190px;max-width:220px;background:var(--ay-panel);border:1px solid var(--ay-line);
+    border-radius:14px;padding:26px 20px;text-align:center}
+  .step .num{width:44px;height:44px;line-height:44px;margin:0 auto 14px;border-radius:50%;
+    background:linear-gradient(180deg,var(--ay-gold),#c9a34e);color:#241a06;font-weight:bold;font-size:19px}
+  .step h3{color:var(--ay-ink);font-size:16px;margin-bottom:8px}
+  .step p{color:var(--ay-muted);font-size:13.5px;line-height:1.6}
+  /* SSS akordeon */
+  .faq{max-width:760px;margin:0 auto}
+  .faq details{background:var(--ay-panel);border:1px solid var(--ay-line);border-radius:12px;
+    margin-bottom:12px;padding:0 20px;overflow:hidden}
+  .faq summary{cursor:pointer;padding:18px 0;font-size:15.5px;color:var(--ay-ink);
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";color:var(--ay-gold);font-size:22px;transition:transform .2s}
+  .faq details[open] summary::after{content:"−"}
+  .faq details[open] summary{border-bottom:1px solid var(--ay-line)}
+  .faq .ans{padding:16px 0 20px;color:var(--ay-muted);font-size:14px;line-height:1.75}
+  .disclaimer{max-width:760px;margin:40px auto 0;padding:16px 20px;border:1px dashed var(--ay-line);
+    border-radius:12px;color:var(--ay-muted);background:#1a1530;font-size:12.5px;line-height:1.7;text-align:center}
+  .tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:920px;margin:0 auto}
+  @media(max-width:760px){.tools-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.tools-grid{grid-template-columns:1fr}}
+  .tool-card{display:flex;gap:13px;align-items:flex-start;background:var(--ay-panel);border:1px solid var(--ay-line);border-radius:14px;padding:16px 17px;text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+  .tool-card:hover{background:rgba(217,185,106,.06);border-color:var(--ay-gold);transform:translateY(-2px)}
+  .tool-card .ic{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--ay-line);display:flex;align-items:center;justify-content:center;color:var(--ay-gold);font-size:17px}
+  .tool-card .tx{display:flex;flex-direction:column}
+  .tool-card .tt{color:var(--ay-ink);font-size:15px;font-weight:bold;line-height:1.3}
+  .tool-card .td{color:var(--ay-muted);font-size:12.5px;line-height:1.5;margin-top:3px}
+  .burc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:920px;margin:0 auto}
+  @media(max-width:760px){.burc-grid{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:460px){.burc-grid{grid-template-columns:repeat(3,1fr)}}
+  .burc-grid a{display:flex;flex-direction:column;align-items:center;gap:7px;background:var(--ay-panel);border:1px solid var(--ay-line);border-radius:14px;padding:16px 8px;text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+  .burc-grid a:hover{background:rgba(217,185,106,.07);border-color:var(--ay-gold);transform:translateY(-2px)}
+  .burc-grid .bs{font-size:25px;color:var(--ay-gold);line-height:1}
+  .burc-grid .bn{font-size:13px;color:var(--ay-ink);font-weight:600}
+  .burc-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .burc-cta a{color:var(--ay-gold);border:1px solid var(--ay-line);padding:9px 18px;border-radius:20px;text-decoration:none;font-size:14px;transition:background .2s,border-color .2s}
+  .burc-cta a:hover{background:rgba(217,185,106,.1);border-color:var(--ay-gold)}
+  .hw-svg{width:min(320px,72vw);height:min(320px,72vw);display:block;margin:0 auto 8px}
+  .hw-core{fill:url(#hwCoreGrad)}
+  .hw-ring{fill:none;stroke:rgba(217,185,106,.42);stroke-width:1}
+  .hw-ring-outer{stroke:rgba(217,185,106,.7)}
+  .hw-div{stroke:rgba(217,185,106,.16);stroke-width:1}
+  .hw-zg{fill:#e7cf95;font-size:15px;text-anchor:middle;dominant-baseline:middle;font-family:'Segoe UI Symbol',sans-serif}
+  .hw-pg{fill:var(--ay-ink);font-size:13px;text-anchor:middle;dominant-baseline:middle;font-family:'Segoe UI Symbol',sans-serif}
+  .hw-pdot{fill:var(--ay-gold)}
+  .hw-asp{stroke:rgba(124,108,240,.5);stroke-width:1}
+  .hw-accent{fill:none;stroke:rgba(217,185,106,.32);stroke-width:1;stroke-dasharray:2 8}
+  /* Çark: dış burç halkası ile iç alan zıt yönlerde döner (astrolab) */
+  .hw-spin-o{transform-box:view-box;transform-origin:200px 200px;animation:hwspin 120s linear infinite}
+  .hw-spin-i{transform-box:view-box;transform-origin:200px 200px;animation:hwspin 88s linear infinite reverse}
+  @keyframes hwspin{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.hw-spin-o,.hw-spin-i{animation:none}}
+  .tools-more{text-align:center;margin-top:22px;font-size:14px}
+  .tools-more a{color:var(--ay-gold)}
+  /* Öne çıkan araç kartları */
+  .tool-feature{display:flex;align-items:center;gap:18px;max-width:920px;margin:0 auto 16px;
+    background:linear-gradient(120deg,rgba(217,185,106,.15),rgba(124,108,240,.10));
+    border:1px solid var(--ay-gold);border-radius:16px;padding:20px 24px;text-decoration:none;
+    box-shadow:0 8px 30px rgba(217,185,106,.08);transition:transform .1s,box-shadow .2s}
+  .tool-feature:hover{transform:translateY(-2px);box-shadow:0 12px 44px rgba(217,185,106,.18);border-color:var(--ay-gold)}
+  .tool-feature .fic{flex:none;width:54px;height:54px;border-radius:50%;border:1px solid var(--ay-gold);
+    background:rgba(217,185,106,.08);display:flex;align-items:center;justify-content:center;color:var(--ay-gold);font-size:26px}
+  .tool-feature .ftx{flex:1;min-width:0}
+  .tool-feature .fbadge{display:inline-block;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;
+    color:#241a06;background:linear-gradient(180deg,#e7cf95,var(--ay-gold));padding:3px 11px;border-radius:20px;font-weight:bold;margin-bottom:7px}
+  .tool-feature .ftt{color:var(--ay-ink);font-size:19px;font-weight:bold;line-height:1.25}
+  .tool-feature .ftd{color:var(--ay-muted);font-size:13.5px;line-height:1.55;margin-top:4px}
+  .tool-feature .farrow{flex:none;color:var(--ay-gold);font-size:24px;margin-left:6px}
+  @media(max-width:560px){.tool-feature{gap:14px;padding:18px}.tool-feature .farrow{display:none}}
+  /* — Rapor kartları: kategoriler + eşit yükseklik + açılır açıklama (style.css'i bozmadan) — */
+  #cards{padding-top:6px}
+  .rapor-kategori{max-width:1120px;margin:0 auto;padding:0 22px}
+  .rapor-kategori .kat-h{color:var(--ay-gold);font-size:22px;text-align:center;margin:48px 0 4px}
+  .rapor-kategori .kat-sub{color:var(--ay-muted);text-align:center;font-size:13.5px;margin-bottom:24px}
+  .rapor-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;align-items:stretch}
+  .rk{position:relative;flex:1 1 300px;max-width:360px;min-width:0;display:flex;flex-direction:column;padding:22px 22px 20px;border-radius:18px;border:1px solid rgba(217,185,106,.22);background:radial-gradient(120% 70% at 50% -10%,rgba(217,185,106,.10),transparent 60%),linear-gradient(180deg,#191628,#100e1b);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px rgba(0,0,0,.25);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .rk:hover{transform:translateY(-3px);border-color:rgba(217,185,106,.55);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 18px 44px rgba(0,0,0,.4),0 0 0 1px rgba(217,185,106,.12)}
+  .rk-ust{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .rk-ikon{flex:none;width:58px;height:58px;filter:drop-shadow(0 0 12px rgba(217,185,106,.2))}.rk-ikon svg{width:100%;height:100%;display:block}
+  .rk h3{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.25;margin:0;color:var(--ink)}
+  .rk-etiket{display:inline-block;margin-top:5px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-soft);opacity:.85}
+  .rk p{color:#b3aec4;font-size:14px;line-height:1.6;margin:0 0 16px;flex:1}
+  .rk ul{list-style:none;margin:0 0 18px;padding:12px 0 0;border-top:1px solid rgba(255,255,255,.07);display:grid;gap:7px}
+  .rk li{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.45;color:#cfc9dc}
+  .rk li svg{flex:none;width:15px;height:15px;margin-top:2px;color:var(--gold)}
+  .rk li a{color:var(--gold-soft);text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(232,211,163,.4)}
+  .rk li a:hover{text-decoration-color:currentColor}
+  .rk-alt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07)}
+  .rk-fiyat{line-height:1.1}.rk-fiyat b{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--gold-soft);letter-spacing:.3px}.rk-fiyat span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+  .rk-btn{flex:none;display:inline-flex;align-items:center;gap:7px;padding:12px 18px;min-height:44px;border-radius:12px;background:linear-gradient(180deg,#ecd7a0,#d2ae62);color:#1d1606;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 6px 18px rgba(217,185,106,.18);transition:filter .2s,transform .15s}
+  .rk-btn:hover{filter:brightness(1.06)}.rk-btn:active{transform:scale(.98)}
+  .rk-btn svg{width:16px;height:16px;transition:transform .2s}.rk:hover .rk-btn svg{transform:translateX(2px)}
+  .rk-rozet{position:absolute;top:-10px;right:18px;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;font-weight:700;color:#1d1606;background:linear-gradient(180deg,#ecd7a0,#d2ae62);padding:4px 11px;border-radius:20px}
+  @media(max-width:420px){.rk{padding:20px 18px 18px}.rk-btn{padding:12px 15px}}
+  .kat-kaydir{display:none}
+  @media(max-width:640px){
+    .rapor-kategori{padding:0}.rapor-kategori .kat-h,.rapor-kategori .kat-sub{padding:0 16px}.rapor-kategori .kat-sub{margin-bottom:10px}
+    .kat-kaydir{display:block;margin-top:3px;font-size:12.5px;color:var(--gold-soft);opacity:.8}
+    .rapor-grid{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 16px;padding:12px 16px 16px;gap:12px;scrollbar-width:none;overscroll-behavior-x:contain}
+    .rapor-grid::-webkit-scrollbar{display:none}
+    .rk{flex:0 0 86%;max-width:340px;scroll-snap-align:start}
+    .rk:hover{transform:none}
+  }
+  @media (prefers-reduced-motion:reduce){.rk,.rk-btn,.rk-btn svg{transition:none}}
+  /* Hız: ekran dışındaki bölümler görünür olana kadar çizilmez (görünüm değişmez) */
+  #daily-promo,#cards,#araclar,#nasil-calisir,#sss{content-visibility:auto}
+  #araclar>h2,#nasil-calisir>h2,#sss>h2{margin-top:0}#araclar>.tools-more{margin-bottom:0} /* kapsama nedeniyle birleşmeyen boşlukları eşitler */
+  #daily-promo{contain-intrinsic-size:auto 916px}#cards{contain-intrinsic-size:auto 2010px}#araclar{contain-intrinsic-size:auto 1297px}#nasil-calisir{contain-intrinsic-size:auto 952px}#sss{contain-intrinsic-size:auto 874px}
+  @media(min-width:821px){#daily-promo{contain-intrinsic-size:auto 524px}#cards{contain-intrinsic-size:auto 2880px}#araclar{contain-intrinsic-size:auto 630px}#nasil-calisir{contain-intrinsic-size:auto 291px}#sss{contain-intrinsic-size:auto 802px}}
+</style>
+<style id="ay-cerez-kritik">#ay-cerez{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1b1530;border-top:1px solid #332a4d;box-shadow:0 -12px 34px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .32s ease;font-family:"Segoe UI",system-ui,sans-serif}#ay-cerez.ac-in{transform:translateY(0)}.ay-cerez-in{max-width:980px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.ay-cerez-tx{margin:0;color:#f0e6d2;opacity:.9;font-size:13.5px;line-height:1.55;flex:1;min-width:230px}.ay-cerez-tx a{color:#e7cf95;text-decoration:underline}.ay-cerez-bt{display:flex;gap:10px;flex-shrink:0}.ay-cerez-kabul{background:linear-gradient(180deg,#e7cf95,#d9b96a);border:none;color:#1a1428;font:inherit;font-weight:bold;font-size:13.5px;padding:9px 26px;border-radius:20px;cursor:pointer;transition:filter .2s}.ay-cerez-kabul:hover{filter:brightness(1.06)}@media (max-width:600px){.ay-cerez-in{padding:12px 16px}.ay-cerez-bt{width:100%}.ay-cerez-kabul{flex:1}}@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}#ay-cerez.ac-in{animation:ayCerezGir .32s ease}@keyframes ayCerezGir{from{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){#ay-cerez.ac-in{animation:none}}</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Astro Yuvam"><meta name="apple-mobile-web-app-status-bar-style" content="black">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Astro Yuvam nedir?", "acceptedAnswer": {"@type": "Answer", "text": "Astro Yuvam, Türkiye'ye yönelik Türkçe bir astroloji ve numeroloji sitesidir. Doğduğun andaki gerçek gezegen konumlarıyla hesaplanan 24 çeşit kişiye özel PDF rapor ve üyelik gerektirmeyen 34 ücretsiz araç sunar. Ayrıntılar Hakkımızda sayfasında."}}, {"@type": "Question", "name": "Rapor fiyatları ne kadar?", "acceptedAnswer": {"@type": "Answer", "text": "Raporlar 300 TL ile 900 TL arasındadır ve tek seferlik ödenir; abonelik yoktur. Kişiye özel doğum haritası analizi 750 TL'dir ve 20+ sayfalık PDF olarak e-postana gelir. Tüm liste Fiyatlar sayfasında."}}, {"@type": "Question", "name": "Satın almadan önce örnek rapor görebilir miyim?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Pusula Serisi dışındaki 18 raporun her birinin detay sayfasında, gerçek bir rapordan hazırlanmış 3 sayfalık örnek PDF'i ücretsiz inceleyebilirsin."}}, {"@type": "Question", "name": "Doğum saatimi bilmiyorum, yine de rapor alabilir miyim?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Doğum saatiniz yoksa varsayılan olarak 12:00 kullanılır. Bu durumda gezegen konumları ve burçlar doğru hesaplanır; yalnızca yükselen burç ve ev konumları saate bağlı olduğu için tam kesinlik taşımayabilir. Saatinizi biliyorsanız girmeniz raporu daha isabetli kılar."}}, {"@type": "Question", "name": "Raporum ne kadar sürede gelir?", "acceptedAnswer": {"@type": "Answer", "text": "Siparişinizden sonra raporunuz size özel hazırlanır ve hazır olduğunda PDF olarak e-postanıza gönderilir. Gelen kutunuzda göremezseniz spam/gereksiz klasörünü kontrol etmeyi unutmayın."}}, {"@type": "Question", "name": "İade veya iptal mümkün mü?", "acceptedAnswer": {"@type": "Answer", "text": "Raporlar size özel, anında üretilen dijital ürünlerdir; bu nedenle üretim sonrası iade edilemez. Ancak teknik bir hata nedeniyle raporunuz üretilmez veya ulaşmazsa, yeniden üretir ya da ücretinizi iade ederiz. Detaylar için Mesafeli Satış Sözleşmemize bakabilirsiniz."}}, {"@type": "Question", "name": "Bilgilerim güvende mi?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Verileriniz yalnızca raporunuzu hazırlamak ve size ulaştırmak için kullanılır; pazarlama amacıyla üçüncü kişilerle paylaşılmaz veya satılmaz. Ödeme bilgileriniz doğrudan güvenli ödeme altyapısı tarafından işlenir, tarafımızca saklanmaz. Detaylar KVKK Aydınlatma Metnimizde."}}, {"@type": "Question", "name": "İlişki raporlarında neden partnerimin bilgileri isteniyor?", "acceptedAnswer": {"@type": "Answer", "text": "Sinastri ve Kader Matrisi Uyum gibi ilişki raporları, iki kişinin haritalarının/enerjilerinin etkileşimini analiz eder. Bu nedenle partnerinizin de doğum bilgileri gereklidir. Bu bilgileri girerken, ilgili kişinin bu konuda bilgilendirildiğini varsayarız."}}, {"@type": "Question", "name": "Raporlar ne kadar kişiye özel?", "acceptedAnswer": {"@type": "Answer", "text": "Tamamen size özeldir. Her rapor, doğum tarihiniz, saatiniz ve yerinizle hesaplanan gerçek gezegen konumlarına, yükselen dereceye, evlere ve açılara dayanır; numeroloji raporları da doğum tarihiniz ve isminizden türeyen sayılarla hazırlanır. Yorumlar, binlerce yıllık astroloji ve numeroloji geleneğini sıcak ve anlaşılır bir dille birleştirir; size sabit bir kader değil, eğilimlerinizi, güçlü yanlarınızı ve önünüzdeki dönemlerin temalarını gösterir. Kararlarınız her zaman sizindir."}}, {"@type": "Question", "name": "Raporu kimler için alabilirim? Kendim dışında biri olur mu?", "acceptedAnswer": {"@type": "Answer", "text": "Kendiniz için ya da hediye olarak bir yakınınız için alabilirsiniz. Sadece o kişinin doğum bilgilerini girmeniz yeterli. (Not: Bir başkası adına alırken, o kişinin bilgilerini paylaşmaya rıza gösterdiğinden emin olun.)"}}, {"@type": "Question", "name": "Ödemeyi nasıl yapıyorum?", "acceptedAnswer": {"@type": "Answer", "text": "Ödemenizi güvenli ödeme altyapısı üzerinden kartınızla kolayca yapabilirsiniz. Ödeme onaylandıktan sonra raporunuz size özel hazırlanmaya başlar."}}]}</script>
+<meta property="og:title" content="Astro Yuvam — Ücretsiz Doğum Haritası Hesaplama & Kişiye Özel Astroloji Raporları">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://astroyuvam.com/">
+<meta property="og:site_name" content="Astro Yuvam">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:description" content="Ücretsiz doğum haritası hesaplama, yükselen burç ve Lilith hesaplayıcıları, haftalık burç yorumları ve gerçek gezegen konumlarıyla hazırlanan kişiye özel astroloji, numeroloji ve kader matrisi raporları — Astro Yuvam.">
+<meta property="og:image" content="https://astroyuvam.com/logo-512.png">
+</head>
+<body>
+<div id="astro-menu"><nav class="am-nav"><a class="am-brand" href="/">✦ ASTRO YUVAM</a><div class="am-links"><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Keşfet <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Burç Yorumları <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div><a href="/yildiz-gunlugu.html">Yıldız Günlüğü</a><a href="/giris.html">Giriş</a><a href="/#cards" class="am-cta">Raporlar</a></div></nav></div>
+<script>(function(){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&/^sb-.*-auth-token$/.test(k)){var o=JSON.parse(localStorage.getItem(k)||"{}"),t=o.access_token||(o.currentSession&&o.currentSession.access_token),e=o.expires_at||(o.currentSession&&o.currentSession.expires_at);if(t&&(!e||e*1000>Date.now())){var g=document.querySelector('#astro-menu a[href="/giris.html"]');if(g)g.outerHTML='<div class="am-dropdown"><button type="button" class="am-drop-btn" aria-haspopup="true" aria-expanded="false">Hesabım <span class="am-caret">▾</span></button><div class="am-drop-menu" role="menu"></div></div>';}break;}}}catch(x){}})();</script>
+<main>
+<section class="hero">
+  <svg class="hw-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="hwCoreGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1e1733"/><stop offset="100%" stop-color="rgba(20,16,31,0)"/>
+      </radialGradient>
+      <filter id="hwGlow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <circle cx="200" cy="200" r="150" class="hw-core"/>
+    <circle cx="200" cy="200" r="196" class="hw-accent">
+      <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200 200" to="360 200 200" dur="80s" repeatCount="indefinite"/>
+    </circle>
+    <g class="hw-spin-o" id="heroOuter"><g filter="url(#hwGlow)"><circle cx="200" cy="200" r="186" class="hw-ring hw-ring-outer"></circle><circle cx="200" cy="200" r="152" class="hw-ring"></circle><line x1="200" y1="48" x2="200" y2="14" class="hw-div"></line><line x1="276" y1="68.36" x2="293" y2="38.92" class="hw-div"></line><line x1="331.64" y1="124" x2="361.08" y2="107" class="hw-div"></line><line x1="352" y1="200" x2="386" y2="200" class="hw-div"></line><line x1="331.64" y1="276" x2="361.08" y2="293" class="hw-div"></line><line x1="276" y1="331.64" x2="293" y2="361.08" class="hw-div"></line><line x1="200" y1="352" x2="200" y2="386" class="hw-div"></line><line x1="124" y1="331.64" x2="107" y2="361.08" class="hw-div"></line><line x1="68.36" y1="276" x2="38.92" y2="293" class="hw-div"></line><line x1="48" y1="200" x2="14" y2="200" class="hw-div"></line><line x1="68.36" y1="124" x2="38.92" y2="107" class="hw-div"></line><line x1="124" y1="68.36" x2="107" y2="38.92" class="hw-div"></line></g><g><text x="243.74" y="36.76" class="hw-zg">♈︎</text><text x="319.5" y="80.5" class="hw-zg">♉︎</text><text x="363.24" y="156.26" class="hw-zg">♊︎</text><text x="363.24" y="243.74" class="hw-zg">♋︎</text><text x="319.5" y="319.5" class="hw-zg">♌︎</text><text x="243.74" y="363.24" class="hw-zg">♍︎</text><text x="156.26" y="363.24" class="hw-zg">♎︎</text><text x="80.5" y="319.5" class="hw-zg">♏︎</text><text x="36.76" y="243.74" class="hw-zg">♐︎</text><text x="36.76" y="156.26" class="hw-zg">♑︎</text><text x="80.5" y="80.5" class="hw-zg">♒︎</text><text x="156.26" y="36.76" class="hw-zg">♓︎</text></g></g>
+    <g class="hw-spin-i" id="heroInner"><g filter="url(#hwGlow)"><circle cx="200" cy="200" r="64" class="hw-ring"></circle><line x1="200" y1="136" x2="200" y2="48" class="hw-div"></line><line x1="232" y1="144.57" x2="276" y2="68.36" class="hw-div"></line><line x1="255.43" y1="168" x2="331.64" y2="124" class="hw-div"></line><line x1="264" y1="200" x2="352" y2="200" class="hw-div"></line><line x1="255.43" y1="232" x2="331.64" y2="276" class="hw-div"></line><line x1="232" y1="255.43" x2="276" y2="331.64" class="hw-div"></line><line x1="200" y1="264" x2="200" y2="352" class="hw-div"></line><line x1="168" y1="255.43" x2="124" y2="331.64" class="hw-div"></line><line x1="144.57" y1="232" x2="68.36" y2="276" class="hw-div"></line><line x1="136" y1="200" x2="48" y2="200" class="hw-div"></line><line x1="144.57" y1="168" x2="68.36" y2="124" class="hw-div"></line><line x1="168" y1="144.57" x2="124" y2="68.36" class="hw-div"></line><line x1="250.7" y1="104.64" x2="184.97" y2="306.95" class="hw-asp"></line><line x1="307.93" y1="203.77" x2="102.93" y2="247.34" class="hw-asp"></line><line x1="280.26" y1="272.27" x2="106.47" y2="146" class="hw-asp"></line><line x1="184.97" y1="306.95" x2="177.55" y2="94.36" class="hw-asp"></line><line x1="250.7" y1="104.64" x2="102.93" y2="247.34" class="hw-asp"></line><line x1="307.93" y1="203.77" x2="106.47" y2="146" class="hw-asp"></line><circle cx="250.7" cy="104.64" r="3.2" class="hw-pdot"></circle><circle cx="307.93" cy="203.77" r="3.2" class="hw-pdot"></circle><circle cx="280.26" cy="272.27" r="3.2" class="hw-pdot"></circle><circle cx="184.97" cy="306.95" r="3.2" class="hw-pdot"></circle><circle cx="102.93" cy="247.34" r="3.2" class="hw-pdot"></circle><circle cx="106.47" cy="146" r="3.2" class="hw-pdot"></circle><circle cx="177.55" cy="94.36" r="3.2" class="hw-pdot"></circle></g><g><text x="259.15" y="88.75" class="hw-pg">☉︎</text><text x="325.92" y="204.4" class="hw-pg">☽︎</text><text x="293.64" y="284.31" class="hw-pg">☿︎</text><text x="182.46" y="324.77" class="hw-pg">♀︎</text><text x="86.75" y="255.23" class="hw-pg">♂︎</text><text x="90.88" y="137" class="hw-pg">♃︎</text><text x="173.8" y="76.75" class="hw-pg">♄︎</text></g></g>
+  </svg>
+  <h1>Doğum haritan <em>sana ne söylüyor?</em></h1>
+  <p>Gerçek gezegen konumları ve numeroloji ile hesaplanan, kişiye özel astroloji ve kader matrisi raporların. Her rapor sana özel hazırlanır ve hazır olduğunda PDF olarak e-postana gönderilir.</p>
+</section>
+
+<!-- ✦ YENİ VİDEO kartı (23–29 Kasım haftalık burç yorumu). 19 Kasım 16:10'dan 30 Kasım'a kadar görünür; tıklanınca oynatıcı yüklenir (sayfa hızını etkilemez). -->
+<style>.yv{max-width:820px;margin:26px auto 0;padding:0 18px}.yv-kart{display:flex;gap:20px;align-items:center;background:linear-gradient(120deg,rgba(217,185,106,.13),rgba(124,108,240,.10));border:1px solid rgba(217,185,106,.45);border-radius:16px;padding:14px;box-shadow:0 8px 30px rgba(217,185,106,.08)}
+.yv-ekran{position:relative;flex:none;width:400px;max-width:100%;aspect-ratio:16/9;border-radius:11px;overflow:hidden;background:#0b0b14;border:0;padding:0;cursor:pointer;display:block}
+.yv-ekran img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.yv-ekran:hover img{transform:scale(1.03)}
+.yv-play{position:absolute;left:27%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(11,11,20,.72);border:2px solid #d9b96a;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(217,185,106,.45);transition:transform .2s}
+.yv-ekran:hover .yv-play{transform:scale(1.08)}.yv-play svg{width:24px;height:24px;margin-left:4px;fill:#d9b96a}
+.yv-sure{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.78);color:#fff;font-size:12px;font-weight:600;padding:2px 6px;border-radius:4px}
+.yv-ekran iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yv-yazi{flex:1;min-width:0;text-align:left}.yv-rozet{display:inline-block;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:#14101f;background:#d9b96a;border-radius:999px;padding:3px 10px;font-weight:700}
+.yv-baslik{color:#efe9dc;font-size:20px;line-height:1.3;margin:10px 0 6px;font-weight:700}.yv-alt{color:#b9aecb;font-size:13.5px;line-height:1.55;margin:0 0 14px}
+.yv-btns{display:flex;gap:10px;flex-wrap:wrap}.yv-b{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:10px 15px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:1px solid transparent;font-family:inherit}
+.yv-b1{background:transparent;color:#d9b96a;border-color:#d9b96a}.yv-b1:hover{background:rgba(217,185,106,.12)}.yv-b2{background:#e62117;color:#fff}.yv-b2:hover{filter:brightness(1.1)}.yv-b2 svg{width:18px;height:18px;fill:#fff}
+@media(max-width:700px){.yv-kart{flex-direction:column;align-items:stretch;gap:14px}.yv-ekran{width:100%}.yv-yazi{text-align:center}.yv-btns{justify-content:center}.yv-baslik{font-size:18px}}</style>
+<section class="yv" id="yeniVideo" aria-label="Yeni video">
+  <div class="yv-kart">
+    <button class="yv-ekran" type="button" id="yvEkran" aria-label="Videoyu burada oynat: 23-29 Kasım haftalık burç yorumu">
+      <img src="/yt-2311-480.webp" srcset="/yt-2311-480.webp 480w, /yt-2311-800.webp 800w" sizes="(max-width:700px) 92vw, 400px" width="480" height="270" alt="23-29 Kasım haftalık burç yorumu videosunun kapağı: Sürpriz haftası" loading="lazy" decoding="async">
+      <span class="yv-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+      <span class="yv-sure" aria-hidden="true">31:03</span>
+    </button>
+    <div class="yv-yazi">
+      <span class="yv-rozet">Yeni video · 23-29 Kasım</span>
+      <h2 class="yv-baslik">12 burç 100 üzerinden puanlandı: bu hafta zirvede kim?</h2>
+      <p class="yv-alt">İkizler'de dolunay, Mars Başak'ta. Her burcun haftası kendi bölümünde, ilk üç en sonda açılıyor.</p>
+      <div class="yv-btns">
+        <button class="yv-b yv-b1" type="button" id="yvBurada">▶ Burada izle</button>
+        <a class="yv-b yv-b2" href="https://www.youtube.com/watch?v=Kfia5zcvh6o" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>YouTube'da izle</a>
+      </div>
+    </div>
+  </div>
+</section>
+<script>(function(){var s=document.getElementById("yeniVideo");if(!s)return;var n=Date.now();if(n<Date.parse("2026-11-19T16:10:00+03:00")||n>Date.parse("2026-11-30T00:00:00+03:00")){s.style.display="none";return;}
+var e=document.getElementById("yvEkran"),acik=false;function oynat(){if(acik)return;acik=true;var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/Kfia5zcvh6o?autoplay=1&rel=0&playsinline=1";f.title="23-29 Kasım Haftalık Burç Yorumu";f.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";f.allowFullscreen=true;var d=document.createElement("div");d.className="yv-ekran";d.style.cursor="default";d.appendChild(f);e.replaceWith(d);e=d;if(window.gtag)gtag("event","video_oynat",{video_id:"Kfia5zcvh6o"});}
+e.addEventListener("click",oynat);document.getElementById("yvBurada").addEventListener("click",function(){oynat();e.scrollIntoView({behavior:"smooth",block:"center"});});})();</script>
+
+<section class="section-block" id="burc-yorumlari">
+  <h2>12 Burç ve Özellikleri</h2>
+  <p class="sub">Burcuna tıkla; karakterini, aşk ve kariyer eğilimlerini, elementini ve uyumunu oku.</p>
+  <div class="burc-grid">
+    <a href="/koc-burcu.html"><span class="bs">♈&#xFE0E;</span><span class="bn">Koç</span></a>
+    <a href="/boga-burcu.html"><span class="bs">♉&#xFE0E;</span><span class="bn">Boğa</span></a>
+    <a href="/ikizler-burcu.html"><span class="bs">♊&#xFE0E;</span><span class="bn">İkizler</span></a>
+    <a href="/yengec-burcu.html"><span class="bs">♋&#xFE0E;</span><span class="bn">Yengeç</span></a>
+    <a href="/aslan-burcu.html"><span class="bs">♌&#xFE0E;</span><span class="bn">Aslan</span></a>
+    <a href="/basak-burcu.html"><span class="bs">♍&#xFE0E;</span><span class="bn">Başak</span></a>
+    <a href="/terazi-burcu.html"><span class="bs">♎&#xFE0E;</span><span class="bn">Terazi</span></a>
+    <a href="/akrep-burcu.html"><span class="bs">♏&#xFE0E;</span><span class="bn">Akrep</span></a>
+    <a href="/yay-burcu.html"><span class="bs">♐&#xFE0E;</span><span class="bn">Yay</span></a>
+    <a href="/oglak-burcu.html"><span class="bs">♑&#xFE0E;</span><span class="bn">Oğlak</span></a>
+    <a href="/kova-burcu.html"><span class="bs">♒&#xFE0E;</span><span class="bn">Kova</span></a>
+    <a href="/balik-burcu.html"><span class="bs">♓&#xFE0E;</span><span class="bn">Balık</span></a>
+  </div>
+  <div class="burc-cta">
+    <a href="/haftalik-burc-yorumlari.html">Haftalık Burç Yorumları →</a>
+    <a href="/2027-burc-yorumlari.html">2027 Burç Yorumları →</a>
+  </div>
+</section>
+
+<section class="section-block" id="daily-promo">
+  <style>
+    .uye-vitrin{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;background:radial-gradient(ellipse at 15% 0%,rgba(124,108,240,.16),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(217,185,106,.12),transparent 55%),var(--ay-panel);border:1px solid rgba(217,185,106,.35);border-radius:24px;padding:30px}
+    @media(max-width:820px){.uye-vitrin{grid-template-columns:1fr;padding:22px 18px}}
+    .uv-rozet{display:inline-block;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#241a06;background:linear-gradient(180deg,#e7cf95,var(--ay-gold));border-radius:10px;padding:3px 9px;font-weight:700}
+    .uye-vitrin .uv-bas{font-family:Georgia,serif;font-size:30px;line-height:1.15;color:var(--ay-ink);margin:12px 0 8px}
+    .uv-bas em{color:#e7cf95}
+    .uv-alt{color:var(--ay-muted);font-size:14.5px;line-height:1.6;margin:0 0 14px}
+    .uv-liste{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:8px}
+    .uv-liste li{position:relative;padding-left:24px;font-size:14px;color:var(--ay-ink);line-height:1.5}
+    .uv-liste li::before{content:"✦";position:absolute;left:2px;color:var(--ay-gold)}
+    .uv-liste b{color:#e7cf95;font-weight:600}
+    .uv-btn{display:inline-block;background:linear-gradient(180deg,#e7cf95,var(--ay-gold));color:#241a06;font-weight:700;padding:13px 24px;border-radius:30px;text-decoration:none;font-size:15px;box-shadow:0 10px 30px -12px rgba(217,185,106,.8)}
+    .uv-not{font-size:12.5px;color:var(--ay-muted);margin-top:10px}
+    .uv-not a{color:#e7cf95}
+    .uv-ekran{background:#120d1e;border:1px solid var(--ay-line);border-radius:18px;padding:16px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);position:relative}
+    .uv-ekran .ust{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ay-muted);margin-bottom:10px}
+    .uv-ekran .ust b{font-family:Georgia,serif;font-size:18px;color:var(--ay-ink);font-weight:600}
+    .uv-ekran .ust span{border:1px solid rgba(217,185,106,.4);border-radius:10px;padding:2px 8px;color:#e7cf95}
+    .uv-ikili{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .uv-k{background:#1c1733;border:1px solid var(--ay-line);border-radius:14px;padding:12px}
+    .uv-k small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ay-gold);margin-bottom:6px}
+    .uv-k b{font-family:Georgia,serif;font-size:17px;color:var(--ay-ink);font-weight:600}
+    .uv-k p{font-size:12px;color:var(--ay-muted);margin:4px 0 0;line-height:1.45}
+    .uv-k .n{font-family:Georgia,serif;font-size:38px;color:#e7cf95;line-height:1}
+    .uv-aci{margin-top:10px;background:#1c1733;border:1px solid var(--ay-line);border-left:3px solid #8fd8b0;border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--ay-ink)}
+    .uv-aci b{display:block;font-size:13px;margin-bottom:2px}
+    .uv-aci em{font-style:normal;color:#e7cf95;font-size:12px}
+    .uv-gun{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+    .uv-gun span{font-size:11.5px;color:var(--ay-ink);background:#1c1733;border:1px solid var(--ay-line);border-radius:10px;padding:4px 8px}
+    .uv-ornek{position:absolute;top:-10px;right:14px;font-size:10.5px;color:var(--ay-muted);background:#120d1e;border:1px solid var(--ay-line);border-radius:8px;padding:1px 7px}
+  </style>
+  <div class="uye-vitrin">
+    <div>
+      <span class="uv-rozet" id="uvRozet">Ücretsiz üyelik</span>
+      <h2 class="uv-bas" style="text-align:left" id="uvBaslik">Gökyüzün, <em>her gün</em> seninle.</h2>
+      <p class="uv-alt" id="uvAlt">Bir kez doğum bilgini gir; Astro Yuvam her sabah o günü senin haritana göre okusun. Üyelere özel:</p>
+      <ul class="uv-liste">
+        <li><b>Kozmik Panelim:</b> Ay bugün hangi evinde, bu hafta hangi gün ne için uygun, kişisel gün sayın ve haritana dokunan açılar.</li>
+        <li><b>Sana özel günlük yorum:</b> doğum haritan ve bugünün gökyüzüyle yazılır.</li>
+        <li><b>30 günlük kişisel takvim:</b> sana özel tarihler, tek tıkla telefon takvimine.</li>
+        <li><b>Hayatının dönüm yılları</b> ve haritandan çıkan <b>“ben buyum” hikâye kartın.</b></li>
+        <li><b>Doğum haritan her zaman hazır,</b> sevdiklerinin haritaları da kayıtlı.</li>
+        <li><b>Asterna ile raporunu konuş:</b> bizden aldığın raporu satır satır incele.</li>
+      </ul>
+      <a class="uv-btn" id="uvBtn" href="/giris.html?mod=uye&amp;geri=%2Fpanelim.html">✦ Ücretsiz üye ol</a>
+      <div class="uv-not" id="uvNot">Kredi kartı gerekmez · 30 saniye · Zaten üye misin? <a href="/giris.html?mod=giris&amp;geri=%2Fpanelim.html">Giriş yap</a></div>
+    </div>
+    <a class="uv-ekran" href="/panelim.html" style="text-decoration:none">
+      <span class="uv-ornek">örnek görünüm</span>
+      <div class="ust"><b>Günaydın, Deniz ✦</b><span>4 gündür buradasın</span></div>
+      <div class="uv-ikili">
+        <div class="uv-k"><small>Bugün Ay</small><b>Balık burcunda</b><p>Senin 5. evinde: keyif, flört ve yaratıcılık günü.</p></div>
+        <div class="uv-k"><small>Kişisel gün sayın</small><div class="n">3</div><p>İfade ve neşe: yaz, konuş, paylaş.</p></div>
+      </div>
+      <div class="uv-aci"><b>Venüs △ natal Ay · Üçgen</b>Sevgi, uyum ve keyif duyguların ve iç dünyanla rahatça akıyor. <em>✦ Sevdiğin biriyle zaman geçir.</em></div>
+      <div class="uv-gun"><span>12 Eki · Yeni Ay 9. evinde</span><span>18 Eki · Merkür geri</span><span>+ takvimine ekle</span></div>
+    </a>
+  </div>
+  <script>
+  (function(){
+    try{
+      var acik=false,o,tok,exp,k;
+      for(var i=0;i<localStorage.length;i++){
+        k=localStorage.key(i);
+        if(k && /^sb-.*-auth-token$/.test(k)){
+          o=JSON.parse(localStorage.getItem(k)||"{}");
+          tok=o.access_token||(o.currentSession&&o.currentSession.access_token);
+          exp=o.expires_at||(o.currentSession&&o.currentSession.expires_at);
+          if(tok && (!exp || exp*1000>Date.now())){ acik=true; break; }
+        }
+      }
+      if(acik){
+        document.getElementById("uvRozet").textContent="Bugüne özel";
+        document.getElementById("uvBaslik").innerHTML="Panelin <em>bugünle</em> hazır.";
+        document.getElementById("uvAlt").textContent="Ay bugün senin hangi evinde, kişisel gün sayın ne ve bugün haritana hangi gezegenler dokunuyor? Hepsi Kozmik Panelinde.";
+        var b=document.getElementById("uvBtn"); b.textContent="✦ Kozmik Panelime git"; b.setAttribute("href","/panelim.html");
+        document.getElementById("uvNot").innerHTML='Sana özel günlük yorumun da hazır: <a href="/gunluk-yorumum.html">Günlük yorumum →</a>';
+      }
+    }catch(e){}
+  })();
+  </script>
+</section>
+
+<section id="cards"></section>
+
+<section class="section-block" id="araclar">
+  <h2>Ücretsiz Araçlar</h2>
+  <p class="sub">Rapor almadan önce keşfet: gökyüzü, sayılar, semboller ve daha fazlası — hepsi ücretsiz, anında.</p>
+  <a class="tool-feature" href="/dogum-haritasi-hesaplama.html">
+    <span class="fic">✦</span>
+    <span class="ftx">
+      <span class="fbadge">★ Ücretsiz &amp; anlık</span>
+      <span class="ftt">Ücretsiz Doğum Haritası Hesaplama</span>
+      <span class="ftd">Doğum tarihi, saati ve yerini gir; gerçek doğum haritanı, yükselen burcunu ve gezegen yerleşimlerini anında ücretsiz gör.</span>
+    </span>
+    <span class="farrow">→</span>
+  </a>
+  <a class="tool-feature" href="/yaz-saati-dogum-saati.html">
+    <span class="fic">✦</span>
+    <span class="ftx">
+      <span class="fbadge">★ Doğum haritan için kritik</span>
+      <span class="ftt">Doğduğum Gün Yaz Saati Var mıydı?</span>
+      <span class="ftd">Türkiye'nin 1940–2016 yaz saati geçmişiyle doğum saatinin UTC karşılığını bul; yanlış saat dilimi yükselen burcunu değiştirebilir.</span>
+    </span>
+    <span class="farrow">→</span>
+  </a>
+  <div class="tools-grid">
+    <a class="tool-card" href="/gokyuzu.html"><span class="ic">✦</span><span class="tx"><span class="tt">Gökyüzü</span><span class="td">Şu an gökyüzü & günün fısıltısı</span></span></a>
+    <a class="tool-card" href="/ay-takvimi.html"><span class="ic">☾</span><span class="tx"><span class="tt">Ay Takvimi</span><span class="td">Bugünün ay evresi ve ritüeli</span></span></a>
+    <a class="tool-card" href="/yildizlara-sor.html"><span class="ic">✧</span><span class="tx"><span class="tt">Yıldızlara Sor</span><span class="td">Astroloji &amp; numeroloji kavramlarını sor</span></span></a>
+    <a class="tool-card" href="/ruya-sembolu.html"><span class="ic">☾</span><span class="tx"><span class="tt">Rüya Sembolü</span><span class="td">Rüyandaki motif ne anlatıyor?</span></span></a>
+    <a class="tool-card" href="/hangi-burcsun.html"><span class="ic">✦</span><span class="tx"><span class="tt">Hangi Burçsun?</span><span class="td">10 soruluk eğlenceli test</span></span></a>
+    <a class="tool-card" href="/yasam-yolu.html"><span class="ic">✦</span><span class="tx"><span class="tt">Yaşam Yolu Sayın</span><span class="td">Doğum tarihinden yaşam yolu sayın</span></span></a>
+    <a class="tool-card" href="/isim-titresimi.html"><span class="ic">✧</span><span class="tx"><span class="tt">İsminin Titreşimi</span><span class="td">Bir ismin sayısal titreşimi</span></span></a>
+    <a class="tool-card" href="/burclar.html"><span class="ic">✦</span><span class="tx"><span class="tt">Burç Profilleri</span><span class="td">12 burcun karakteri ve özellikleri</span></span></a>
+    <a class="tool-card" href="/arkanalar.html"><span class="ic">✧</span><span class="tx"><span class="tt">Arkana Profilleri</span><span class="td">22 Majör Arkana ve anlamları</span></span></a>
+  </div>
+  <p class="tools-more">Astroloji ve numeroloji üzerine yazılar için <a href="/yildiz-gunlugu.html">Yıldız Günlüğü'ne göz at →</a></p>
+</section>
+
+<section class="section-block" id="nasil-calisir">
+  <h2>Nasıl Çalışır?</h2>
+  <div class="sub">Dört basit adımda kişisel raporun e-postanda.</div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Raporunu Seç</h3><p>İhtiyacına uygun rapor türünü seç.</p></div>
+    <div class="step"><div class="num">2</div><h3>Bilgilerini Gir</h3><p>Doğum tarihi, yeri ve birkaç detay yeterli.</p></div>
+    <div class="step"><div class="num">3</div><h3>Güvenle Öde</h3><p>Güvenli ödeme altyapısıyla ödemeni tamamla.</p></div>
+    <div class="step"><div class="num">4</div><h3>E-postana Gelsin</h3><p>Raporun hazır olduğunda PDF olarak e-postanda.</p></div>
+  </div>
+</section>
+
+
+<section class="section-block" id="fiyat-listesi">
+  <h2>Tüm Raporlar ve Fiyatları</h2>
+  <div class="sub">24 kişiye özel PDF rapor · tek seferlik ödeme · 18 raporun 3 sayfalık örneği ücretsiz</div>
+  <ul class="fl-liste"><li><a href="/pusula-serisi.html"><span class="fl-ad">Pusula Serisi (İş, Aşk, Para, Yetenek, Yaşam) ve Altın Pusula</span><span class="fl-fy">kişiye özel plan · <b>1.500 TL</b>'den</span></a></li><li><a href="/dogum-haritasi-analizi.html"><span class="fl-ad">Doğum Haritası Analizi (Haritanı Tanı)</span><span class="fl-fy">20+ sayfa · <b>750 TL</b></span></a></li><li><a href="/cocugunu-tani-analizi.html"><span class="fl-ad">Çocuğunu Tanı — Gelişim ve Eğitim</span><span class="fl-fy">14+ sayfa · <b>750 TL</b></span></a></li><li><a href="/kariyer-haritasi-analizi.html"><span class="fl-ad">Kariyer ve Meslek Haritası</span><span class="fl-fy">14+ sayfa · <b>675 TL</b></span></a></li><li><a href="/ask-haritasi-analizi.html"><span class="fl-ad">Aşk Haritası</span><span class="fl-fy">11+ sayfa · <b>675 TL</b></span></a></li><li><a href="/karmik-harita-analizi.html"><span class="fl-ad">Karmik Harita</span><span class="fl-fy">13+ sayfa · <b>600 TL</b></span></a></li><li><a href="/vedik-harita-analizi.html"><span class="fl-ad">Vedik Doğum Haritası (Jyotiṣa)</span><span class="fl-fy">12+ sayfa · <b>675 TL</b></span></a></li><li><a href="/astrokartografi-analizi.html"><span class="fl-ad">Astrokartografi — Dünyada Senin Yerin</span><span class="fl-fy">13+ sayfa · <b>900 TL</b></span></a></li><li><a href="/transit-analizi.html"><span class="fl-ad">Transit Raporu (12 Aylık Öngörü)</span><span class="fl-fy">11+ sayfa · <b>450 TL</b></span></a></li><li><a href="/solar-return-analizi.html"><span class="fl-ad">Solar Return (Kişisel Yıl Haritası)</span><span class="fl-fy">14+ sayfa · <b>400 TL</b></span></a></li><li><a href="/lunar-return-analizi.html"><span class="fl-ad">Lunar Return (Aylık Duygusal Harita)</span><span class="fl-fy">12+ sayfa · <b>300 TL</b></span></a></li><li><a href="/progresyon-analizi.html"><span class="fl-ad">Progresyon — Ruhsal Olgunlaşma Haritası</span><span class="fl-fy">12+ sayfa · <b>600 TL</b></span></a></li><li><a href="/secim-astrolojisi-analizi.html"><span class="fl-ad">Seçim Astrolojisi — En Uygun Gün ve Saat</span><span class="fl-fy">9+ sayfa · <b>900 TL</b></span></a></li><li><a href="/sinastri-uyum-analizi.html"><span class="fl-ad">Sinastri (İlişki Uyumu)</span><span class="fl-fy">18+ sayfa · <b>750 TL</b></span></a></li><li><a href="/iliski-haritasi-analizi.html"><span class="fl-ad">İlişki Haritası — Kompozit ve Davison</span><span class="fl-fy">14+ sayfa · <b>750 TL</b></span></a></li><li><a href="/kader-matrisi-analizi.html"><span class="fl-ad">Kader Matrisi</span><span class="fl-fy">24+ sayfa · <b>600 TL</b></span></a></li><li><a href="/kader-matrisi-uyum-analizi.html"><span class="fl-ad">Kader Matrisi Uyum</span><span class="fl-fy">30+ sayfa · <b>750 TL</b></span></a></li><li><a href="/numeroloji-analizi.html"><span class="fl-ad">Kişisel Numeroloji</span><span class="fl-fy">13+ sayfa · <b>525 TL</b></span></a></li><li><a href="/soru-astrolojisi-analizi.html"><span class="fl-ad">Soru Astrolojisi (Horary)</span><span class="fl-fy">3–4 sayfa · <b>675 TL</b></span></a></li></ul>
+  <p class="fl-alt"><a href="/fiyatlar.html">Fiyatların ayrıntısı ve karşılaştırma →</a> · <a href="/ucretsiz-astroloji-araclari.html">34 ücretsiz araç →</a> · <a href="/hakkimizda.html">Astro Yuvam nedir? →</a></p>
+</section>
+
+<section class="section-block" id="sss">
+  <h2>Sıkça Sorulan Sorular</h2>
+  <div class="sub">Aklına takılanların cevabı burada.</div>
+  <div class="faq">
+    <details><summary>Astro Yuvam nedir?</summary>
+      <div class="ans">Astro Yuvam, Türkiye'ye yönelik Türkçe bir astroloji ve numeroloji sitesidir. Doğduğun andaki gerçek gezegen konumlarıyla hesaplanan 24 çeşit kişiye özel PDF rapor ve üyelik gerektirmeyen 34 ücretsiz araç sunar. Ayrıntılar <a href="/hakkimizda.html" style="color:var(--ay-gold)">Hakkımızda</a> sayfasında.</div>
+    </details>
+    <details><summary>Rapor fiyatları ne kadar?</summary>
+      <div class="ans">Raporlar 300 TL ile 900 TL arasındadır ve tek seferlik ödenir; abonelik yoktur. Kişiye özel doğum haritası analizi 750 TL'dir ve 20+ sayfalık PDF olarak e-postana gelir. Tüm liste <a href="/fiyatlar.html" style="color:var(--ay-gold)">Fiyatlar</a> sayfasında.</div>
+    </details>
+    <details><summary>Satın almadan önce örnek rapor görebilir miyim?</summary>
+      <div class="ans">Evet. Pusula Serisi dışındaki 18 raporun her birinin detay sayfasında, gerçek bir rapordan hazırlanmış 3 sayfalık örnek PDF'i ücretsiz inceleyebilirsin.</div>
+    </details>
+    <details><summary>Doğum saatimi bilmiyorum, yine de rapor alabilir miyim?</summary>
+      <div class="ans">Evet. Doğum saatiniz yoksa varsayılan olarak 12:00 kullanılır. Bu durumda gezegen konumları ve burçlar doğru hesaplanır; yalnızca yükselen burç ve ev konumları saate bağlı olduğu için tam kesinlik taşımayabilir. Saatinizi biliyorsanız girmeniz raporu daha isabetli kılar.</div>
+    </details>
+    <details><summary>Raporum ne kadar sürede gelir?</summary>
+      <div class="ans">Siparişinizden sonra raporunuz size özel hazırlanır ve hazır olduğunda PDF olarak e-postanıza gönderilir. Gelen kutunuzda göremezseniz spam/gereksiz klasörünü kontrol etmeyi unutmayın.</div>
+    </details>
+    <details><summary>İade veya iptal mümkün mü?</summary>
+      <div class="ans">Raporlar size özel, anında üretilen dijital ürünlerdir; bu nedenle üretim sonrası iade edilemez. Ancak teknik bir hata nedeniyle raporunuz üretilmez veya ulaşmazsa, yeniden üretir ya da ücretinizi iade ederiz. Detaylar için <a href="mesafeli-satis.html" style="color:var(--ay-gold)">Mesafeli Satış Sözleşmemize</a> bakabilirsiniz.</div>
+    </details>
+    <details><summary>Bilgilerim güvende mi?</summary>
+      <div class="ans">Evet. Verileriniz yalnızca raporunuzu hazırlamak ve size ulaştırmak için kullanılır; pazarlama amacıyla üçüncü kişilerle paylaşılmaz veya satılmaz. Ödeme bilgileriniz doğrudan güvenli ödeme altyapısı tarafından işlenir, tarafımızca saklanmaz. Detaylar <a href="gizlilik-kvkk.html" style="color:var(--ay-gold)">KVKK Aydınlatma Metnimizde</a>.</div>
+    </details>
+    <details><summary>İlişki raporlarında neden partnerimin bilgileri isteniyor?</summary>
+      <div class="ans">Sinastri ve Kader Matrisi Uyum gibi ilişki raporları, iki kişinin haritalarının/enerjilerinin etkileşimini analiz eder. Bu nedenle partnerinizin de doğum bilgileri gereklidir. Bu bilgileri girerken, ilgili kişinin bu konuda bilgilendirildiğini varsayarız.</div>
+    </details>
+    <details><summary>Raporlar ne kadar kişiye özel?</summary>
+      <div class="ans">Tamamen size özeldir. Her rapor, doğum tarihiniz, saatiniz ve yerinizle hesaplanan gerçek gezegen konumlarına, yükselen dereceye, evlere ve açılara dayanır; numeroloji raporları da doğum tarihiniz ve isminizden türeyen sayılarla hazırlanır. Yorumlar, binlerce yıllık astroloji ve numeroloji geleneğini sıcak ve anlaşılır bir dille birleştirir; size sabit bir kader değil, eğilimlerinizi, güçlü yanlarınızı ve önünüzdeki dönemlerin temalarını gösterir. Kararlarınız her zaman sizindir.</div>
+    </details>
+    <details><summary>Raporu kimler için alabilirim? Kendim dışında biri olur mu?</summary>
+      <div class="ans">Kendiniz için ya da hediye olarak bir yakınınız için alabilirsiniz. Sadece o kişinin doğum bilgilerini girmeniz yeterli. (Not: Bir başkası adına alırken, o kişinin bilgilerini paylaşmaya rıza gösterdiğinden emin olun.)</div>
+    </details>
+    <details><summary>Ödemeyi nasıl yapıyorum?</summary>
+      <div class="ans">Ödemenizi güvenli ödeme altyapısı üzerinden kartınızla kolayca yapabilirsiniz. Ödeme onaylandıktan sonra raporunuz size özel hazırlanmaya başlar.</div>
+    </details>
+  </div>
+  <div class="disclaimer">
+    Astro Yuvam raporları öz-farkındalık ve rehberlik amaçlıdır. Kesin kehanet niteliği taşımaz; tıbbi, psikolojik, hukuki veya finansal tavsiye yerine geçmez. Kararlarınız her zaman size aittir.
+  </div>
+</section>
+
+</main>
+<style>
+  .ay-sosyal{display:flex;gap:20px;justify-content:center;align-items:center;margin:2px 0 18px}
+  .ay-sosyal a{color:#b9aecb;display:inline-flex;transition:color .2s,transform .2s}
+  .ay-sosyal a:hover{color:#d9b96a;transform:translateY(-2px)}
+</style>
+<footer>
+  <div class="ay-sosyal">
+    <a href="https://www.instagram.com/astroyuvam" target="_blank" rel="noopener" aria-label="Astro Yuvam Instagram" title="Instagram">
+      <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.6"/><circle cx="17.6" cy="6.4" r="1.15" fill="currentColor" stroke="none"/></svg>
+    </a>
+  </div>
+  © 2026 Astro Yuvam — Tüm hakları saklıdır.<br>
+  <a href="/hakkimizda.html">Hakkımızda</a> · <a href="/fiyatlar.html">Fiyatlar</a> · <a href="/ucretsiz-astroloji-araclari.html">Ücretsiz Araçlar</a> · <a href="/astroloji-uygulamasi.html">Uygulama</a><br>
+  <a href="gizlilik-kvkk.html">Gizlilik &amp; KVKK Aydınlatma Metni</a> ·
+  <a href="mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a> ·
+  <a href="kullanim-kosullari.html">Kullanım Koşulları</a>
+</footer>
+
+<script>
+function kartlariKur(){
+  // Raporları kategorilere ayır (yeni rapor eklendikçe ilgili gruba düşer, düzen bozulmaz).
+  const KATEGORILER = [
+    { ad:"Pusula Serisi — Yorum Değil, Plan", alt:"Astro Yuvam'a özgü: haritanın bütününden çıkan yollar ve bugünün koşullarıyla adım adım planı", ids:["pusula_butun","pusula_is","pusula_ask","pusula_para","pusula_beceri","pusula_yasam"] },
+    { ad:"Kişisel Haritalar", alt:"Kendi doğum haritan ve hayatının alanları", ids:["natal","cocuk","kariyer","ask","karmik","vedik","astrokartografi"] },
+    { ad:"Zaman ve Öngörü",   alt:"Önündeki dönemler ve doğru anı seçmek",     ids:["transit","solar_return","lunar_return","progresyon","secim"] },
+    { ad:"İlişki Raporları",  alt:"İki kişinin uyumu ve ilişki dinamiği",      ids:["sinastri","iliski_haritasi","matrix_uyum"] },
+    { ad:"Numeroloji & Soru Astrolojisi", alt:"Sayıların dili ve tek soruna anlık yanıt", ids:["matrix","numeroloji","horary"] }
+  ];
+  const byId = Object.fromEntries(REPORTS.map(r => [r.id, r]));
+  const container = document.getElementById("cards");
+
+  // Kart ayrıntıları: sayfa sayısı, gerekenler, ücretsiz örnek PDF, kısa ve net fayda cümlesi
+  const EK = {"natal":{"s":"20+","g":"Doğum tarihi, saati, yeri","o":"ornek-dogum-haritasi-raporu.pdf","k":"Güneş-Ay-Yükselen, 12 evin tek tek yorumu, aşk, kariyer, para, yaşam amacı ve önündeki 12 aya tarihli öngörüler."},"cocuk":{"s":"14+","g":"Çocuğun doğum tarihi, saati, yeri","o":"ornek-cocugunu-tani-raporu.pdf","k":"Yaşa göre öğrenme stili, dersler, dikkat, duygusal ihtiyaçlar, sosyal gelişim ve ebeveyne uygulama rehberi."},"kariyer":{"s":"14+","g":"Doğum tarihi, saati, yeri","o":"ornek-kariyer-haritasi-raporu.pdf","k":"Sana uygun 3 meslek alanı, çalışma tarzı, para kazanma yolu ve önümüzdeki 24 ayın kariyer dönemleri."},"ask":{"s":"11+","g":"Doğum tarihi, saati, yeri","o":"ornek-ask-haritasi-raporu.pdf","k":"Aşk dilin, partner profilin, tanışma ortamları ve önümüzdeki 24 ayın aşk dönemleri."},"karmik":{"s":"13+","g":"Doğum tarihi, saati, yeri","o":"ornek-karmik-harita-raporu.pdf","k":"Ay Düğümleri, Satürn, Chiron ve 12. ev ile ruh görevin; karmik eşiklerin yaşlarıyla birlikte."},"vedik":{"s":"12+","g":"Doğum tarihi, saati, yeri","o":"ornek-vedik-harita-raporu.pdf","k":"Lagna, nakşatra, Rasi ve Navamşa, yogalar, Mangal doşa, Sade Sati ve gerçek tarihli daşa dönemleri."},"astrokartografi":{"s":"13+","g":"Doğum tarihi, saati, yeri","o":"ornek-astrokartografi-raporu.pdf","k":"40 gezegen hattı; 81 il ve 170 dünya şehri tarama; aşk, kariyer, para ve huzur için en iyi şehirler."},"transit":{"s":"11+","g":"Doğum tarihi, saati, yeri","o":"ornek-transit-raporu.pdf","k":"Önümüzdeki 12 ayı ev geçişleri ve açılarla tarih tarih anlatan öngörü raporu."},"solar_return":{"s":"14+","g":"Doğum tarihi, saati, yeri","o":"ornek-solar-return-raporu.pdf","k":"Doğum gününden doğum gününe kişisel yeni yılının haritası ve temaları."},"lunar_return":{"s":"12+","g":"Doğum tarihi, saati, yeri","o":"ornek-lunar-return-raporu.pdf","k":"Ay'ın her ay doğum derecene döndüğü an: bu ayın duygusal döngüsü."},"progresyon":{"s":"12+","g":"Doğum tarihi, saati, yeri","o":"ornek-progresyon-raporu.pdf","k":"Hayat döngündeki evren, progres Ay'ın 3 yıllık takvimi ve yaklaşan dönüm noktaları."},"secim":{"s":"9+","g":"Doğum bilgisi, amaç, tarih aralığı","o":"ornek-secim-astrolojisi-raporu.pdf","k":"Nikâh, açılış, sözleşme, taşınma için aralıktaki her günü 10 dakikalık adımlarla tarayıp en uygun pencereyi verir."},"sinastri":{"s":"18+","g":"İki kişinin doğum bilgileri","o":"ornek-sinastri-raporu.pdf","k":"İki haritanın karşılaştırması: duygusal, fiziksel, zihinsel uyum ve 12 aylık tarihli ilişki öngörüleri."},"iliski_haritasi":{"s":"14+","g":"İki kişinin doğum bilgileri","o":"ornek-iliski-haritasi-raporu.pdf","k":"İlişkinin kendi haritası: özü, en güçlü yanı, en büyük sınavı ve önümüzdeki 15 ay."},"matrix":{"s":"24+","g":"Yalnızca doğum tarihi","o":"ornek-kader-matrisi-raporu.pdf","k":"22 Büyük Arkana oktagramı: karmik kuyruk, aşk-para-yetenek hatları, çakralar, blokajlar ve yaş dönemleri."},"matrix_uyum":{"s":"30+","g":"İki kişinin doğum tarihi","o":"ornek-kader-matrisi-uyum-raporu.pdf","k":"İki oktagramın birleşimi: ortak enerjiler, ilişki-para-karmik bağ blokajları ve kriz-çözüm rehberi."},"numeroloji":{"s":"13+","g":"Doğumdaki tam ad + doğum tarihi","o":"ornek-numeroloji-raporu.pdf","k":"Yaşam Yolu, İfade, Ruh Güdüsü, karmik borçlar, 4 zirve ve bu yılın kişisel sayıları (Pisagor)."},"horary":{"s":"3–4","g":"Yalnızca net bir soru","o":"ornek-soru-astrolojisi-raporu.pdf","k":"Aklındaki tek somut soruya, sorunun sorulduğu anın gökyüzünden en başta net bir cevapla başlayan okuma."}};
+  const CHK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>';
+  const DOC = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z"/><path d="M9.5 1.8V5h3M6 8.5h4.5M6 11h4.5"/></svg>';
+  const OK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+  const ONERI = { natal:"Başlangıç için önerilen", pusula_butun:"En kapsamlısı" };
+  const PG = "Doğum tarihi, saati, yeri + durumunu anlatan kısa sorular";
+  Object.assign(EK, {
+    pusula_butun:{ g:PG, k:"Hayatının beş alanı tek seferde: iş, aşk, para, yetenek ve yaşam düzeni. Hepsi aynı haritadan, birbirine bağlanarak çıkar; her önerinin güncel fiyatlarla planı, birleşik 12 aylık takvimin ve sana özel izleme listen dahil." },
+    pusula_is:{ g:PG, k:"Ne iş yapmalıyım, nereden başlamalıyım? Haritanın bütününden çıkan 2–3 iş yolu; her biri kalem kalem güncel maliyeti, araçları, 7-30-90 gün takvimi ve kazanç hesabıyla." },
+    pusula_ask:{ g:PG, k:"Neden hep aynı yere varıyorum? Sana uyan ilişki biçimi, tekrar eden düğümün ve çıkış yolu; şehrinde sana uyan tanışma zeminleri, hazır cümleler ve 90 günlük adımlar." },
+    pusula_para:{ g:PG, k:"Param neden elimde durmuyor? Para düğümün, sana uyan birikim düzeni ve gerçekçi bir ek gelir yolu; bugün kurulacak adımlar ve 6 aylık takvimle. Yatırım tavsiyesi değildir." },
+    pusula_beceri:{ g:PG, k:"Neyi öğrenirsem karşılığını alırım? Sana en çok değecek 2–3 beceri, sana uyan öğrenme biçimi, güncel kaynaklar ve hafta hafta 12 haftalık program." },
+    pusula_yasam:{ g:PG, k:"Nasıl bir düzen bana iyi gelir? Sana uyan günlük ritim, yaşaman gereken ortam ve enerjini tüketen alışkanlık; 30 günlük yeni düzen planıyla." }
+  });
+  const tanitimda = r => r.liste && (!r.tanitimBitis || new Date() <= new Date(r.tanitimBitis + "T23:59:59+03:00"));
+  function kartHTML(r){
+    const e = EK[r.id] || {};
+    const href = r.page || ("order.html?type=" + r.id);
+    const ikon = (typeof RAPOR_IKON!=="undefined" && RAPOR_IKON[r.id]) ? RAPOR_IKON[r.id] : "";
+    const td = tanitimda(r);
+    const fiyat = Number(r.liste && !td ? r.liste : r.price).toLocaleString("tr-TR");
+    const fiyatAlt = td ? `tanıtım fiyatı · sonra ${Number(r.liste).toLocaleString("tr-TR")} TL` : "tek seferlik · e-postana gelir";
+    return `
+      ${ONERI[r.id] ? `<span class="rk-rozet">${ONERI[r.id]}</span>` : ``}
+      <div class="rk-ust">${ikon ? `<div class="rk-ikon">${ikon}</div>` : ``}<div><h3>${r.title}</h3>${e.s ? `<span class="rk-etiket">${e.s} sayfa · PDF</span>` : ``}</div></div>
+      <p>${e.k || r.short}</p>
+      <ul>
+        ${e.g ? `<li>${CHK}<span>Gerekenler: ${e.g.charAt(0).toLocaleLowerCase("tr") + e.g.slice(1)}</span></li>` : ``}
+        ${e.o ? `<li>${DOC}<span><a href="/${e.o}" target="_blank" rel="noopener">Ücretsiz 3 sayfalık örneği gör</a></span></li>` : ``}
+      </ul>
+      <div class="rk-alt">
+        <div class="rk-fiyat"><b>${fiyat} TL</b><span>${fiyatAlt}</span></div>
+        <a class="rk-btn" href="${href}" aria-label="${r.title}: incele ve sipariş ver">İncele ${OK}</a>
+      </div>`;
+  }
+
+  KATEGORILER.forEach(kat => {
+    const raporlar = kat.ids.map(id => byId[id]).filter(Boolean);
+    if (!raporlar.length) return;
+    const bolum = document.createElement("div");
+    bolum.className = "rapor-kategori";
+    bolum.innerHTML = `<h2 class="kat-h">${kat.ad}</h2><div class="kat-sub">${kat.alt}<span class="kat-kaydir">${raporlar.length} rapor · yana kaydır →</span></div><div class="rapor-grid"></div>`;
+    const grid = bolum.querySelector(".rapor-grid");
+    raporlar.forEach(r => {
+      const card = document.createElement("article");
+      card.className = "rk";
+      card.innerHTML = kartHTML(r);
+      grid.appendChild(card);
+    });
+    container.appendChild(bolum);
+  });
+
+  // Kategorisiz kalan rapor olursa (yeni eklenip gruba yazılmadıysa) en alta "Diğer" grubunda göster.
+  const kategorili = new Set(KATEGORILER.flatMap(k => k.ids));
+  const digerler = REPORTS.filter(r => !kategorili.has(r.id));
+  if (digerler.length){
+    const bolum = document.createElement("div");
+    bolum.className = "rapor-kategori";
+    bolum.innerHTML = `<h2 class="kat-h">Diğer Raporlar</h2><div class="kat-sub">Yeni eklenenler<span class="kat-kaydir">yana kaydır →</span></div><div class="rapor-grid"></div>`;
+    const grid = bolum.querySelector(".rapor-grid");
+    digerler.forEach(r => {
+      const card = document.createElement("article");
+      card.className = "rk"; card.innerHTML = kartHTML(r);
+      grid.appendChild(card);
+    });
+    container.appendChild(bolum);
+  }
+}
+</script>
+<div id="ay-cerez" class="ac-in" role="note" aria-label="Çerez bilgilendirmesi"><div class="ay-cerez-in"><p class="ay-cerez-tx">Deneyimini iyileştirmek ve ziyaret istatistikleri için çerezler kullanıyoruz. Ayrıntılar için <a href="/gizlilik-kvkk.html">Gizlilik &amp; KVKK</a> metnimize göz atabilirsin.</p><div class="ay-cerez-bt"><button type="button" class="ay-cerez-kabul">Tamam</button></div></div></div>
+<script>try{if(localStorage.getItem("ay_cerez_bilgi_v1")==="1"){var c=document.getElementById("ay-cerez");c.parentNode.removeChild(c);}}catch(e){}</script>
+<script>
+/* Hız: ilk içerik ekrana çizildikten hemen sonra (ya da ilk dokunuşta) rapor kartları ve ortak menü betiği yüklenir */
+(function(){
+  var oldu=false, olaylar=["pointerdown","keydown","touchstart"];
+  function yukle(){
+    if(oldu) return; oldu=true;
+    olaylar.forEach(function(o){ removeEventListener(o,yukle,true); });
+    var r=document.createElement("script"); r.src="reports-data.js"; r.onload=kartlariKur; document.body.appendChild(r);
+    var m=document.createElement("script"); m.src="/menu.js"; document.body.appendChild(m);
+  }
+  olaylar.forEach(function(o){ addEventListener(o,yukle,{capture:true,passive:true}); });
+  try{
+    var po=new PerformanceObserver(function(l){ l.getEntries().forEach(function(e){ if(e.name==="first-contentful-paint"){ po.disconnect(); setTimeout(yukle,0); } }); });
+    po.observe({type:"paint",buffered:true});
+  }catch(e){}
+  setTimeout(yukle,1500); // yedek: tarayıcı çizim bilgisini vermezse
+})();
+</script>
+</body>
+</html>

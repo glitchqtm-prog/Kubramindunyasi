@@ -1,0 +1,260 @@
+{{MENU}}
+<main>
+<section class="hero" id="ust" aria-label="Astro Yuvam">
+  <div class="pin" id="pin">
+    <div class="film" id="film"><canvas width="720" height="1280" aria-hidden="true"></canvas></div>
+    <div class="shade"></div>
+    <div class="hc h0" id="h0">
+      <p class="eyb">Astroloji ve numeroloji</p>
+      <h1 class="h1"><span>Doğduğun anın</span><span>gökyüzü,</span><span><em>senin haritan.</em></span></h1>
+      <div class="gap"></div>
+      <p class="hs">Astro Yuvam, doğduğun andaki gerçek gezegen konumlarını hesaplar. Haritanı ücretsiz çıkar; istersen sana özel yazılan raporunu al.</p>
+      <div class="hb">
+        <a class="btn b1" href="dogum-haritasi-hesaplama.html">Haritanı ücretsiz çıkar <svg aria-hidden="true"><use href="#ok"/></svg></a>
+        <a class="btn b2" href="#cards">Raporları incele</a>
+      </div>
+      <p class="hp">24 kişiye özel rapor · 34 ücretsiz araç · üyelik gerekmez</p>
+    </div>
+    <p class="beat bt1">Doğduğun an gökyüzü <em>bir kez</em> öyle dizildi.</p>
+    <p class="beat bt2">Her gezegen bir burçta, bir evde, <em>kendi yerindeydi.</em></p>
+    <div class="hc he" id="he">
+      <p class="beat">O anı hesaplıyor, sana <em>anlaşılır bir dille</em> anlatıyoruz.</p>
+      <div class="hb">
+        <a class="btn b1" href="dogum-haritasi-hesaplama.html" tabindex="-1">Haritanı ücretsiz çıkar <svg aria-hidden="true"><use href="#ok"/></svg></a>
+        <a class="btn b2" href="#cards" tabindex="-1">Raporları incele</a>
+      </div>
+    </div>
+    <span class="hint" aria-hidden="true">Kaydır</span>
+  </div>
+</section>
+
+<section class="sec" id="gok">
+  <div class="w">
+    <div class="gk">
+      <div class="gk-c rv" id="gkC">
+        <svg viewBox="-200 -200 400 400" role="img" aria-label="Bugünün gökyüzü: gezegenlerin burçlardaki yeri">
+          <circle class="gk-r dr" r="190" pathLength="1" stroke-width="1.2"/>
+          <circle class="gk-r dr" r="150" pathLength="1" stroke-width="1"/>
+          <circle class="gk-r fd" r="74" stroke-width=".6" stroke-opacity=".28"/>
+          <g class="fd">{{ZOD}}</g>
+          <g id="gkP"></g>
+        </svg>
+        <div class="gk-n fd"><b id="gkEvre">Gökyüzü</b><span id="gkAy">bugün</span></div>
+      </div>
+      <div>
+        <p class="eyb rv">Bugünün gökyüzü</p>
+        <h2 class="h2 rv">Gezegenler bugün <em>burada.</em></h2>
+        <p class="lead rv">Raporlarımız da ücretsiz araçlarımız da aynı yerden başlar: gezegenlerin gerçek konumları. Bu çark her gün yeniden hesaplanır.</p>
+        <ul class="gk-li rv" id="gkL" hidden></ul>
+        <div class="gk-a rv">
+          <a class="lnk" href="bugun-gokyuzu.html">Bugünün gökyüzünü ayrıntılı gör <svg aria-hidden="true"><use href="#ok"/></svg></a>
+          <a class="lnk" href="zaman-makinesi.html">Doğduğun gün nasıldı? <svg aria-hidden="true"><use href="#ok"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="nm rv">
+      <a href="#cards"><b data-n="24">24</b><span>kişiye özel rapor</span></a>
+      <a href="ucretsiz-astroloji-araclari.html"><b data-n="34">34</b><span>ücretsiz araç</span></a>
+      <a href="yildiz-gunlugu.html"><b data-n="{{YAZI}}">{{YAZI}}</b><span>rehber yazı</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="cards">
+  <div class="w">
+    <div class="rp-top">
+      <p class="eyb rv"><i>01</i>Raporlar</p>
+      <h2 class="h2 rv">Sana özel yazılan <em>24 rapor.</em></h2>
+      <p class="lead rv">Her rapor doğduğun andaki gerçek gezegen konumlarından hesaplanır, sana özel yazılır ve PDF olarak e-postana gelir. 18 raporun üç sayfalık örneğini satın almadan görebilirsin.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Rapor grupları" id="rpTabs">
+      <button class="tab" role="tab" type="button" aria-selected="true" aria-controls="rpStage" data-k="0">Pusula Serisi<small>6</small></button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="rpStage" data-k="1" tabindex="-1">Kişisel Haritalar<small>7</small></button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="rpStage" data-k="2" tabindex="-1">Zaman ve Öngörü<small>5</small></button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="rpStage" data-k="3" tabindex="-1">İlişki Raporları<small>3</small></button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="rpStage" data-k="4" tabindex="-1">Numeroloji ve Soru Astrolojisi<small>3</small></button>
+    </div>
+    <div class="stg" id="rpStage" role="tabpanel" aria-label="Seçili gruptaki raporlar">
+      <div class="kat" id="rpKat">
+        <div class="kat-t"><b id="rpAd">Pusula Serisi</b><span id="rpAlt">Astro Yuvam'a özgü: haritanın bütününden çıkan yollar ve bugünün koşullarıyla adım adım planı</span></div>
+      </div>
+      <div class="cards" id="rpCards"><p class="rp-wait">Raporlar yükleniyor. Tüm liste aşağıda da var.</p></div>
+    </div>
+
+    <div class="stp" id="nasil-calisir">
+      <h2 class="stp-h rv">Nasıl çalışır?</h2>
+      <p class="stp-s rv">Dört basit adımda kişisel raporun e-postanda.</p>
+      <ol class="rv">
+        <li><h3>Raporunu seç</h3><p>İhtiyacına uygun rapor türünü seç.</p></li>
+        <li><h3>Bilgilerini gir</h3><p>Doğum tarihi, yeri ve birkaç detay yeterli.</p></li>
+        <li><h3>Güvenle öde</h3><p>Güvenli ödeme altyapısıyla ödemeni tamamla.</p></li>
+        <li><h3>E-postana gelsin</h3><p>Raporun hazır olduğunda PDF olarak e-postanda.</p></li>
+      </ol>
+    </div>
+
+    <details class="fl" id="fiyat-listesi">
+      <summary><h2 class="srf" style="font-size:inherit;line-height:1.2">Tüm Raporlar ve Fiyatları</h2></summary>
+      <p class="fl-sub">24 kişiye özel PDF rapor · tek seferlik ödeme · 18 raporun 3 sayfalık örneği ücretsiz</p>
+      {{FLISTE}}
+      {{FLALT}}
+    </details>
+  </div>
+</section>
+
+<section class="sec" id="araclar">
+  <div class="w">
+    <p class="eyb rv"><i>02</i>Ücretsiz araçlar</p>
+    <h2 class="h2 rv">Önce kendin dene, <em>ücretsiz.</em></h2>
+    <p class="lead rv">34 araç, üyelik gerekmez. Rapor almadan önce gökyüzünü, sayıları ve sembolleri kendin keşfet.</p>
+    <div class="ar">
+      <div class="mt rv">
+        <h3>Doğum tarihini seç, <em>ikisini hemen öğren.</em></h3>
+        <p>Güneş burcun ve yaşam yolu sayın. İkisi de yalnızca doğum tarihinden hesaplanır.</p>
+        <form id="mtF" novalidate>
+          <div><label for="mtG">Gün</label><select id="mtG" autocomplete="bday-day"></select></div>
+          <div><label for="mtA">Ay</label><select id="mtA" autocomplete="bday-month"></select></div>
+          <div><label for="mtY">Yıl</label><select id="mtY" autocomplete="bday-year"></select></div>
+          <button class="btn b1" type="submit">Göster <svg aria-hidden="true"><use href="#ok"/></svg></button>
+        </form>
+        <p class="mt-e" id="mtE" role="alert"></p>
+        <div class="mt-r" id="mtR" hidden aria-live="polite"></div>
+      </div>
+      <div class="rv d1">
+        <ul class="tl">
+          <li><a href="dogum-haritasi-hesaplama.html"><b>Ücretsiz Doğum Haritası Hesaplama</b><span>Etkileşimli çark, ev sistemleri ve tüm açılar</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="yukselen-burc-nedir.html"><b>Yükselen Burç Hesaplama</b><span>Yükselenin doğum saatine göre nasıl değiştiğini canlı gör</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="uyum-testi.html"><b>Burç Uyum Testi</b><span>İki doğum tarihiyle iletişim, tutku ve güven uyumu</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="zaman-makinesi.html"><b>Gökyüzü Zaman Makinesi</b><span>İlk buluşma, düğün, doğum günü: o günün gökyüzü</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="yaz-saati-dogum-saati.html"><b>Doğduğum Gün Yaz Saati Var mıydı?</b><span>Yanlış saat dilimi yükselen burcunu değiştirebilir</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="lilith-burcu-hesaplama.html"><b>Lilith Burcu Hesaplama</b><span>Kara Ay Lilith hangi burçta, hangi evde?</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="dugun-tarihi-hesaplama.html"><b>Düğün Tarihi Hesaplama</b><span>Nikâh, nişan ve düğün için seçtiğin günü kontrol et</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="ay-takvimi.html"><b>Ay Takvimi</b><span>Bugünün ay evresi ve evreye özel niyet</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+          <li><a href="asterna.html"><b>Asterna</b><span>Astroloji ve numeroloji sorularını sor</span><svg aria-hidden="true"><use href="#ok"/></svg></a></li>
+        </ul>
+        <div class="kt tl-c">
+          <a href="gokyuzu.html">Şu An Gökyüzü</a><a href="hangi-burcsun.html">Hangi Burçsun?</a><a href="yasam-yolu.html">Yaşam Yolu Sayın</a><a href="isim-titresimi.html">İsminin Titreşimi</a><a href="ruya-sembolu.html">Rüya Sembolü</a><a href="yildizlara-sor.html">Yıldızlara Sor</a><a href="burclar.html">Burç Profilleri</a><a href="arkanalar.html">Arkana Profilleri</a>
+        </div>
+        <a class="lnk tl-m" href="ucretsiz-astroloji-araclari.html">34 aracın tamamını gör <svg aria-hidden="true"><use href="#ok"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="burc-yorumlari">
+  <div class="w">
+    <p class="eyb rv"><i>03</i>Burçlar</p>
+    <h2 class="h2 rv">On iki burç, <em>seninki hangisi?</em></h2>
+    <p class="lead rv">Burcuna dokun; karakterini, aşk ve kariyer eğilimlerini, elementini ve uyumunu oku.</p>
+    <div class="bz rv">{{BZ}}</div>
+    <div class="bz-a rv">
+      <a class="lnk" href="haftalik-burc-yorumlari.html">Haftalık Burç Yorumları <svg aria-hidden="true"><use href="#ok"/></svg></a>
+      <a class="lnk" href="2027-burc-yorumlari.html">2027 Burç Yorumları <svg aria-hidden="true"><use href="#ok"/></svg></a>
+    </div>
+{{YV}}
+  </div>
+</section>
+
+<section class="sec" id="yildiz-gunlugu">
+  <div class="w">
+    <p class="eyb rv"><i>04</i>Yıldız Günlüğü</p>
+    <h2 class="h2 rv">Merak ettiklerin, <em>sade bir dille.</em></h2>
+    <p class="lead rv">{{YAZI}} yazı: doğum haritasından numerolojiye, aşktan hesaplamalara.</p>
+    <div class="yg rv">{{YG}}</div>
+    <div class="kt rv">{{KT}}</div>
+    <a class="lnk yg-m rv" href="yildiz-gunlugu.html">Tüm yazılar <svg aria-hidden="true"><use href="#ok"/></svg></a>
+  </div>
+</section>
+
+<section class="sec" id="daily-promo">
+  <div class="w uy">
+    <div class="rv">
+      <span class="uv-rozet" id="uvRozet">Ücretsiz üyelik</span>
+      <h2 class="uv-bas" id="uvBaslik">Gökyüzün, <em>her gün</em> seninle.</h2>
+      <p class="uv-alt" id="uvAlt">Bir kez doğum bilgini gir; Astro Yuvam her sabah o günü senin haritana göre okusun. Üyelere özel:</p>
+      <a class="btn b1 uv-btn" id="uvBtn" href="giris.html?mod=uye&amp;geri=%2Fpanelim.html">Ücretsiz üye ol</a>
+      <div class="uv-not" id="uvNot">Kredi kartı gerekmez · 30 saniye · Zaten üye misin? <a href="giris.html?mod=giris&amp;geri=%2Fpanelim.html">Giriş yap</a></div>
+    </div>
+    <ul class="uv-liste rv d1">
+      <li><b><a href="panelim.html">Kozmik Panelim</a></b>Ay bugün hangi evinde, bu hafta hangi gün ne için uygun, kişisel gün sayın ve haritana dokunan açılar.</li>
+      <li><b>Sana özel günlük yorum</b>Doğum haritan ve bugünün gökyüzüyle yazılır.</li>
+      <li><b>30 günlük kişisel takvim</b>Sana özel tarihler, tek tıkla telefon takvimine.</li>
+      <li><b>Doğum haritan her zaman hazır</b>Sevdiklerinin haritaları da kayıtlı.</li>
+      <li><b>Asterna ile raporunu konuş</b>Bizden aldığın raporu satır satır incele.</li>
+    </ul>
+  </div>
+  {{UYEJS}}
+</section>
+
+<section class="sec" id="sss">
+  <div class="w sq">
+    <div>
+      <p class="eyb rv">Sorular</p>
+      <h2 class="h2 rv">Sıkça Sorulan Sorular</h2>
+      <p class="lead rv">Aklına takılanların cevabı burada.</p>
+    </div>
+    <div class="rv">
+      {{FAQ}}
+      {{DISC}}
+    </div>
+  </div>
+</section>
+
+<section class="kp" id="son">
+  <img src="ay-kapanis.webp" width="1024" height="576" alt="" loading="lazy" decoding="async">
+  <video id="kpV" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="ay-kapanis.mp4"></video>
+  <div class="w">
+    <h2 class="kp-h rv">Önce <em>haritana</em> bak.</h2>
+    <p class="rv">Doğum tarihin, saatin ve doğduğun yer yeterli. Haritanı ücretsiz çıkar; daha derine inmek istediğinde sana özel yazılan raporlar burada.</p>
+    <div class="hb rv">
+      <a class="btn b1" href="dogum-haritasi-hesaplama.html">Haritanı ücretsiz çıkar <svg aria-hidden="true"><use href="#ok"/></svg></a>
+      <a class="btn b2" href="#cards">Raporları incele</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="ft">
+  <div class="w">
+    <div class="ft-g">
+      <div class="ft-m">
+        <a class="ft-b" href="./">✦ ASTRO YUVAM</a>
+        <p>Astroloji ve numeroloji: ücretsiz araçlar, haftalık burç yorumları ve kişiye özel raporlar.</p>
+        <a class="ft-s" href="https://www.instagram.com/astroyuvam" target="_blank" rel="noopener" aria-label="Astro Yuvam Instagram">{{IGSVG}}Instagram</a>
+      </div>
+      <div>
+        <h2>Astro Yuvam</h2>
+        <ul>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="fiyatlar.html">Fiyatlar</a></li>
+          <li><a href="ucretsiz-astroloji-araclari.html">Ücretsiz Araçlar</a></li>
+          <li><a href="astroloji-uygulamasi.html">Uygulama</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Keşfet</h2>
+        <ul>
+          <li><a href="dogum-haritasi-hesaplama.html">Doğum Haritası</a></li>
+          <li><a href="haftalik-burc-yorumlari.html">Haftalık Burç Yorumları</a></li>
+          <li><a href="yildiz-gunlugu.html">Yıldız Günlüğü</a></li>
+          <li><a href="#sss">Sıkça Sorulanlar</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Yasal</h2>
+        <ul>
+          <li><a href="gizlilik-kvkk.html">Gizlilik &amp; KVKK Aydınlatma Metni</a></li>
+          <li><a href="mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a></li>
+          <li><a href="kullanim-kosullari.html">Kullanım Koşulları</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-a"><span>© 2026 Astro Yuvam — Tüm hakları saklıdır.</span><span>astroyuvam.com</span></div>
+  </div>
+</footer>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="ok" viewBox="0 0 16 16"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+{{SYM}}
+</defs></svg>
+{{CEREZ}}
+<script>{{APPJS}}</script>
+</body>
+</html>
