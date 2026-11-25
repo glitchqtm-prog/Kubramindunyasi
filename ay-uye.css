@@ -1,6 +1,6 @@
 /* ay-uye.css — üyelere özel sayfaların ortak görünümü: Giriş / Üye ol, Hesabım, Kozmik Panelim.
    Sayfanın kendi stil bloğundan SONRA yüklenir; ana sayfadaki gece laciverdi ton ve yazı düzeniyle aynı aileden. */
-@font-face{font-family:"AY Fraunces";font-style:normal;font-weight:400;font-display:swap;src:url(ay-fraunces.woff2) format("woff2")}
+@font-face{font-family:"AY Fraunces";font-style:normal;font-weight:400;font-display:swap;src:url(ay-fraunces-b.woff2) format("woff2")}
 :root{--bg:#04060d;--bg-1:#03050b;--bg-2:#04060d;--panel:#080b17;--panel-2:#0b1020;--field:#060913;--field-2:#0b1020;--gold:#d9b96a;--gold-soft:#e7cf95;--cream:#f0e6d2;--muted:#aaa5ba;--muted-2:rgba(240,230,210,.45);--line:rgba(240,230,210,.1);--line-2:rgba(217,185,106,.4);--mor:#9fb4e6;--u-hair:rgba(240,230,210,.1);--u-altin:rgba(217,185,106,.28);--u-kart:linear-gradient(180deg,rgba(13,18,36,.72),rgba(7,10,20,.72));--u-disp:"AY Fraunces",Georgia,"Times New Roman",serif;--u-serif:Georgia,"Iowan Old Style","Times New Roman",serif;--u-sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 html{background:#04060d}
 body.u{font-family:var(--u-sans);color:var(--cream);background:radial-gradient(1200px 640px at 82% -140px,rgba(24,48,96,.46),transparent 64%),radial-gradient(900px 560px at -6% 34%,rgba(217,185,106,.045),transparent 60%),#04060d}
