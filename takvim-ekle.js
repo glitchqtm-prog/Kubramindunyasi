@@ -8,7 +8,7 @@
   if (window.AYTakvim) return;
   var API = "https://astro-rapor.onrender.com/api/takvim.ics";
   var ua = navigator.userAgent || "", IOS = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && "ontouchend" in document), ANDROID = /Android/i.test(ua), MAC = /Macintosh/.test(ua) && !IOS;
-  var css = '#ayt-ort{position:fixed;inset:0;z-index:100000;background:rgba(8,6,14,.72);display:flex;align-items:flex-end;justify-content:center;font-family:"Segoe UI",system-ui,sans-serif;animation:aytF .2s ease}'
+  var css = '#ayt-ort{position:fixed;inset:0;z-index:100000;background:rgba(3,4,6,.72);display:flex;align-items:flex-end;justify-content:center;font-family:"Segoe UI",system-ui,sans-serif;animation:aytF .2s ease}'
     + '@media(min-width:640px){#ayt-ort{align-items:center}}'
     + '@keyframes aytF{from{opacity:0}}'
     + '.ayt-k{width:100%;max-width:440px;max-height:88vh;overflow:auto;background:#0a0e1c;border:1px solid rgba(217,185,106,.45);border-radius:20px 20px 0 0;padding:20px 18px 18px;color:#f0e6d2;box-shadow:0 -20px 60px rgba(0,0,0,.6)}'
@@ -23,7 +23,7 @@
     + '.ayt-k details{margin:2px 0 10px;border:1px solid #1f2942;border-radius:12px;padding:8px 12px}'
     + '.ayt-k summary{cursor:pointer;font-size:13.5px;color:#e7cf95}'
     + '.ayt-l{list-style:none;margin:8px 0 2px;padding:0}'
-    + '.ayt-l li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid rgba(51,42,77,.6);font-size:13px}'
+    + '.ayt-l li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid rgba(34,43,63,.6);font-size:13px}'
     + '.ayt-l a{flex:none;color:#241a06;background:#e7cf95;border-radius:10px;padding:3px 10px;font-size:12px;text-decoration:none;font-weight:600}'
     + '.ayt-kapat{display:block;width:100%;background:none;border:0;color:#a39db6;font:inherit;font-size:14px;padding:10px;cursor:pointer}'
     + '.ayt-not{font-size:12px;color:#a39db6;line-height:1.5;margin:4px 2px 10px}';

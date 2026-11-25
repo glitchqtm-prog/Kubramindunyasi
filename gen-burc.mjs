@@ -127,11 +127,11 @@ function moonSVG(angleDeg){
   const R=44,c=50,a=((angleDeg%360)+360)%360,rad=a*Math.PI/180,semi=Math.cos(rad)*R,rx=Math.abs(semi).toFixed(2),rightLit=a<180;
   let d; if(rightLit){const s=semi>0?0:1; d=`M${c},${c-R} A${R},${R} 0 0 1 ${c},${c+R} A${rx},${R} 0 0 ${s} ${c},${c-R} Z`;}
   else{const s=semi>0?1:0; d=`M${c},${c-R} A${R},${R} 0 0 0 ${c},${c+R} A${rx},${R} 0 0 ${s} ${c},${c-R} Z`;}
-  return `<svg viewBox="0 0 100 100" class="ay-svg" role="img" aria-label="Ay evresi"><defs><radialGradient id="ayp" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fbf3d8"/><stop offset="1" stop-color="#e7cf95"/></radialGradient></defs><circle cx="${c}" cy="${c}" r="${R}" fill="#171327" stroke="#19213a"/><path d="${d}" fill="url(#ayp)"/><circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#3a3358"/></svg>`;
+  return `<svg viewBox="0 0 100 100" class="ay-svg" role="img" aria-label="Ay evresi"><defs><radialGradient id="ayp" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fbf3d8"/><stop offset="1" stop-color="#e7cf95"/></radialGradient></defs><circle cx="${c}" cy="${c}" r="${R}" fill="#0b0e17" stroke="#19213a"/><path d="${d}" fill="url(#ayp)"/><circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#2e384f"/></svg>`;
 }
 function skyWheelSVG(ayIdx,gunIdx){
   const c=110,R=88,rg=64,pos=(i,r)=>{const a=(-90+i*30)*Math.PI/180;return[c+r*Math.cos(a),c+r*Math.sin(a)];};
-  let s=`<svg viewBox="0 0 220 220" class="sky-svg" role="img" aria-label="Bugünün gökyüzü çarkı"><circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#19213a"/><circle cx="${c}" cy="${c}" r="${rg}" fill="none" stroke="#241d38"/>`;
+  let s=`<svg viewBox="0 0 220 220" class="sky-svg" role="img" aria-label="Bugünün gökyüzü çarkı"><circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#19213a"/><circle cx="${c}" cy="${c}" r="${rg}" fill="none" stroke="#141926"/>`;
   for(let i=0;i<12;i++){const p=pos(i,R-14),on=(i===ayIdx||i===gunIdx);s+=`<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="15" fill="${on?'#e7cf95':'#807b94'}" font-family="Segoe UI Symbol,serif">${GLIF[i]}&#xFE0E;</text>`;}
   const pa=pos(ayIdx,rg-14),pg=pos(gunIdx,rg-14);
   s+=`<text x="${pg[0].toFixed(1)}" y="${(pg[1]+6).toFixed(1)}" text-anchor="middle" font-size="18" fill="#e0a84e">☉&#xFE0E;</text>`;
@@ -630,7 +630,7 @@ const CSS = `
   .ay-svg{width:70px;height:70px}.sky-svg{width:88px;height:88px;margin:-8px 0}
   .pano-ad{font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:4px}
   .pano-deger{font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--cream);line-height:1.4}
-  .pano-kart{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:74px;background:linear-gradient(160deg,#2a2145,#080c18);border:1px solid var(--gold);border-radius:9px;color:var(--gold-soft);text-decoration:none}
+  .pano-kart{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:74px;background:linear-gradient(160deg,#192134,#080c18);border:1px solid var(--gold);border-radius:9px;color:var(--gold-soft);text-decoration:none}
   .pano-kart-n{font-family:Georgia,serif;font-size:20px;font-weight:bold}.pano-kart-ad{font-size:10px;color:var(--muted);padding:0 2px;line-height:1.1}
   .pano-renk{width:56px;height:56px;border-radius:50%;box-shadow:0 0 18px rgba(0,0,0,.4) inset,0 4px 14px rgba(0,0,0,.3)}
   .pano-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:#a39db6;text-align:center;margin:14px 0 0;line-height:1.5}
@@ -638,7 +638,7 @@ const CSS = `
   .eb{display:flex;flex-direction:column;gap:7px;margin:12px 0 0}
   .eb-satir{display:flex;align-items:center;gap:9px}
   .eb-l{width:32px;font-family:'Segoe UI',system-ui,sans-serif;font-size:12.5px;color:var(--muted)}
-  .eb-track{flex:1;height:8px;background:#15111f;border-radius:6px;overflow:hidden}
+  .eb-track{flex:1;height:8px;background:#090b11;border-radius:6px;overflow:hidden}
   .eb-track i{display:block;height:100%;border-radius:6px}
   .eb-v{width:24px;text-align:right;font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:var(--gold-soft);font-weight:600}
   .burc .eb{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
@@ -649,7 +649,7 @@ const CSS = `
   .dalga-not{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;color:#a39db6;text-align:center;margin-top:8px}
   /* Günün kartı satırı (tekil sayfa) */
   .gunkart{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:18px 0}
-  .gunkart .ikon{flex:none;width:52px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#2a2145,#080c18);border:1px solid var(--gold);border-radius:8px;color:var(--gold-soft);text-decoration:none}
+  .gunkart .ikon{flex:none;width:52px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#192134,#080c18);border:1px solid var(--gold);border-radius:8px;color:var(--gold-soft);text-decoration:none}
   .gunkart .ikon b{font-family:Georgia,serif;font-size:18px}.gunkart .ikon small{font-size:9px;color:var(--muted)}
   .gunkart .mtn{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;color:#efe7f6;line-height:1.55}
   .gunkart .mtn b{color:var(--gold-soft)}

@@ -48,15 +48,15 @@ export function chartWheelSVG(chart, opts = {}){
 
   let svg = `<svg viewBox="0 0 ${S} ${S+40}" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, Segoe UI Symbol, sans-serif">
   <rect width="${S}" height="${S+40}" fill="#ffffff"/>
-  <text x="${C}" y="26" text-anchor="middle" font-size="19" fill="#2a2470" font-weight="bold">${esc(opts.title||"")}</text>
+  <text x="${C}" y="26" text-anchor="middle" font-size="19" fill="#213768" font-weight="bold">${esc(opts.title||"")}</text>
   <g transform="translate(0,34)">
-  <circle cx="${C}" cy="${C}" r="${Rz1}" fill="none" stroke="#2a2470" stroke-width="2"/>
-  <circle cx="${C}" cy="${C}" r="${Rz2}" fill="none" stroke="#2a2470" stroke-width="1.4"/>
-  <circle cx="${C}" cy="${C}" r="${Rhub}" fill="none" stroke="#2a2470" stroke-width="1"/>`;
+  <circle cx="${C}" cy="${C}" r="${Rz1}" fill="none" stroke="#213768" stroke-width="2"/>
+  <circle cx="${C}" cy="${C}" r="${Rz2}" fill="none" stroke="#213768" stroke-width="1.4"/>
+  <circle cx="${C}" cy="${C}" r="${Rhub}" fill="none" stroke="#213768" stroke-width="1"/>`;
 
   // Zodyak: 30°'lik dilim çizgileri + burç sembolleri + 10°'lik tikler
   for(let s=0; s<12; s++){
-    svg += line(s*30, Rz2, Rz1, `stroke="#2a2470" stroke-width="1"`);
+    svg += line(s*30, Rz2, Rz1, `stroke="#213768" stroke-width="1"`);
     const [gx,gy] = pt(s*30+15, (Rz1+Rz2)/2);
     svg += `<text x="${gx.toFixed(1)}" y="${(gy+8).toFixed(1)}" text-anchor="middle" font-size="22" fill="${SIGN_COLOR[s%4]}">${SIGN_GLYPH[s]}</text>`;
     for(let t=10; t<30; t+=10) svg += line(s*30+t, Rz2, Rz2+8, `stroke="#8a86b8" stroke-width="0.7"`);
@@ -66,16 +66,16 @@ export function chartWheelSVG(chart, opts = {}){
   const cusps = chart.houseCusps.map(c=>c.longitude);
   for(let h=0; h<12; h++){
     const heavy = (h===0 || h===9); // ASC ve MC
-    svg += line(cusps[h], Rhub, Rhouse, `stroke="#2a2470" stroke-width="${heavy?2.4:0.9}" ${heavy?"":'stroke-dasharray="0"'} opacity="${heavy?1:0.55}"`);
+    svg += line(cusps[h], Rhub, Rhouse, `stroke="#213768" stroke-width="${heavy?2.4:0.9}" ${heavy?"":'stroke-dasharray="0"'} opacity="${heavy?1:0.55}"`);
     const nextC = cusps[(h+1)%12];
     const mid = norm(cusps[h] + norm(nextC - cusps[h])/2);
     const [nx,ny] = pt(mid, Rhub+16);
     svg += `<text x="${nx.toFixed(1)}" y="${(ny+4).toFixed(1)}" text-anchor="middle" font-size="12" fill="#8a86b8">${h+1}</text>`;
   }
   const [ax,ay] = pt(cusps[0], Rz1+0); // AC etiketi
-  svg += `<text x="${(ax<C?ax-4:ax+4).toFixed(1)}" y="${(ay-6).toFixed(1)}" text-anchor="${ax<C?"end":"start"}" font-size="14" fill="#2a2470" font-weight="bold">AC</text>`;
+  svg += `<text x="${(ax<C?ax-4:ax+4).toFixed(1)}" y="${(ay-6).toFixed(1)}" text-anchor="${ax<C?"end":"start"}" font-size="14" fill="#213768" font-weight="bold">AC</text>`;
   const [mx,my] = pt(cusps[9], Rz1);
-  svg += `<text x="${mx.toFixed(1)}" y="${(my<C?my-8:my+16).toFixed(1)}" text-anchor="middle" font-size="14" fill="#2a2470" font-weight="bold">MC</text>`;
+  svg += `<text x="${mx.toFixed(1)}" y="${(my<C?my-8:my+16).toFixed(1)}" text-anchor="middle" font-size="14" fill="#213768" font-weight="bold">MC</text>`;
 
   // Gezegen yerleşimi (çakışma önleme: görünür açıyı 7.5°'lik minimum aralıkla kaydır)
   const layout = (planets) => {
@@ -100,7 +100,7 @@ export function chartWheelSVG(chart, opts = {}){
     return out;
   };
   const innerPlanets = chart.planets;
-  svg += drawPlanets(innerPlanets, RpIn, "#1c1b33");
+  svg += drawPlanets(innerPlanets, RpIn, "#121621");
   if(biWheel) svg += drawPlanets(opts.outerChart.planets, RpOut, "#b03a2e");
 
   // Açı çizgileri (merkez çember üzerinde)

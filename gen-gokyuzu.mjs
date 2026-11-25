@@ -203,7 +203,7 @@ const CSS = `<style>
 const ayCiz = (() => { const f = ayIsik/100, buyuyen = ayAci < 180, r = 36, c = 42;
   const x = Math.abs(1 - 2*f) * r, sw = f > 0.5 ? 1 : 0, yon = buyuyen ? 1 : 0;
   const yol = `M${c} ${c-r} A${r} ${r} 0 1 ${yon} ${c} ${c+r} A${x} ${r} 0 1 ${f > 0.5 ? yon : 1-yon} ${c} ${c-r}Z`;
-  return `<svg width="84" height="84" viewBox="0 0 84 84" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" fill="#2a2147" stroke="#d9b96a" stroke-width="1"/><path d="${yol}" fill="#f3e3b0"/></svg>`; })();
+  return `<svg width="84" height="84" viewBox="0 0 84 84" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" fill="#192236" stroke="#d9b96a" stroke-width="1"/><path d="${yol}" fill="#f3e3b0"/></svg>`; })();
 
 const govde = `
   <div class="kisa-cevap"><b>Bugün (${tarihGun(simdi)}):</b> Güneş ${HAL[konumlar[0].burc]} (${konumlar[0].derece}), Ay ${HAL[ay.burc]} (${ay.derece}, ${ayEvre}, %${ayIsik} aydınlık). ${retroSimdi.length ? `Şu an retro olan gezegenler: <b>${retroSimdi.join(", ")}</b>.` : "Şu an retro olan gezegen yok."} ${sonrakiDolunay ? `Bir sonraki Dolunay: <b>${tarihSaat(sonrakiDolunay.z)}</b> (${BURC[sonrakiDolunay.burc]}).` : ""}</div>

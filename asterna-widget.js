@@ -95,7 +95,7 @@
     + '.ast-gonder:disabled{opacity:.5;cursor:default}'
     + '.ast-feragat{text-align:center;font-size:10.5px;color:#807b94;margin-top:7px;line-height:1.4}'
     + '.ast-feragat a{color:#a39db6}'
-    + '.ast-modal{position:absolute;inset:0;background:rgba(10,7,18,.92);z-index:5;display:none;flex-direction:column;padding:18px}'
+    + '.ast-modal{position:absolute;inset:0;background:rgba(3,5,8,.92);z-index:5;display:none;flex-direction:column;padding:18px}'
     + '.ast-modal.acik{display:flex}'
     + '.ast-modal h4{margin:0 0 6px;font-family:Georgia,serif;color:#e7cf95;font-size:16px}'
     + '.ast-modal p{margin:0 0 10px;font-size:12.5px;color:#a39db6;line-height:1.5}'

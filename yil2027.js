@@ -105,7 +105,7 @@
   function kart(s, yer) {
     var P = D.P[s], c = document.createElement("canvas"); c.width = 1080; c.height = 1920;
     var x = c.getContext("2d"), W = 1080, H = 1920;
-    var bg = x.createRadialGradient(W / 2, 520, 60, W / 2, 900, 1300); bg.addColorStop(0, "#2c2250"); bg.addColorStop(.55, "#15101f"); bg.addColorStop(1, "#0a0712");
+    var bg = x.createRadialGradient(W / 2, 520, 60, W / 2, 900, 1300); bg.addColorStop(0, "#1b2640"); bg.addColorStop(.55, "#090b11"); bg.addColorStop(1, "#030508");
     x.fillStyle = bg; x.fillRect(0, 0, W, H);
     var r = 7 + s * 13; function rnd() { r = (r * 16807) % 2147483647; return r / 2147483647; }
     for (var i = 0; i < 220; i++) { x.globalAlpha = .25 + rnd() * .6; x.fillStyle = "#f0e6d2"; x.beginPath(); x.arc(rnd() * W, rnd() * H, rnd() * 2.1 + .4, 0, 7); x.fill(); }

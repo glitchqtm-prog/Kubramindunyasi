@@ -118,7 +118,7 @@
     ".pe-zaman li.gecti .nk{background:#6f6290}.pe-zaman li.simdi .nk{background:var(--gold);box-shadow:0 0 0 3px #04060d,0 0 14px var(--gold)}.pe-zaman li.gelecek .nk{background:var(--mor)}" +
     ".pe-zaman b{display:block;font-size:15px}.pe-zaman .tr{font-size:12.5px;color:var(--mor);margin:1px 0 4px}.pe-zaman p{margin:0;font-size:14px;color:#e2d9ee}" +
     ".pe-zaman li.gecti p{color:#bfb5d2}.pe-zaman .rz{display:inline-block;font-size:11px;font-weight:600;border-radius:10px;padding:1px 8px;margin-left:6px;vertical-align:1px}" +
-    ".pe-zaman li.simdi .rz{background:var(--gold);color:#2a1e08}.pe-zaman li.gecti .rz{background:#19213a;color:#bfb5d2}.pe-zaman li.gelecek .rz{background:rgba(169,156,240,.18);color:var(--mor)}" +
+    ".pe-zaman li.simdi .rz{background:var(--gold);color:#2a1e08}.pe-zaman li.gecti .rz{background:#19213a;color:#bfb5d2}.pe-zaman li.gelecek .rz{background:rgba(156,181,240,.18);color:var(--mor)}" +
     ".pe-dg{background:radial-gradient(ellipse at 85% 0%,rgba(217,185,106,.22),transparent 60%),linear-gradient(180deg,rgba(14,22,48,.9),rgba(11,16,32,.9));border:1px solid rgba(217,185,106,.5);border-radius:20px;padding:20px 20px 18px;margin-top:14px}" +
     ".pe-dg .k{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}.pe-dg h2{font-family:Georgia,serif;font-weight:600;font-size:25px;margin:6px 0 4px;color:var(--gold-soft)}" +
     ".pe-dg p{margin:8px 0 0;font-size:15px;color:#ece4f4}.pe-dg .an{font-size:13px;color:var(--muted)}" +
@@ -166,9 +166,9 @@
   }
   function altin(x, x0, y0, x1, y1){ var g = x.createLinearGradient(x0, y0, x1, y1); g.addColorStop(0, "#f6e3ad"); g.addColorStop(.45, "#d6ad5c"); g.addColorStop(.7, "#f3dc9c"); g.addColorStop(1, "#b98f43"); return g; }
   function arkaPlan(x, W, H){
-    x.fillStyle = "#0b0814"; x.fillRect(0, 0, W, H);
+    x.fillStyle = "#040509"; x.fillRect(0, 0, W, H);
     // bulutsular
-    [[.18,.16,760,"rgba(74,52,140,.55)"],[.9,.48,820,"rgba(110,40,96,.38)"],[.3,.78,760,"rgba(46,40,120,.5)"],[.75,.95,600,"rgba(120,70,40,.18)"],[.5,.2,460,"rgba(217,185,106,.13)"]].forEach(function(n){
+    [[.18,.16,760,"rgba(52,78,140,.55)"],[.9,.48,820,"rgba(110,40,96,.38)"],[.3,.78,760,"rgba(39,63,117,.5)"],[.75,.95,600,"rgba(120,70,40,.18)"],[.5,.2,460,"rgba(217,185,106,.13)"]].forEach(function(n){
       var g = x.createRadialGradient(n[0]*W, n[1]*H, 0, n[0]*W, n[1]*H, n[2]); g.addColorStop(0, n[3]); g.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = g; x.fillRect(0, 0, W, H); });
     // yıldızlar (her kartta aynı desen)
     var t = 11; function r(){ t = (t * 9301 + 49297) % 233280; return t / 233280; }

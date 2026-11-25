@@ -45,7 +45,7 @@
       + '#ay-pwa button{flex:1;appearance:none;border:none;cursor:pointer;border-radius:20px;padding:10px 12px;font:600 14px "Segoe UI",system-ui,sans-serif}'
       + '#ay-pwa .evet{background:linear-gradient(180deg,#e7cf95,#d9b96a);color:#090d1a}'
       + '#ay-pwa .hayir{background:transparent;color:#cfc4e6;border:1px solid #1f2942}'
-      + '#ay-pwa-ios{position:fixed;inset:0;z-index:2147483601;background:rgba(8,6,16,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px;font-family:"Segoe UI",system-ui,sans-serif}'
+      + '#ay-pwa-ios{position:fixed;inset:0;z-index:2147483601;background:rgba(3,4,7,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px;font-family:"Segoe UI",system-ui,sans-serif}'
       + '#ay-pwa-ios .k{background:#0a0e1c;border:1px solid rgba(217,185,106,.45);border-radius:20px;max-width:420px;width:100%;padding:18px 18px 14px;color:#f0e6d2}'
       + '#ay-pwa-ios h3{margin:0 0 10px;font:600 18px Georgia,serif}'
       + '#ay-pwa-ios ol{margin:0 0 14px;padding-left:20px;font-size:14.5px;line-height:1.7;color:#e9e1f2}'

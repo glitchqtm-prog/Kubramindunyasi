@@ -19,12 +19,12 @@
     s.textContent =
       ".aa-ust{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}" +
       ".aa-sayac{font-family:Georgia,serif;font-size:30px;color:var(--gold-soft);line-height:1}.aa-sayac small{font-size:15px;color:var(--muted)}" +
-      ".aa-bar{flex:1;min-width:160px;height:8px;border-radius:6px;background:#2a2342;overflow:hidden}.aa-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mor),var(--gold))}" +
+      ".aa-bar{flex:1;min-width:160px;height:8px;border-radius:6px;background:#1a2131;overflow:hidden}.aa-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mor),var(--gold))}" +
       ".aa-g{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:8px}" +
       "@media(max-width:900px){.aa-g{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.aa-k{font-size:9.5px}.aa-k b{font-size:13px}}" +
-      ".aa-k{position:relative;aspect-ratio:2/3.1;border-radius:10px;border:1px dashed rgba(154,143,184,.35);background:rgba(4,6,13,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4px;color:var(--muted);font-size:10.5px;line-height:1.2;text-decoration:none}" +
+      ".aa-k{position:relative;aspect-ratio:2/3.1;border-radius:10px;border:1px dashed rgba(143,155,184,.35);background:rgba(4,6,13,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4px;color:var(--muted);font-size:10.5px;line-height:1.2;text-decoration:none}" +
       ".aa-k b{font-family:Georgia,serif;font-size:15px;font-weight:600;margin-bottom:3px}" +
-      ".aa-k.var{border:1px solid rgba(217,185,106,.7);background:linear-gradient(170deg,#3a2c5e,#1d1633 70%);color:var(--cream);box-shadow:0 0 14px rgba(217,185,106,.18)}" +
+      ".aa-k.var{border:1px solid rgba(217,185,106,.7);background:linear-gradient(170deg,#273554,#0e1420 70%);color:var(--cream);box-shadow:0 0 14px rgba(217,185,106,.18)}" +
       ".aa-k.var b{color:var(--gold-soft)}" +
       ".aa-k .x{position:absolute;top:3px;right:5px;font-size:10px;color:var(--gold-soft)}" +
       ".aa-k.son{outline:2px solid var(--gold);outline-offset:2px}";

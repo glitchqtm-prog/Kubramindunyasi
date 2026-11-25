@@ -313,7 +313,7 @@
     var x = c.getContext("2d"), tarihGoster = false;
     function satir(t, maxw, font) { x.font = font; var k = t.split(" "), l = [], s = ""; k.forEach(function (w) { var d = s ? s + " " + w : w; if (x.measureText(d).width > maxw && s) { l.push(s); s = w; } else s = d; }); if (s) l.push(s); return l; }
     function ciz() {
-      var g = x.createRadialGradient(540, 300, 50, 540, 900, 1300); g.addColorStop(0, "#2a2150"); g.addColorStop(.55, "#04060d"); g.addColorStop(1, "#0a0812");
+      var g = x.createRadialGradient(540, 300, 50, 540, 900, 1300); g.addColorStop(0, "#1a253f"); g.addColorStop(.55, "#04060d"); g.addColorStop(1, "#040508");
       x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
       var s = 7; for (var i = 0; i < 140; i++) { s = (s * 9301 + 49297) % 233280; var px = s / 233280 * 1080; s = (s * 9301 + 49297) % 233280; var py = s / 233280 * 1920; s = (s * 9301 + 49297) % 233280; x.globalAlpha = .25 + s / 233280 * .6; x.fillStyle = "#f0e6d2"; x.beginPath(); x.arc(px, py, 1 + (i % 3) * .7, 0, 7); x.fill(); }
       x.globalAlpha = 1;

@@ -14,13 +14,13 @@
 <style>
 :root{
   --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2;
-  --bg:#04060d; --bg2:#1c1630; --panel:rgba(255,255,255,.045);
+  --bg:#04060d; --bg2:#0e131e; --panel:rgba(255,255,255,.045);
   --line:rgba(217,185,106,.28); --muted:#b9aecb;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-  background:radial-gradient(1200px 700px at 50% -10%,#241a3d 0%,var(--bg) 60%);
+  background:radial-gradient(1200px 700px at 50% -10%,#12192a 0%,var(--bg) 60%);
   color:var(--cream); line-height:1.6; min-height:100vh;
 }
 #astro-menu{min-height:0}
@@ -61,7 +61,7 @@ body{
 .card-emblem{
   width:210px;max-width:70%;margin:4px auto 22px;aspect-ratio:5/8;
   border-radius:18px;position:relative;overflow:hidden;
-  background:linear-gradient(160deg,#221a3a,#150f26);
+  background:linear-gradient(160deg,#121827,#080c15);
   border:1px solid var(--line);
   box-shadow:0 18px 44px rgba(0,0,0,.5),inset 0 0 0 6px rgba(217,185,106,.08);
 }
@@ -121,7 +121,7 @@ body{
 .footer a{color:var(--gold-soft);text-decoration:none}
 
 /* share overlay */
-.ovl{position:fixed;inset:0;background:rgba(6,4,12,.86);display:none;align-items:center;
+.ovl{position:fixed;inset:0;background:rgba(2,3,5,.86);display:none;align-items:center;
   justify-content:center;padding:20px;z-index:9999}
 .ovl.on{display:flex}
 .ovl-inner{max-width:340px;width:100%;text-align:center}
@@ -409,7 +409,7 @@ function kartCiz(ctx, data, ad, dateStr){
   const kart=data.kart;
   // arka plan
   const bg=ctx.createLinearGradient(0,0,0,H);
-  bg.addColorStop(0,"#241a3d"); bg.addColorStop(1,"#04060d");
+  bg.addColorStop(0,"#12192a"); bg.addColorStop(1,"#04060d");
   ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
   // yıldız alanı (belirlenimci)
   const rnd=mulberry32(data.hash);

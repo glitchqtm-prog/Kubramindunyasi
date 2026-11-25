@@ -60,7 +60,7 @@
   .cipler{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}
   .cip{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;border-radius:20px;padding:4px 10px;border:1px solid var(--line);background:rgba(217,185,106,.06);color:var(--cream)}
   .cip i{font-style:normal;color:var(--gold-soft)}
-  .cip.sat{background:rgba(124,108,240,.10)}
+  .cip.sat{background:rgba(108,148,240,.10)}
   .cip.tut{background:rgba(229,155,176,.08)}
   /* zaman şeridi */
   .serit{background:rgba(11,16,32,.6);border:1px solid var(--line);border-radius:16px;padding:16px 16px 12px;margin:20px 0;font-family:'Segoe UI',system-ui,sans-serif}
@@ -89,7 +89,7 @@
   .sira .ic p{margin:6px 0 0}
   .zaman{display:inline-block;font-family:'Segoe UI',system-ui,sans-serif;font-size:11.5px;letter-spacing:.3px;color:var(--gold-soft);border:1px solid rgba(217,185,106,.35);border-radius:20px;padding:2px 10px;margin-top:6px}
   .ipucu{list-style:none;padding:0;margin:14px 0}
-  .ipucu li{position:relative;padding:8px 0 8px 26px;border-bottom:1px solid rgba(51,42,77,.6);font-size:16px;color:#efe7f6}
+  .ipucu li{position:relative;padding:8px 0 8px 26px;border-bottom:1px solid rgba(34,43,63,.6);font-size:16px;color:#efe7f6}
   .ipucu li::before{content:"✦";position:absolute;left:4px;top:8px;color:var(--gold)}
   /* ===== 2027 v2 ekleri ===== */
   h2{scroll-margin-top:80px}
@@ -133,7 +133,7 @@
   .y-bb.on{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#2a1e08;border-color:var(--gold);transform:translateY(-1px)}
   .y-bb.on b{color:#2a1e08}
   /* kişisel özet */
-  .y-ozet{background:radial-gradient(ellipse at 20% 0%,rgba(217,185,106,.13),transparent 60%),linear-gradient(180deg,#261e42,#0b1020);border:1px solid rgba(217,185,106,.45);border-radius:20px;padding:20px 20px 16px;margin:14px 0 6px;font-family:'Segoe UI',system-ui,sans-serif;scroll-margin-top:80px}
+  .y-ozet{background:radial-gradient(ellipse at 20% 0%,rgba(217,185,106,.13),transparent 60%),linear-gradient(180deg,#161e30,#0b1020);border:1px solid rgba(217,185,106,.45);border-radius:20px;padding:20px 20px 16px;margin:14px 0 6px;font-family:'Segoe UI',system-ui,sans-serif;scroll-margin-top:80px}
   .y-ozet h3{font-family:Georgia,serif;font-size:22px;margin:0}
   .y-oz-bas{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .y-oz-bas .gl{font-family:'Segoe UI Symbol','Noto Sans Symbols 2',serif;font-size:30px;color:var(--gold);width:52px;height:52px;border-radius:50%;border:1px solid rgba(217,185,106,.5);display:flex;align-items:center;justify-content:center;background:rgba(217,185,106,.08);flex:none}
@@ -142,13 +142,13 @@
   .y-oz-iki{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:600px){.y-oz-iki{grid-template-columns:1fr}}
   .y-l{list-style:none;padding:0;margin:0;font-size:14px;line-height:1.5;color:#efe7f6}
-  .y-l li{padding:6px 0 6px 20px;position:relative;border-bottom:1px solid rgba(51,42,77,.55)}
+  .y-l li{padding:6px 0 6px 20px;position:relative;border-bottom:1px solid rgba(34,43,63,.55)}
   .y-l.iyi li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
   .y-l.dik li::before{content:"◆";position:absolute;left:1px;color:#e59bb0;font-size:11px;top:9px}
   .y-l b{color:var(--cream)}
   .y-not{font-family:Georgia,serif;font-size:15.5px;color:#efe7f6;margin:10px 0 0;line-height:1.7}
   .y-tk{list-style:none;padding:0;margin:0;font-size:14px;counter-reset:none}
-  .y-tk li{display:grid;grid-template-columns:118px 1fr;gap:10px;padding:7px 0;border-bottom:1px solid rgba(51,42,77,.55);line-height:1.45;color:#efe7f6}
+  .y-tk li{display:grid;grid-template-columns:118px 1fr;gap:10px;padding:7px 0;border-bottom:1px solid rgba(34,43,63,.55);line-height:1.45;color:#efe7f6}
   .y-tk time{color:var(--gold-soft);font-variant-numeric:tabular-nums}
   .y-tk b{color:var(--cream);display:block}
   .y-gizli{display:none!important}
@@ -161,7 +161,7 @@
   /* şans grafiği */
   .y-graf-b{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin:16px 0 4px}
   .y-graf svg{width:100%;height:auto;display:block}
-  .y-graf .gz{stroke:rgba(154,143,184,.18);stroke-width:1}
+  .y-graf .gz{stroke:rgba(143,155,184,.18);stroke-width:1}
   .y-graf rect{fill:rgba(217,185,106,.55);transition:fill .2s;transform-origin:center bottom;transform-box:fill-box}
   @media (prefers-reduced-motion:no-preference){.y-graf rect{animation:y-grow .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*45ms)}}
   @keyframes y-grow{from{transform:scaleY(.02)}}
@@ -186,13 +186,13 @@
   .y-ck-svg .gl.sec{fill:#fff1c8;font-size:20px}
   .y-ck-svg .evno{fill:var(--muted);font:10px 'Segoe UI',system-ui,sans-serif}
   .y-ck-svg .tik{stroke:rgba(240,230,210,.45);stroke-width:1}
-  .y-ck-svg .pl circle{fill:#221a3a;stroke:rgba(217,185,106,.55);stroke-width:1}
+  .y-ck-svg .pl circle{fill:#121827;stroke:rgba(217,185,106,.55);stroke-width:1}
   .y-ck-svg .pl text{fill:#f0e6d2;font-size:13px}
   .y-ck-svg .p0 circle{fill:#3a2d10;stroke:#f3d27a}.y-ck-svg .p0 text{fill:#f7dc8c}
   .y-ck-svg .p1 circle{stroke:#cdd6ff}.y-ck-svg .p5 circle{stroke:#f3d27a;stroke-width:1.6}.y-ck-svg .p6 circle{stroke:#a99cf0;stroke-width:1.6}
   .y-ck-svg .rx{fill:#e59bb0;font:bold 9px 'Segoe UI',system-ui,sans-serif}
   .y-ck-liste{list-style:none;margin:0;padding:0;font-size:13.5px}
-  .y-ck-liste li{display:grid;grid-template-columns:22px 62px 1fr auto;gap:6px;align-items:center;padding:4px 0;border-bottom:1px solid rgba(51,42,77,.5);color:#efe7f6}
+  .y-ck-liste li{display:grid;grid-template-columns:22px 62px 1fr auto;gap:6px;align-items:center;padding:4px 0;border-bottom:1px solid rgba(34,43,63,.5);color:#efe7f6}
   .y-ck-liste .pg{font-family:'Segoe UI Symbol','Noto Sans Symbols 2',serif;color:var(--gold);font-weight:normal;text-align:center}
   .y-ck-liste .br{font-variant-numeric:tabular-nums}
   .y-ck-liste .ev{font-size:11.5px;color:var(--gold-soft);border:1px solid rgba(217,185,106,.3);border-radius:10px;padding:0 7px}
@@ -221,13 +221,13 @@
   .y-dg-kart{border-radius:16px;padding:14px 16px;text-align:center;border:1px solid var(--line)}
   .y-dg-kart.cok{background:linear-gradient(180deg,rgba(217,185,106,.28),rgba(217,185,106,.08));border-color:rgba(217,185,106,.7)}
   .y-dg-kart.uygun{background:linear-gradient(180deg,rgba(120,200,160,.20),rgba(120,200,160,.05));border-color:rgba(120,200,160,.55)}
-  .y-dg-kart.notr{background:rgba(154,143,184,.10)}
+  .y-dg-kart.notr{background:rgba(143,155,184,.10)}
   .y-dg-kart.kacin{background:linear-gradient(180deg,rgba(229,120,140,.20),rgba(229,120,140,.05));border-color:rgba(229,120,140,.5)}
   .y-dg-rozet{display:inline-block;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cream)}
   .y-dg-t{font-family:Georgia,serif;font-size:22px;color:var(--cream);margin-top:2px}
   .y-dg-mini{font-size:12.5px;color:var(--muted)}
   .y-dg-n{list-style:none;padding:0;margin:12px 0 0;font-size:14px;line-height:1.5}
-  .y-dg-n li{padding:6px 0 6px 24px;position:relative;border-bottom:1px solid rgba(51,42,77,.55);color:#efe7f6}
+  .y-dg-n li{padding:6px 0 6px 24px;position:relative;border-bottom:1px solid rgba(34,43,63,.55);color:#efe7f6}
   .y-dg-n li::before{position:absolute;left:2px;top:6px;font-weight:bold}
   .y-dg-n .na::before{content:"✓";color:#8fd8b0}.y-dg-n .ne::before{content:"✕";color:#e98ea2}.y-dg-n .nn::before{content:"◌";color:var(--muted)}
   .y-dg-ay{margin-top:12px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -239,14 +239,14 @@
   .y-tv .ay-ad{font-size:12.5px;color:var(--gold-soft);text-align:center;margin-bottom:4px;letter-spacing:.5px}
   .y-tv .hg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
   .y-tv .hg i{font-style:normal;font-size:8.5px;color:var(--muted);text-align:center}
-  .y-tv .gn{appearance:none;border:none;border-radius:4px;font:10.5px 'Segoe UI',system-ui,sans-serif;padding:3px 0;cursor:pointer;color:#efe7f6;background:rgba(154,143,184,.10);font-variant-numeric:tabular-nums}
+  .y-tv .gn{appearance:none;border:none;border-radius:4px;font:10.5px 'Segoe UI',system-ui,sans-serif;padding:3px 0;cursor:pointer;color:#efe7f6;background:rgba(143,155,184,.10);font-variant-numeric:tabular-nums}
   .y-tv .gn.cok{background:#d9b96a;color:#2a1e08;font-weight:700}
   .y-tv .gn.uygun{background:rgba(120,200,160,.42)}
-  .y-tv .gn.kacin{background:rgba(229,120,140,.22);color:rgba(239,231,246,.6)}
+  .y-tv .gn.kacin{background:rgba(229,120,140,.22);color:rgba(231,236,246,.6)}
   .y-tv .gn.on{outline:2px solid #fff;outline-offset:1px}
   .y-tv-lej{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:12px;color:var(--muted);margin-top:12px}
   .y-tv-lej span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-  .y-tv-lej .cok::before{background:#d9b96a}.y-tv-lej .uygun::before{background:rgba(120,200,160,.6)}.y-tv-lej .notr::before{background:rgba(154,143,184,.25)}.y-tv-lej .kacin::before{background:rgba(229,120,140,.4)}
+  .y-tv-lej .cok::before{background:#d9b96a}.y-tv-lej .uygun::before{background:rgba(120,200,160,.6)}.y-tv-lej .notr::before{background:rgba(143,155,184,.25)}.y-tv-lej .kacin::before{background:rgba(229,120,140,.4)}
   /* statik tablo detayları */
   details.y-det{margin:14px 0 8px;border:1px solid var(--line);border-radius:12px;padding:8px 14px;background:rgba(4,6,13,.35);font-family:'Segoe UI',system-ui,sans-serif}
   details.y-det summary{cursor:pointer;color:var(--gold-soft);font-size:14px}
@@ -255,7 +255,7 @@
   .gl-i{font-family:'Segoe UI Symbol','Noto Sans Symbols 2',serif;color:var(--gold)}
   .noscript-uyari{font-size:13px;color:var(--muted)}
   .ipucu-no{padding-left:22px;margin:14px 0}
-  .ipucu-no li{padding:7px 0;border-bottom:1px solid rgba(51,42,77,.6);font-size:16px;color:#efe7f6}
+  .ipucu-no li{padding:7px 0;border-bottom:1px solid rgba(34,43,63,.6);font-size:16px;color:#efe7f6}
   .ipucu-no li::marker{color:var(--gold);font-family:'Segoe UI',system-ui,sans-serif;font-weight:bold}
   /* tembel yüklenen araçlar için yer ayır (sayfa kaymasın) */
   [data-y27="cark"]:not(.y27-on){min-height:560px}
@@ -270,7 +270,7 @@
 @media(max-width:520px){.burc-kart{contain-intrinsic-size:auto 3050px}}
 @media(max-width:400px){.burc-kart{contain-intrinsic-size:auto 3500px}}
 
-  .ev-kutu{background:radial-gradient(ellipse at 10% 0%,rgba(124,108,240,.16),transparent 55%),linear-gradient(180deg,rgba(14,22,48,.8),rgba(11,16,32,.8));border:1px solid rgba(217,185,106,.45);border-radius:22px;padding:20px 18px;margin:22px 0;font-family:'Segoe UI',system-ui,sans-serif}
+  .ev-kutu{background:radial-gradient(ellipse at 10% 0%,rgba(108,148,240,.16),transparent 55%),linear-gradient(180deg,rgba(14,22,48,.8),rgba(11,16,32,.8));border:1px solid rgba(217,185,106,.45);border-radius:22px;padding:20px 18px;margin:22px 0;font-family:'Segoe UI',system-ui,sans-serif}
   .ev-kutu-b{text-align:center;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
   .ev-form{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
   @media(max-width:560px){.ev-form{grid-template-columns:1fr}}
@@ -300,7 +300,7 @@
   .ev-partner-sonuc{margin-top:12px;background:rgba(217,185,106,.08);border:1px solid rgba(217,185,106,.35);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--cream)}
   .ev-zaman-b{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin:20px 0 8px}
   .ev-zaman{list-style:none;padding:0;margin:0}
-  .ev-zaman li{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid rgba(51,42,77,.6);font-size:14px}
+  .ev-zaman li{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid rgba(34,43,63,.6);font-size:14px}
   @media(max-width:520px){.ev-zaman li{grid-template-columns:1fr;gap:2px}}
   .ev-zaman time{color:var(--gold-soft);font-variant-numeric:tabular-nums}
   .ev-zaman b{display:block;color:var(--cream)}
@@ -309,6 +309,13 @@
   .ev-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
   details.y-det p{font-size:14.5px}
   .h3-ic{font-size:17px;color:var(--gold-soft);margin:18px 0 4px}
+
+h1{font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.16;letter-spacing:-.01em}
+.ozet{font-style:normal;color:#cfc8d8}
+.etiketler span{background:none;border-color:rgba(240,230,210,.14)}
+.cta-kutu{border-radius:22px;border-color:rgba(217,185,106,.26)}
+.ilgili a{border-radius:999px}
+/*ay-yazi-2*/
 </style>
 <style id="am-kritik">.am-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:820px;margin:0 auto;padding:18px 20px;font-family:"Segoe UI",system-ui,sans-serif}.am-brand{font-family:Georgia,"Times New Roman",serif;font-size:18px;letter-spacing:2px;color:#d9b96a;font-weight:bold;white-space:nowrap;text-decoration:none}.am-links{display:flex;gap:18px;font-size:14px;align-items:center;white-space:nowrap}.am-links>a{color:#f0e6d2;opacity:.82;text-decoration:none;transition:color .2s,opacity .2s}.am-links>a:hover{opacity:1;color:#e7cf95}.am-dropdown{position:relative;display:inline-block}.am-drop-btn{background:none;border:none;color:#f0e6d2;opacity:.82;font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .2s,opacity .2s}.am-drop-btn:hover,.am-drop-btn[aria-expanded="true"]{opacity:1;color:#e7cf95}.am-caret{font-size:11px;transition:transform .2s}.am-drop-btn[aria-expanded="true"] .am-caret{transform:rotate(180deg)}.am-drop-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:262px;background:#0e1630;border:1px solid #1f2942;border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60;text-align:left}.am-dropdown.open .am-drop-menu{opacity:1;visibility:visible;transform:translateY(0)}.am-cat + .am-cat{border-top:1px solid #19213a;margin-top:2px}.am-cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;font:inherit;color:#d9b96a;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;opacity:.9;padding:12px 12px;text-align:left;border-radius:8px;transition:background .15s,color .15s,opacity .15s}.am-cat-btn:hover{opacity:1;color:#e7cf95;background:rgba(217,185,106,.06)}.am-cat-caret{font-size:10px;opacity:.75;transition:transform .22s}.am-cat.open>.am-cat-btn{color:#e7cf95;opacity:1}.am-cat.open>.am-cat-btn .am-cat-caret{transform:rotate(180deg)}.am-cat-items{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}.am-cat.open>.am-cat-items{grid-template-rows:1fr}.am-cat-inner{overflow:hidden;min-height:0}.am-drop-menu a{display:block;padding:10px 12px;border-radius:8px;color:#f0e6d2;font-size:14.5px;text-decoration:none;transition:background .15s}.am-drop-menu a:hover{background:rgba(217,185,106,.10);color:#e7cf95}.am-drop-menu a[aria-current="page"]{color:#e7cf95;background:rgba(217,185,106,.08)}.am-sub{display:block;font-size:12px;color:#a39db6;margin-top:2px}.am-cta{color:#d9b96a !important;opacity:1 !important;font-weight:bold;border:1px solid #1f2942;padding:7px 16px;border-radius:20px;transition:background .2s,border-color .2s}.am-cta:hover{background:rgba(217,185,106,.12);border-color:#d9b96a}@media (max-width:600px){.am-nav{flex-wrap:wrap;justify-content:center}.am-links{flex-wrap:wrap;justify-content:center;position:relative}.am-dropdown{position:static}.am-drop-menu{left:50%;right:auto;transform:translate(-50%,-6px);width:min(88vw,320px);min-width:0}.am-dropdown.open .am-drop-menu{transform:translate(-50%,0)}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}.am-nav{padding:20px}.am-links{gap:24px;font-size:14.5px}.am-links>a,.am-drop-btn{color:#f0e6d2;opacity:.8;font-size:14.5px;min-height:40px;display:inline-flex;align-items:center}.am-links>a:hover,.am-drop-btn:hover,.am-drop-btn[aria-expanded="true"]{opacity:1;color:#e7cf95}.am-cta{border:1px solid rgba(217,185,106,.55);padding:0 22px;border-radius:999px;font-weight:650;letter-spacing:.02em;transition:background .25s,color .25s,border-color .25s}.am-cta:hover{background:#e7cf95;border-color:#e7cf95;color:#17120a !important}.am-drop-menu{background:rgba(7,10,20,.97);border:1px solid rgba(217,185,106,.24);border-radius:18px;padding:10px;min-width:290px;box-shadow:0 30px 80px rgba(0,0,0,.65);top:calc(100% + 10px)}.am-cat + .am-cat{border-top:1px solid rgba(240,230,210,.1)}.am-cat-btn{font-size:11.5px;letter-spacing:.22em;padding:14px 12px;border-radius:10px}.am-drop-menu a{border-radius:10px;padding:10px 12px;font-size:15px;color:#f0e6d2}.am-drop-menu a:hover{background:rgba(217,185,106,.09);color:#e7cf95}.am-sub{color:#aaa5ba;font-size:12.5px;margin-top:3px}@media (max-width:600px){.am-nav{position:relative;display:block;padding:12px 20px 0}.am-brand{display:block;line-height:42px}.am-links{position:static;flex-wrap:nowrap;justify-content:space-between;gap:8px;margin-top:8px;border-top:1px solid rgba(240,230,210,.1);padding:4px 0}.am-links>a,.am-drop-btn{font-size:13.5px;min-height:44px}.am-cta{position:absolute;top:12px;right:20px;min-height:42px;padding:0 20px}.am-drop-menu{top:calc(100% + 6px);width:min(92vw,340px)}}@media (max-width:370px){.am-links>a,.am-drop-btn{font-size:12.5px}}/*ay-menu-2*/</style>
 <style id="ay-cerez-kritik">#ay-cerez{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#0a0e1c;border-top:1px solid #1f2942;box-shadow:0 -12px 34px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .32s ease;font-family:"Segoe UI",system-ui,sans-serif}#ay-cerez.ac-in{transform:translateY(0)}.ay-cerez-in{max-width:980px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.ay-cerez-tx{margin:0;color:#f0e6d2;opacity:.9;font-size:13.5px;line-height:1.55;flex:1;min-width:230px}.ay-cerez-tx a{color:#e7cf95;text-decoration:underline}.ay-cerez-bt{display:flex;gap:10px;flex-shrink:0}.ay-cerez-kabul{background:linear-gradient(180deg,#e7cf95,#d9b96a);border:none;color:#090d1a;font:inherit;font-weight:bold;font-size:13.5px;padding:9px 26px;border-radius:20px;cursor:pointer;transition:filter .2s}.ay-cerez-kabul:hover{filter:brightness(1.06)}@media (max-width:600px){.ay-cerez-in{padding:12px 16px}.ay-cerez-bt{width:100%}.ay-cerez-kabul{flex:1}}@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}@media (prefers-reduced-motion:reduce){.am-drop-menu,.am-caret,.am-cat-caret,.am-cat-items,.am-links>a,.am-cta{transition:none !important}}#ay-cerez.ac-in{animation:ayCerezGir .32s ease}@keyframes ayCerezGir{from{transform:translateY(100%)}}@media (prefers-reduced-motion:reduce){#ay-cerez.ac-in{animation:none}}#ay-cerez{background:rgba(6,9,18,.97);border-top:1px solid rgba(217,185,106,.24);box-shadow:0 -18px 50px rgba(0,0,0,.5)}#ay-cerez .ay-cerez-tx{color:#d5cfde}#ay-cerez .ay-cerez-kabul{border-radius:999px;min-height:44px}@media (max-width:700px){#ay-cerez .ay-cerez-in{padding:10px 14px;gap:12px;flex-wrap:nowrap;align-items:center}#ay-cerez .ay-cerez-tx{font-size:12px;line-height:1.45;min-width:0}#ay-cerez .ay-cerez-bt{width:auto}#ay-cerez .ay-cerez-kabul{flex:none;padding:0 18px}}/*ay-cerez-2*/</style>
@@ -337,7 +344,7 @@
 </style>
 <script src="/dogum-giris.js" defer></script>
 <meta property="og:image" content="https://astroyuvam.com/sekt-gunduz-gece-haritasi.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<style id="yol-css">.yol{font-family:"Segoe UI",system-ui,sans-serif;font-size:12.5px;color:#a39db6;margin:14px 0 0;line-height:1.6}.yol a{color:#a39db6;text-decoration:none;border-bottom:1px dotted rgba(154,143,184,.5)}.yol a:hover{color:#e7cf95;border-color:#e7cf95}.yol .ay{margin:0 6px;opacity:.6}.yol [aria-current]{color:#f0e6d2;opacity:.85}</style>
+<style id="yol-css">.yol{font-family:"Segoe UI",system-ui,sans-serif;font-size:12.5px;color:#a39db6;margin:14px 0 0;line-height:1.6}.yol a{color:#a39db6;text-decoration:none;border-bottom:1px dotted rgba(143,155,184,.5)}.yol a:hover{color:#e7cf95;border-color:#e7cf95}.yol .ay{margin:0 6px;opacity:.6}.yol [aria-current]{color:#f0e6d2;opacity:.85}</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Sekt (Sect) Nedir? Gündüz Haritası mı, Gece Haritası mı Olduğunu Nasıl Anlarsın?", "description": "Doğum haritan gündüz mü gece mi? Sekt (sect) nedir, Güneş'in ufka göre yeriyle nasıl anlaşılır, Mars ve Satürn'ü nasıl değiştirir? Ücretsiz hesapla, haritanda gör.", "image": ["https://astroyuvam.com/sekt-gunduz-gece-haritasi.jpg", "https://astroyuvam.com/sekt-gunduz-haritasi-ornek.webp", "https://astroyuvam.com/sekt-gece-haritasi-ornek.webp"], "datePublished": "2026-11-24", "dateModified": "2026-11-24", "inLanguage": "tr", "mainEntityOfPage": "https://astroyuvam.com/sekt-gunduz-gece-haritasi.html", "author": {"@type": "Organization", "name": "Astro Yuvam", "url": "https://astroyuvam.com/"}, "publisher": {"@type": "Organization", "name": "Astro Yuvam", "url": "https://astroyuvam.com/", "logo": {"@type": "ImageObject", "url": "https://astroyuvam.com/logo-512.png"}}, "about": [{"@type": "Thing", "name": "Sekt (astroloji)"}, {"@type": "Thing", "name": "Gündüz haritası"}, {"@type": "Thing", "name": "Gece haritası"}], "keywords": "sekt, sect, gündüz haritası, gece haritası, doğum haritası gündüz mü gece mi, sekt hesaplama"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Sekt (sect) ne demek?", "acceptedAnswer": {"@type": "Answer", "text": "Sekt, doğum haritasının gündüz haritası mı gece haritası mı olduğunu belirten antik bir astroloji kavramıdır. Kelime İngilizce “sect”in karşılığıdır ve “taraf, grup” anlamına gelen Latince “secta”dan türer. Haritanın hangi tarafta olduğu, gezegenlerin sana daha uyumlu mu yoksa daha zorlayıcı mı çalışacağını değiştirir."}}, {"@type": "Question", "name": "Doğum haritam gündüz mü gece mi, nasıl anlarım?", "acceptedAnswer": {"@type": "Answer", "text": "Haritanda ortadan geçen yatay çizgi (yükselen ile alçalan arasındaki eksen) doğduğun andaki ufuktur. Güneş sembolü (ortası noktalı küçük daire) bu çizginin üstündeyse, yani 7.–12. evlerdeyse gündüz haritan; altındaysa, yani 1.–6. evlerdeyse gece haritan var. Bu sayfanın başındaki araç bunu senin için otomatik hesaplar."}}, {"@type": "Question", "name": "Akşam doğdum, kesin gece haritam mı var?", "acceptedAnswer": {"@type": "Answer", "text": "Hayır. Yaz aylarında Türkiye'de Güneş 20:00'den sonra batabilir; bu yüzden akşam sekizde doğan birinin gündüz haritası olabilir. Kışın ise Güneş 18:00'den önce battığı için akşam altıda doğanların çoğunun gece haritası vardır. Mevsim, şehir ve o yılın saat uygulaması sonucu değiştirir."}}, {"@type": "Question", "name": "Gündüz haritasında en zorlayıcı gezegen hangisi?", "acceptedAnswer": {"@type": "Answer", "text": "Gündüz haritasında en çok zorlayan gezegen Mars'tır; çünkü gece takımının zorlayıcısıdır ve gündüz haritasında ortamına yabancı kalır. Acele, öfke, sabırsızlık ve sürtüşme en çok Mars'ın bulunduğu evin konularında çıkabilir. Satürn ise gündüz haritasında zorlasa da daha yapıcı çalışır."}}, {"@type": "Question", "name": "Gece haritasında en zorlayıcı gezegen hangisi?", "acceptedAnswer": {"@type": "Answer", "text": "Gece haritasında en çok zorlayan gezegen Satürn'dür. Yük, gecikme, yalnız hissetme ve “her şey bana kalıyor” duygusu en çok Satürn'ün bulunduğu evin konularında hissedilebilir. Mars ise gece haritasında daha yapıcıdır ve sınır çizmeyi kolaylaştırır."}}, {"@type": "Question", "name": "Gece doğanlar neden Ay burcunu daha çok benimser?", "acceptedAnswer": {"@type": "Answer", "text": "Gece haritasında sektin ışığı Ay'dır. Bu yüzden gece doğan birçok kişi kendini Ay burcunun anlattığı duygusal dünyada, Güneş burcundan daha çok bulur. Gündüz haritasında ise Güneş öne çıkar."}}, {"@type": "Question", "name": "Doğum saatimi bilmiyorsam sektimi öğrenebilir miyim?", "acceptedAnswer": {"@type": "Answer", "text": "Kesin olarak hayır, çünkü sekt Güneş'in doğduğun andaki konumuna bağlıdır. Ama doğduğun saatin aşağı yukarı sabah mı, öğle mi, gece yarısı mı olduğunu biliyorsan sonuç büyük ihtimalle bellidir. Gün doğumu ya da gün batımına yakınsa saatini öğrenmeden karar vermemek gerekir."}}, {"@type": "Question", "name": "Sekt modern astrolojide de kullanılıyor mu?", "acceptedAnswer": {"@type": "Answer", "text": "20. yüzyıl astrolojisinde büyük ölçüde unutulmuştu. 1990'larda Helenistik metinlerin yeni çevirileriyle yeniden yaygınlaştı ve bugün geleneksel teknikleri kullanan pek çok astroloğun temel araçlarından biri. Modern yorumla birlikte kullanıldığında haritayı daha incelikli okumayı sağlar."}}, {"@type": "Question", "name": "Sekt burç uyumunu etkiler mi?", "acceptedAnswer": {"@type": "Answer", "text": "Sekt bir uyum tekniği değildir, ama iki kişinin neye ihtiyaç duyduğunu anlamaya yardım eder. Gündüz doğmuş biri düzen ve planla rahatlarken gece doğmuş partneri aynı düzeni yük gibi yaşayabilir. İki haritanın birlikte okunuşunu Sinastri Nedir? yazımızda anlattık."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "name": "Doğum haritasının gündüz mü gece mi olduğu nasıl anlaşılır?", "step": [{"@type": "HowToStep", "name": "Doğum haritanı çıkar", "text": "Doğum tarihin, saatin ve yerinle doğum haritanı hesapla. Sekt için doğum saati gerekir."}, {"@type": "HowToStep", "name": "Ufuk çizgisini bul", "text": "Haritada ortadan geçen ve solunda yükselen (AC), sağında alçalan (DC) yazan yatay çizgi doğduğun andaki ufuktur."}, {"@type": "HowToStep", "name": "Güneş'i bul", "text": "Güneş'in sembolü ortası noktalı küçük dairedir. Haritada bu sembolün yerini bul."}, {"@type": "HowToStep", "name": "Konumuna bak", "text": "Güneş çizginin üstünde, yani 7.-12. evlerdeyse gündüz haritası; altında, yani 1.-6. evlerdeyse gece haritası vardır."}]}</script>

@@ -16,14 +16,14 @@
 <style>
 :root{
   --gold:#d9b96a; --gold-soft:#e7cf95; --cream:#f0e6d2;
-  --bg:#04060d; --bg2:#1c1630; --panel:rgba(255,255,255,.045);
+  --bg:#04060d; --bg2:#0e131e; --panel:rgba(255,255,255,.045);
   --line:rgba(217,185,106,.28); --muted:#b9aecb;
   --puls:#d9b96a; /* günün rengi — JS ile değişir */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-  background:radial-gradient(1200px 700px at 50% -10%,#241a3d 0%,var(--bg) 60%);
+  background:radial-gradient(1200px 700px at 50% -10%,#12192a 0%,var(--bg) 60%);
   color:var(--cream); line-height:1.6; min-height:100vh;
 }
 #astro-menu{min-height:0}
@@ -78,7 +78,7 @@ body{
 .footer{text-align:center;color:#6f6685;font-size:.82rem;padding:26px 0 10px}
 .footer a{color:var(--gold-soft);text-decoration:none}
 
-.ovl{position:fixed;inset:0;background:rgba(6,4,12,.86);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999}
+.ovl{position:fixed;inset:0;background:rgba(2,3,5,.86);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999}
 .ovl.on{display:flex}
 .ovl-inner{max-width:340px;width:100%;text-align:center}
 .ovl-inner img{width:100%;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid var(--line)}
@@ -250,7 +250,7 @@ function hexA(hex,a){const n=hex.replace("#","");const r=parseInt(n.substring(0,
 function kartCiz(ctx, data, ad, dateStr){
   const W=1080,H=1920,cx=W/2, v=data.veri, col=v.hex;
   const bg=ctx.createLinearGradient(0,0,0,H);
-  bg.addColorStop(0,"#241a3d"); bg.addColorStop(1,"#04060d");
+  bg.addColorStop(0,"#12192a"); bg.addColorStop(1,"#04060d");
   ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
   // yıldız alanı
   const rnd=mulberry32(data.hash);

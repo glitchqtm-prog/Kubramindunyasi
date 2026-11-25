@@ -72,6 +72,31 @@ def cerez(s):
     s = re.sub(r'(<style id=\\"ay-cerez-kritik\\">)(.*?)(</style>)', lambda m: m.group(1) + m.group(2) + CEREZ_EK + m.group(3), s, count=1, flags=re.S)
     return s
 
+import colorsys
+
+def mordan(r, g, b, koyu_sinir=0.36):
+    """Mor/eflatun tonları gece laciverdine çevirir. Dönüş: (r,g,b) ya da None (dokunma)."""
+    h, l, sat = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+    if not (235 / 360 <= h <= 300 / 360) or sat < 0.12: return None
+    if l < koyu_sinir:
+        l2 = l * min(1.0, 0.35 + 2.0 * l); s2 = min(sat, 0.55)
+    else:
+        l2 = l; s2 = sat
+    r2, g2, b2 = colorsys.hls_to_rgb(222 / 360, l2, s2)
+    return (round(r2 * 255), round(g2 * 255), round(b2 * 255))
+
+def renk2(s):
+    def fh(m):
+        x = m.group(0); t = mordan(int(x[1:3], 16), int(x[3:5], 16), int(x[5:7], 16))
+        # açık mor vurgu renkleri (yazı, nokta) olduğu gibi kalır; yalnız koyu zemin/çizgi tonları değişir
+        if not t or colorsys.rgb_to_hls(int(x[1:3], 16) / 255, int(x[3:5], 16) / 255, int(x[5:7], 16) / 255)[1] >= 0.36: return x
+        return '#%02x%02x%02x' % t
+    s = re.sub(r'#[0-9a-fA-F]{6}\b', fh, s)
+    def fr(m):
+        t = mordan(int(m.group(2)), int(m.group(3)), int(m.group(4)))
+        return '%s%d,%d,%d' % (m.group(1), t[0], t[1], t[2]) if t else m.group(0)
+    return re.sub(r'(rgba\(\s*)(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?=\s*,)', fr, s)
+
 def renk(s):
     s = re.sub(r'#[0-9a-fA-F]{6}\b', lambda m: RENK.get(m.group(0).lower(), m.group(0)), s)
     def f(m):
@@ -96,7 +121,7 @@ def main():
     for y in yollar:
         if y in atla: continue
         s = open(y, encoding='utf-8').read(); o = s
-        s = renk(s)
+        s = renk2(renk(s))
         if y.endswith('.html') or y.endswith('.mjs'): s = cerez(menu(s))
         if y == 'menu.js' and '/*ay-menu-2*/' not in s:
             k = "  + '#ay-cerez{position:fixed"

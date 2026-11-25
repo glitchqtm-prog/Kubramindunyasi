@@ -31,7 +31,7 @@
     + '#burc-imza{--bi-gold:#d9b96a;--bi-gold-soft:#e7cf95;--bi-panel:#0b1020;--bi-panel2:#0e1630;'
     + '--bi-line:#1f2942;--bi-cream:#f0e6d2;--bi-muted:#a39db6;margin:26px 0;}'
     + '#burc-imza *{box-sizing:border-box;}'
-    + '#burc-imza .bi-kart{background:linear-gradient(160deg,#0b1020,#141020);border:1px solid var(--bi-line);'
+    + '#burc-imza .bi-kart{background:linear-gradient(160deg,#0b1020,#090b11);border:1px solid var(--bi-line);'
     + 'border-radius:18px;padding:20px 20px 22px;box-shadow:0 10px 34px rgba(0,0,0,.34);}'
     + '#burc-imza .bi-ust{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;}'
     + '#burc-imza .bi-kicker{font:600 12px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--bi-gold);}'
@@ -81,8 +81,8 @@
     // ---- SVG çark ----
     var svg = '<svg viewBox="0 0 300 300" role="img" aria-label="' + esc(b.ad) + ' burcu ve ' + esc(e.ad) + ' element üçgeni">';
     // dış/iç halka
-    svg += '<circle cx="150" cy="150" r="128" fill="none" stroke="#2a2340" stroke-width="1"/>';
-    svg += '<circle cx="150" cy="150" r="86" fill="none" stroke="#241d38" stroke-width="1"/>';
+    svg += '<circle cx="150" cy="150" r="128" fill="none" stroke="#1a202f" stroke-width="1"/>';
+    svg += '<circle cx="150" cy="150" r="86" fill="none" stroke="#141926" stroke-width="1"/>';
     // element üçgeni (aktif burcun elementi)
     var tri = trigonlar(b.el), pts = tri.map(function (i) { return konum(i, 110); });
     var d = "M" + pts[0].x.toFixed(1) + "," + pts[0].y.toFixed(1) +

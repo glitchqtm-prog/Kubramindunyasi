@@ -21,7 +21,7 @@
   body{
     margin:0; background:
       radial-gradient(1200px 700px at 20% -10%, rgba(217,185,106,.10), transparent 60%),
-      radial-gradient(900px 600px at 100% 0%, rgba(120,90,200,.14), transparent 55%),
+      radial-gradient(900px 600px at 100% 0%, rgba(90,123,200,.14), transparent 55%),
       var(--bg);
     color:var(--cream);
     font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function(){
   function moonSVG(illum, waxing){
     var R=45, cx=50, cy=50, rx = R * Math.abs(1 - 2*illum);
     var gibbous = illum > 0.5;
-    var litFill = "#e7cf95", darkFill = "#221a33";
+    var litFill = "#e7cf95", darkFill = "#111621";
     // aydınlık yarım (büyüyen → sağ, küçülen → sol)
     var litRectX = waxing ? cx : (cx - R);
     var ellipseFill = gibbous ? litFill : darkFill;

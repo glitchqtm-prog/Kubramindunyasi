@@ -78,7 +78,7 @@
       '<circle cx="150" cy="150" r="' + R2 + '" fill="rgba(4,6,13,.55)" stroke="rgba(217,185,106,.3)"/>';
     if (N.cusp) N.cusp.forEach(function (c, i) {
       var a = P(c, R0), b = P(c, R2), n = P(c + norm(N.cusp[(i + 1) % 12] - c) / 2, R2 + 12);
-      if (i !== 0 && i !== 6) h += '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" stroke="rgba(154,143,184,.28)"/>';
+      if (i !== 0 && i !== 6) h += '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" stroke="rgba(143,155,184,.28)"/>';
       h += '<text x="' + n[0] + '" y="' + n[1] + '" fill="#a39db6" font-size="9" font-family="Segoe UI,sans-serif">' + (i + 1) + "</text>";
     });
     h += '<line x1="4" y1="150" x2="296" y2="150" stroke="#f3dca0" stroke-width="2.2"/>' +
@@ -92,7 +92,7 @@
       kul.forEach(function (u) { if (Math.abs(norm(l - u.l + 180) - 180) < 9 && Math.abs(r - u.r) < 1) r -= 20; });
       kul.push({ l: l, r: r }); var q = P(l, r);
       var ana = ad === "Güneş" || ad === (gunduz ? "Mars" : "Satürn");
-      h += '<g><circle cx="' + q[0] + '" cy="' + q[1] + '" r="' + (ana ? 13 : 11) + '" fill="' + (ad === "Güneş" ? "#3a2d10" : "#221a3a") + '" stroke="' + (ad === "Güneş" ? "#f3d27a" : ana ? "#e5624e" : "rgba(217,185,106,.55)") + '" stroke-width="' + (ana ? 1.8 : 1) + '"/>' +
+      h += '<g><circle cx="' + q[0] + '" cy="' + q[1] + '" r="' + (ana ? 13 : 11) + '" fill="' + (ad === "Güneş" ? "#3a2d10" : "#121827") + '" stroke="' + (ad === "Güneş" ? "#f3d27a" : ana ? "#e5624e" : "rgba(217,185,106,.55)") + '" stroke-width="' + (ana ? 1.8 : 1) + '"/>' +
         '<text x="' + q[0] + '" y="' + q[1] + '" fill="' + (ad === "Güneş" ? "#f7dc8c" : "#f0e6d2") + '" font-size="' + (ana ? 15 : 13) + '" text-anchor="middle" dominant-baseline="central" font-family="Segoe UI Symbol,Noto Sans Symbols 2,DejaVu Sans,sans-serif">' + (GL[ad] + VS) + "</text></g>";
     });
     return h + "</svg>";

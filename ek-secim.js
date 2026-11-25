@@ -14,7 +14,7 @@
 
   var css = document.createElement("style");
   css.textContent =
-    ".ek-kutu{margin-top:16px;border:1px solid var(--line,#283454);border-radius:14px;background:rgba(106,63,160,.08)}" +
+    ".ek-kutu{margin-top:16px;border:1px solid var(--line,#283454);border-radius:14px;background:rgba(63,92,160,.08)}" +
     ".ek-kutu>summary{cursor:pointer;list-style:none;padding:13px 16px;font-weight:600;color:var(--gold-soft,#e7cf95);display:flex;justify-content:space-between;gap:10px;align-items:center}" +
     ".ek-kutu>summary::-webkit-details-marker{display:none}.ek-kutu>summary:after{content:'▾';opacity:.7}.ek-kutu[open]>summary:after{content:'▴'}" +
     ".ek-say{font-weight:400;font-size:.8rem;color:#cfc5e0;margin-left:auto;white-space:nowrap}" +

@@ -55,7 +55,7 @@ body.u :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;bord
 @media (min-width:901px){.u-profil .stack:has(.hub:not([style*="none"])){max-width:1120px;grid-template-columns:minmax(0,360px) minmax(0,1fr)}.u-profil .stack:has(.hub:not([style*="none"])) .hub{grid-column:1;grid-row:2/span 2;position:sticky;top:18px}.u-profil .stack:has(.hub:not([style*="none"])) main.card,.u-profil .stack:has(.hub:not([style*="none"])) #peopleCard{grid-column:2}}
 .u-profil .hub-ust h2{font-family:var(--u-disp);font-weight:400;font-size:30px;letter-spacing:-.01em}
 .u-profil .hub-ust .k{letter-spacing:.26em}
-.u-profil .hub-grid{gap:0;margin-top:6px}
+.u-profil .hub-grid{grid-template-columns:1fr;gap:0;margin-top:6px}
 .u-profil .hub-grid a{background:none;border:0;border-top:1px solid var(--u-hair);border-radius:0;padding:14px 2px;font-family:var(--u-serif);font-size:16.5px;position:relative}
 .u-profil .hub-grid a::after{content:"→";position:absolute;right:4px;top:50%;transform:translateY(-50%);color:var(--gold);font-family:var(--u-sans);transition:transform .2s}
 .u-profil .hub-grid a:hover{transform:none;color:var(--gold-soft)}
