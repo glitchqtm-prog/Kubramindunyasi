@@ -61,6 +61,17 @@ ASTERNA_EK = ('body #asterna-fab{width:58px;height:58px;background:radial-gradie
  '@media(max-width:480px){body #asterna-panel{left:8px;right:8px;width:auto;bottom:8px;height:min(82vh,640px);max-height:none;border-radius:22px}}'
  '/*ay-asterna-2*/')
 
+CEREZ_EK = ('#ay-cerez{background:rgba(6,9,18,.97);border-top:1px solid rgba(217,185,106,.24);box-shadow:0 -18px 50px rgba(0,0,0,.5)}'
+ '#ay-cerez .ay-cerez-tx{color:#d5cfde}#ay-cerez .ay-cerez-kabul{border-radius:999px;min-height:44px}'
+ '@media (max-width:700px){#ay-cerez .ay-cerez-in{padding:10px 14px;gap:12px;flex-wrap:nowrap;align-items:center}#ay-cerez .ay-cerez-tx{font-size:12px;line-height:1.45;min-width:0}#ay-cerez .ay-cerez-bt{width:auto}#ay-cerez .ay-cerez-kabul{flex:none;padding:0 18px}}'
+ '/*ay-cerez-2*/')
+
+def cerez(s):
+    if '/*ay-cerez-2*/' in s: return s
+    s = re.sub(r'(<style id="ay-cerez-kritik">)(.*?)(</style>)', lambda m: m.group(1) + m.group(2) + CEREZ_EK + m.group(3), s, count=1, flags=re.S)
+    s = re.sub(r'(<style id=\\"ay-cerez-kritik\\">)(.*?)(</style>)', lambda m: m.group(1) + m.group(2) + CEREZ_EK + m.group(3), s, count=1, flags=re.S)
+    return s
+
 def renk(s):
     s = re.sub(r'#[0-9a-fA-F]{6}\b', lambda m: RENK.get(m.group(0).lower(), m.group(0)), s)
     def f(m):
@@ -86,11 +97,15 @@ def main():
         if y in atla: continue
         s = open(y, encoding='utf-8').read(); o = s
         s = renk(s)
-        if y.endswith('.html') or y.endswith('.mjs'): s = menu(s)
+        if y.endswith('.html') or y.endswith('.mjs'): s = cerez(menu(s))
         if y == 'menu.js' and '/*ay-menu-2*/' not in s:
             k = "  + '#ay-cerez{position:fixed"
             assert k in s
             s = s.replace(k, "  + '" + MENU_EK.replace("'", "\\'") + "'\n" + k, 1)
+        if y == 'menu.js' and '/*ay-cerez-2*/' not in s:
+            k = "  + '@media (prefers-reduced-motion:reduce){#ay-cerez{transition:none}}'"
+            assert k in s
+            s = s.replace(k, "  + '" + CEREZ_EK + "'\n" + k, 1)
         if y == 'asterna-widget.js' and '/*ay-asterna-2*/' not in s:
             k = "@media(max-width:480px){#asterna-panel{right:8px;left:8px;width:auto;bottom:84px}}';"
             assert k in s
