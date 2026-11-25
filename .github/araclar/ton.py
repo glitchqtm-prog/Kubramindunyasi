@@ -97,6 +97,11 @@ def renk2(s):
         return '%s%d,%d,%d' % (m.group(1), t[0], t[1], t[2]) if t else m.group(0)
     return re.sub(r'(rgba\(\s*)(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?=\s*,)', fr, s)
 
+def ana_isaret(s):
+    """Erişilebilirlik: ana içerik işareti olmayan sayfalarda içerik kutusuna role="main" ekler."""
+    if '<main' in s or 'role="main"' in s or s.count('<div class="wrap">') != 1: return s
+    return s.replace('<div class="wrap">', '<div class="wrap" role="main">', 1)
+
 def renk(s):
     s = re.sub(r'#[0-9a-fA-F]{6}\b', lambda m: RENK.get(m.group(0).lower(), m.group(0)), s)
     def f(m):
@@ -123,6 +128,7 @@ def main():
         s = open(y, encoding='utf-8').read(); o = s
         s = renk2(renk(s))
         if y.endswith('.html') or y.endswith('.mjs'): s = cerez(menu(s))
+        if y.endswith('.html'): s = ana_isaret(s)
         if y == 'menu.js' and '/*ay-menu-2*/' not in s:
             k = "  + '#ay-cerez{position:fixed"
             assert k in s
