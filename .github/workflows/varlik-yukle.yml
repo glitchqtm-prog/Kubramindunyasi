@@ -1,0 +1,34 @@
+name: Ana sayfa filmi, masaüstü kareleri (tek seferlik yükleme)
+
+# Yalnızca yeni-anasayfa dalında, bu dosya değiştiğinde bir kez çalışır; sonra silinir, main'e taşınmaz.
+on:
+  push:
+    branches: [yeni-anasayfa]
+    paths:
+      - ".github/workflows/varlik-yukle.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  yukle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dalı al
+        uses: actions/checkout@v4
+
+      - name: Kareleri indir, doğrula, değiştir
+        run: |
+          curl -fsSL -o /tmp/v.zip "https://d2ol7oe51mr4n9.cloudfront.net/user_3LyFYhOxtdwTi9S3VyJYumAMkN8/7d5742e8-a665-4cd9-bbf2-a23da498427d.zip"
+          echo "bc9212c422c12f31850ea1271465e510032525e02f726eca0018d02d2172cd40  /tmp/v.zip" | sha256sum -c -
+          git rm -q film/d*.webp
+          unzip -o -q /tmp/v.zip -d .
+          ls film/d*.webp | wc -l
+
+      - name: Dala ekle
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add film
+          git commit -m "Ana sayfa: masaüstü film kareleri hareket hızına göre yeniden seçildi"
+          git push
