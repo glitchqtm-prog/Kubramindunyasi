@@ -51,10 +51,10 @@
   }
 
   var CSS = ''
-    + '.blab{--bl-gold:#d9b96a;--bl-gold2:#e7cf95;--bl-panel:#1c1733;--bl-panel2:#241c3d;--bl-line:#332a4d;--bl-cream:#f0e6d2;--bl-muted:#9a8fb8;'
+    + '.blab{--bl-gold:#d9b96a;--bl-gold2:#e7cf95;--bl-panel:#0b1020;--bl-panel2:#0e1630;--bl-line:#1f2942;--bl-cream:#f0e6d2;--bl-muted:#a39db6;'
     + '--fire:#e0794f;--earth:#b79a5a;--air:#6aa9d6;--water:#5fb3a3;margin:22px 0;font-family:"Segoe UI",system-ui,sans-serif}'
     + '.blab *{box-sizing:border-box}'
-    + '.blab .kart{background:linear-gradient(160deg,#1c1733,#141020);border:1px solid var(--bl-line);border-radius:18px;padding:18px 18px 20px;box-shadow:0 10px 34px rgba(0,0,0,.30)}'
+    + '.blab .kart{background:linear-gradient(160deg,#0b1020,#141020);border:1px solid var(--bl-line);border-radius:18px;padding:18px 18px 20px;box-shadow:0 10px 34px rgba(0,0,0,.30)}'
     + '.blab .kick{font:600 11.5px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--bl-gold);margin-bottom:2px}'
     + '.blab .bas{font:700 19px/1.2 Georgia,serif;color:var(--bl-cream);margin:0 0 3px}'
     + '.blab .ipu{font:500 12.5px/1.5 system-ui,sans-serif;color:var(--bl-muted);margin:0 0 12px}'
@@ -68,7 +68,7 @@
     + '.blab .mtablo{width:100%;border-collapse:separate;border-spacing:7px}'
     + '.blab .mtablo th{font:600 11px/1.2 system-ui,sans-serif;color:var(--bl-muted);text-transform:uppercase;letter-spacing:.06em;padding:2px;text-align:center}'
     + '.blab .mtablo th.el{text-align:right;white-space:nowrap;padding-right:6px}'
-    + '.blab .hucre{display:flex;flex-direction:column;align-items:center;gap:2px;background:#241c3d;border:1px solid var(--bl-line);border-radius:11px;padding:9px 4px;cursor:pointer;color:var(--bl-cream);text-decoration:none;transition:transform .18s,border-color .18s,background .18s}'
+    + '.blab .hucre{display:flex;flex-direction:column;align-items:center;gap:2px;background:#0e1630;border:1px solid var(--bl-line);border-radius:11px;padding:9px 4px;cursor:pointer;color:var(--bl-cream);text-decoration:none;transition:transform .18s,border-color .18s,background .18s}'
     + '.blab .hucre:hover{transform:translateY(-2px);border-color:var(--bl-gold)}'
     + '.blab .hucre .hg{font-size:22px;line-height:1}'
     + '.blab .hucre .hn{font:600 12px/1.1 system-ui,sans-serif}'
@@ -77,11 +77,11 @@
     + '.blab .mnot b{color:var(--bl-gold2)}'
     // uyum
     + '.blab .ucips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:14px}'
-    + '.blab .ucip{display:inline-flex;align-items:center;gap:5px;background:#241c3d;border:1px solid var(--bl-line);border-radius:999px;padding:6px 11px;cursor:pointer;color:var(--bl-cream);font:600 13px/1 system-ui,sans-serif;transition:border-color .18s,transform .18s}'
+    + '.blab .ucip{display:inline-flex;align-items:center;gap:5px;background:#0e1630;border:1px solid var(--bl-line);border-radius:999px;padding:6px 11px;cursor:pointer;color:var(--bl-cream);font:600 13px/1 system-ui,sans-serif;transition:border-color .18s,transform .18s}'
     + '.blab .ucip:hover{border-color:var(--bl-gold);transform:translateY(-1px)}'
     + '.blab .ucip.akt{border-color:var(--bl-gold);background:rgba(217,185,106,.14)}'
     + '.blab .ucip b{font-size:15px}'
-    + '.blab .upanel{background:#241c3d;border:1px solid var(--bl-line);border-radius:13px;padding:14px 15px}'
+    + '.blab .upanel{background:#0e1630;border:1px solid var(--bl-line);border-radius:13px;padding:14px 15px}'
     + '.blab .ubas{display:flex;align-items:center;gap:9px;margin-bottom:9px}'
     + '.blab .ubas .ig{font-size:26px}'
     + '.blab .ubas .it{font:700 15px/1.2 Georgia,serif;color:var(--bl-cream)}'
@@ -104,14 +104,14 @@
     // grid halkaları
     [0.25, 0.5, 0.75, 1].forEach(function (f) {
       var d = ""; for (var k = 0; k < n; k++) { var p = pt(k, R * f); d += (k ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1); }
-      svg += '<path d="' + d + 'Z" fill="none" stroke="#2c2545" stroke-width="1"/>';
+      svg += '<path d="' + d + 'Z" fill="none" stroke="#19213a" stroke-width="1"/>';
     });
     // eksen çizgileri + etiketler
     for (var k = 0; k < n; k++) {
       var pe = pt(k, R), pl = pt(k, R + 22);
-      svg += '<line x1="' + C + '" y1="' + C + '" x2="' + pe[0].toFixed(1) + '" y2="' + pe[1].toFixed(1) + '" stroke="#2c2545" stroke-width="1"/>';
+      svg += '<line x1="' + C + '" y1="' + C + '" x2="' + pe[0].toFixed(1) + '" y2="' + pe[1].toFixed(1) + '" stroke="#19213a" stroke-width="1"/>';
       var anc = Math.abs(pl[0] - C) < 6 ? "middle" : (pl[0] > C ? "start" : "end");
-      svg += '<text x="' + pl[0].toFixed(1) + '" y="' + (pl[1] + 4).toFixed(1) + '" text-anchor="' + anc + '" font-size="12" font-weight="600" fill="#9a8fb8">' + EKSEN[k] + '</text>';
+      svg += '<text x="' + pl[0].toFixed(1) + '" y="' + (pl[1] + 4).toFixed(1) + '" text-anchor="' + anc + '" font-size="12" font-weight="600" fill="#a39db6">' + EKSEN[k] + '</text>';
     }
     // veri poligonu
     var dd = "", pts = [];

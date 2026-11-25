@@ -35,22 +35,22 @@
     if (stilEklendi) return; stilEklendi = true;
     var s = document.createElement("style");
     s.textContent = ''
-      + '#ay-pwa{position:fixed;left:12px;right:12px;bottom:12px;z-index:2147483600;max-width:460px;margin:0 auto;background:#1b1530;border:1px solid rgba(217,185,106,.45);border-radius:18px;box-shadow:0 18px 44px rgba(0,0,0,.55);padding:14px 14px 12px;font-family:"Segoe UI",system-ui,sans-serif;color:#f0e6d2;transform:translateY(140%);transition:transform .35s ease}'
+      + '#ay-pwa{position:fixed;left:12px;right:12px;bottom:12px;z-index:2147483600;max-width:460px;margin:0 auto;background:#0a0e1c;border:1px solid rgba(217,185,106,.45);border-radius:18px;box-shadow:0 18px 44px rgba(0,0,0,.55);padding:14px 14px 12px;font-family:"Segoe UI",system-ui,sans-serif;color:#f0e6d2;transform:translateY(140%);transition:transform .35s ease}'
       + '#ay-pwa.ac{transform:translateY(0)}'
       + '#ay-pwa .ust{display:flex;gap:12px;align-items:center}'
-      + '#ay-pwa img{width:46px;height:46px;border-radius:12px;flex:none;border:1px solid #332a4d}'
+      + '#ay-pwa img{width:46px;height:46px;border-radius:12px;flex:none;border:1px solid #1f2942}'
       + '#ay-pwa b{display:block;font-size:15px;margin-bottom:2px}'
       + '#ay-pwa p{margin:0;font-size:13px;line-height:1.5;color:#cfc4e6}'
       + '#ay-pwa .bt{display:flex;gap:8px;margin-top:12px}'
       + '#ay-pwa button{flex:1;appearance:none;border:none;cursor:pointer;border-radius:20px;padding:10px 12px;font:600 14px "Segoe UI",system-ui,sans-serif}'
-      + '#ay-pwa .evet{background:linear-gradient(180deg,#e7cf95,#d9b96a);color:#1a1428}'
-      + '#ay-pwa .hayir{background:transparent;color:#cfc4e6;border:1px solid #332a4d}'
+      + '#ay-pwa .evet{background:linear-gradient(180deg,#e7cf95,#d9b96a);color:#090d1a}'
+      + '#ay-pwa .hayir{background:transparent;color:#cfc4e6;border:1px solid #1f2942}'
       + '#ay-pwa-ios{position:fixed;inset:0;z-index:2147483601;background:rgba(8,6,16,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px;font-family:"Segoe UI",system-ui,sans-serif}'
-      + '#ay-pwa-ios .k{background:#1b1530;border:1px solid rgba(217,185,106,.45);border-radius:20px;max-width:420px;width:100%;padding:18px 18px 14px;color:#f0e6d2}'
+      + '#ay-pwa-ios .k{background:#0a0e1c;border:1px solid rgba(217,185,106,.45);border-radius:20px;max-width:420px;width:100%;padding:18px 18px 14px;color:#f0e6d2}'
       + '#ay-pwa-ios h3{margin:0 0 10px;font:600 18px Georgia,serif}'
       + '#ay-pwa-ios ol{margin:0 0 14px;padding-left:20px;font-size:14.5px;line-height:1.7;color:#e9e1f2}'
       + '#ay-pwa-ios svg{vertical-align:-4px}'
-      + '#ay-pwa-ios button{width:100%;appearance:none;border:none;cursor:pointer;border-radius:20px;padding:11px;font:600 14px "Segoe UI",system-ui,sans-serif;background:linear-gradient(180deg,#e7cf95,#d9b96a);color:#1a1428}'
+      + '#ay-pwa-ios button{width:100%;appearance:none;border:none;cursor:pointer;border-radius:20px;padding:11px;font:600 14px "Segoe UI",system-ui,sans-serif;background:linear-gradient(180deg,#e7cf95,#d9b96a);color:#090d1a}'
       + '@media (prefers-reduced-motion:reduce){#ay-pwa{transition:none}}';
     document.head.appendChild(s);
   }
@@ -85,7 +85,7 @@
     var liste = document.querySelector("#astro-menu .am-dropdown .am-drop-menu"); if (!liste || !liste.children.length) return;
     var a = document.createElement("a"); a.href = "#"; a.id = "ay-pwa-menu"; a.setAttribute("role", "menuitem");
     a.innerHTML = '✦ Uygulama olarak ekle<span class="am-sub">Astro Yuvam telefonunun ana ekranında</span>';
-    a.style.borderTop = "1px solid #2c2545"; a.style.marginTop = "4px";
+    a.style.borderTop = "1px solid #19213a"; a.style.marginTop = "4px";
     a.addEventListener("click", function (e) { e.preventDefault(); kur("menu"); });
     liste.appendChild(a);
   }

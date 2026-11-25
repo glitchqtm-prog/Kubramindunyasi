@@ -79,16 +79,16 @@
     if ($("bn-stil")) return;
     var s = document.createElement("style"); s.id = "bn-stil";
     s.textContent =
-      "#burcNabzi{--bn-gold:#d9b96a;--bn-gs:#e7cf95;--bn-cr:#f0e6d2;--bn-mu:#9a8fb8;--bn-ln:#332a4d;color:var(--bn-cr);font-family:'Segoe UI',system-ui,-apple-system,sans-serif}" +
-      ".bn-kart{background:radial-gradient(ellipse at 100% 0%,rgba(169,156,240,.16),transparent 55%),linear-gradient(180deg,rgba(36,28,61,.82),rgba(24,19,43,.82));border:1px solid var(--bn-ln);border-radius:22px;padding:22px;text-align:left}" +
+      "#burcNabzi{--bn-gold:#d9b96a;--bn-gs:#e7cf95;--bn-cr:#f0e6d2;--bn-mu:#a39db6;--bn-ln:#1f2942;color:var(--bn-cr);font-family:'Segoe UI',system-ui,-apple-system,sans-serif}" +
+      ".bn-kart{background:radial-gradient(ellipse at 100% 0%,rgba(169,156,240,.16),transparent 55%),linear-gradient(180deg,rgba(14,22,48,.82),rgba(24,19,43,.82));border:1px solid var(--bn-ln);border-radius:22px;padding:22px;text-align:left}" +
       ".bn-adim{font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--bn-gold);margin:0 0 10px}" +
       ".bn-burc{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}" +
       "@media(max-width:600px){.bn-burc{grid-template-columns:repeat(4,minmax(0,1fr))}}" +
-      ".bn-burc button,.bn-hal button{appearance:none;cursor:pointer;background:rgba(20,16,31,.6);border:1px solid var(--bn-ln);border-radius:13px;color:var(--bn-cr);font:500 13px 'Segoe UI',system-ui,sans-serif;transition:border-color .15s,background .15s,transform .15s}" +
+      ".bn-burc button,.bn-hal button{appearance:none;cursor:pointer;background:rgba(4,6,13,.6);border:1px solid var(--bn-ln);border-radius:13px;color:var(--bn-cr);font:500 13px 'Segoe UI',system-ui,sans-serif;transition:border-color .15s,background .15s,transform .15s}" +
       ".bn-burc button{padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:2px}" +
       ".bn-burc button b{font-size:19px;font-weight:400;color:var(--bn-gs);font-family:'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif;line-height:1.1}" +
       ".bn-burc button:hover,.bn-hal button:hover{border-color:rgba(217,185,106,.6);transform:translateY(-1px)}" +
-      ".bn-burc button.on,.bn-hal button.on{border-color:var(--bn-gold);background:linear-gradient(180deg,rgba(217,185,106,.22),rgba(28,23,51,.9))}" +
+      ".bn-burc button.on,.bn-hal button.on{border-color:var(--bn-gold);background:linear-gradient(180deg,rgba(217,185,106,.22),rgba(11,16,32,.9))}" +
       ".bn-hal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}" +
       "@media(max-width:420px){.bn-hal{grid-template-columns:repeat(2,minmax(0,1fr))}}" +
       ".bn-hal button{display:flex;align-items:center;gap:8px;padding:11px 12px;font-size:14px;text-align:left}" +
@@ -99,7 +99,7 @@
       ".bn-dun b{color:var(--bn-gs)}" +
       ".bn-ust{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}" +
       ".bn-sek{display:flex;gap:6px}" +
-      ".bn-sek button{appearance:none;border:1px solid var(--bn-ln);background:rgba(20,16,31,.6);color:var(--bn-cr);border-radius:16px;padding:5px 13px;font:12.5px 'Segoe UI',system-ui,sans-serif;cursor:pointer}" +
+      ".bn-sek button{appearance:none;border:1px solid var(--bn-ln);background:rgba(4,6,13,.6);color:var(--bn-cr);border-radius:16px;padding:5px 13px;font:12.5px 'Segoe UI',system-ui,sans-serif;cursor:pointer}" +
       ".bn-sek button.on{background:linear-gradient(180deg,var(--bn-gs),var(--bn-gold));color:#2a1e08;border-color:var(--bn-gold)}" +
       ".bn-say{font-size:13px;color:var(--bn-mu)}.bn-say b{color:var(--bn-gs);font-size:15px}" +
       ".bn-ben{background:rgba(217,185,106,.09);border:1px solid rgba(217,185,106,.32);border-radius:14px;padding:11px 14px;font-size:14.5px;margin-bottom:12px;line-height:1.55}" +
@@ -111,7 +111,7 @@
       ".bn-izgara{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}" +
       "@media(max-width:760px){.bn-izgara{grid-template-columns:repeat(4,minmax(0,1fr))}}" +
       "@media(max-width:420px){.bn-izgara{grid-template-columns:repeat(3,minmax(0,1fr))}}" +
-      ".bn-k{position:relative;background:rgba(20,16,31,.6);border:1px solid var(--bn-ln);border-radius:14px;padding:10px 8px 9px;text-align:center;overflow:hidden}" +
+      ".bn-k{position:relative;background:rgba(4,6,13,.6);border:1px solid var(--bn-ln);border-radius:14px;padding:10px 8px 9px;text-align:center;overflow:hidden}" +
       ".bn-k.ben{border-color:var(--bn-gold);box-shadow:0 0 0 1px rgba(217,185,106,.35)}" +
       ".bn-k .g{font-size:18px;color:var(--bn-gs);font-family:'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif;line-height:1}" +
       ".bn-k .a{font-size:12.5px;font-weight:600;margin:3px 0 4px}" +
@@ -210,26 +210,26 @@
   function kartOlustur() {
     var dun = SEKME === "dun", O = ozet(VERI && (dun ? VERI.d : VERI.b)), o = oyum();
     var W = 1080, H = 1920, c = document.createElement("canvas"); c.width = W; c.height = H; var x = c.getContext("2d");
-    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#241c3d"); g.addColorStop(.55, "#14101f"); g.addColorStop(1, "#0c0914"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#0e1630"); g.addColorStop(.55, "#04060d"); g.addColorStop(1, "#03050b"); x.fillStyle = g; x.fillRect(0, 0, W, H);
     for (var i = 0; i < 140; i++) { var sx = (i * 397) % W, sy = (i * 733) % H, r = (i % 7 === 0) ? 2.4 : 1.2; x.globalAlpha = .25 + (i % 5) * .1; x.fillStyle = "#f0e6d2"; x.beginPath(); x.arc(sx, sy, r, 0, 7); x.fill(); }
     x.globalAlpha = 1; x.textAlign = "center"; x.textBaseline = "middle";
     x.fillStyle = "#d9b96a"; x.font = "600 30px 'Segoe UI',sans-serif"; x.fillText("✦  ASTRO YUVAM  ✦", W / 2, 150);
     x.fillStyle = "#f0e6d2"; x.font = "600 92px Georgia,serif"; x.fillText("Burçların Nabzı", W / 2, 270);
     var tarih = new Date(); if (dun) tarih.setDate(tarih.getDate() - 1);
     var AYL = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-    x.fillStyle = "#9a8fb8"; x.font = "36px 'Segoe UI',sans-serif"; x.fillText((dun ? "Dün · " : "Bugün · ") + tarih.getDate() + " " + AYL[tarih.getMonth()] + " · " + O.top + " kişi oy verdi", W / 2, 350);
+    x.fillStyle = "#a39db6"; x.font = "36px 'Segoe UI',sans-serif"; x.fillText((dun ? "Dün · " : "Bugün · ") + tarih.getDate() + " " + AYL[tarih.getMonth()] + " · " + O.top + " kişi oy verdi", W / 2, 350);
     var tw = 300, th = 250, gx = (W - tw * 3 - 30 * 2) / 2, gy = 430;
     O.B.forEach(function (b, k) {
       var cx = gx + (k % 3) * (tw + 30), cy = gy + Math.floor(k / 3) * (th + 26), az = b.n < MIN || !b.bas, h = az ? null : HI[b.bas], ben = o && o.b === b.i && !dun;
-      x.fillStyle = "rgba(28,23,51,.85)"; yuvarlak(x, cx, cy, tw, th, 26); x.fill();
-      x.lineWidth = ben ? 5 : 2; x.strokeStyle = ben ? "#d9b96a" : "#3a2f5c"; yuvarlak(x, cx, cy, tw, th, 26); x.stroke();
+      x.fillStyle = "rgba(11,16,32,.85)"; yuvarlak(x, cx, cy, tw, th, 26); x.fill();
+      x.lineWidth = ben ? 5 : 2; x.strokeStyle = ben ? "#d9b96a" : "#283454"; yuvarlak(x, cx, cy, tw, th, 26); x.stroke();
       x.fillStyle = "#e7cf95"; x.font = "56px 'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif"; x.fillText(GL[b.i] + VS, cx + tw / 2, cy + 62);
       x.fillStyle = "#f0e6d2"; x.font = "600 34px 'Segoe UI',sans-serif"; x.fillText(BN[b.i], cx + tw / 2, cy + 120);
-      if (az) { x.fillStyle = "#9a8fb8"; x.font = "28px 'Segoe UI',sans-serif"; x.fillText(b.n ? "az oy" : "oy yok", cx + tw / 2, cy + 178); }
+      if (az) { x.fillStyle = "#a39db6"; x.font = "28px 'Segoe UI',sans-serif"; x.fillText(b.n ? "az oy" : "oy yok", cx + tw / 2, cy + 178); }
       else {
         x.fillStyle = h.r; x.beginPath(); x.arc(cx + 48, cy + 178, 13, 0, 7); x.fill();
         x.fillStyle = "#f0e6d2"; x.font = "600 30px 'Segoe UI',sans-serif"; x.textAlign = "left"; x.fillText(h.ad, cx + 72, cy + 178); x.textAlign = "center";
-        x.fillStyle = "#9a8fb8"; x.font = "26px 'Segoe UI',sans-serif"; x.fillText("%" + Math.round(b.oran * 100), cx + tw / 2, cy + 222);
+        x.fillStyle = "#a39db6"; x.font = "26px 'Segoe UI',sans-serif"; x.fillText("%" + Math.round(b.oran * 100), cx + tw / 2, cy + 222);
       }
     });
     var E = enler(O, 2);

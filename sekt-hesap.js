@@ -75,11 +75,11 @@
       '<circle cx="150" cy="150" r="' + R0 + '" fill="rgba(246,194,154,.20)" clip-path="url(#sk-ust)"/>' +
       '<circle cx="150" cy="150" r="' + R0 + '" fill="rgba(35,52,106,.55)" clip-path="url(#sk-alt)"/>' +
       '<circle cx="150" cy="150" r="' + R0 + '" fill="none" stroke="rgba(217,185,106,.55)"/>' +
-      '<circle cx="150" cy="150" r="' + R2 + '" fill="rgba(20,16,31,.55)" stroke="rgba(217,185,106,.3)"/>';
+      '<circle cx="150" cy="150" r="' + R2 + '" fill="rgba(4,6,13,.55)" stroke="rgba(217,185,106,.3)"/>';
     if (N.cusp) N.cusp.forEach(function (c, i) {
       var a = P(c, R0), b = P(c, R2), n = P(c + norm(N.cusp[(i + 1) % 12] - c) / 2, R2 + 12);
       if (i !== 0 && i !== 6) h += '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" stroke="rgba(154,143,184,.28)"/>';
-      h += '<text x="' + n[0] + '" y="' + n[1] + '" fill="#9a8fb8" font-size="9" font-family="Segoe UI,sans-serif">' + (i + 1) + "</text>";
+      h += '<text x="' + n[0] + '" y="' + n[1] + '" fill="#a39db6" font-size="9" font-family="Segoe UI,sans-serif">' + (i + 1) + "</text>";
     });
     h += '<line x1="4" y1="150" x2="296" y2="150" stroke="#f3dca0" stroke-width="2.2"/>' +
       '<text x="20" y="140" fill="#e7cf95" font-size="10" font-family="Segoe UI,sans-serif" text-anchor="start">ASC</text>' +

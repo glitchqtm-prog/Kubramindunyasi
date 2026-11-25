@@ -55,19 +55,19 @@
     s.textContent =
       ".ad-kap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:14px}" +
       "@media(max-width:860px){.ad-kap{grid-template-columns:1fr}}" +
-      ".ad-kart{background:radial-gradient(ellipse at 0% 0%,rgba(169,156,240,.16),transparent 55%),linear-gradient(180deg,rgba(36,28,61,.78),rgba(28,23,51,.78));border:1px solid var(--line);border-radius:20px;padding:18px}" +
+      ".ad-kart{background:radial-gradient(ellipse at 0% 0%,rgba(169,156,240,.16),transparent 55%),linear-gradient(180deg,rgba(14,22,48,.78),rgba(11,16,32,.78));border:1px solid var(--line);border-radius:20px;padding:18px}" +
       ".ad-soru{font-family:Georgia,serif;font-size:22px;line-height:1.25;margin:0 0 4px;color:var(--cream)}" +
       ".ad-alt{font-size:13px;color:var(--muted);margin:0 0 14px}" +
       ".ad-hal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}" +
       "@media(max-width:420px){.ad-hal{grid-template-columns:repeat(2,minmax(0,1fr))}}" +
-      ".ad-hal button{appearance:none;cursor:pointer;display:flex;align-items:center;gap:8px;background:rgba(20,16,31,.55);border:1px solid var(--line);border-radius:14px;padding:11px 12px;color:var(--cream);font:500 14px 'Segoe UI',system-ui,sans-serif;text-align:left;transition:border-color .15s,transform .15s,background .15s}" +
+      ".ad-hal button{appearance:none;cursor:pointer;display:flex;align-items:center;gap:8px;background:rgba(4,6,13,.55);border:1px solid var(--line);border-radius:14px;padding:11px 12px;color:var(--cream);font:500 14px 'Segoe UI',system-ui,sans-serif;text-align:left;transition:border-color .15s,transform .15s,background .15s}" +
       ".ad-hal button:hover{border-color:rgba(217,185,106,.55);transform:translateY(-1px)}" +
       ".ad-hal button i{width:12px;height:12px;border-radius:50%;flex:none;box-shadow:0 0 10px currentColor}" +
       ".ad-hal button em{font-style:normal;font-size:17px;line-height:1}" +
-      ".ad-hal button.on{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,185,106,.2),rgba(28,23,51,.85))}" +
+      ".ad-hal button.on{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,185,106,.2),rgba(11,16,32,.85))}" +
       ".ad-hal button:disabled{opacity:.6;cursor:wait}" +
       ".ad-not{display:flex;gap:8px;margin-top:12px}" +
-      ".ad-not input{flex:1;min-width:0;background:#120e1e;color:var(--cream);border:1px solid rgba(217,185,106,.35);border-radius:12px;padding:10px 12px;font:14px 'Segoe UI',system-ui,sans-serif}" +
+      ".ad-not input{flex:1;min-width:0;background:#060912;color:var(--cream);border:1px solid rgba(217,185,106,.35);border-radius:12px;padding:10px 12px;font:14px 'Segoe UI',system-ui,sans-serif}" +
       ".ad-durum{font-size:13px;color:var(--gold-soft);margin-top:8px}.ad-durum:empty{display:none}" +
       ".ad-dun{appearance:none;background:none;border:none;color:var(--muted);font:12.5px 'Segoe UI',system-ui,sans-serif;text-decoration:underline;cursor:pointer;padding:0;margin-top:6px}" +
       ".ad-ipucu{margin-top:14px;background:rgba(217,185,106,.08);border:1px solid rgba(217,185,106,.3);border-radius:14px;padding:11px 14px;font-size:14px;color:var(--cream)}" +
@@ -87,7 +87,7 @@
       ".ad-ilerleme span{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}" +
       ".ad-oruntu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}" +
       "@media(max-width:860px){.ad-oruntu{grid-template-columns:1fr}}" +
-      ".ad-o{background:rgba(28,23,51,.75);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:16px;padding:13px 15px}" +
+      ".ad-o{background:rgba(11,16,32,.75);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:16px;padding:13px 15px}" +
       ".ad-o small{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}" +
       ".ad-o>b{display:block;font-family:Georgia,serif;font-weight:600;font-size:17px;line-height:1.3;margin:5px 0 4px}" +
       ".ad-o p{margin:0;font-size:13.5px;color:#e2d9ee}.ad-o p b{color:var(--gold-soft)}" +
@@ -97,7 +97,7 @@
       ".ty h3{font-family:Georgia,serif;font-weight:600;font-size:20px;margin:0 0 4px;color:var(--gold-soft)}.ty p{margin:0;font-size:13.5px;color:var(--muted)}" +
       ".ty svg{width:100%;height:auto;display:block;margin:10px 0 6px}" +
       ".ty-ilerle{font-size:13.5px;color:var(--muted)}.ty-ilerle b{font-family:Georgia,serif;font-size:22px;color:var(--gold-soft)}.ty-ilerle span{color:#e2d9ee}" +
-      ".ty-arac{display:flex;gap:8px;flex-wrap:wrap}.ty-arac input{flex:1;min-width:180px;background:#120e1e;color:var(--cream);border:1px solid rgba(217,185,106,.4);border-radius:12px;padding:10px 12px;font:14px 'Segoe UI',system-ui,sans-serif}" +
+      ".ty-arac{display:flex;gap:8px;flex-wrap:wrap}.ty-arac input{flex:1;min-width:180px;background:#060912;color:var(--cream);border:1px solid rgba(217,185,106,.4);border-radius:12px;padding:10px 12px;font:14px 'Segoe UI',system-ui,sans-serif}" +
       "@media (prefers-reduced-motion:reduce){.ad-hal button{transition:none}}";
     document.head.appendChild(s);
   }
@@ -184,7 +184,7 @@
   function saatCiz() {
     var S = 300, M = S / 2, R = 112, h = '<svg viewBox="0 0 ' + S + ' ' + S + '" role="img" aria-label="Ay Saati: kayıtlarının Ay evrelerine göre dağılımı">';
     function P(a, r) { var t = (a - 90) * Math.PI / 180; return [M + r * Math.cos(t), M + r * Math.sin(t)]; }
-    h += '<defs><radialGradient id="adG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(169,156,240,.18)"/><stop offset="100%" stop-color="rgba(20,16,31,0)"/></radialGradient></defs>';
+    h += '<defs><radialGradient id="adG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(169,156,240,.18)"/><stop offset="100%" stop-color="rgba(4,6,13,0)"/></radialGradient></defs>';
     h += '<circle cx="' + M + '" cy="' + M + '" r="' + (R + 26) + '" fill="url(#adG)"/>';
     [R + 18, R - 18, R - 54].forEach(function (r, i) { h += '<circle cx="' + M + '" cy="' + M + '" r="' + r + '" fill="none" stroke="rgba(217,185,106,' + (i === 0 ? .4 : .14) + ')"' + (i ? ' stroke-dasharray="2 5"' : "") + '/>'; });
     // dört evre simgesi
@@ -200,8 +200,8 @@
     // bugünün Ay konumu (ok)
     var gb = gok(bugunK()), pb = P(gb.fazAci, R + 18);
     var pt = P(gb.fazAci, R + 30);
-    h += '<circle cx="' + pb[0].toFixed(1) + '" cy="' + pb[1].toFixed(1) + '" r="4.5" fill="#d9b96a" stroke="#14101f" stroke-width="1.5"><title>Bugün Ay burada</title></circle><text x="' + pt[0].toFixed(1) + '" y="' + pt[1].toFixed(1) + '" fill="#d9b96a" font-size="10" font-weight="600">bugün</text>';
-    h += '<text x="' + M + '" y="' + (M - 9) + '" fill="#e7cf95" font-size="15" font-family="Georgia,serif">Ay Saatin</text><text x="' + M + '" y="' + (M + 11) + '" fill="#9a8fb8" font-size="11">' + n + ' kayıt</text></svg>';
+    h += '<circle cx="' + pb[0].toFixed(1) + '" cy="' + pb[1].toFixed(1) + '" r="4.5" fill="#d9b96a" stroke="#04060d" stroke-width="1.5"><title>Bugün Ay burada</title></circle><text x="' + pt[0].toFixed(1) + '" y="' + pt[1].toFixed(1) + '" fill="#d9b96a" font-size="10" font-weight="600">bugün</text>';
+    h += '<text x="' + M + '" y="' + (M - 9) + '" fill="#e7cf95" font-size="15" font-family="Georgia,serif">Ay Saatin</text><text x="' + M + '" y="' + (M + 11) + '" fill="#a39db6" font-size="11">' + n + ' kayıt</text></svg>';
     var lej = HAL.map(function (x) { return '<span><i style="background:' + x.r + '"></i>' + esc(x.ad) + '</span>'; }).join("");
     return '<div class="ad-saat">' + h + '<div class="ad-lej">' + lej + '</div></div>';
   }
@@ -267,11 +267,11 @@
   function tyKart() {
     var no = Math.floor(KAYIT.length / TY_N) - 1, S = sekil(no), ad = tyAdlar()[no] || "İsimsiz takımyıldızım", W = 1080, H = 1350;
     var c = document.createElement("canvas"); c.width = W; c.height = H; var x = c.getContext("2d");
-    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#241c3d"); g.addColorStop(1, "#0c0914"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#0e1630"); g.addColorStop(1, "#03050b"); x.fillStyle = g; x.fillRect(0, 0, W, H);
     for (var i = 0; i < 220; i++) { x.globalAlpha = .12 + (i % 6) * .06; x.fillStyle = "#f0e6d2"; x.beginPath(); x.arc((i * 397) % W, (i * 733) % H, i % 9 ? 1 : 1.8, 0, 7); x.fill(); }
     x.globalAlpha = 1; x.textAlign = "center"; x.fillStyle = "#d9b96a"; x.font = "600 28px 'Segoe UI',sans-serif"; x.fillText("✦  ASTRO YUVAM  ✦", W / 2, 110);
     x.fillStyle = "#f0e6d2"; x.font = "600 78px Georgia,serif"; x.fillText(ad, W / 2, 230);
-    x.fillStyle = "#9a8fb8"; x.font = "34px 'Segoe UI',sans-serif"; x.fillText("30 günde kendi gökyüzümde yaktığım takımyıldız", W / 2, 295);
+    x.fillStyle = "#a39db6"; x.font = "34px 'Segoe UI',sans-serif"; x.fillText("30 günde kendi gökyüzümde yaktığım takımyıldız", W / 2, 295);
     var ox = 60, oy = 400, k = (W - 120) / 560;
     S.E.forEach(function (e) { var a = S.P[e[0]], b = S.P[e[1]]; x.strokeStyle = "rgba(231,207,149,.7)"; x.lineWidth = 3; x.beginPath(); x.moveTo(ox + a.x * k, oy + a.y * k); x.lineTo(ox + b.x * k, oy + b.y * k); x.stroke(); });
     S.P.forEach(function (p) { var px = ox + p.x * k, py = oy + p.y * k, rg = x.createRadialGradient(px, py, 0, px, py, p.r * 14);

@@ -153,7 +153,7 @@
       " A" + w.toFixed(2) + " " + r + " 0 0 " + (sag ? (gib ? 1 : 0) : (gib ? 0 : 1)) + " " + c + " " + (c - r) + "Z";
     var isik = (1 - Math.cos(faz * R)) / 2;
     return '<svg class="' + (cls || "at-ay") + '" viewBox="0 0 ' + 2 * c + " " + 2 * c + '" width="' + 2 * c + '" height="' + 2 * c + '" role="img" aria-label="Ay evresi: ' + evreAd(faz) + ', yüzde ' + Math.round(isik * 100) + ' aydınlık">' +
-      '<circle cx="' + c + '" cy="' + c + '" r="' + r + '" fill="#1d1830" stroke="#4a3d73" stroke-width="1.2"/>' +
+      '<circle cx="' + c + '" cy="' + c + '" r="' + r + '" fill="#0b1021" stroke="#36436e" stroke-width="1.2"/>' +
       (isik > 0.004 ? '<path d="' + d + '" fill="#f0e6d2"/>' : "") + "</svg>";
   }
   function mzAralik(i) { var a = i * 360 / 28, b = (i + 1) * 360 / 28; return dYaz(a) + " – " + dYaz(b); }
@@ -313,7 +313,7 @@
     var x = c.getContext("2d"), tarihGoster = false;
     function satir(t, maxw, font) { x.font = font; var k = t.split(" "), l = [], s = ""; k.forEach(function (w) { var d = s ? s + " " + w : w; if (x.measureText(d).width > maxw && s) { l.push(s); s = w; } else s = d; }); if (s) l.push(s); return l; }
     function ciz() {
-      var g = x.createRadialGradient(540, 300, 50, 540, 900, 1300); g.addColorStop(0, "#2a2150"); g.addColorStop(.55, "#14101f"); g.addColorStop(1, "#0a0812");
+      var g = x.createRadialGradient(540, 300, 50, 540, 900, 1300); g.addColorStop(0, "#2a2150"); g.addColorStop(.55, "#04060d"); g.addColorStop(1, "#0a0812");
       x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
       var s = 7; for (var i = 0; i < 140; i++) { s = (s * 9301 + 49297) % 233280; var px = s / 233280 * 1080; s = (s * 9301 + 49297) % 233280; var py = s / 233280 * 1920; s = (s * 9301 + 49297) % 233280; x.globalAlpha = .25 + s / 233280 * .6; x.fillStyle = "#f0e6d2"; x.beginPath(); x.arc(px, py, 1 + (i % 3) * .7, 0, 7); x.fill(); }
       x.globalAlpha = 1;
@@ -321,7 +321,7 @@
       x.textAlign = "center"; x.fillStyle = "#d9b96a"; x.font = "600 34px 'Segoe UI', system-ui, sans-serif"; x.fillText("DOĞDUĞUM GÜN AY TAKVİMİNDE", 540, 190);
       // Ay
       var faz = r.ay ? r.ay.faz : tipikFaz(n), cx = 540, cy = 470, rr = 170, w = Math.abs(Math.cos(faz * R)) * rr, sag = faz < 180, gib = faz > 90 && faz < 270;
-      x.fillStyle = "#1d1830"; x.beginPath(); x.arc(cx, cy, rr, 0, 7); x.fill(); x.strokeStyle = "#4a3d73"; x.lineWidth = 3; x.stroke();
+      x.fillStyle = "#0b1021"; x.beginPath(); x.arc(cx, cy, rr, 0, 7); x.fill(); x.strokeStyle = "#36436e"; x.lineWidth = 3; x.stroke();
       x.save(); x.fillStyle = "#f0e6d2"; x.shadowColor = "rgba(240,230,210,.45)"; x.shadowBlur = 50; x.beginPath();
       x.arc(cx, cy, rr, -Math.PI / 2, Math.PI / 2, !sag);
       x.ellipse(cx, cy, Math.max(w, .01), rr, 0, Math.PI / 2, -Math.PI / 2, sag ? !gib : gib);
@@ -337,7 +337,7 @@
         l2.forEach(function (t, i) { x.fillText(t, 540, y1 + i * 48); });
         x.font = "600 30px 'Segoe UI', system-ui, sans-serif"; x.fillStyle = v[0] === "nahs" ? "#ff9a8a" : "#d9b96a"; x.fillText(TUR[v[0]].toUpperCase(), 540, y1 + l2.length * 48 + 60);
       } else { x.font = "40px 'Segoe UI', system-ui, sans-serif"; x.fillStyle = "#cfc5e0"; x.fillText("Rûznâme bu gün için hüküm yazmamış.", 540, 1160); }
-      x.font = "30px 'Segoe UI', system-ui, sans-serif"; x.fillStyle = "#9a8fb8"; x.fillText("Sultan Mahmud'a nispet edilen eski bir rûznâmeden", 540, 1690);
+      x.font = "30px 'Segoe UI', system-ui, sans-serif"; x.fillStyle = "#a39db6"; x.fillText("Sultan Mahmud'a nispet edilen eski bir rûznâmeden", 540, 1690);
       x.fillStyle = "#d9b96a"; x.font = "bold 40px Georgia, 'Times New Roman', serif"; x.fillText("✦ ASTRO YUVAM", 540, 1770);
     }
     ciz();

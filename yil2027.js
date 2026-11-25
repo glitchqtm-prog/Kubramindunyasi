@@ -278,7 +278,7 @@
       var anim = red ? "" : '<animate attributeName="cx" values="' + sx.toFixed(1) + ";" + mx.toFixed(1) + ";" + mx.toFixed(1) + ";" + sx.toFixed(1) + '" keyTimes="0;.45;.6;1" dur="7s" repeatCount="indefinite"/><animate attributeName="cy" values="' + sy.toFixed(1) + ";" + my.toFixed(1) + ";" + my.toFixed(1) + ";" + sy.toFixed(1) + '" keyTimes="0;.45;.6;1" dur="7s" repeatCount="indefinite"/>';
       svg.innerHTML = '<defs><radialGradient id="ttG"><stop offset="0" stop-color="#fff6d8"/><stop offset=".7" stop-color="#f3d27a"/><stop offset="1" stop-color="#e2a93c"/></radialGradient><radialGradient id="ttH"><stop offset=".45" stop-color="rgba(243,210,122,.35)"/><stop offset="1" stop-color="rgba(243,210,122,0)"/></radialGradient><clipPath id="ttC"><rect width="240" height="240" rx="120"/></clipPath></defs>' +
         '<g clip-path="url(#ttC)"><rect width="240" height="240" fill="#1a2440" opacity="' + (1 - p * .55).toFixed(2) + '"/><circle cx="120" cy="120" r="100" fill="url(#ttH)"/><circle cx="120" cy="120" r="60" fill="url(#ttG)"/>' +
-        '<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="60" fill="#0c0914">' + anim + "</circle></g>";
+        '<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="60" fill="#03050b">' + anim + "</circle></g>";
       bil.innerHTML = '<div class="y-tt-yuz">%' + x[4] + '</div><div class="y-kucuk">Güneş\'in örtülen kısmı</div><dl><dt>Başlangıç</dt><dd>' + x[1] + "</dd><dt>En yüksek an</dt><dd>" + x[2] + "</dd><dt>Bitiş</dt><dd>" + x[3] + "</dd><dt>Güneş'in yüksekliği</dt><dd>" + x[5] + "°</dd></dl>";
       try { localStorage.setItem("ay_il", s.value); } catch (e) {}
     }

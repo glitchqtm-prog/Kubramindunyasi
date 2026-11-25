@@ -122,17 +122,17 @@
     var cx = 140, cy = 140, r1 = 130, r2 = 104, r3 = 80, asc = N && N.asc != null ? N.asc : 0;
     function nk(l, r) { var a = (180 + (l - asc)) * R; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
     var s = '<svg viewBox="0 0 280 280" role="img" aria-label="Doğum haritanda Lilith\'in konumu">';
-    s += '<circle cx="140" cy="140" r="' + r1 + '" fill="#130f22" stroke="#332a4d"/>';
+    s += '<circle cx="140" cy="140" r="' + r1 + '" fill="#130f22" stroke="#1f2942"/>';
     for (var b = 0; b < 12; b++) {
       var p0 = nk(b * 30, r1), p1 = nk(b * 30, r2), m = nk(b * 30 + 15, (r1 + r2) / 2);
-      s += '<line x1="' + p0[0].toFixed(1) + '" y1="' + p0[1].toFixed(1) + '" x2="' + p1[0].toFixed(1) + '" y2="' + p1[1].toFixed(1) + '" stroke="#332a4d"/>';
-      s += '<text x="' + m[0].toFixed(1) + '" y="' + m[1].toFixed(1) + '" font-size="13" fill="' + (b === sg(lm) ? "#e7cf95" : "#9a8fb8") + '">' + GL[b] + VS + '</text>';
+      s += '<line x1="' + p0[0].toFixed(1) + '" y1="' + p0[1].toFixed(1) + '" x2="' + p1[0].toFixed(1) + '" y2="' + p1[1].toFixed(1) + '" stroke="#1f2942"/>';
+      s += '<text x="' + m[0].toFixed(1) + '" y="' + m[1].toFixed(1) + '" font-size="13" fill="' + (b === sg(lm) ? "#e7cf95" : "#a39db6") + '">' + GL[b] + VS + '</text>';
     }
     s += '<circle cx="140" cy="140" r="' + r2 + '" fill="none" stroke="#4a3f6b"/>';
-    if (N && N.cusp) N.cusp.forEach(function (c, i) { var a = nk(c, r2), z = nk(c, 18); s += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + z[0].toFixed(1) + '" y2="' + z[1].toFixed(1) + '" stroke="' + (i === 0 || i === 9 ? "rgba(217,185,106,.6)" : "rgba(154,143,184,.22)") + '" stroke-width="' + (i === 0 || i === 9 ? 1.4 : 1) + '"/>'; var mm = nk(c + fark(N.cusp[(i + 1) % 12], c) / 2 + 0, 30); s += '<text x="' + mm[0].toFixed(1) + '" y="' + mm[1].toFixed(1) + '" font-size="9" fill="#6f6690" font-family="Segoe UI,sans-serif">' + (i + 1) + '</text>'; });
+    if (N && N.cusp) N.cusp.forEach(function (c, i) { var a = nk(c, r2), z = nk(c, 18); s += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + z[0].toFixed(1) + '" y2="' + z[1].toFixed(1) + '" stroke="' + (i === 0 || i === 9 ? "rgba(217,185,106,.6)" : "rgba(154,143,184,.22)") + '" stroke-width="' + (i === 0 || i === 9 ? 1.4 : 1) + '"/>'; var mm = nk(c + fark(N.cusp[(i + 1) % 12], c) / 2 + 0, 30); s += '<text x="' + mm[0].toFixed(1) + '" y="' + mm[1].toFixed(1) + '" font-size="9" fill="#807b94" font-family="Segoe UI,sans-serif">' + (i + 1) + '</text>'; });
     if (N && N.p) Object.keys(N.p).forEach(function (ad) { if (!PG[ad]) return; var q = nk(N.p[ad].lon, r3); s += '<text x="' + q[0].toFixed(1) + '" y="' + q[1].toFixed(1) + '" font-size="12" fill="#cfc4e6">' + PG[ad] + VS + '</text>'; });
-    function nokta(l, renk, et, rr) { var q = nk(l, rr), t = nk(l, r2); s += '<line x1="' + t[0].toFixed(1) + '" y1="' + t[1].toFixed(1) + '" x2="' + q[0].toFixed(1) + '" y2="' + q[1].toFixed(1) + '" stroke="' + renk + '" stroke-width="1.2"/><circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="11" fill="#1c1733" stroke="' + renk + '" stroke-width="1.6"/><text x="' + q[0].toFixed(1) + '" y="' + q[1].toFixed(1) + '" font-size="13" fill="' + renk + '">' + et + '</text>'; }
-    if (lt != null && Math.abs(fark(lt, lm)) > 4) nokta(lt, "#9a8fb8", LIL, 58);
+    function nokta(l, renk, et, rr) { var q = nk(l, rr), t = nk(l, r2); s += '<line x1="' + t[0].toFixed(1) + '" y1="' + t[1].toFixed(1) + '" x2="' + q[0].toFixed(1) + '" y2="' + q[1].toFixed(1) + '" stroke="' + renk + '" stroke-width="1.2"/><circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="11" fill="#0b1020" stroke="' + renk + '" stroke-width="1.6"/><text x="' + q[0].toFixed(1) + '" y="' + q[1].toFixed(1) + '" font-size="13" fill="' + renk + '">' + et + '</text>'; }
+    if (lt != null && Math.abs(fark(lt, lm)) > 4) nokta(lt, "#a39db6", LIL, 58);
     nokta(lm, "#e7cf95", LIL, 58);
     if (N && N.asc != null) { var aa = nk(N.asc, r1 + 2); s += '<text x="' + (aa[0] + 12).toFixed(1) + '" y="' + (aa[1] - 8).toFixed(1) + '" font-size="9.5" fill="#e7cf95" font-family="Segoe UI,sans-serif">ASC</text>'; }
     return s + "</svg>";
@@ -259,7 +259,7 @@
       yl.setAttribute("x", ap[0].toFixed(1)); yl.setAttribute("y", (ap[1] + (Math.sin(lam * R) > 0.3 ? -16 : 24)).toFixed(1));
       yp.setAttribute("x", pe[0].toFixed(1)); yp.setAttribute("y", (pe[1] - 14).toFixed(1));
       yok.setAttribute("x2", uc[0].toFixed(1)); yok.setAttribute("y2", uc[1].toFixed(1));
-      var bb = sg(lam); if (bb !== eskiB) { eskiB = bb; burclar.forEach(function (t) { t.setAttribute("fill", +t.dataset.b === bb ? "#e7cf95" : "#6f6690"); }); yazi.textContent = "Lilith şu an animasyonda " + BN[bb] + " burcu yönünde"; }
+      var bb = sg(lam); if (bb !== eskiB) { eskiB = bb; burclar.forEach(function (t) { t.setAttribute("fill", +t.dataset.b === bb ? "#e7cf95" : "#807b94"); }); yazi.textContent = "Lilith şu an animasyonda " + BN[bb] + " burcu yönünde"; }
     }
     function kare(ts) {
       if (son != null) { var dt = Math.min(0.05, (ts - son) / 1000); lam = norm(lam + dt * 360 / (hizli ? 12 : 40)); faz += dt * 2 * Math.PI / (hizli ? 1.1 : 3.2); }
@@ -281,13 +281,13 @@
       var W = 640, H = 260, sol = 44, sag = 12, ust = 14, alt = 34, iw = W - sol - sag, ih = H - ust - alt;
       var mx = Math.max(10, Math.ceil(Math.max.apply(null, veri.map(function (v) { return Math.abs(v[1]); })) / 10) * 10);
       function X(i) { return sol + i / 365 * iw; } function Y(v) { return ust + (mx - v) / (2 * mx) * ih; }
-      var s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Önümüzdeki 12 ay için gerçek Lilith ile ortalama Lilith arasındaki fark (derece)"><g font-family="Segoe UI,system-ui,sans-serif" font-size="11" fill="#9a8fb8">';
+      var s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Önümüzdeki 12 ay için gerçek Lilith ile ortalama Lilith arasındaki fark (derece)"><g font-family="Segoe UI,system-ui,sans-serif" font-size="11" fill="#a39db6">';
       for (var v = -mx; v <= mx; v += 10) s += '<line x1="' + sol + '" x2="' + (W - sag) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (v === 0 ? "rgba(231,207,149,.55)" : "rgba(154,143,184,.14)") + '" stroke-width="1"/><text x="' + (sol - 6) + '" y="' + (Y(v) + 4).toFixed(1) + '" text-anchor="end">' + (v > 0 ? "+" : "") + v + "°</text>";
       var d0 = dateOf(bas);
       for (var m = 0; m <= 12; m++) { var dm = new Date(d0.getFullYear(), d0.getMonth() + m, 1), gi = (jdOf(dm.getTime()) - bas); if (gi < 0 || gi > 365) continue; s += '<line x1="' + X(gi).toFixed(1) + '" x2="' + X(gi).toFixed(1) + '" y1="' + (ust + ih) + '" y2="' + (ust + ih + 4) + '" stroke="rgba(154,143,184,.5)"/>' + (m % 2 === 0 || W > 500 ? '<text x="' + X(gi).toFixed(1) + '" y="' + (ust + ih + 17) + '" text-anchor="middle">' + AYL[dm.getMonth()].slice(0, 3) + "</text>" : ""); }
       s += '<text x="' + (sol + 4) + '" y="' + (Y(0) - 6).toFixed(1) + '" fill="#e7cf95">ortalama Lilith</text>';
       s += '<path d="' + veri.map(function (p, i) { return (i ? "L" : "M") + X(i).toFixed(1) + "," + Y(p[1]).toFixed(1); }).join("") + '" fill="none" stroke="#d9b96a" stroke-width="2" stroke-linejoin="round"/>';
-      s += '<line class="li-gx" x1="0" x2="0" y1="' + ust + '" y2="' + (ust + ih) + '" stroke="rgba(240,230,210,.45)" stroke-width="1" visibility="hidden"/><circle class="li-gn" r="4.5" fill="#e7cf95" stroke="#1c1733" stroke-width="2" visibility="hidden"/>';
+      s += '<line class="li-gx" x1="0" x2="0" y1="' + ust + '" y2="' + (ust + ih) + '" stroke="rgba(240,230,210,.45)" stroke-width="1" visibility="hidden"/><circle class="li-gn" r="4.5" fill="#e7cf95" stroke="#0b1020" stroke-width="2" visibility="hidden"/>';
       s += '<rect class="li-gh" x="' + sol + '" y="' + ust + '" width="' + iw + '" height="' + ih + '" fill="transparent" style="cursor:crosshair"/></g></svg><div class="li-ipucu"></div>';
       k.innerHTML = s;
       var sv = $("svg", k), gx = $(".li-gx", k), gn = $(".li-gn", k), ip = $(".li-ipucu", k), hit = $(".li-gh", k);
